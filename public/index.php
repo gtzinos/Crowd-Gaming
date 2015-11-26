@@ -65,9 +65,22 @@
   /*
       load the right template (guest / authenticated template)
   */
-	if(!@include_once('../src/views/authenticated_template/head.php'))
-	{
-			header('Location: /');
+
+
+	if(isset($_SESSION['uid'])) {
+		if(!@include_once('../src/views/authenticated_template/header.php'))
+		{
+				header('Location: /');
+		}
+
+			//	include_once('../src/views/authenticated_template/body.php');
+			//	include_once('../src/views/authenticated_template/footer.php');
+	}
+	else {
+		if(!@include_once('../src/views/guest_template/index.php'))
+		{
+				header('Location: /');
+		}
 	}
 
 
