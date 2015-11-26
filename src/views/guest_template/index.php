@@ -13,29 +13,29 @@
 
     <!-- Favicons
     ================================================== -->
-    <link rel="shortcut icon" href="../src/views/img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="../src/views/img/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="../src/views/img/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="../src/views/img/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="../src/views/guest_template//img/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="../src/views/guest_template//img/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="../src/views/guest_template//img/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="../src/views/guest_template//img/apple-touch-icon-114x114.png">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css"  href="../src/views/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="../src/views/fonts/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css"  href="../src/views/guest_template//css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../src/views/guest_template//fonts/font-awesome/css/font-awesome.css">
 
     <!-- Slider
     ================================================== -->
-    <link href="../src/views/css/owl.carousel.css" rel="stylesheet" media="screen">
-    <link href="../src/views/css/owl.theme.css" rel="stylesheet" media="screen">
+    <link href="../src/views/guest_template//css/owl.carousel.css" rel="stylesheet" media="screen">
+    <link href="../src/views/guest_template//css/owl.theme.css" rel="stylesheet" media="screen">
 
     <!-- Stylesheet
     ================================================== -->
-    <link rel="stylesheet" type="text/css"  href="../src/views/css/style.css">
-    <link rel="stylesheet" type="text/css" href="../src/views/css/responsive.css">
+    <link rel="stylesheet" type="text/css"  href="../src/views/guest_template//css/style.css">
+    <link rel="stylesheet" type="text/css" href="../src/views/guest_template//css/responsive.css">
 
     <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,700,300,600,800,400' rel='stylesheet' type='text/css'>
 
-    <script type="text/javascript" src="../src/views/js/modernizr.custom.js"></script>
+    <script type="text/javascript" src="../src/views/guest_template//js/modernizr.custom.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -93,7 +93,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="../src/views/img/02.png" class="img-responsive">
+                    <img src="../src/views/guest_template//img/02.png" class="img-responsive">
                 </div>
                 <div class="col-md-6">
                     <div class="about-text">
@@ -139,7 +139,7 @@
                 <div id="team" class="owl-carousel owl-theme row">
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/01.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/01.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -150,7 +150,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/02.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/02.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -161,7 +161,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/03.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/03.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -172,7 +172,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/04.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/04.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -183,7 +183,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/04.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/04.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -194,7 +194,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/01.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/01.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -205,7 +205,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/02.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/02.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -216,7 +216,7 @@
 
                     <div class="item">
                         <div class="thumbnail">
-                            <img src="../src/views/img/team/03.jpg" alt="..." class="img-circle team-img">
+                            <img src="../src/views/guest_template//img/team/03.jpg" alt="..." class="img-circle team-img">
                             <div class="caption">
                                 <h3>Jenn Gwapa</h3>
                                 <p>CEO / Founder</p>
@@ -285,25 +285,25 @@
                 </div>
                 <div id="clients" class="owl-carousel owl-theme">
                     <div class="item">
-                        <img src="../src/views/img/client/01.png">
+                        <img src="../src/views/guest_template//img/client/01.png">
                     </div>
                     <div class="item">
-                        <img src="../src/views/img/client/02.png">
+                        <img src="../src/views/guest_template//img/client/02.png">
                     </div>
                     <div class="item">
-                        <img src="../src/views/img/client/03.png">
+                        <img src="../src/views/guest_template//img/client/03.png">
                     </div>
                     <div class="item">
-                        <img src="../src/views/img/client/04.png">
+                        <img src="../src/views/guest_template//img/client/04.png">
                     </div>
                     <div class="item">
-                        <img src="../src/views/img/client/05.png">
+                        <img src="../src/views/guest_template//img/client/05.png">
                     </div>
                     <div class="item">
-                        <img src="../src/views/img/client/06.png">
+                        <img src="../src/views/guest_template//img/client/06.png">
                     </div>
                     <div class="item">
-                        <img src="../src/views/img/client/07.png">
+                        <img src="../src/views/guest_template//img/client/07.png">
                     </div>
                 </div>
 
@@ -354,7 +354,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/01.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/01.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -370,7 +370,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/02.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/02.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -386,7 +386,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/03.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/03.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -402,7 +402,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/04.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/04.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -418,7 +418,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/05.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/05.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -434,7 +434,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/06.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/06.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -450,7 +450,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/07.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/07.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -466,7 +466,7 @@
                                     <div class="clearfix"></div>
                                     <i class="fa fa-plus"></i>
                                 </div>
-                                <img src="../src/views/img/portfolio/08.jpg" class="img-responsive" alt="...">
+                                <img src="../src/views/guest_template//img/portfolio/08.jpg" class="img-responsive" alt="...">
                             </a>
                         </div>
                     </div>
@@ -576,17 +576,17 @@
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script type="text/javascript" src="../src/views/js/jquery.1.11.1.js"></script>
+    <script type="text/javascript" src="../src/views/guest_template//js/jquery.1.11.1.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script type="text/javascript" src="../src/views/js/bootstrap.js"></script>
-    <script type="text/javascript" src="../src/views/js/SmoothScroll.js"></script>
-    <script type="text/javascript" src="../src/views/js/jquery.isotope.js"></script>
+    <script type="text/javascript" src="../src/views/guest_template//js/bootstrap.js"></script>
+    <script type="text/javascript" src="../src/views/guest_template//js/SmoothScroll.js"></script>
+    <script type="text/javascript" src="../src/views/guest_template//js/jquery.isotope.js"></script>
 
-    <script src="../src/views/js/owl.carousel.js"></script>
+    <script src="../src/views/guest_template//js/owl.carousel.js"></script>
 
     <!-- Javascripts
     ================================================== -->
-    <script type="text/javascript" src="../src/views/js/main.js"></script>
+    <script type="text/javascript" src="../src/views/guest_template//js/main.js"></script>
 
   </body>
 </html>

@@ -65,7 +65,7 @@
   /*
       load the right template (guest / authenticated template)
   */
-	if(!@include_once('../src/views/guest_template/index.php'))
+	if(!@include_once('../src/views/authenticated_template/head.php'))
 	{
 			header('Location: /');
 	}
