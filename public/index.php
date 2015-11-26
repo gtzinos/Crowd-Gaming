@@ -1,11 +1,5 @@
 
-<html>
-	<head>
-		<title>Treasure-Thess ( The Treasure Hunter game for Thessaloniki - Greece )</title
-		<link rel="icon" type="image/ico" href="./resources/ico/logo.ico">
 
-	</head>
-	<body>
 <?php
 	/*
 			Starting point of this application
