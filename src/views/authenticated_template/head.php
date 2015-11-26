@@ -13,7 +13,7 @@
 		<!-- Latest compiled JavaScript -->
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/js/bootcards.min.js"></script>
-		<link rel="stylesheet" href="..src/views/css/tmpStyle.css">
+		<link rel="stylesheet" href="../src/views/authenticated_template/css/tmpStyle.css">
 	</head>
 	<body>
 		<div class="navbar navbar-default navbar-fixed-top" role="navigation" style="background-color:#5B9DB3 " >
