@@ -63,9 +63,9 @@
 	$controller = new $pages[$target_controller];
 
   /*
-      load the template
+      load the right template (guest / authenticated template)
   */
-	if(!@include_once('../src/views/index.html'))
+	if(!@include_once('../src/views/guest_template/index.php'))
 	{
 			header('Location: /');
 	}
