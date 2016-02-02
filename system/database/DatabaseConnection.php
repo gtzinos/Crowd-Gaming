@@ -1,4 +1,11 @@
 <?php
+	/*
+		This scripts should run only if it is included by the application.
+	 */
+	global $_IN_SAME_APP ; 
+	if(!isset($_IN_SAME_APP)){die("Not authorized access");}
+
+
 	/*	
 		This file contains the DatabaseConnection class
 		which is used to connect to a mysql database

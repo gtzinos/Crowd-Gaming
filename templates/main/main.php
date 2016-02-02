@@ -1,3 +1,6 @@
+<?php /*Execute this script only by the application*/ global $_IN_SAME_APP ; if(!isset($_IN_SAME_APP)){die("Not authorized access");} ?>
+
+
 <!DOCTYPE html>
 <html>
 	<head>
