@@ -1,5 +1,11 @@
 <?php
 	/*
+		This scripts should run only if it is included by the application.
+	 */
+	global $_IN_SAME_APP ; 
+	if(!isset($_IN_SAME_APP)){die("Not authorized access");}
+
+	/*
 		True if debuging is on else false
 		disable this before release
 	*/

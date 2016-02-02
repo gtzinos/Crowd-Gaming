@@ -1,4 +1,12 @@
 <?php
+    
+    /*
+        This variable is used to determine in the other
+        php scripts if they are included by the main
+        application script.
+     */
+    $_IN_SAME_APP = true;
+
     require 'system/Config.php';
     require 'system/database/Database.php';
     require 'system/Page.php';
