@@ -5,6 +5,9 @@
 
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
-	<h1>Informations</h1>
 
+	<div id="section" class="container-fluid">
+	  <center><h1>Informations</h1></center>
+
+	</div>
 <?php endif; ?>
