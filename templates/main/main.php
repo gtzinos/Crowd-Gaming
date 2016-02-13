@@ -14,9 +14,6 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-
-
-
 		<title>
 			<?php show("PAGE_TITLE") ?>
 		</title>
@@ -83,7 +80,7 @@
 		 <div class="modal-content">
 			 <div class="modal-header">
 				 <button type="button" class="close" data-dismiss="modal">&times;</button>
-				 <h1 class="modal-title form-title">Login Page</h1>
+				 <h4><span class="glyphicon glyphicon-lock"></span> Login Page</h4>
 			 </div>
 			 <div class="modal-body">
 					<form role="form">
@@ -95,6 +92,7 @@
 								<label for="pwd">Password:</label>
 								<input type="password" class="form-control" placeholder="Password">
 							</div>
+
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" /> Remember Me
@@ -116,10 +114,18 @@
 		 <div class="modal-content">
 			 <div class="modal-header">
 				 <button type="button" class="close" data-dismiss="modal">&times;</button>
-				 <h1 class="modal-title form-title">Register Page</h1>
+				 	 <h4><span class="glyphicon glyphicon-lock"></span> Register Page</h4>
 			 </div>
 			 <div class="modal-body">
 						<form role="form">
+							<div class="form-group">
+								 <label for="email">Email</label>
+								 <input class="form-control" type="email"  placeholder="Email">
+							 </div>
+							 <div class="form-group">
+								 <label for="pwd">Password:</label>
+								 <input type="password" class="form-control" placeholder="Password">
+							 </div>
 							 <div class="form-group">
 								   <label>First Name</label>
 							 		<input class="form-control" type="text"  placeholder="First Name" />
@@ -129,13 +135,28 @@
 							 		<input class="form-control" type="text"  placeholder="Last Name" />
 							 </div>
 							 <div class="form-group">
-									<label for="email">Email</label>
-							 	  <input class="form-control" type="email"  placeholder="Email">
-							</div>
-							<div class="form-group">
-								<label for="pwd">Password:</label>
-								<input type="password" class="form-control" placeholder="Password">
-							</div>
+								  <label for="sel1">Gender</label>
+								  <select class="form-control" id="gender">
+								    <option>Male</option>
+								    <option>Female</option>
+								  </select>
+							 </div>
+							 <div class="form-group">
+									<label>Country</label>
+							 		<input class="form-control" type="text"  placeholder="Country" />
+							 </div>
+							 <div class="form-group">
+									<label>City</label>
+							 		<input class="form-control" type="text"  placeholder="City" />
+							 </div>
+							 <div class="form-group">
+									<label>Address</label>
+							 		<input class="form-control" type="text"  placeholder="Address" />
+							 </div>
+							 <div class="form-group">
+									<label>Phone</label>
+							 		<input class="form-control" type="text"  placeholder="Phone" />
+							 </div>
 							<div class="checkbox">
 								<label>
 									<input type="checkbox" />Accept licence

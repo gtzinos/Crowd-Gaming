@@ -2,17 +2,19 @@
 	/*
 		This scripts should run only if it is included by the application.
 	 */
-	global $_IN_SAME_APP ; 
+	global $_IN_SAME_APP ;
 	if(!isset($_IN_SAME_APP)){die("Not authorized access");}
 
 	/*
 		Menus
-	 
+
 		menu_add_item( Name of Menu , The codename of the page , Order , Label );
 
 	 */
 
 	menu_add_item("Guest" , "home" , 0 , "Home");
+	menu_add_item("Guest" , "info" , 1 , "Info");
+	menu_add_item("Guest" , "contact" , 2 , "Contact");
 
 	menu_add_item("unauthorized" , "signin" , 0 , "Sign In");
 	menu_add_item("unauthorized" , "signup" , 1 , "Sign Up");
