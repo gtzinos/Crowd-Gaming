@@ -2,7 +2,7 @@
 	/*
 		This scripts should run only if it is included by the application.
 	 */
-	global $_IN_SAME_APP ; 
+	global $_IN_SAME_APP ;
 	if(!isset($_IN_SAME_APP)){die("Not authorized access");}
 
 	/*
@@ -26,7 +26,7 @@
 				$html .= '<li ';
 				if($_SESSION["CURRENT_PAGE"] == $_MENUS[$menuName][$i]["page"])
 					$html .= 'class="active"';
-				$html .= '><a href="';
+				$html .= '><a href=".';
 				$html .= self::generatePageLink($_MENUS[$menuName][$i]["page"]);
 				$html .= '">'.$_MENUS[$menuName][$i]["label"].'</a></li>';
 			}
@@ -41,9 +41,9 @@
 		public static function generatePageLink($page){
 			return "/?p=".$page;
 		}
-		
 
-		/*	
+
+		/*
 			Generates a page link that has parameters
 		*/
 		public static function genPageLinkWithParameters($page , $parameter , $value){
