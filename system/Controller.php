@@ -2,9 +2,9 @@
     /*
         This scripts should run only if it is included by the application.
      */
-    global $_IN_SAME_APP ; 
-    if(!isset($_IN_SAME_APP)){die("Not authorized access");}  
-    
+    global $_IN_SAME_APP ;
+    if(!isset($_IN_SAME_APP)){die("Not authorized access");}
+
 
     require_once 'system/ext/Parsedown.php';
 
@@ -38,8 +38,8 @@
             $this->page = $page;
 
             $this->setArg("PAGE_TITLE", $this->page->getName());
-            
-            
+
+
             $this->init();
             $this->run();
 
@@ -86,7 +86,7 @@
         }
 
         public function isHeadless(){
-            return $this->headless; 
+            return $this->headless;
         }
 
         public function setHeadless($headless){
@@ -118,7 +118,7 @@
         if(strcmp($controller->getSectionFile($section) , "Empty") == 0){
             return;
         }
-        include $controller->getSectionFile($section);      
+        include $controller->getSectionFile($section);
     }
 
     /*

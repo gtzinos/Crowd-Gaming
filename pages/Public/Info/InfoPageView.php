@@ -1,11 +1,10 @@
 <?php if($section == "CSS") : ?>
-	<head>
-	<link rel="stylesheet" href="/pages/Public/Home/css/HomePage.css">
-</head>
+	<link rel="stylesheet" href="<?php echo $section; ?>" >
+
 <?php elseif($section == "JAVASCRIPT") : ?>
 
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
-	<h1>Home Page</h1>
+	<h1>Informations</h1>
 
 <?php endif; ?>
