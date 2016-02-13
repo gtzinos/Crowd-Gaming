@@ -4,7 +4,12 @@ body,html{
 	background-color: #FFF;
 }
 
-
+.form-title {
+	text-align: center;
+}
+.btn.round {
+	border-radius: 24px;
+}
 #Section{
 	margin:10px 2px;
 	padding: 40px 40px 100px;
