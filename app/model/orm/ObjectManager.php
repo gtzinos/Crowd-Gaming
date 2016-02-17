@@ -1,5 +1,5 @@
 <?php
-
+	include_once 'DataObject.php';
 
 	public class ObjectManager{
 
@@ -33,6 +33,7 @@
 			//Not Implemented
 		}
 
+
 		/**
 		 * Finds and retrieves a answer from
 		 * the data source
@@ -63,11 +64,7 @@
 		public function flush(){
 
 			foreach ($this->dataObjects as $dataObject) {
-
-				if( !$dataObject->existsInSchema() || $dataObject->edited()){
-
-					$dataObject->persist();
-				}
+				$dataObject->persist();
 			}
 		}
 		

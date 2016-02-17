@@ -19,6 +19,7 @@
 		 */
 		private $edited;
 
+
 		public function __construct(){
 			$existsInSchema = false;
 
@@ -45,7 +46,26 @@
 		/**
 		 * Updates or Inserts the object in the database.
 		 */
-		public abstract function persist();
+		public function persist(){
+			if( !$this->existsInSchema ){
+
+				$this->insert();
+			}else if( $this->edited ){
+
+				$this->update();
+			}
+
+		}
+
+		/**
+		 * 
+		 */
+		public abstract function update();
+
+		/**
+		 * 
+		 */
+		public abstract function insert();
 		
 	}	
 	
