@@ -42,7 +42,7 @@
 	/*
 		Database Schema
 	*/
-	$_CONFIG["DB_SCHEMA"] = "";
+	$_CONFIG["DB_SCHEMA"] = "quizapp";
 	/*
 		Session Timeout in minutes, -1 means disabled
 	*/
