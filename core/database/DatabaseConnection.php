@@ -59,21 +59,30 @@
             if($port!="null" && $socket!="null"){
                 // create db from unix domain socket
             }else{
-                $this->dbConnection = new mysqli($hostname,$user,$pass,$database);// or die(mysqli_error($this->mysql));
+                $this->dbConnection = new mysqli($hostname,$user,$pass,$database);
             	$this->dbConnection->query("SET NAMES utf8");
                 $this->dbConnection->query("SET CHARACTER SET utf8");
             }
 
 
             if($this->dbConnection->connect_error){
-            	if(Config::debug){
-            		die($this->dbConnection->connect_error);
-            	}else{
-            		die("Database Connection Error");
-            	}
+            	throw new Exception("There was an error while trying to connect to the database");
             }
         }
 
+        public function startTransaction(){
+        	$this->dbConnection->autocommit(false);
+        }
+
+        public function rollback(){
+        	$this->dbConnection->rollback();
+        	$this->autocommit(true);
+        }
+
+        public function commit(){
+        	$this->dbConnection->commit();
+        	$this->autocommit(true);
+        }
 
         /*
 			Creates and returns an sql statement

@@ -60,11 +60,22 @@
 		/**
 		 * Updates or Inserts all the objects that
 		 * were edited or are new.
+		 *
+		 * Returns true if there was an error while updating the database.
 		 */
 		public function flush(){
+			DatabaseConnection::getInstance()->startTransaction();
+			try{
 
-			foreach ($this->dataObjects as $dataObject) {
-				$dataObject->persist();
+				foreach ($this->dataObjects as $dataObject) {
+					$dataObject->persist();
+				}
+
+				DatabaseConnection::getInstance()->commit();
+				return false;
+			}catch(Exception $e){
+				DatabaseConnection::getInstance()->rollback();
+				return true;
 			}
 		}
 		

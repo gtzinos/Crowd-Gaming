@@ -15,11 +15,7 @@
 				Error Handling
             */
             if (mysqli_error($this->dbConnection)){
-            	if($_CONFIG["DEBUG"] == "true"){	
-            		die(mysqli_error($this->dbConnection));
-	            }else{
-	            	die("Database Query Error");
-	            }
+            	throw new Exception("Error when trying to execute update query ".$query);
 	        }
 
 	        $resultSet = new ResultSet($result);
@@ -33,11 +29,7 @@
 				Error Handling
             */
             if (mysqli_error($this->dbConnection)){
-            	if($_CONFIG["DEBUG"] == "true"){	
-            		die(mysqli_error($this->dbConnection));
-	            }else{
-	            	die("Database Query Error");
-	            }
+            	throw new Exception("Error when trying to execute update query ".$query);
 	        }
 		}
 
