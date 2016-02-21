@@ -32,9 +32,34 @@
 			//TODO
 		}
 
-		public static function signin($username , $password){
-			//TODO
+
+		public static function signin($email , $password){
+			$query =	"select User.password, AccessLevel.name, User.id from User ".
+						"inner join AccessLevel on AccessLevel.id = User.access ".
+						"where User.email=?";
+
+			$preparedStatement = DatabaseConnection::getInstance()->prepareStatement($query);
+			$preparedStatement->setParameters('s' , $email);
+
+			$set = $preparedStatement->execute();
+
+			if($set->next()){
+				$hashedPassword = $set->get("password");
+
+				if(password_verify($password , $hashedPassword)){
+					$_SESSION["USER_LEVEL"] = $set->get("name");
+					$_SESSION["USER_EMAIL"] = $email;
+					$_SESSION["USER_ID"] = $set->get("id");
+					return true;
+				}else{
+					return false;
+				}
+
+			}else{
+				return false;
+			}
 		}
+
 
 		public static function signup(){
 			//TODO

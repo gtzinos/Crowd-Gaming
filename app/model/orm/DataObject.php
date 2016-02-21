@@ -6,7 +6,7 @@
 	 */
 
 
-	public abstract class DataObject{
+	abstract class DataObject{
 
 		/*
 			Determines if this object exists in the 
