@@ -3,11 +3,13 @@
 	<head>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta charset="utf-8">
-
+		<!-- Css files -->
 		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/MainTemplateStyle.css"); ?>" >
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-
+		<!-- Script files -->
+		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -49,7 +51,7 @@
 
 			</div>
 		</nav>
-		
+
 		<!-- Container place -->
 		<div class="container" id="Container">
 			<div class="row" id="Section">
@@ -58,8 +60,8 @@
 				?>
 			</div>
 		</div>
-		
-		<?php 
+
+		<?php
 			load("SIGN_IN");
 
 			load("SIGN_UP");
@@ -67,4 +69,3 @@
 	</body>
 
 </html>
-

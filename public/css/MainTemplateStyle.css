@@ -16,6 +16,17 @@ body,html{
 		text-align: center;
 		font-size: 30px;
 }
+
+/*
+	Login/Register Form Response Labels
+*/
+.responseLabel {
+	display:none;
+	color:red;
+}
+
+
+
 #Section{
 	margin:10px 2px;
 	padding: 40px 40px 100px;

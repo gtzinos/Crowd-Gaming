@@ -10,13 +10,16 @@
 						<form role="form">
 								<div class="form-group">
 										<label for="email">Email</label>
-								 	  <input class="form-control" type="email"  placeholder="Email">
+								 	  <input class="form-control" id="userEmail" type="email"  placeholder="Email">
 								</div>
 								<div class="form-group">
 									<label for="pwd">Password:</label>
-									<input type="password" class="form-control" placeholder="Password">
+									<input type="password" id="userPassword" class="form-control" placeholder="Password">
 								</div>
-
+								<div class="form-group">
+									<div id="spinner"> </div>
+									<label id="login_response" class="responseLabel"></label>
+								</div>
 								<div class="checkbox">
 									<label>
 										<input type="checkbox" /> Remember Me
@@ -25,7 +28,7 @@
 						</form>
 				 </div>
 				 <div class="modal-footer">
-					 <button type="button" class="btn btn-primary btn-md round">Sign In</button>
+					 <button type="button" class="btn btn-primary btn-md round" onclick="signIn()" >Sign In</button>
 					 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal">Close</button>
 				 </div>
 			 </div>
