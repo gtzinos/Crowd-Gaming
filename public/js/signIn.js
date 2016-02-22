@@ -6,8 +6,8 @@ function signIn() {
 	/*
 		Initialize response label
 	*/
-	 document.getElementById("login_response").innerHTML = "";
-	 document.getElementById("login_response").style.display = "none";
+	 document.getElementById("signin-response").innerHTML = "";
+	 document.getElementById("signin-response").style.display = "none";
 
 		if (window.XMLHttpRequest) {
 			/*
@@ -22,10 +22,10 @@ function signIn() {
 		}
 
 		/*
-			Store user input to variabless
+			Store user input to variables
 		*/
-		var userEmail = document.getElementById("userEmail").value;
-		var userPassword = document.getElementById("userPassword").value;
+		var userEmail = document.getElementById("signin-Email").value;
+		var userPassword = document.getElementById("signin-Password").value;
 		/*
 			Check the Variables before sending them
 		*/
@@ -54,7 +54,7 @@ function signIn() {
 			, hwaccel: false // Whether to use hardware acceleration
 			, position: 'absolute' // Element positioning
 			}
-			var target = document.getElementById('spinner');
+			var target = document.getElementById('signin-spinner');
 			//var spinner = new Spinner(opts).spin(target);
 
 			spinner = new Spinner(opts).spin();
@@ -74,7 +74,7 @@ function signIn() {
 				/*
 					Response function
 				*/
-				responseLogin();
+				responseSignIn();
 			}, millisecondsToWait);
 			/*
 				Url string
@@ -94,15 +94,15 @@ function signIn() {
 		}
 		else
 		{
-			document.getElementById("login_response").style.display = "inline";
-			document.getElementById("login_response").innerHTML = "Username or Password cannot be empty !!!";
+			document.getElementById("signin-response").style.display = "inline";
+			document.getElementById("signin-response").innerHTML = "Username or Password cannot be empty !!!";
 		}
 
 }
 /*
 	Method called after response
 */
-function responseLogin() {
+function responseSignIn() {
 	/*
 		if Server responsed back successfully
 	*/
@@ -117,7 +117,7 @@ function responseLogin() {
 			/*
 				Remove spinner loader
 			*/
-			var target = document.getElementById('spinner');
+			var target = document.getElementById('signin-spinner');
 			target.removeChild(spinner.el);
 			/*
 				User can login
@@ -138,8 +138,8 @@ function responseLogin() {
 					/*
 						Display an error message
 					*/
-			 	 document.getElementById("login_response").style.display = "inline";
-				 document.getElementById("login_response").innerHTML = "Wrong username or password";
+			 	 document.getElementById("signin-response").style.display = "inline";
+				 document.getElementById("signin-response").innerHTML = "Wrong username or password";
 			}
 		}
 
@@ -150,8 +150,8 @@ function responseLogin() {
 	else {
 		/*
 			TODO Something like
-			document.getElementById("login_response").style.display ="none";
-			document.getElementById("login_response").innerHTML = "Wrong username or password";
+			document.getElementById("signin-response").style.display ="none";
+			document.getElementById("signin-response").innerHTML = "Wrong username or password";
 			OR
 			TODO window.location("./home");
 		*/

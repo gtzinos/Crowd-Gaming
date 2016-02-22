@@ -6,7 +6,6 @@ body,html{
 /*
 	Round Buttons
 */
-
 /*
 	Modal forms (Login,Register) styles
 */
@@ -15,6 +14,18 @@ body,html{
 		color:white !important;
 		text-align: center;
 		font-size: 30px;
+}
+
+div.col-xs-2 {
+	margin-left: 10%;
+}
+
+/*
+	Increase icon size class
+*/
+.bigicon {
+		font-size: 35px;
+		color: #36A0FF;
 }
 
 /*

@@ -10,15 +10,15 @@
 						<form role="form">
 								<div class="form-group">
 										<label for="email">Email</label>
-								 	  <input class="form-control" id="userEmail" type="email"  placeholder="Email">
+								 	  <input class="form-control" id="signin-Email" type="email"  placeholder="Email">
 								</div>
 								<div class="form-group">
 									<label for="pwd">Password:</label>
-									<input type="password" id="userPassword" class="form-control" placeholder="Password">
+									<input type="password" id="signin-Password" class="form-control" placeholder="Password">
 								</div>
 								<div class="form-group">
-									<div id="spinner"> </div>
-									<label id="login_response" class="responseLabel"></label>
+									<div id="signin-spinner"> </div>
+									<label id="signin-response" class="responseLabel"></label>
 								</div>
 								<div class="checkbox">
 									<label>

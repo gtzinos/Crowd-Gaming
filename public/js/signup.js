@@ -1,13 +1,13 @@
 var xmlHttp;
 /*
-	Try to Sign In Method
+	Try to Sign Up Method
 */
-function signIn() {
+function signUp() {
 	/*
 		Initialize response label
 	*/
-	 document.getElementById("login_response").innerHTML = "";
-	 document.getElementById("login_response").style.display = "none";
+	 document.getElementById("signup-response").innerHTML = "";
+	 document.getElementById("signup-response").style.display = "none";
 
 		if (window.XMLHttpRequest) {
 			/*
@@ -22,10 +22,19 @@ function signIn() {
 		}
 
 		/*
-			Store user input to variabless
+			Store user input to variables
 		*/
-		var userEmail = document.getElementById("userEmail").value;
-		var userPassword = document.getElementById("userPassword").value;
+		var email = document.getElementById("signup-email").value;
+		var password = document.getElementById("signup-password").value;
+		var fname = document.getElementById("signup-fname").value;
+		var lname = document.getElementById("signup-lname").value;
+		var gender = document.getElementById("signup-gender").value;
+		var country = document.getElementById("signup-country").value;
+		var city = document.getElementById("signup-city").value;
+		var address = document.getElementById("signup-address").value;
+		var phone = document.getElementById("signup-phone").value;
+		var licence = document.getElementById("signup-licence").value;
+
 		/*
 			Check the Variables before sending them
 		*/
@@ -54,9 +63,10 @@ function signIn() {
 			, hwaccel: false // Whether to use hardware acceleration
 			, position: 'absolute' // Element positioning
 			}
-			var target = document.getElementById('spinner');
-			//var spinner = new Spinner(opts).spin(target);
-
+			var target = document.getElementById('signup-spinner');
+			/*
+				Append Spinner
+			*/
 			spinner = new Spinner(opts).spin();
 			target.appendChild(spinner.el);
 			/*
@@ -74,12 +84,12 @@ function signIn() {
 				/*
 					Response function
 				*/
-				responseLogin();
+				responseSignUp();
 			}, millisecondsToWait);
 			/*
 				Url string
 			*/
-			var url = "./signin";
+			var url = "./signup";
 			/*
 			 Send using POST Method
 			*/
@@ -94,15 +104,16 @@ function signIn() {
 		}
 		else
 		{
-			document.getElementById("login_response").style.display = "inline";
-			document.getElementById("login_response").innerHTML = "Username or Password cannot be empty !!!";
+			document.getElementById("signup-response").style.display = "inline";
+			document.getElementById("signup-response").innerHTML = "Username or Password cannot be empty !!!";
 		}
 
 }
+
 /*
 	Method called after response
 */
-function responseLogin() {
+function responseSignUp() {
 	/*
 		if Server responsed back successfully
 	*/
@@ -117,7 +128,7 @@ function responseLogin() {
 			/*
 				Remove spinner loader
 			*/
-			var target = document.getElementById('spinner');
+			var target = document.getElementById('signup-spinner');
 			target.removeChild(spinner.el);
 			/*
 				User can login
@@ -138,8 +149,8 @@ function responseLogin() {
 					/*
 						Display an error message
 					*/
-			 	 document.getElementById("login_response").style.display = "inline";
-				 document.getElementById("login_response").innerHTML = "Wrong username or password";
+			 	 document.getElementById("signup-response").style.display = "inline";
+				 document.getElementById("signup-response").innerHTML = "Email used from another user !!!";
 			}
 		}
 
@@ -150,8 +161,8 @@ function responseLogin() {
 	else {
 		/*
 			TODO Something like
-			document.getElementById("login_response").style.display ="none";
-			document.getElementById("login_response").innerHTML = "Wrong username or password";
+			document.getElementById("signup-response").style.display ="none";
+			document.getElementById("signup-response").innerHTML = "Wrong username or password";
 			OR
 			TODO window.location("./home");
 		*/
