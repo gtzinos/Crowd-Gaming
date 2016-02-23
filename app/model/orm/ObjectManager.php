@@ -1,7 +1,7 @@
 <?php
 	include_once 'DataObject.php';
 
-	public class ObjectManager{
+	class ObjectManager{
 
 		/*
 			All the objects that were retrieved or added
@@ -73,7 +73,7 @@
 
 				DatabaseConnection::getInstance()->commit();
 				return false;
-			}catch(Exception $e){
+			}catch(DatabaseException $e){
 				DatabaseConnection::getInstance()->rollback();
 				return true;
 			}

@@ -3,6 +3,7 @@
 	/*
 		Include all the required classes for database usesage.
 	*/
+	require_once 'DatabaseException.php';
 	require_once 'DatabaseConnection.php';
 	require_once 'Statement.php';
 	require_once 'PreparedStatement.php';

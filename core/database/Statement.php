@@ -15,7 +15,7 @@
 				Error Handling
             */
             if (mysqli_error($this->dbConnection)){
-            	throw new Exception("Error when trying to execute update query ".$query);
+            	throw new DatabaseException("Error when trying to execute update query ".$query);
 	        }
 
 	        $resultSet = new ResultSet($result);
@@ -29,7 +29,7 @@
 				Error Handling
             */
             if (mysqli_error($this->dbConnection)){
-            	throw new Exception("Error when trying to execute update query ".$query);
+            	throw new DatabaseException("Error when trying to execute update query ".$query);
 	        }
 		}
 

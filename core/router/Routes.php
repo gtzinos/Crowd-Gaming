@@ -10,7 +10,7 @@
 		}
 
 		public static function get($controller){
-
+			
 			if(array_key_exists($controller, self::$routes) && self::$routes[$controller]["user_level"] <= $_SESSION["USER_LEVEL"]){
 				$_SESSION["CURRENT_PAGE"] = $controller; 
 				$route = self::$routes[$controller]["controller"];

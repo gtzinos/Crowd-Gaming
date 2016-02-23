@@ -3,9 +3,9 @@
 	/*
 		User level constants
 	*/
-	$_USER_LEVEL["MODERATOR"] = 10;
-	$_USER_LEVEL["EXAMINER"] = 7;
-	$_USER_LEVEL["PLAYER"] = 4;
+	$_USER_LEVEL["MODERATOR"] = 3;
+	$_USER_LEVEL["EXAMINER"] = 2;
+	$_USER_LEVEL["PLAYER"] = 1;
 	$_USER_LEVEL["GUEST"] = 0;
 
 

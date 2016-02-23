@@ -66,7 +66,7 @@
 
 
             if($this->dbConnection->connect_error){
-            	throw new Exception("There was an error while trying to connect to the database");
+            	throw new DatabaseException("There was an error while trying to connect to the database");
             }
         }
 
@@ -76,12 +76,12 @@
 
         public function rollback(){
         	$this->dbConnection->rollback();
-        	$this->autocommit(true);
+        	$this->dbConnection->autocommit(true);
         }
 
         public function commit(){
         	$this->dbConnection->commit();
-        	$this->autocommit(true);
+        	$this->dbConnection->autocommit(true);
         }
 
         /*

@@ -1,6 +1,6 @@
 <?php
 	include_once '../app/model/orm/DataObject.php';
-
+	include_once '../app/model/user/EmailInUseException.php';
 
 	abstract class User extends DataObject{
 
@@ -15,6 +15,8 @@
 		private $phone;
 		private $lastLogin;
 		private $createdDate;
+		private $accessLevel;
+		private $password;
 
 
 		/**
@@ -29,12 +31,45 @@
 		 *  Inserts the data of this object in the database.
 		 */
 		public function insert(){
-			//TODO
+			
+			if( self::emailInUse($this->email) )
+				throw new EmailInUseException("This email is in use by another user.");
+
+			if( isset($this->address) && isset($this->phone) ){
+				$query = "insert into User (email,password,access,name,surname,gender,country,city,address,phone) ".
+						 "values (?,?,?,?,?,?,?,?,?,?)";
+				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement->setParameters("ssississss",	$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city,$this->address,$this->phone);
+				$statement->executeUpdate();
+			}else if( isset($this->address) ){
+				$query = "insert into User (email,password,access,name,surname,gender,country,city,address) ".
+						 "values (?,?,?,?,?,?,?,?,?)";
+				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement->setParameters("ssississs",	$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city,$this->address);
+				$statement->executeUpdate();
+			}else if( isset($this->phone) ){
+				$query = "insert into User (email,password,access,name,surname,gender,country,city,phone) ".
+						 "values (?,?,?,?,?,?,?,?,?)";
+				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement->setParameters("ssississs",	$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city,$this->phone);
+				$statement->executeUpdate();
+			}else{
+				$query = "insert into User (email,password,access,name,surname,gender,country,city) ".
+						 "values (?,?,?,?,?,?,?,?)";
+				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement->setParameters("ssississ",$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city);
+				$statement->executeUpdate();
+			}
+
 		}
 
 
 		public static function signin($email , $password){
-			$query =	"select User.password, AccessLevel.name, User.id from User ".
+			$query =	"select User.password, AccessLevel.name, User.access, User.id from User ".
 						"inner join AccessLevel on AccessLevel.id = User.access ".
 						"where User.email=?";
 
@@ -47,7 +82,8 @@
 				$hashedPassword = $set->get("password");
 
 				if(password_verify($password , $hashedPassword)){
-					$_SESSION["USER_LEVEL"] = $set->get("name");
+					$_SESSION["USER_LEVEL_STGRING"] = $set->get("name");
+					$_SESSION["USER_LEVEL"] = $set->get("access");
 					$_SESSION["USER_EMAIL"] = $email;
 					$_SESSION["USER_ID"] = $set->get("id");
 					return true;
@@ -61,12 +97,21 @@
 		}
 
 
-		public static function signup(){
-			//TODO
-		}
-
 		public static function signout(){
 			session_destroy();
+		}
+
+
+		public static function emailInUse($email){
+			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=?");
+			$statement->setParameters("s" , $email);
+
+			$result = $statement->execute();
+
+			if($result->getRowCount() > 0)
+				return true;
+			else 
+				return false;
 		}
 
 
@@ -170,5 +215,21 @@
 		public function setCreatedDate($createdDate){
 			$this->setEdited(true);
 			$this->createdDate = $createdDate;
+		}
+
+		public function getAccessLevel(){
+			return $this->accessLevel;
+		}
+
+		public function setAccessLevel($accessLevel){
+			$this->accessLevel = $accessLevel;
+		}
+
+		public function getPassword(){
+			return $this->password;
+		}
+
+		public function setPassword($password){
+			$this->password = $password;
 		}
 	}
