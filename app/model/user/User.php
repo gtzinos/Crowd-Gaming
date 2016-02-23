@@ -36,35 +36,39 @@
 				throw new EmailInUseException("This email is in use by another user.");
 
 			if( isset($this->address) && isset($this->phone) ){
-				$query = "insert into User (email,password,access,name,surname,gender,country,city,address,phone) ".
-						 "values (?,?,?,?,?,?,?,?,?,?)";
-				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement = self::getInsertFullStatement();
 
 				$statement->setParameters("ssississss",	$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city,$this->address,$this->phone);
 				$statement->executeUpdate();
 			}else if( isset($this->address) ){
-				$query = "insert into User (email,password,access,name,surname,gender,country,city,address) ".
-						 "values (?,?,?,?,?,?,?,?,?)";
-				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement = self::getInsertWithAddressStatement();
 
 				$statement->setParameters("ssississs",	$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city,$this->address);
 				$statement->executeUpdate();
 			}else if( isset($this->phone) ){
-				$query = "insert into User (email,password,access,name,surname,gender,country,city,phone) ".
-						 "values (?,?,?,?,?,?,?,?,?)";
-				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+				
+				$statement = self::getInsertWithPhoneStatement();
 
 				$statement->setParameters("ssississs",	$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city,$this->phone);
 				$statement->executeUpdate();
 			}else{
-				$query = "insert into User (email,password,access,name,surname,gender,country,city) ".
-						 "values (?,?,?,?,?,?,?,?)";
-				$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+
+				$statement = self::getInsertStatement();
 
 				$statement->setParameters("ssississ",$this->email,$this->password,$this->accessLevel,$this->name,$this->surname,$this->gender,$this->country,$this->city);
 				$statement->executeUpdate();
 			}
 
+		}
+
+		public function remove(){
+			$statement = self::getDeleteStatement();
+
+			$statement->setParameters("i" , $this->id);
+
+			$statement->executeUpdate();
 		}
 
 
@@ -114,6 +118,45 @@
 				return false;
 		}
 
+		/*
+			Prepared Statements
+		 */
+		private static $insertWithAddressStatement;
+		private static $insertWithPhoneStatement;
+		private static $insertFullStatement;
+		private static $insertStatement;
+
+		private static $deleteStatement;
+
+		public static function getInsertWithAddressStatement(){
+			if( !isset(self::$insertWithAddressStatement) )
+				self::$insertWithAddressStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address) values (?,?,?,?,?,?,?,?,?)");
+			return self::$insertWithAddressStatement;
+		}
+
+		public static function getInsertWithPhoneStatement(){
+			if( !isset(self::$insertWithPhoneStatement) )
+				self::$insertWithPhoneStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,phone) values (?,?,?,?,?,?,?,?,?)");
+			return self::$insertWithPhoneStatement;
+		}
+
+		public static function getInsertFullStatement(){
+			if( !isset(self::$insertFullStatement) )
+				self::$insertFullStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone) values (?,?,?,?,?,?,?,?,?,?)");
+			return self::$insertFullStatement;
+		}
+
+		public static function getInsertStatement(){
+			if( !isset(self::$insertStatement) )
+				self::$insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city) values (?,?,?,?,?,?,?,?)");
+			return self::$insertStatement;
+		}
+
+		public static function getDeleteStatement(){
+			if( !isset(self::$deleteStatement) )
+				self::$deleteStatement = DatabaseConnection::getInstance()->prepareStatement("delete from user where id=?");
+			return self::$deleteStatement;
+		}
 
 		/*
 			Get and Set methods bellow

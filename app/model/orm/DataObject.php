@@ -19,11 +19,16 @@
 		 */
 		private $edited;
 
+		/*
+			If true then this object must be removed from the database
+		 */
+		private $toRemove;
+
 
 		public function __construct(){
 			$existsInSchema = false;
-
 			$edited = false;
+			$toRemove = false;
 		}
 
 		public function isEdited(){
@@ -47,9 +52,13 @@
 		 * Updates or Inserts the object in the database.
 		 */
 		public function persist(){
+
 			if( !$this->existsInSchema ){
 
 				$this->insert();
+			}else if($this->toRemove ){
+
+				$this->remove();
 			}else if( $this->edited ){
 
 				$this->update();
@@ -57,15 +66,11 @@
 
 		}
 
-		/**
-		 * 
-		 */
 		public abstract function update();
 
-		/**
-		 * 
-		 */
 		public abstract function insert();
+
+		public abstract function remove();
 		
 	}	
 	
