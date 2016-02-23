@@ -2,9 +2,13 @@
 
 	class PreparedStatement{
 		/*
-			holds the query string
+			holds the query object
         */
         private $query;
+        /*
+            Holds the query string
+         */
+        private $queryString;
         /*
 			Holds the mysqli connection object
         */
@@ -14,6 +18,7 @@
 			Create the Prepared stetement
         */
 		public function __construct($query,$connection){
+            $this->queryString = $query;
             $this->query = $connection->prepare($query);
             $this->connection = $connection;
         }
@@ -38,8 +43,12 @@
             for($i=0 ; $i<count($args) ;$i++)
                 $params[] = & $args[$i];
 
-
-            call_user_func_array(array($this->query, 'bind_param'), $params);
+            try{
+                call_user_func_array(array($this->query, 'bind_param'), $params);
+            }
+            catch(Exception $e){
+                throw new Exception("Error while trying to bind the parameters of query ".$this->query);
+            }
         }
 
 
@@ -54,11 +63,7 @@
 				Error Handling
             */
             if (mysqli_error($this->connection)){
-            	if($_CONFIG["DEBUG"]){	
-            		die(mysqli_error($this->connection));
-	            }else{
-	            	die("Database Query Error");
-	            }
+            	throw new Exception("Error when trying to execute query ".$this->query);
 	        }
 
             $result = $this->query->get_result();
@@ -76,11 +81,7 @@
 				Error Handling
             */
         	if (mysqli_error($this->connection)){
-            	if($_CONFIG["DEBUG"]){	
-            		die(mysqli_error($this->connection));
-	            }else{
-	            	die("Database Query Error");
-	            }
+            	throw new Exception("Error when trying to execute update query ".$this->query);
 	        }
         }
 
