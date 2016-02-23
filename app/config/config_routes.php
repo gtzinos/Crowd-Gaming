@@ -7,6 +7,7 @@
 	Routes::add( 'page_not_found' , 'public/PageNotFoundController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'signin' , 'public/SignInController.php' , $_USER_LEVEL["GUEST"]);
 
+	Routes::add( 'signout' , 'public/SignOutController.php' , $_USER_LEVEL["GUEST"]);
 	/*
 		The Page to load when the page parameter is not defined
 	*/

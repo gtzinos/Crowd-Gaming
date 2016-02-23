@@ -87,7 +87,7 @@
         }
 
         public function redirect($uri){
-            header("Location: ".Utils::generatePageLink($uri));
+            header("Location: ".LinkUtils::generatePageLink($uri));
             die();
         }
 

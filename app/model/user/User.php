@@ -66,7 +66,7 @@
 		}
 
 		public static function signout(){
-			//TODO
+			session_destroy();
 		}
 
 

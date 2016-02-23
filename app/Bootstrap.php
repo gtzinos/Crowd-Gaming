@@ -13,9 +13,15 @@
 	$controller->defSection("SIGN_IN" , "public/SignInView.php");
 	$controller->defSection("SIGN_UP" , "public/SignUpView.php");
 
-	$controller->setArg("primary-menu"   , "GuestMenu");
-	$controller->setArg("secondary-menu" , "UnauthorizedRightMenu");
 
+	$controller->setArg("primary-menu"   , "GuestMenu");
+
+
+	if( isset($_SESSION["USER_ID"])){
+		$controller->setArg("secondary-menu" , "authorizedRightMenu");
+	}else{
+		$controller->setArg("secondary-menu" , "UnauthorizedRightMenu");	
+	}
 
 	/*
 		This will give control to the controller.

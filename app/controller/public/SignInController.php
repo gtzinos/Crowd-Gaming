@@ -9,13 +9,17 @@
 		}
 
 		public function run(){
-			if( isset($_POST["email"]) && isset($_POST["password"]) ){
-				if( User::signin($_POST["email"] , $_POST["password"] ) ){
-					print 'true';
-				}else{
-					print 'false';
-				}
+
+			if( isset($_SESSION["USER_ID"]) || ( !isset($_POST["email"]) && !isset($_POST["password"]) ) ){
+				$this->redirect("home");
 			}
+
+			if( User::signin($_POST["email"] , $_POST["password"] ) ){
+				print 'true';
+			}else{
+				print 'false';
+			}
+
 		}
 
 	}
