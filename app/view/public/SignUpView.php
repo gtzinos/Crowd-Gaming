@@ -36,8 +36,8 @@
 								      <!--  <label class="control-label">Name</label> -->
                       <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                    </div>
-                   <div class="input-group col-xs-7" data-validate="length" data-length="5" >
-							 		      <input class="form-control" type="text" id="signup-fname" maxlength="25" placeholder="First Name (Required) *Length >= 5" required />
+                   <div class="input-group col-xs-7" data-validate="length" data-length="2" >
+							 		      <input class="form-control" type="text" id="signup-fname" maxlength="25" placeholder="First Name (Required) *Length >= 2" required />
                         <span id="fname-response"></span>
                    </div>
                </div>
@@ -47,8 +47,8 @@
 									  <!--  <label class="control-label">Surname</label> -->
                     <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                   </div>
-                  <div class="input-group col-xs-7" data-validate="length" data-length="5" >
-							 		    <input class="form-control" type="text" id="signup-lname" maxlength="25" placeholder="Last Name (Required) *Length >= 5" required/>
+                  <div class="input-group col-xs-7" data-validate="length" data-length="2" >
+							 		    <input class="form-control" type="text" id="signup-lname" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required/>
                       <span id="lname-response"></span>
                   </div>
                </div>
@@ -132,7 +132,7 @@
             </form>
 				</div>
 			 <div class="modal-footer">
-				 <button type="button" class="btn btn-primary btn-md round submit" onclick="signUp()" disabled >Sign Up</button>
+				 <button type="button" class="btn btn-primary btn-md round submit" onclick="signUp()" disabled>Sign Up</button>
 				 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal">Close</button>
 			 </div>
 		 </div>

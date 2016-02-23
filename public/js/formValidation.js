@@ -5,6 +5,7 @@ $(document).ready(function() {
       If a key pressed (Keyup event)
       in a input-group class then
     */
+
     $('.input-group input, .input-group textarea, .input-group checkbox, .input-group select').on('keyup change', function() {
 
       /*
@@ -134,6 +135,7 @@ $(document).ready(function() {
         If user complete successfull the form
         then add button property to enabled
       */
+
       if ($form.find('.input-group.has-success [required]').length >= 8 && $form.find('.input-group.has-error').length == 0) {
           $button.prop('disabled', false);
       }
