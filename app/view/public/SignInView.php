@@ -15,8 +15,8 @@
 											 <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
 								</div>
 								<div class="input-group col-xs-7" data-validate="email">
-								 	  <input class="form-control" id="signin-email" type="email" maxlength="40" placeholder="Email (Required)" required>
-										<span id="signin-email-response" ></span>
+								 	  <input class="form-control" id="signin-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
+										<span></span>
 								</div>
 							</div>
 							<!-- Password Field -->
@@ -26,16 +26,21 @@
 											 <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 								</div>
 								<div class="input-group col-xs-7" data-validate="length" data-length="8" >
-											 <input type="password" class="form-control" maxlength="20" placeholder="Password (Required) *Length >= 8" required />
+											 <input type="password" id="signin-password" name="password" class="form-control" maxlength="20" placeholder="Password (Required) *Length >= 8" required />
 											 <span></span>
 								</div>
 							</div>
-								<div class="input-group">
+							<!-- Spinner and Response Label Field -->
+							<div class="form-group">
+								<div class="col-xs-3"></div>
+								<div class="col-xs-7">
 									<div id="signin-spinner">
 
 									</div>
 									<label id="signin-response" class="responseLabel"></label>
 								</div>
+							</div>
+								<!-- Check box Field -->
 							<div class="form-group">
 								<div class="col-xs-2"></div>
 								<div class="col-xs-7">
@@ -47,7 +52,7 @@
 						</form>
 				 </div>
 				 <div class="modal-footer">
-					 <button type="button" class="btn btn-primary btn-md round submit" onclick="signIn()" disabled>Sign In</button>
+					 <button type="button" id="submit" class="btn btn-primary btn-md round" onclick="signIn()" disabled>Sign In</button>
 					 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal">Close</button>
 				 </div>
 			 </div>

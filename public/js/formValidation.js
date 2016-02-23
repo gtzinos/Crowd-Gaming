@@ -1,5 +1,3 @@
-
-
 $(document).ready(function() {
     /*
       If a key pressed (Keyup event)
@@ -7,15 +5,14 @@ $(document).ready(function() {
     */
 
     $('.input-group input, .input-group textarea, .input-group checkbox, .input-group select').on('keyup change', function() {
-
       /*
         Initialize variables (Form, div(input-group), button(submit form), span(icon error,success))
       */
       var $form = $(this).closest('form'), //form variable
       $group = $(this).closest('.input-group'), //div input-group
-      $button = $(document).find('.submit'); //submit button (use document cause this cant find it)
+      $button = $(document).find('#submit'); //submit button (use document cause this cant find it)
 			$icon = $group.find('span'), //icon (success,error)
-      $first_time = false;
+      first_time = false;
 			state = false; //default state
 
       /*
@@ -25,7 +22,7 @@ $(document).ready(function() {
       if($group.data('validate') == "select")
       {
         if($(this).prop('selectedIndex') == 0)
-          $first_time = true;
+          first_time = true;
       }
       /*
         If no value then return
@@ -33,7 +30,7 @@ $(document).ready(function() {
       */
       else if(!$(this).val())
       {
-        $first_time = true;
+        first_time = true;
       }
       /*
         If is a check box and is not checked
@@ -41,7 +38,7 @@ $(document).ready(function() {
       else if(!$(this).prop('checked'))
       {
         /* TODO SOMETHING LIKE
-          $first_time = true
+          first_time = true
         */
       }
 
@@ -50,14 +47,14 @@ $(document).ready(function() {
         If group div dont have attribute validate-date="something"
         then we need to have text length >= 1
       */
-      if (!$group.data('validate') && !$first_time) {
+      if (!$group.data('validate') && !first_time) {
   			state = $(this).val() ? true : false;
   		}
       /*
         Else If group div have attribute validate-date="email"
         then we need a correct email address
       */
-      else if ($group.data('validate') == "email" && !$first_time)
+      else if ($group.data('validate') == "email" && !first_time)
       {
   			state = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(this).val())
   		}
@@ -65,7 +62,7 @@ $(document).ready(function() {
         Else If group div have attribute validate-date="phone"
         then we need a correct phone number
       */
-      else if($group.data('validate') == 'phone' && !$first_time) {
+      else if($group.data('validate') == 'phone' && !first_time) {
   			state = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/.test($(this).val())
   		}
       /*
@@ -73,7 +70,7 @@ $(document).ready(function() {
         then we need the correct length.
         so we check if text.length >= attribute data-length="e.g 5"
       */
-      else if ($group.data('validate') == "length" && !$first_time)
+      else if ($group.data('validate') == "length" && !first_time)
       {
   			state = $(this).val().length >= $group.data('length') ? true : false;
   		}
@@ -81,7 +78,7 @@ $(document).ready(function() {
         Else If group div have attribute validate-date="accept-checkbox"
         then we need accept the box
       */
-      else if ($group.data('validate') == "accept-checkbox" && !$first_time)
+      else if ($group.data('validate') == "accept-checkbox" && !first_time)
       {
         state = $(this).prop('checked') ? true : false;
       }
@@ -90,7 +87,7 @@ $(document).ready(function() {
         then we need the user to select another option
         from default one
       */
-      else if ($group.data('validate') == "select" && !$first_time)
+      else if ($group.data('validate') == "select" && !first_time)
       {
   			state = $(this).prop('selectedIndex') > 0 ? true : false;
   		}
@@ -98,7 +95,7 @@ $(document).ready(function() {
         Else If group div have attribute validate-date="number"
         then we need a correct number (1,2,3.5) float type
       */
-      else if ($group.data('validate') == "number" && !$first_time) {
+      else if ($group.data('validate') == "number" && !first_time) {
   			state = !isNaN(parseFloat($(this).val())) && isFinite($(this).val());
   		}
 
@@ -106,7 +103,7 @@ $(document).ready(function() {
         If it was the first time
         or no value to check
       */
-      if($first_time)
+      if(first_time)
       {
         $group.removeClass('has-error');
         $group.removeClass('has-success');
@@ -135,8 +132,7 @@ $(document).ready(function() {
         If user complete successfull the form
         then add button property to enabled
       */
-
-      if ($form.find('.input-group.has-success [required]').length >= 8 && $form.find('.input-group.has-error').length == 0) {
+      if ($form.find('.input-group.has-success [required]').length >= $form.find('.input-group [required]').length && $form.find('.input-group.has-error').length == 0) {
           $button.prop('disabled', false);
       }
       /*
