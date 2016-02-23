@@ -47,49 +47,49 @@
 				Validation
 			 */
 			if( strlen($email) < 3 || strlen($email) > 50 ){
-				print 'The email should be 3 to 50 characters.';
+				print '1';
 				die();
 			}
 
 			if( strlen($name) < 2 || strlen($name) > 40 ){
-				print 'The name should be 2 to 40 characters.';
+				print '2';
 				die();
 			}
 
 			if( strlen($surname) < 2 || strlen($surname) > 40 ){
-				print 'The surname should be 2 to 40 characters.';
+				print '3';
 				die();
 			}
 
 			if( $gender!= "1" && $gender!= "0"){
-				print 'The gender should be 0 (male) or 1 (female).';
+				print '4';
 				die();
 			}
 
 			if( strlen($country) < 2 || strlen($country) > 40 ){
-				print 'The country should be 2 to 40 characters.';
+				print '5';
 				die();
 			}
 
 			if( strlen($city) < 2 || strlen($city) > 40 ){
-				print 'The city should be 2 to 40 characters.';
+				print '6';
 				die();
 			}
 
 			if( strlen($password) < 8 ){
-				print 'The password should be at least 8 characters long.';
+				print '7';
 				die();
 			}else{
 				$password = password_hash($password , PASSWORD_DEFAULT);
 			}
 
 			if( isset($address) && ( strlen($address) < 2 || strlen($address) > 40 ) ){
-				print 'The address should be 2 to 50 characters.';
+				print '8';
 				die();
 			}
 
 			if( isset($phone) && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
-				print 'The phone should be 2 to 50 characters.';
+				print '9';
 				die();
 			}
 
@@ -126,12 +126,12 @@
 
 			try{
 				if( $objectManager->flush() ){
-					print 'Error while trying to create the user. Please try again later.';
+					print '11';
 				}else{
 					print 'TRUE';
 				}
 			}catch(EmailInUseException $e){
-				print 'This email is in use by another user.';
+				print '10';
 			}
 
 		}
