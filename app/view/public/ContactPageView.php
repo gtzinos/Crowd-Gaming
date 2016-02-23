@@ -7,48 +7,66 @@
 
           <div class="col-md-12">
                   <form class="form-horizontal" method="post">
-                    <fieldset>
                          <legend class="text-center header">Contact us</legend>
-                          <div class="form-group">
-                              <span class="col-md-1 col-md-offset-2 text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
-                              <div class="col-md-8">
-                                  <input id="fname" name="name" type="text" placeholder="First Name" class="form-control">
-                              </div>
-                          </div>
-                          <div class="form-group">
-                              <span class="col-md-1 col-md-offset-2 text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
-                              <div class="col-md-8">
-                                  <input id="lname" name="name" type="text" placeholder="Last Name" class="form-control">
-                              </div>
-                          </div>
 
-                          <div class="form-group">
-                              <span class="col-md-1 col-md-offset-2 text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
-                              <div class="col-md-8">
-                                  <input id="email" name="email" type="email" placeholder="Email Address" class="form-control">
-                              </div>
-                          </div>
+                         <!-- First Name Field -->
+           							<div class="form-group has-feedback">
+           								<div class="col-xs-2">
+                            <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
+                            </div>
+           								<div class="input-group col-xs-7" data-validate="length" data-length="2">
+           								 	  <input class="form-control" id="contact-fname" name="fname" type="text" maxlength="25" placeholder="First Name (Required) *Length >= 2" required >
+           										<span></span>
+           								</div>
+           							</div>
+                        <!-- Last Name Field -->
+                       <div class="form-group has-feedback">
+                         <div class="col-xs-2">
+                              <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
+                         </div>
+                        <div class="input-group col-xs-7" data-validate="length" data-length="2">
+                          <input class="form-control" id="contact-lname" name="fname" type="text" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required >
+                          <span></span>
+                      </div>
+                    </div>
 
-                          <div class="form-group">
-                              <span class="col-md-1 col-md-offset-2 text-center"><i class="glyphicon glyphicon-earphone bigicon"></i></span>
-                              <div class="col-md-8">
-                                  <input id="phone" name="phone" type="text" placeholder="Phone" class="form-control">
-                              </div>
-                          </div>
+                    <!-- Email Address Field -->
+                   <div class="form-group has-feedback">
+                      <div class="col-xs-2">
+                          <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
+                      </div>
+                      <div class="input-group col-xs-7" data-validate="length" data-length="2">
+                          <input id="contact-email" name="email" type="email" maxlength="40" placeholder="Email Address (Required)" class="form-control" required>
+                      </div>
+                  </div>
+                  <!-- Phone Number Field -->
+                 <div class="form-group has-feedback">
+                      <div class="col-xs-2">
+                          <span class="text-center"><i class="glyphicon glyphicon-earphone bigicon"></i></span>
+                      </div>
+                      <div class="input-group col-xs-7"  data-validate="phone">
+                            <input id="contact-phone" name="phone" type="text" maxlength="15" placeholder="Phone (Optional)" class="form-control">
+                      </div>
+                  </div>
+                  <!-- Message Text Field -->
+                  <div class="form-group has-feedback">
+                      <div class="col-xs-2">
+                          <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
+                      </div>
+                      <div class="input-group col-xs-7"  data-validate="length" data-length="20">
+                          <textarea class="form-control" maxlength="250" id="contact-message" name="message" placeholder="Enter your message for us here. We will get back to you within 2 business days. (Required) *Length >= 20"></textarea>
+                      </div>
+                  </div>
 
-                          <div class="form-group">
-                              <span class="col-md-1 col-md-offset-2 text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
-                              <div class="col-md-8">
-                                  <textarea class="form-control" id="message" name="message" placeholder="Enter your message for us here. We will get back to you within 2 business days." rows="7"></textarea>
-                              </div>
-                          </div>
-
-                          <div class="form-group">
-                              <div class="col-md-8 text-center">
-                                  <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
-                              </div>
-                          </div>
-                      </fieldset>
+                  <!-- Button Field -->
+                  <div class="form-group has-feedback">
+                      <div class="col-xs-2">
+                          <span></span>
+                      </div>
+                      <div class="input-group col-xs-7">
+                          <button id="submit" type="submit" class="btn btn-primary btn-lg" disabled>Send Message</button>
+                      </div>
+                  </div>
                   </form>
           </div>
 

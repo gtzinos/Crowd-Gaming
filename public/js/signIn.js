@@ -24,8 +24,8 @@ function signIn() {
 		/*
 			Store user input to variables
 		*/
-		var userEmail = document.getElementById("signin-Email").value;
-		var userPassword = document.getElementById("signin-Password").value;
+		var userEmail = document.getElementById("signin-email").value;
+		var userPassword = document.getElementById("signin-password").value;
 		/*
 			Check the Variables before sending them
 		*/
@@ -59,6 +59,10 @@ function signIn() {
 
 			spinner = new Spinner(opts).spin();
 			target.appendChild(spinner.el);
+			/*
+				While spin loading submit button must be disabled
+			*/
+			$(document).find('#submit').prop('disabled',true);
 			/*
 				Milliseconds which user must wait
 				after server response arrived
@@ -119,6 +123,10 @@ function responseSignIn() {
 			*/
 			var target = document.getElementById('signin-spinner');
 			target.removeChild(spinner.el);
+			/*
+				After spin loaded submit button must be enabled
+			*/
+			$(document).find('#submit').prop('disabled',false);
 			/*
 				User can login
 			*/
