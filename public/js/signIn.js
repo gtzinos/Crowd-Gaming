@@ -122,13 +122,13 @@ function responseLogin() {
 			/*
 				User can login
 			*/
-			if(xmlHttp.responseText.localeCompare("true") == 0)
+			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
 			{
 				/*
 					Redirect to home page
 				*/
 
-				window.location("./home");
+				location.reload();
 			}
 			/*
 				Wrong username or password

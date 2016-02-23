@@ -15,9 +15,9 @@
 			}
 
 			if( User::signin($_POST["email"] , $_POST["password"] ) ){
-				print 'true';
+				print 'TRUE';
 			}else{
-				print 'false';
+				print 'FALSE';
 			}
 
 		}
