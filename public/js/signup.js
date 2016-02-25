@@ -24,23 +24,24 @@ function signUp() {
 		/*
 			Store user input to variables
 		*/
-		var email = document.getElementById("signup-email").value;
-		var password = document.getElementById("signup-password").value;
-		var fname = document.getElementById("signup-fname").value;
-		var lname = document.getElementById("signup-lname").value;
-		var gender = document.getElementById("signup-gender").value;
-		var country = document.getElementById("signup-country").value;
-		var city = document.getElementById("signup-city").value;
-		var address = document.getElementById("signup-address").value;
-		var phone = document.getElementById("signup-phone").value;
-		var licence = document.getElementById("signup-licence").value;
+		var userEmail = document.getElementById("signup-email").value;
+		var userPassword = document.getElementById("signup-password").value;
+		var userFName = document.getElementById("signup-fname").value;
+		var userLName = document.getElementById("signup-lname").value;
+		var userGender = document.getElementById("signup-gender").value;
+		var userCountry = document.getElementById("signup-country").value;
+		var userCity = document.getElementById("signup-city").value;
+
+		var userAddress = $(document).find("#signup-address").val();
+		var userPhone =  $(document).find("#signup-phone").val();
 
 		/*
 			Check the Variables before sending them
 		*/
 
-		if(userEmail && userPassword)
+		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity)
 		{
+
 			var opts = {
 				lines: 11 // The number of lines to draw
 			, length: 28 // The length of each line
@@ -64,11 +65,14 @@ function signUp() {
 			, position: 'absolute' // Element positioning
 			}
 			var target = document.getElementById('signup-spinner');
-			/*
-				Append Spinner
-			*/
+			//var spinner = new Spinner(opts).spin(target);
+
 			spinner = new Spinner(opts).spin();
 			target.appendChild(spinner.el);
+			/*
+				While spin loading submit button must be disabled
+			*/
+			$(document).find('.submit').prop('disabled',true);
 			/*
 				Milliseconds which user must wait
 				after server response arrived
@@ -98,18 +102,29 @@ function signUp() {
 				Header encryption
 			*/
 			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
+				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
+				+ userGender;
 
-			xmlHttp.send("email=" + userEmail + "&password=" +  userPassword);
+			if(userAddress)
+			{
+				variables = variables + "&address=" + userAddress;
+			}
+			if(userPhone)
+			{
+				variables = variables + "&phone=" + userPhone;
+			}
+
+			xmlHttp.send(variables);
 
 		}
 		else
 		{
 			document.getElementById("signup-response").style.display = "inline";
-			document.getElementById("signup-response").innerHTML = "Username or Password cannot be empty !!!";
+			document.getElementById("signup-response").innerHTML = "You must fill all fields !!!";
 		}
 
 }
-
 /*
 	Method called after response
 */
@@ -131,15 +146,20 @@ function responseSignUp() {
 			var target = document.getElementById('signup-spinner');
 			target.removeChild(spinner.el);
 			/*
+				After spin loaded submit button must be enabled
+			*/
+			$(document).find('.submit').prop('disabled',false);
+			/*
 				User can login
 			*/
-			if(xmlHttp.responseText.localeCompare("true") == 0)
+			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
 			{
 				/*
 					Redirect to home page
 				*/
-
-				window.location("./home");
+				document.getElementById("signup-response").style.display = "inline";
+				document.getElementById("signup-response").innerHTML = "Register successfully !!!";
+				//location.reload();
 			}
 			/*
 				Wrong username or password
@@ -150,7 +170,7 @@ function responseSignUp() {
 						Display an error message
 					*/
 			 	 document.getElementById("signup-response").style.display = "inline";
-				 document.getElementById("signup-response").innerHTML = "Email used from another user !!!";
+				 document.getElementById("signup-response").innerHTML = "Your email used from another user !!!";
 			}
 		}
 
@@ -161,8 +181,8 @@ function responseSignUp() {
 	else {
 		/*
 			TODO Something like
-			document.getElementById("signup-response").style.display ="none";
-			document.getElementById("signup-response").innerHTML = "Wrong username or password";
+			document.getElementById("signin-response").style.display ="none";
+			document.getElementById("signin-response").innerHTML = "Wrong username or password";
 			OR
 			TODO window.location("./home");
 		*/

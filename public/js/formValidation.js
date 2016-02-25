@@ -1,3 +1,9 @@
+function closeModal()
+{
+  $(document).find('.submit').prop('disabled',true);
+  $(document).find('form').resetForm();
+}
+
 $(document).ready(function() {
     /*
       If a key pressed (Keyup event)
@@ -10,7 +16,7 @@ $(document).ready(function() {
       */
       var $form = $(this).closest('form'), //form variable
       $group = $(this).closest('.input-group'), //div input-group
-      $button = $(document).find('#submit'); //submit button (use document cause this cant find it)
+      $button = $(document).find('.submit'); //submit button (use document cause this cant find it)
 			$icon = $group.find('span'), //icon (success,error)
       first_time = false;
 			state = false; //default state
