@@ -61,8 +61,8 @@
                   <div class="input-group col-xs-7" data-validate="select">
     								  <select class="form-control" id="signup-gender" required>
                         <option selected>Gender (Required)</option>
-    								    <option>Male</option>
-    								    <option>Female</option>
+    								    <option value="0">Male</option>
+    								    <option value="1">Female</option>
     								  </select>
                       <span id="gender-response"></span>
                   </div>
@@ -124,16 +124,17 @@
 							</div>
               <!-- Spinner Loader Field -->
               <div class="form-group">
-                <div id="signup-spinner"> </div>
-                <div class="col-xs-11">
-                  <label id="signup-response" class="responseLabel"></label>
+                <div class="col-xs-2"></div>
+                <div class="col-xs-7">
+                    <div id="signup-spinner"> </div>
+                    <label id="signup-response" class="responseLabel"></label>
                 </div>
               </div>
             </form>
 				</div>
 			 <div class="modal-footer">
-				 <button type="button" id="submit" class="btn btn-primary btn-md round" onclick="signUp()" disabled>Sign Up</button>
-				 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal">Close</button>
+				 <button type="button" id="submit" class="btn btn-primary btn-md round submit" onclick="signUp()" disabled>Sign Up</button>
+				 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" onclick="closeModal()">Close</button>
 			 </div>
 		 </div>
 	 </div>
