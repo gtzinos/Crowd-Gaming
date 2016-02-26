@@ -1,7 +1,7 @@
 <?php
 
-	include_once '../app/model/user/Player.php';
-	include_once '../app/model/orm/ObjectManager.php';
+	include_once '../app/model/domain/user/Player.php';
+	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class SignUpController extends Controller{
 
@@ -97,7 +97,6 @@
 			/*
 				Set data
 			 */
-
 			$player = new Player();
 
 			$player->setEmail($email);
@@ -116,23 +115,30 @@
 				$player->setPhone($phone);
 
 
+
 			/*
-				Map the object to the database
+				Insert the user in the database
 			 */
 			
-			$objectManager = new ObjectManager();
-
-			$objectManager->persist($player);
+			$userMapper = new UserMapper();
 
 			try{
-				if( $objectManager->flush() ){
-					print '11';
-				}else{
-					print 'TRUE';
-				}
+				DatabaseConnection::getInstance()->startTransaction();
+
+				$userMapper->persist($player);
+
+				DatabaseConnection::getInstance()->commit();
+
+				print 'TRUE';
+				
 			}catch(EmailInUseException $e){
 				print '10';
+				DatabaseConnection::getInstance()->rollback();
+			}catch(DatabaseException $ex){
+				print '11';
+				DatabaseConnection::getInstance()->rollback();
 			}
+
 
 		}
 

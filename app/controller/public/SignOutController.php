@@ -1,6 +1,6 @@
 <?php
 
-	include_once '../app/model/user/User.php';
+	include_once '../app/model/domain/user/User.php';
 
 	class SignOutController extends Controller{
 
@@ -11,9 +11,10 @@
 
 		public function run(){
 
-
 			if( isset($_SESSION["USER_ID"]) ){
-				User::signout();
+				$user = new User();
+
+				$user->logout();
 			}
 			$this->redirect("home");
 

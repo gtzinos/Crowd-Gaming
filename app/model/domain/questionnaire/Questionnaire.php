@@ -3,7 +3,7 @@
 	include_once 'QuestionGroup.php';
 
 
-	class Questionnaire extends DataObject{
+	class Questionnaire{
 
 		private $id;
 		private $name;
@@ -23,30 +23,30 @@
 		 */
 		private $subExaminers;
 
-		public function addQuestionGroup($questionGroup){
 
+		public function addQuestionGroup($questionGroup){
+			$this->questionGroups[$questionGroup->getId()] = $questionGroup;
 		}
 
 		public function getQuestionGroup($questionGroupId){
-
+			return $this->questionGroup[$questionGroupId];
 		}
 
 		public function removeQuestionGroup($questionGroupId){
-
+			unset($this->questionGroup[$questionGroupId]);
 		}
 
-
-		/*
-			Data Methods
-		 */
-		public function insert(){
-
+		public function addSubExaminer($subExaminer){
+			$this->subExaminers[$subExaminer->getId()] = $subExaminer;
 		}
 
-		public function update(){
-
+		public function getSubExaminer($subExaminerId){
+			return $this->subExaminers[$subExaminerId];
 		}
 
+		public function removeSubExaminer($subExaminerId){
+			unset($this->subExaminers[$subExaminerId]);
+		}
 
 		/*
 			Get and Set methods bellow

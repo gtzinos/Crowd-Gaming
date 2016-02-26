@@ -1,8 +1,8 @@
 <?php
-	include_once '../app/model/user/User.php';
+	include_once '../app/model/domain/user/User.php';
+	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class SignInController extends Controller{
-
 
 		public function init(){
 			$this->setHeadless(true);
@@ -12,14 +12,19 @@
 
 			if( isset($_SESSION["USER_ID"]) || ( !isset($_POST["email"]) && !isset($_POST["password"]) ) ){
 				$this->redirect("home");
-			}
+			}	
 
-			if( User::signin($_POST["email"] , $_POST["password"] ) ){
+
+			$userMapper = new UserMapper();
+
+			$user = $userMapper->authenticate($_POST["email"] , $_POST["password"] );
+
+			if( $user ){
+				$user->login();
 				print 'TRUE';
 			}else{
 				print 'FALSE';
 			}
-
 		}
 
 	}

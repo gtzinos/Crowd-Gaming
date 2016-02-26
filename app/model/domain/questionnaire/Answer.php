@@ -1,20 +1,8 @@
 <?php
-	include_once '../app/model/orm/DataObject.php';
-
-	class Answer extends DataObject{
+	class Answer{
 		private $id;
 		private $correct;
 		private $text;
-
-
-		public function update(){
-
-		}
-
-		public function insert(){
-
-		}
-
 
 		/*
 			Set and Get Methods bellow

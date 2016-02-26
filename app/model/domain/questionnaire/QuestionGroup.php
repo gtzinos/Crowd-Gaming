@@ -1,7 +1,7 @@
 <?php
 	include_once 'Question.php';
 
-	class QuestionGroup extends DataObject{
+	class QuestionGroup {
 
 		private $id;
 		private $name;
@@ -19,27 +19,15 @@
 		private $questions;
 
 		public function addQuestion($question){
-
+			$this->questions[$question->getId()] = $question;
 		}
 
 		public function getQuestion($questionId){
-
+			return $this->questions[$questionId];
 		}
 
 		public function removeQuestion($questionId){
-
-		}
-
-
-		/*
-			Data Methods
-		 */
-		public function insert(){
-
-		}
-
-		public function update(){
-
+			unset($this->questions[$questionId]);
 		}
 
 

@@ -1,7 +1,7 @@
 <?php
 	include_once 'Answer.php';
 
-	class Question extends DataObject{
+	class Question {
 
 		private $id;
 		private $name;
@@ -14,30 +14,16 @@
 		private $answers;
 
 
-
 		public function addAnswer($answer){
-
+			$this->answers[$answer->getId()] = $answer;
 		}
 
 		public function getAnswer($answerId){
-
+			return $this->answers[$answerId];
 		}
 
 		public function removeAnswer($answerId){
-
-		}
-
-
-		/*
-			Data Methods
-		 */
-		
-		public function update(){
-
-		}
-
-		public function insert(){
-
+			unset($this->answers[$answerId]);
 		}
 
 		/*
