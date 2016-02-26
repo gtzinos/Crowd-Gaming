@@ -9,6 +9,11 @@
 	Routes::add( 'signin' , 'public/SignInController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'signup' , 'public/SignUpController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'signout' , 'public/SignOutController.php' , $_USER_LEVEL["PLAYER"]);
+
+	Routes::add( 'questionnaires' , 'player/QuestionnairesController.php'  ,$_USER_LEVEL["PLAYER"]);
+	Routes::add( 'become-examiner' , 'player/ExaminerApplicationController.php'  ,$_USER_LEVEL["PLAYER"]);
+
+	
 	
 	/*
 		The Page to load when the page parameter is not defined
