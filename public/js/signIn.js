@@ -24,8 +24,9 @@ function signIn() {
 		/*
 			Store user input to variables
 		*/
-		var userEmail = document.getElementById("signin-email").value;
-		var userPassword = document.getElementById("signin-password").value;
+		var userEmail = $(document).find("#signin-email").val();
+		var userPassword = $(document).find("#signin-password").val();
+		var userRememberMe = $(document).find("#signin-remember").prop('checked');
 		/*
 			Check the Variables before sending them
 		*/
@@ -92,8 +93,19 @@ function signIn() {
 				Header encryption
 			*/
 			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			/*
+				Variables we will send
+			*/
+			var variables = "email=" + userEmail + "&password=" +  userPassword;
 
-			xmlHttp.send("email=" + userEmail + "&password=" +  userPassword);
+			/*
+				If user needs to remember him
+			*/
+			if(userRememberMe == "true")
+			{
+				variables += "&remember=true";
+			}
+			xmlHttp.send(variables);
 
 		}
 		else

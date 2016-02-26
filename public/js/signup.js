@@ -25,13 +25,14 @@ function signUp() {
 		/*
 			Store user input to variables
 		*/
-		var userEmail = document.getElementById("signup-email").value;
-		var userPassword = document.getElementById("signup-password").value;
-		var userFName = document.getElementById("signup-fname").value;
-		var userLName = document.getElementById("signup-lname").value;
-		var userGender = document.getElementById("signup-gender").value;
-		var userCountry = document.getElementById("signup-country").value;
-		var userCity = document.getElementById("signup-city").value;
+		var userEmail = $(document).find("#signup-email").val();
+		var userPassword = $(document).find("#signup-password").val();
+		var userFName = $(document).find("#signup-fname").val();
+		var userLName = $(document).find("#signup-lname").val();
+		var userGender = $(document).find("#signup-gender").val();
+		var userCountry = $(document).find("#signup-country").val();
+		var userCity = $(document).find("#signup-city").val();
+		var userAcceptLicence = $(document).find("#signup-licence").prop('checked');
 
 		var userAddress = $(document).find("#signup-address").val();
 		var userPhone =  $(document).find("#signup-phone").val();
@@ -40,7 +41,7 @@ function signUp() {
 			Check the Variables before sending them
 		*/
 
-		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity)
+		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity && userAcceptLicence)
 		{
 
 			var opts = {
@@ -105,7 +106,7 @@ function signUp() {
 			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
 				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
-				+ userGender;
+				+ userGender + "&licence=accepted";
 
 			if(userAddress)
 			{
@@ -122,7 +123,7 @@ function signUp() {
 		else
 		{
 			document.getElementById("signup-response").style.display = "inline";
-			document.getElementById("signup-response").innerHTML = "You must fill all fields !!!";
+			document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
 		}
 
 }
