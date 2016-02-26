@@ -8,6 +8,7 @@ function signUp() {
 	*/
 	 document.getElementById("signup-response").innerHTML = "";
 	 document.getElementById("signup-response").style.display = "none";
+	 //$(document).find("#signup-response").css('color','red');
 
 		if (window.XMLHttpRequest) {
 			/*
@@ -24,13 +25,14 @@ function signUp() {
 		/*
 			Store user input to variables
 		*/
-		var userEmail = document.getElementById("signup-email").value;
-		var userPassword = document.getElementById("signup-password").value;
-		var userFName = document.getElementById("signup-fname").value;
-		var userLName = document.getElementById("signup-lname").value;
-		var userGender = document.getElementById("signup-gender").value;
-		var userCountry = document.getElementById("signup-country").value;
-		var userCity = document.getElementById("signup-city").value;
+		var userEmail = $(document).find("#signup-email").val();
+		var userPassword = $(document).find("#signup-password").val();
+		var userFName = $(document).find("#signup-fname").val();
+		var userLName = $(document).find("#signup-lname").val();
+		var userGender = $(document).find("#signup-gender").val();
+		var userCountry = $(document).find("#signup-country").val();
+		var userCity = $(document).find("#signup-city").val();
+		var userAcceptLicence = $(document).find("#signup-licence").prop('checked');
 
 		var userAddress = $(document).find("#signup-address").val();
 		var userPhone =  $(document).find("#signup-phone").val();
@@ -39,7 +41,7 @@ function signUp() {
 			Check the Variables before sending them
 		*/
 
-		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity)
+		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity && userAcceptLicence)
 		{
 
 			var opts = {
@@ -104,7 +106,7 @@ function signUp() {
 			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
 				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
-				+ userGender;
+				+ userGender + "&licence=accepted";
 
 			if(userAddress)
 			{
@@ -121,7 +123,7 @@ function signUp() {
 		else
 		{
 			document.getElementById("signup-response").style.display = "inline";
-			document.getElementById("signup-response").innerHTML = "You must fill all fields !!!";
+			document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
 		}
 
 }
@@ -158,8 +160,25 @@ function responseSignUp() {
 					Redirect to home page
 				*/
 				document.getElementById("signup-response").style.display = "inline";
-				document.getElementById("signup-response").innerHTML = "Register successfully !!!";
-				//location.reload();
+			//	$(document).find("#signup-response").css('color','green');
+				document.getElementById("signup-response").innerHTML = "<div class='alert alert-success'>You have registered successfully!</div>";
+
+				/*
+				 Milliseconds which user must wait
+				 after register completed successfully
+			 */
+			 var millisecondsToWait = 2000;
+
+			 /*
+				After var millisecondsToWait
+				we will show results to the client
+			*/
+			 xmlHttp.onreadystatechange = setTimeout(function() {
+				 /*
+					 reload to main page
+				 */
+				 location.reload();
+			 }, millisecondsToWait);
 			}
 			/*
 				Wrong username or password
@@ -168,9 +187,106 @@ function responseSignUp() {
 			{
 					/*
 						Display an error message
+						depending on the response message
 					*/
+
+
+				 var error_message="";
+				 /*
+				 		If error message == 1
+						Email address length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("1") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>Email address length must be 3 - 50 characters.</div>";
+				 }
+				 /*
+				 		If error message == 2
+					  First Name length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("2") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>First Name length must be 2 - 40 characters.</div>";
+				 }
+				 /*
+				 		If error message == 3
+						Last Name length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("3") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>Last Name length must be 2 - 40 characters.</div>";
+				 }
+				 /*
+				 		If error message == 4
+						Gender value problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("4") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>Gender length must be 0 or 1.</div>";
+				 }
+				 /*
+				 		If error message == 5
+						Country Name length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("5") == 0)
+				 {
+				 	error_message += "<div class='alert alert-danger'>Country name length must be 2 - 40 characters.</div>";
+				 }
+				 /*
+				 		If error message == 6
+					  City Name length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("6") == 0)
+				 {
+				 	error_message += "<div class='alert alert-danger'>City name length must be 2 - 40 characters.</div>";
+				 }
+				 /*
+				 		If error message == 7
+						Password length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("7") == 0)
+				 {
+				 	error_message += "<div class='alert alert-danger'>Password length must be 8 - 50 characters.</div>";
+				 }
+				 /*
+				 		If error message == 8
+						Address Name length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("8") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>Address name length must be 2 - 40 characters.</div>";
+				 }
+				 /*
+				 		If error message == 9
+						Phone number length problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("9") == 0)
+				 {
+				 	error_message += "<div class='alert alert-danger'>Phone number length must be 8 - 15 characters.</div>";
+				 }
+				 /*
+				 		If error message == 10
+						Email address used problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("10") == 0)
+				 {
+				 	error_message += "<div class='alert alert-danger'>Email address used by another user.</div>";
+				 }
+				 /*
+				 	 If error message == 11
+				 	 General database problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("11") == 0)
+				 {
+				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
+				 }
+				 /*
+				 	 Display the message
+					 to the wright div
+				 */
 			 	 document.getElementById("signup-response").style.display = "inline";
-				 document.getElementById("signup-response").innerHTML = "Your email used from another user !!!";
+				 document.getElementById("signup-response").innerHTML = error_message;
+
 			}
 		}
 
@@ -181,8 +297,8 @@ function responseSignUp() {
 	else {
 		/*
 			TODO Something like
-			document.getElementById("signin-response").style.display ="none";
-			document.getElementById("signin-response").innerHTML = "Wrong username or password";
+			document.getElementById("signup-response").style.display ="none";
+			document.getElementById("signup-response").innerHTML = "Server is offline"	;
 			OR
 			TODO window.location("./home");
 		*/

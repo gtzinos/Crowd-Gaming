@@ -17,6 +17,7 @@
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signUp.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/homePageEvents.js"); ?>"></script>
 
 
 		<title>
@@ -29,7 +30,7 @@
 		?>
 	</head>
 
-	<body>
+	<body onkeypress="keyPressForm(event)">
 		<!-- Menu bar place -->
 		<nav class="navbar navbar-inverse">
 		  	<div class="container-fluid">

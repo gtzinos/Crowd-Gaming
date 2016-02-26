@@ -24,8 +24,9 @@ function signIn() {
 		/*
 			Store user input to variables
 		*/
-		var userEmail = document.getElementById("signin-email").value;
-		var userPassword = document.getElementById("signin-password").value;
+		var userEmail = $(document).find("#signin-email").val();
+		var userPassword = $(document).find("#signin-password").val();
+		var userRememberMe = $(document).find("#signin-remember").prop('checked');
 		/*
 			Check the Variables before sending them
 		*/
@@ -92,14 +93,28 @@ function signIn() {
 				Header encryption
 			*/
 			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			/*
+				Variables we will send
+			*/
+			var variables = "email=" + userEmail + "&password=" +  userPassword;
 
-			xmlHttp.send("email=" + userEmail + "&password=" +  userPassword);
+			/*
+				If user needs to remember him
+			*/
+			if(userRememberMe == "true")
+			{
+				variables += "&remember=true";
+			}
+			xmlHttp.send(variables);
 
 		}
 		else
 		{
+			/*
+				Response failed login message
+			*/
 			document.getElementById("signin-response").style.display = "inline";
-			document.getElementById("signin-response").innerHTML = "Username or Password cannot be empty !!!";
+			document.getElementById("signin-response").innerHTML = "<div class='alert alert-danger'>Username or Password cannot be empty. </div>";
 		}
 
 }
@@ -146,8 +161,21 @@ function responseSignIn() {
 					/*
 						Display an error message
 					*/
+
+					var error_message = "";
+					/*
+						 If error message == 1
+						 Wrong username or password
+					*/
+					if(xmlHttp.responseText.localeCompare("FALSE") == 0)
+					{
+					 error_message += "<div class='alert alert-danger'>Wrong username or password.</div>";
+					}
+
+
+
 			 	 document.getElementById("signin-response").style.display = "inline";
-				 document.getElementById("signin-response").innerHTML = "Wrong username or password";
+				 document.getElementById("signin-response").innerHTML = error_message;
 			}
 		}
 
