@@ -35,7 +35,7 @@
 
 
 		private function _create($user){
-			if( self::emailInUse($user->email) )
+			if( self::emailInUse($user->getEmail()) )
 				throw new EmailInUseException("This email is in use by another user.");
 
 			$address = $user->getAddress();

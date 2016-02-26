@@ -11,7 +11,7 @@
 		}
 
 		public function run(){
-
+			
 			if( isset($_SESSION["USER_ID"])  || 
 				!(  isset($_POST["email"]) && 
 					isset($_POST["name"]) &&
@@ -23,7 +23,7 @@
 			{
 				$this->redirect("home");
 			}
-
+			
 			/*
 				Sanitizing
 			 */
