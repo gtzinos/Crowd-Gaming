@@ -98,8 +98,11 @@ function signIn() {
 		}
 		else
 		{
+			/*
+				Response failed login message
+			*/
 			document.getElementById("signin-response").style.display = "inline";
-			document.getElementById("signin-response").innerHTML = "Username or Password cannot be empty !!!";
+			document.getElementById("signin-response").innerHTML = "<div class='alert alert-danger'>Username or Password cannot be empty. </div>";
 		}
 
 }
@@ -146,8 +149,21 @@ function responseSignIn() {
 					/*
 						Display an error message
 					*/
+
+					var error_message = "";
+					/*
+						 If error message == 1
+						 Wrong username or password
+					*/
+					if(xmlHttp.responseText.localeCompare("FALSE") == 0)
+					{
+					 error_message += "<div class='alert alert-danger'>Wrong username or password.</div>";
+					}
+
+
+
 			 	 document.getElementById("signin-response").style.display = "inline";
-				 document.getElementById("signin-response").innerHTML = "Wrong username or password";
+				 document.getElementById("signin-response").innerHTML = error_message;
 			}
 		}
 
