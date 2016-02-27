@@ -310,12 +310,11 @@ function responseSignUp() {
 		Server Problem (Timeout probably)
 	*/
 	else {
-		/*
-			TODO Something like
+			/*
+				TODO Something like
+			*/
 			document.getElementById("signup-response").style.display ="none";
-			document.getElementById("signup-response").innerHTML = "Server is offline"	;
-			OR
-			TODO window.location("./home");
-		*/
+			document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>"	;
+
 	}
 }

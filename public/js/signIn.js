@@ -184,12 +184,10 @@ function responseSignIn() {
 		Server Problem (Timeout probably)
 	*/
 	else {
-		/*
-			TODO Something like
+			/*
+				TODO Something like
+			*/
 			document.getElementById("signin-response").style.display ="none";
-			document.getElementById("signin-response").innerHTML = "Wrong username or password";
-			OR
-			TODO window.location("./home");
-		*/
+			document.getElementById("signin-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>";
 	}
 }

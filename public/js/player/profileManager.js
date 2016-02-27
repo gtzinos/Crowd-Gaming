@@ -1,4 +1,31 @@
-  var xmlHttp;
+var xmlHttp;
+
+/*
+  Initialize spinner
+*/
+var opts = {
+  lines: 11 // The number of lines to draw
+, length: 28 // The length of each line
+, width: 14 // The line thickness
+, radius: 32 // The radius of the inner circle
+, scale: 0.5 // Scales overall size of the spinner
+, corners: 1 // Corner roundness (0..1)
+, color: '#000' // #rgb or #rrggbb or array of colors
+, opacity: 0.25 // Opacity of the lines
+, rotate: 0 // The rotation offset
+, direction: 1 // 1: clockwise, -1: counterclockwise
+, speed: 1 // Rounds per second
+, trail: 60 // Afterglow percentage
+, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
+, zIndex: 2e9 // The z-index (defaults to 2000000000)
+, className: 'spinner' // The CSS class to assign to the spinner
+, top: '50%' // Top position relative to parent
+, left: '50%' // Left position relative to parent
+, shadow: false // Whether to render a shadow
+, hwaccel: false // Whether to use hardware acceleration
+, position: 'absolute' // Element positioning
+}
+
 /*
   User try to update
   his profile informations
@@ -48,28 +75,6 @@ function profileUpdate()
   		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity)
   		{
 
-  			var opts = {
-  				lines: 11 // The number of lines to draw
-  			, length: 28 // The length of each line
-  			, width: 14 // The line thickness
-  			, radius: 32 // The radius of the inner circle
-  			, scale: 0.5 // Scales overall size of the spinner
-  			, corners: 1 // Corner roundness (0..1)
-  			, color: '#000' // #rgb or #rrggbb or array of colors
-  			, opacity: 0.25 // Opacity of the lines
-  			, rotate: 0 // The rotation offset
-  			, direction: 1 // 1: clockwise, -1: counterclockwise
-  			, speed: 1 // Rounds per second
-  			, trail: 60 // Afterglow percentage
-  			, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-  			, zIndex: 2e9 // The z-index (defaults to 2000000000)
-  			, className: 'spinner' // The CSS class to assign to the spinner
-  			, top: '50%' // Top position relative to parent
-  			, left: '50%' // Left position relative to parent
-  			, shadow: false // Whether to render a shadow
-  			, hwaccel: false // Whether to use hardware acceleration
-  			, position: 'absolute' // Element positioning
-  			}
   			var target = document.getElementById('profile-spinner');
   			//var spinner = new Spinner(opts).spin(target);
 
@@ -335,5 +340,162 @@ function profileUpdate()
 */
 function deleteAccount()
 {
+  /*
+    Initialize response label
+  */
+   document.getElementById("profile-response").innerHTML = "";
+   document.getElementById("profile-response").style.display = "none";
+   //$(document).find("#profile-response").css('color','red');
 
+    if (window.XMLHttpRequest) {
+      /*
+       code for IE7+, Firefox, Chrome, Opera, Safari
+      */
+      xmlHttp = new XMLHttpRequest();
+    } else {
+      /*
+       code for IE6, IE5
+      */
+      xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    var target = document.getElementById('profile-spinner');
+    //var spinner = new Spinner(opts).spin(target);
+
+    spinner = new Spinner(opts).spin();
+    target.appendChild(spinner.el);
+    /*
+      While spin loading submit button must be disabled
+    */
+    $(document).find('.submit').prop('disabled',true);
+    /*
+      Milliseconds which user must wait
+      after server response arrived
+      (Spinner loader)
+    */
+    var millisecondsToWait = 1500;
+
+    /*
+      After var millisecondsToWait
+      we will show results to the client
+    */
+    xmlHttp.onreadystatechange = setTimeout(function() {
+      /*
+        Response function
+      */
+      responseDeleteAccount();
+    }, millisecondsToWait);
+    /*
+      Url string
+    */
+    var url = "./delete-account";
+    /*
+     Send using POST Method
+    */
+    xmlHttp.open("POST", url, false);
+    /*
+      Header encryption
+    */
+    xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+    var variables = "deleteme=true&accept=true";
+    /*
+      Send ajax request
+    */
+    xmlHttp.send(variables);
+}
+/*
+  Server response
+  after user try to delete
+  his account
+*/
+function responseDeleteAccount()
+{
+  /*
+    if Server responsed back successfully
+  */
+  if (xmlHttp.readyState == 4) {
+    if (xmlHttp.status == 200) {
+      /*
+        Debug
+      */
+
+      //console.log(xmlHttp.responseText);
+
+      /*
+        Remove spinner loader
+      */
+      var target = document.getElementById('profile-spinner');
+      target.removeChild(spinner.el);
+      /*
+        After spin loaded submit button must be enabled
+      */
+      $(document).find('.submit').prop('disabled',false);
+      /*
+        User can login
+      */
+      if(xmlHttp.responseText.localeCompare("TRUE") == 0)
+      {
+        /*
+          Redirect to home page
+        */
+        document.getElementById("profile-response").style.display = "inline";
+        //	$(document).find("#profile-response").css('color','green');
+        document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>Your account deleted successfully!</div>";
+        /*
+         Milliseconds which user must wait
+         after register completed successfully
+        */
+        var millisecondsToWait = 2000;
+
+        /*
+        After var millisecondsToWait
+        we will show results to the client
+        */
+        xmlHttp.onreadystatechange = setTimeout(function() {
+         /*
+           reload to main page
+         */
+         location.reload();
+        }, millisecondsToWait);
+      }
+      /*
+				Something going wrong
+			*/
+			else
+			{
+					/*
+						Display an error message
+						depending on the response message
+					*/
+
+				 var error_message="";
+				 /*
+				 		If error message == 1
+					  ERROR 1
+
+  				 if(xmlHttp.responseText.localeCompare("1") == 0)
+  				 {
+  					 error_message += "<div class='alert alert-danger'>Email address length must be 3 - 50 characters.</div>";
+  				 }
+         */
+         /*
+           Display the message
+           to the wright div
+         */
+         document.getElementById("profile-response").style.display = "inline";
+         document.getElementById("profile-response").innerHTML = error_message;
+
+       }
+     }
+   }
+   /*
+ 		Server Problem (Timeout probably)
+ 	*/
+ 	else {
+ 		/*
+ 			TODO Something like
+    */
+ 			document.getElementById("profile-response").style.display ="none";
+ 			document.getElementById("profile-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>";
+ 	}
 }
