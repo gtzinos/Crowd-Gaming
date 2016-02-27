@@ -19,7 +19,7 @@ function keyPressForm(e) {
       /*
         If submit button is activated
       */
-      var keyPressed = $(document).find("#signup-submit").prop("disabled");
+      var keyPressed = $(document).find(".submit").prop("disabled");
       if(!keyPressed)
       {
         /*
@@ -40,7 +40,7 @@ function keyPressForm(e) {
       /*
         If submit button is activated
       */
-      var keyPressed = $(document).find("#signin-submit").prop("disabled");
+      var keyPressed = $(document).find(".submit").prop("disabled");
       if(!keyPressed)
       {
         /*

@@ -280,6 +280,21 @@ function responseSignUp() {
 				 {
 				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
 				 }
+
+				 /*
+				 	Else if no error message
+					return something going Wrong
+				 */
+
+				 /*
+				 	if(xmlHttp.responseText.localeCompare("") == 0)
+					{
+						Send us one email with the error message
+						mail("to","From","ERROR SIGNUP",xmlHttp.responseText);
+						error_message = "Important error. Contact with one admin!";
+					}
+				 */
+
 				 /*
 				 	 Display the message
 					 to the wright div
