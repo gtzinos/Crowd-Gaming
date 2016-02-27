@@ -126,7 +126,7 @@
 			$user->setGender($gender);
 			$user->setCountry($country);
 			$user->setCity($city);
-			$player->setPassword($password);
+			$user->setPassword($password);
 
 			if( isset($address))
 				$user->setAddress($address);
