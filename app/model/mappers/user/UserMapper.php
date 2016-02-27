@@ -9,14 +9,10 @@
 		/*
 			Prepared Statements
 		 */
-		private $insertWithAddressStatement;
-		private $insertWithPhoneStatement;
-		private $insertFullStatement;
 		private $insertStatement;
-
 		private $deleteStatement;
-
 		private $selectByIdStatement;
+		private $updateStatement;
 
 		public function findById($id){
 			$statement = $this->getSelectByIdStatement();
@@ -68,7 +64,24 @@
 
 
 		private function _update($user){
+			if( self::emailInUseNotByMe($user->getEmail() ,$user->getId() ) )
+				throw new EmailInUseException("This email is in use by another user.");
 
+			$statement = self::getUpdateStatement();
+	
+			$statement->setParameters("sississssi",	
+				$user->getEmail(),
+				$user->getAccessLevel(),
+				$user->getName(),
+				$user->getSurname(),
+				$user->getGender(),
+				$user->getCountry(),
+				$user->getCity(),
+				$user->getAddress(),
+				$user->getPhone(),
+				$user->getId() );
+
+			$statement->executeUpdate();
 		}
 
 
@@ -76,77 +89,23 @@
 			if( self::emailInUse($user->getEmail()) )
 				throw new EmailInUseException("This email is in use by another user.");
 
-			$address = $user->getAddress();
-			$phone = $user->getPhone();
 
-			if( isset($address) && isset($phone) ){
+			$statement = self::getInsertStatement();
 
-				$statement = self::getInsertFullStatement();
+			$statement->setParameters("ssississss",	
+				$user->getEmail(),
+				$user->getPassword(),
+				$user->getAccessLevel(),
+				$user->getName(),
+				$user->getSurname(),
+				$user->getGender(),
+				$user->getCountry(),
+				$user->getCity(),
+				$user->getAddress(),
+				$user->getPhone() );
 
-				$statement->setParameters("ssississss",	
-					$user->getEmail(),
-					$user->getPassword(),
-					$user->getAccessLevel(),
-					$user->getName(),
-					$user->getSurname(),
-					$user->getGender(),
-					$user->getCountry(),
-					$user->getCity(),
-					$user->getAddress(),
-					$user->getPhone() );
+			$statement->executeUpdate();
 
-				$statement->executeUpdate();
-
-			}else if( isset($address) ){
-
-				$statement = self::getInsertWithAddressStatement();
-
-				$statement->setParameters("ssississs",	
-					$user->getEmail(),
-					$user->getPassword(),
-					$user->getAccessLevel(),
-					$user->getName(),
-					$user->getSurname(),
-					$user->getGender(),
-					$user->getCountry(),
-					$user->getCity(),
-					$user->getAddress() );
-
-				$statement->executeUpdate();
-
-			}else if( isset($phone) ){
-				
-				$statement = self::getInsertWithPhoneStatement();
-
-				$statement->setParameters("ssississs",	
-					$user->getEmail(),
-					$user->getPassword(),
-					$user->getAccessLevel(),
-					$user->getName(),
-					$user->getSurname(),
-					$user->getGender(),
-					$user->getCountry(),
-					$user->getCity(),
-					$user->getPhone() );
-
-				$statement->executeUpdate();
-
-			}else{
-
-				$statement = self::getInsertStatement();
-
-				$statement->setParameters("ssississ",
-					$user->getEmail(),
-					$user->getPassword(),
-					$user->getAccessLevel(),
-					$user->getName(),
-					$user->getSurname(),
-					$user->getGender(),
-					$user->getCountry(),
-					$user->getCity() );
-
-				$statement->executeUpdate();
-			}
 		}
 
 
@@ -168,6 +127,18 @@
 		public function emailInUse($email){
 			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=?");
 			$statement->setParameters("s" , $email);
+
+			$result = $statement->execute();
+
+			if($result->getRowCount() > 0)
+				return true;
+			else 
+				return false;
+		}
+
+		public function emailInUseNotByMe($email , $myId){
+			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=? and id<>?");
+			$statement->setParameters("si" , $email , $myId);
 
 			$result = $statement->execute();
 
@@ -219,27 +190,9 @@
 			Get methods for the prepared statements.
 			The PreparedStatents are created only when needed.
 		 */
-		private function getInsertWithAddressStatement(){
-			if( !isset($this->insertWithAddressStatement) )
-				$this->insertWithAddressStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address) values (?,?,?,?,?,?,?,?,?)");
-			return $this->insertWithAddressStatement;
-		}
-
-		private function getInsertWithPhoneStatement(){
-			if( !isset($this->insertWithPhoneStatement) )
-				$this->insertWithPhoneStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,phone) values (?,?,?,?,?,?,?,?,?)");
-			return $this->insertWithPhoneStatement;
-		}
-
-		private function getInsertFullStatement(){
-			if( !isset($this->insertFullStatement) )
-				$this->insertFullStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone) values (?,?,?,?,?,?,?,?,?,?)");
-			return $this->insertFullStatement;
-		}
-
 		private function getInsertStatement(){
 			if( !isset($this->insertStatement) )
-				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city) values (?,?,?,?,?,?,?,?)");
+				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone) values (?,?,?,?,?,?,?,?,?,?)");
 			return $this->insertStatement;
 		}
 
@@ -254,5 +207,14 @@
 			if( !isset($this->selectByIdStatement) )
 				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` FROM `User` WHERE id=?");
 			return $this->selectByIdStatement;
+		}
+
+		private function getUpdateStatement(){
+			if( !isset($this->updateStatement)){
+				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=? WHERE `id`=?";
+
+				$this->updateStatement = DatabaseConnection::getInstance()->prepareStatement($query);
+			}
+			return $this->updateStatement;
 		}
 	}
