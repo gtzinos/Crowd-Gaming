@@ -47,7 +47,7 @@
                 call_user_func_array(array($this->query, 'bind_param'), $params);
             }
             catch(Exception $e){
-                throw new DatabaseException("Error while trying to bind the parameters of query ".$this->query);
+                throw new DatabaseException("Error while trying to bind the parameters of query ".$this->queryString);
             }
         }
 
@@ -63,7 +63,7 @@
 				Error Handling
             */
             if (mysqli_error($this->connection)){
-            	throw new DatabaseException("Error when trying to execute query ".$this->query);
+            	throw new DatabaseException("Error when trying to execute query ".$this->queryString);
 	        }
 
             $result = $this->query->get_result();
@@ -81,7 +81,7 @@
 				Error Handling
             */
         	if (mysqli_error($this->connection)){
-            	throw new DatabaseException("Error when trying to execute update query ".$this->query);
+            	throw new DatabaseException("Error when trying to execute update query ".$this->queryString);
 	        }
         }
 
