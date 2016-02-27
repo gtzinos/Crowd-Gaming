@@ -6,13 +6,18 @@
 
 
 		public function init(){
-			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			if( isset($this->params[1]) && $this->params[1]=="ajax"){
+				$this->setHeadless(true);				
+			}else{
+				global $_CONFIG;
 
-			$this->defSection('CSS','player/ProfilePageView.php');
-			$this->defSection('JAVASCRIPT','player/ProfilePageView.php');
-			$this->defSection('MAIN_CONTENT','player/ProfilePageView.php');
+				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+				$this->defSection('CSS','player/ProfilePageView.php');
+				$this->defSection('JAVASCRIPT','player/ProfilePageView.php');
+				$this->defSection('MAIN_CONTENT','player/ProfilePageView.php');
+			}
 
 		}
 
@@ -23,13 +28,16 @@
 			$user = $mapper->findById( $_SESSION["USER_ID"] );
 
 			if( $user ){
+
 				// Use exists
-				
-				if( isset($_POST["email"])  && isset($_POST["name"]) && isset($_POST["surname"]) &&
-					isset($_POST["gender"]) && isset($_POST["city"]) && isset($_POST["country"]) &&
-					isset($_POST["address"]) && isset($_POST["phone"]) ){
-					$this->updateUser($user , $mapper);
+				if( isset($this->params[1]) && $this->params[1]=="ajax"){
+					if( isset($_POST["email"])   && isset($_POST["name"]) &&
+					 	isset($_POST["surname"]) &&	isset($_POST["gender"]) && 
+					 	isset($_POST["city"])    && isset($_POST["country"]) ){
+							$this->updateUser($user , $mapper);
+					}
 				}
+				
 
 				$this->setArg("user" , $user);
 			}else{
@@ -51,50 +59,56 @@
 			$gender = $_POST["gender"];
 			$country = htmlspecialchars($_POST["country"] , ENT_QUOTES);
 			$city = htmlspecialchars($_POST["city"] , ENT_QUOTES);
-			$address = htmlspecialchars($_POST["address"] , ENT_QUOTES);
-			$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+
+			if( isset($_POST["address"])){
+				$address = htmlspecialchars($_POST["address"] , ENT_QUOTES);
+			}
+
+			if( isset($_POST["phone"]) ){
+				$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+			}
 
 			/*
 				Validation
 			 */
 			if( strlen($email) < 3 || strlen($email) > 50 ){
-				$this->setArg('error-code','2'); // Email Validation Error
-				return;
+				print '2'; // Email Validation Error
+				die();
 			}
 
 			if( strlen($name) < 2 || strlen($name) > 40 ){
-				$this->setArg('error-code','3'); // Name Validation Error
-				return;
+				print '3'; // Name Validation Error
+				die();
 			}
 
 			if( strlen($surname) < 2 || strlen($surname) > 40 ){
-				$this->setArg('error-code','4'); // Surname Validation Error
-				return;
+				print '4'; // Surname Validation Error
+				die();
 			}
 
 			if( $gender!= "1" && $gender!= "0"){
-				$this->setArg('error-code','5'); // Gender Validation Error
-				return;
+				print '5'; // Gender Validation Error
+				die();
 			}
 
 			if( strlen($country) < 2 || strlen($country) > 40 ){
-				$this->setArg('error-code','6'); // Country Validation Error
-				return;
+				print '6'; // Country Validation Error
+				die();
 			}
 
 			if( strlen($city) < 2 || strlen($city) > 40 ){
-				$this->setArg('error-code','7'); // City Validation Error
-				return;
+				print '7'; // City Validation Error
+				die();
 			}
 
-			if( $address !=='' && ( strlen($address) < 2 || strlen($address) > 40 ) ){
-				$this->setArg('error-code','8'); // Address Validation Error
-				return;
+			if( isset($address) && ( strlen($address) < 2 || strlen($address) > 40 ) ){
+				print '8'; // Address Validation Error
+				die();
 			}
 
-			if( $phone !=='' && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
-				$this->setArg('error-code','9'); // Phone Validation Error
-				return;
+			if( isset($phone) && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
+				print '9'; // Phone Validation Error
+				die();
 			}
 
 			/*
@@ -107,30 +121,27 @@
 			$user->setCountry($country);
 			$user->setCity($city);
 
-			if( $address !== '' )
-				$user->setAddress($address);
-			else if( $address ==='' && $user->getAddress() !==''){
-				$user->setAddress(null);
-			}
+			if( isset($address))
+				$player->setAddress($address);
 
-			if( $phone !== '' )
-				$user->setPhone($phone);
-			else if($phone ==='' && $user->getPhone() !==''){
-				$user->setPhone(null);
-			}
+			if( isset($phone))
+				$player->setPhone($phone);
 
+			/*
+				Update the user in the database
+			 */
 			try{
 				DatabaseConnection::getInstance()->startTransaction();
 
 				$userMapper->persist($user);
 
 				DatabaseConnection::getInstance()->commit();
-				$this->setArg('error-code', '0'); // No Error , update Successful
+				print  '0'; // No Error , update Successful
 			}catch(EmailInUseException $e){
-				$this->setArg('error-code','10'); // Email in user
+				print '10'; // Email in use
 				DatabaseConnection::getInstance()->rollback();
 			}catch(DatabaseException $ex){
-				$this->setArg('error-code','11'); // General Database Error
+				print '11'; // General Database Error
 				DatabaseConnection::getInstance()->rollback();
 			}
 		}
