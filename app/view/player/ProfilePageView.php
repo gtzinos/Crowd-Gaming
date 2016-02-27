@@ -1,7 +1,7 @@
 <?php if($section == "CSS") : ?>
 
 <?php elseif($section == "JAVASCRIPT") : ?>
-
+<script src="<?php print LinkUtils::generatePublicLink("js/player/profileManager.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
   <form role="form" class="form-horizontal">
@@ -12,7 +12,7 @@
               <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
        </div>
        <div class="input-group col-xs-7" data-validate="email">
-              <input class="form-control" type="email" id="signup-email" maxlength="40" placeholder="Email (Required)" required>
+              <input class="form-control" type="email" id="profile-email" maxlength="40" placeholder="Email (Required)" required>
               <span id="email-response"></span>
        </div>
      </div>
@@ -23,7 +23,7 @@
               <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
        </div>
        <div class="input-group col-xs-7" data-validate="length" data-length="8" >
-              <input type="password" class="form-control" id="signup-password" placeholder="Password (Required) *Length >= 8" required />
+              <input type="password" class="form-control" id="profile-password" placeholder="Password (Required) *Length >= 8" required />
               <span id="password-response"></span>
        </div>
      </div>
@@ -34,7 +34,7 @@
             <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
          </div>
          <div class="input-group col-xs-7" data-validate="length" data-length="2" >
-              <input class="form-control" type="text" id="signup-fname" maxlength="25" placeholder="First Name (Required) *Length >= 2" required />
+              <input class="form-control" type="text" id="profile-fname" maxlength="25" placeholder="First Name (Required) *Length >= 2" required />
               <span id="fname-response"></span>
          </div>
      </div>
@@ -45,7 +45,7 @@
           <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
         </div>
         <div class="input-group col-xs-7" data-validate="length" data-length="2" >
-            <input class="form-control" type="text" id="signup-lname" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required/>
+            <input class="form-control" type="text" id="profile-lname" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required/>
             <span id="lname-response"></span>
         </div>
      </div>
@@ -56,7 +56,7 @@
            <span class="text-center"><i class="fi-male-female bigicon"></i></span>
         </div>
         <div class="input-group col-xs-7" data-validate="select">
-            <select class="form-control" id="signup-gender" required>
+            <select class="form-control" id="profile-gender" required>
               <option selected>Gender (Required)</option>
               <option value="0">Male</option>
               <option value="1">Female</option>
@@ -71,7 +71,7 @@
             <span class="text-center"><i class="glyphicon glyphicon-globe bigicon"></i></span>
         </div>
         <div class="input-group col-xs-7" data-validate="length" data-length="3">
-          <input class="form-control" type="text" id="signup-country" maxlength="25" placeholder="Country (Required) *Length >= 3"  required />
+          <input class="form-control" type="text" id="profile-country" maxlength="25" placeholder="Country (Required) *Length >= 3"  required />
           <span id="country-response"></span>
         </div>
      </div>
@@ -82,7 +82,7 @@
             <span class="text-center"><i class="material-icons bigicon">location_city</i></span>
         </div>
         <div class="input-group col-xs-7" data-validate="length" data-length="3">
-            <input class="form-control" type="text" id="signup-city" maxlength="25" placeholder="City (Required) *Length >= 3" required/>
+            <input class="form-control" type="text" id="profile-city" maxlength="25" placeholder="City (Required) *Length >= 3" required/>
             <span id="city-response"></span>
         </div>
      </div>
@@ -93,7 +93,7 @@
             <span class="text-center"><i class="glyphicon glyphicon-home bigicon"></i></span>
         </div>
         <div class="input-group col-xs-7" data-validate="length" data-length="5">
-            <input class="form-control" type="text" id="signup-address" maxlength="25" placeholder="Address (Optional) *Length >= 5"/>
+            <input class="form-control" type="text" id="profile-address" maxlength="25" placeholder="Address (Optional) *Length >= 5"/>
             <span id="address-response"></span>
         </div>
      </div>
@@ -104,7 +104,7 @@
             <span class="text-center"><i class="glyphicon glyphicon-earphone bigicon"></i></span>
         </div>
         <div class="input-group col-xs-7" data-validate="phone">
-            <input class="form-control" type="text" id="signup-phone" maxlength="15" placeholder="Phone (Optional)"/>
+            <input class="form-control" type="text" id="profile-phone" maxlength="15" placeholder="Phone (Optional)"/>
             <span id="phone-response"></span>
         </div>
      </div>
@@ -112,8 +112,8 @@
     <div class="form-group">
       <div class="col-xs-2"></div>
       <div class="col-xs-7">
-          <div id="signup-spinner"> </div>
-          <label id="signup-response" class="responseLabel"></label>
+          <div id="profile-spinner"> </div>
+          <label id="profile-response" class="responseLabel"></label>
       </div>
     </div>
     <!-- Spinner Loader Field -->
