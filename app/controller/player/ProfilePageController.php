@@ -1,4 +1,6 @@
 <?php
+	include_once '../app/model/mappers/user/UserMapper.php';
+
 
 	class ProfilePageController extends Controller{
 
@@ -15,6 +17,20 @@
 		}
 
 		public function run(){
+
+			$mapper = new UserMapper();
+
+			$user = $mapper->findById( $_SESSION["USER_ID"] );
+
+			if( $user ){
+
+				$this->setArg("user" , $user);
+
+			}else{
+				// User with id SESSION["USER_ID"] does not exists
+				// This error should never happen
+				$this->setArg("error-code" , 1);
+			}
 
 		}
 

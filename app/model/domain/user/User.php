@@ -68,6 +68,10 @@
 			return $this->gender;
 		}
 
+		public function getGenderString(){
+			return $this->gender?"Female":"Male";
+		}
+
 		public function setGender($gender){
 			$this->gender = $gender;			
 		}

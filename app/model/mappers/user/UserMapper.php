@@ -16,8 +16,46 @@
 
 		private $deleteStatement;
 
+		private $selectByIdStatement;
+
 		public function findById($id){
-			//todo
+			$statement = $this->getSelectByIdStatement();
+
+			$statement->setParameters('i' ,$id);
+
+			$resultSet = $statement->execute();
+
+			if($resultSet->next()){
+
+				$accessLevel = $resultSet->get("access");
+
+				$user = 0;
+				if( $accessLevel == 1 )
+					$user = new Player();
+				else if ( $accessLevel == 2)
+					$user = new Examiner();
+				else if ( $accessLevel == 3)
+					$user = new Moderator();
+
+				$user->setAccessLevel($accessLevel);
+				$user->setId( $resultSet->get("id") );
+				$user->setName( $resultSet->get("name") );
+				$user->setSurname( $resultSet->get("surname") );
+				$user->setEmail( $resultSet->get("email") );
+				$user->setGender( $resultSet->get("gender") );
+				$user->setCountry( $resultSet->get("country") );
+				$user->setCity( $resultSet->get("city") );
+
+				if( $resultSet->get("address") !== null )
+					$user->setAddress( $resultSet->get("address") );
+
+				if( $resultSet->get("phone") !== null )
+					$user->setPhone( $resultSet->get("phone") ); 
+
+				return $user;
+			}
+
+			return false;
 		}
 
 		public function persist($user){
@@ -211,4 +249,10 @@
 			return $this->deleteStatement;
 		}
 
+
+		private function getSelectByIdStatement(){
+			if( !isset($this->selectByIdStatement) )
+				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` FROM `User` WHERE id=?");
+			return $this->selectByIdStatement;
+		}
 	}
