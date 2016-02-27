@@ -20,8 +20,15 @@
 			$user = $userMapper->authenticate($_POST["email"] , $_POST["password"] );
 			
 			if( $user ){
-				$user->login();
-				print 'TRUE';
+
+				if( is_object($user)){
+					$user->login();
+					print 'TRUE';
+				}else{
+					print $user;
+				}
+
+				
 			}else{
 				print 'FALSE';
 			}

@@ -149,6 +149,11 @@
 		}
 
 
+		/*
+			Returns false if the authentication was failed.
+			Returns the access level if the access level is below 0
+			else it returns the user object meaning it was successful.
+		 */
 		public function authenticate($email , $password){
 			$query =	"select User.password, AccessLevel.name, User.access, User.id from User ".
 						"inner join AccessLevel on AccessLevel.id = User.access ".
@@ -160,9 +165,13 @@
 			$set = $preparedStatement->execute();
 
 			if($set->next()){
+				$accessLevel = $set->get("access");
+
+				if($accessLevel<0)
+					return $accessLevel;
+
 				$hashedPassword = $set->get("password");
 				if(password_verify($password , $hashedPassword)){
-					
 					$user = 0;
 					$userType = $set->get("name");
 					if( $userType == "Player" )
