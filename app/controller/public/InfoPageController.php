@@ -8,8 +8,8 @@
 
 			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			//$this->defSection('CSS',dirname(__FILE__).'/InfoPageView.php');
-			//$this->defSection('JAVASCRIPT',dirname(__FILE__).'/InfoPageView.php');
+			//$this->defSection('CSS','public/InfoPageView.php');
+			//$this->defSection('JAVASCRIPT','public/InfoPageView.php');
 			$this->defSection('MAIN_CONTENT','public/InfoPageView.php');
 
 		}
