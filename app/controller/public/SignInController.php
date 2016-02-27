@@ -18,7 +18,7 @@
 			$userMapper = new UserMapper();
 
 			$user = $userMapper->authenticate($_POST["email"] , $_POST["password"] );
-
+			
 			if( $user ){
 				$user->login();
 				print 'TRUE';

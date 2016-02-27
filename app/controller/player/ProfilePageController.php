@@ -8,9 +8,9 @@
 
 			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->defSection('CSS','public/ProfilePageView.php');
-			$this->defSection('JAVASCRIPT','public/ProfilePageView.php');
-			$this->defSection('MAIN_CONTENT','public/ProfilePageView.php');
+			$this->defSection('CSS','player/ProfilePageView.php');
+			$this->defSection('JAVASCRIPT','player/ProfilePageView.php');
+			$this->defSection('MAIN_CONTENT','player/ProfilePageView.php');
 
 		}
 

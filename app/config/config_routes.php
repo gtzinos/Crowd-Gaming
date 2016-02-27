@@ -10,7 +10,7 @@
 	Routes::add( 'signup' , 'public/SignUpController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'signout' , 'public/SignOutController.php' , $_USER_LEVEL["PLAYER"]);
 
-	Routes::add( 'profile' , 'public/ProfilePageController.php' , $_USER_LEVEL["PLAYER"]);
+	Routes::add( 'profile' , 'player/ProfilePageController.php' , $_USER_LEVEL["PLAYER"]);
 
 	/*
 		The Page to load when the page parameter is not defined
