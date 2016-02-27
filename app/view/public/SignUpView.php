@@ -133,8 +133,8 @@
             </form>
 				</div>
 			 <div class="modal-footer">
-				 <button type="button" id="signup-submit" class="btn btn-primary btn-md round submit" onclick="signUp()" disabled>Sign Up</button>
-				 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" onclick="closeModal()">Close</button>
+				 <button type="button" class="btn btn-primary btn-md round submit" onclick="signUp()" disabled>Sign Up</button>
+				 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal">Close</button>
 			 </div>
 		 </div>
 	 </div>

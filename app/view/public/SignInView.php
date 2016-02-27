@@ -52,8 +52,8 @@
 						</form>
 				 </div>
 				 <div class="modal-footer">
-					 <button type="button" id="signin-submit" class="btn btn-primary btn-md round submit" onclick="signIn()" disabled>Sign In</button>
-					 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" onclick="closeModal()" >Close</button>
+					 <button type="button" class="btn btn-primary btn-md round submit" onclick="signIn()" disabled>Sign In</button>
+					 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >Close</button>
 				 </div>
 			 </div>
 		 </div>
