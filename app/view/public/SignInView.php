@@ -26,7 +26,7 @@
 											 <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 								</div>
 								<div class="input-group col-xs-7" data-validate="length" data-length="8" >
-											 <input type="password" id="signin-password" name="password" class="form-control" maxlength="20" placeholder="Password (Required) *Length >= 8" required />
+											 <input type="password" id="signin-password" name="password" class="form-control" placeholder="Password (Required) *Length >= 8" required />
 											 <span></span>
 								</div>
 							</div>

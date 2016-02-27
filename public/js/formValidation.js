@@ -94,6 +94,43 @@ $(document).ready(function() {
   			state = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test($(this).val())
   		}
       /*
+        Else If group div have attribute validate-date="password"
+        then we need a correct password
+        1 letter (a-z or A-Z)
+        1 Number (0-9)
+        1 symbol (#,! . . .)
+        8 at least characters
+      */
+      else if($group.data('validate') == "password" && !first_time)
+      {
+        state = /[0-9]/.test($(this).val());
+        if(state)
+        {
+          state = /[\'£!$%@#~,=_+¬-]/.test($(this).val());
+        }
+        if(state)
+        {
+          state = /[A-Z,a-z]/.test($(this).val());
+        }
+        if(state)
+        {
+          /*
+            If group div have attribute validate-length="e.g 9"
+          */
+          if($group.data('length'))
+          {
+            state = $(this).val().length >= $group.data('length') ? true : false;
+          }
+          /*
+            else group div dont have attribute
+            validate-length we set a default min = 8
+          */
+          else {
+            state = $(this).val().length >= 8 ? true : false;
+          }
+        }
+      }
+      /*
         Else If group div have attribute validate-date="phone"
         then we need a correct phone number
       */
@@ -133,6 +170,22 @@ $(document).ready(function() {
       else if ($group.data('validate') == "number" && !first_time) {
   			state = !isNaN(parseFloat($(this).val())) && isFinite($(this).val());
   		}
+      /*
+        If group div have attribute data-equal="#field-id"
+        then we need to compare them
+      */
+      if($group.data('equal') && state && !first_time)
+      {
+        state = $(this).val().localeCompare($(document).find('#'+$group.data('equal')).val()) == 0 ? true : false;
+      }
+      /*
+        If group div have attribute data-not-equal="#field-id"
+        then we need to compare them
+      */
+      if($group.data('not-equal') && state && !first_time)
+      {
+        state = $(this).val().localeCompare($(document).find('#'+$group.data('not-equal')).val()) != 0 ? true : false;
+      }
 
       /*
         If it was the first time

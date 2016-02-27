@@ -27,6 +27,13 @@ var opts = {
 }
 
 /*
+  User must confirm his password
+*/
+function confirmPassword()
+{
+
+}
+/*
   User try to update
   his profile informations
 */
@@ -56,7 +63,7 @@ function profileUpdate()
         user input to variables
   		*/
   		var userEmail = $(document).find("#profile-email").val();
-  		var userPassword = $(document).find("#profile-password").val();
+  		var userPassword = $(document).find("#profile-new-password").val();
   		var userFName = $(document).find("#profile-fname").val();
   		var userLName = $(document).find("#profile-lname").val();
   		var userGender = $(document).find("#profile-gender").val();

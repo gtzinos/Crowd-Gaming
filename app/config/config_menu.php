@@ -4,7 +4,7 @@
 
 		menu_add_item( Name of Menu , The codename of the page , Order , Label );
 	*/
-	
+
 
 	/*
 		Main menu that will show when a user that has not logged in.
@@ -38,7 +38,7 @@
 	 */
 	$moderatorMenu = Menu::create("ModeratorMenu");
 	//Add menu items here
-	
+
 	/*
 		Right menu that will show when a user has not logged in.
 	 */
@@ -55,7 +55,6 @@
 
 	$authorizedRightMenu->addItem( MenuItem::create("Profile" , "LINK" , "profile") );
 	$authorizedRightMenu->addItem( MenuItem::create("Sign Out" , "LINK" , "signout") );
-
 
 	Menus::add($examinerMenu);
 	Menus::add($moderatorMenu);

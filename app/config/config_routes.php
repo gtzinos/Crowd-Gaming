@@ -11,7 +11,7 @@
 	Routes::add( 'signout' , 'public/SignOutController.php' , $_USER_LEVEL["PLAYER"]);
 
 	Routes::add( 'profile' , 'player/ProfilePageController.php' , $_USER_LEVEL["PLAYER"]);
-
+	Routes::add( 'confirm_password' , 'player/ConfirmPasswordController.php' , $_USER_LEVEL["PLAYER"]);
 	/*
 		The Page to load when the page parameter is not defined
 	*/

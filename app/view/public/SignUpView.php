@@ -19,14 +19,25 @@
                         <span id="email-response"></span>
                  </div>
 							 </div>
-               <!-- Password Field -->
+               <!-- First Password Field -->
 							 <div class="form-group has-feedback">
                  <div class="col-xs-2">
 								        <!--  <label class="control-label" for="pwd">Password:</label> -->
                         <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
                  </div>
-                 <div class="input-group col-xs-7" data-validate="length" data-length="8" >
+                 <div class="input-group col-xs-7" data-validate="length" data-length="8">
 								        <input type="password" class="form-control" id="signup-password" placeholder="Password (Required) *Length >= 8" required />
+                        <span id="password-response"></span>
+                 </div>
+               </div>
+               <!-- Second Password Field -->
+							 <div class="form-group has-feedback">
+                 <div class="col-xs-2">
+								        <!--  <label class="control-label" for="pwd">Password:</label> -->
+                        <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
+                 </div>
+                 <div class="input-group col-xs-7" data-validate="length" data-length="8" data-equal="signup-password">
+								        <input type="password" class="form-control" id="signup-password-2" placeholder="Repeat Password (Required)" required />
                         <span id="password-response"></span>
                  </div>
                </div>
