@@ -19,9 +19,15 @@
 					isset($_POST["country"]) && 
 					isset($_POST["city"]) && 
 					isset($_POST["gender"]) &&
-					isset($_POST["password"]) ) )
+					isset($_POST["password"]) && 
+					isset($_POST["licence"] )) )
 			{
 				$this->redirect("home");
+			}
+
+			if( $_POST["licence"] != 'accepted'){
+				print 12; // licence not accepted
+				die();
 			}
 			
 			/*
