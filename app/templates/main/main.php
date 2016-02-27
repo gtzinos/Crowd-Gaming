@@ -15,7 +15,7 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/formValidation.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/signUp.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/homePageEvents.js"); ?>"></script>
 
