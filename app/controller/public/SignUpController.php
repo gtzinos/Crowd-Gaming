@@ -11,15 +11,15 @@
 		}
 
 		public function run(){
-			
-			if( isset($_SESSION["USER_ID"])  || 
-				!(  isset($_POST["email"]) && 
+
+			if( isset($_SESSION["USER_ID"])  ||
+				!(  isset($_POST["email"]) &&
 					isset($_POST["name"]) &&
-					isset($_POST["surname"]) && 
-					isset($_POST["country"]) && 
-					isset($_POST["city"]) && 
+					isset($_POST["surname"]) &&
+					isset($_POST["country"]) &&
+					isset($_POST["city"]) &&
 					isset($_POST["gender"]) &&
-					isset($_POST["password"]) && 
+					isset($_POST["password"]) &&
 					isset($_POST["licence"] )) )
 			{
 				$this->redirect("home");
@@ -29,7 +29,7 @@
 				print 12; // licence not accepted
 				die();
 			}
-			
+
 			/*
 				Sanitizing
 			 */
@@ -102,7 +102,7 @@
 
 			/*
 				Set data
-			 */
+			*/
 			$player = new Player();
 
 			$player->setEmail($email);
@@ -125,7 +125,7 @@
 			/*
 				Insert the user in the database
 			 */
-			
+
 			$userMapper = new UserMapper();
 
 			try{
@@ -136,7 +136,7 @@
 				DatabaseConnection::getInstance()->commit();
 
 				print 'TRUE';
-				
+
 			}catch(EmailInUseException $e){
 				print '10';
 				DatabaseConnection::getInstance()->rollback();

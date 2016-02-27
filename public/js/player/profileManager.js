@@ -104,7 +104,7 @@ function profileUpdate()
   			/*
   				Url string
   			*/
-  			var url = "./profile";
+  			var url = "./profile/ajax";
   			/*
   			 Send using POST Method
   			*/
@@ -176,7 +176,7 @@ function profileUpdate()
   				*/
   				document.getElementById("profile-response").style.display = "inline";
   			//	$(document).find("#profile-response").css('color','green');
-  				document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>You have registered successfully!</div>";
+  				document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>You have updated your profile successfully!</div>";
 
   				/*
   				 Milliseconds which user must wait
@@ -261,7 +261,7 @@ function profileUpdate()
   				 */
   				 if(xmlHttp.responseText.localeCompare("7") == 0)
   				 {
-  				 	error_message += "<div class='alert alert-danger'>Password length must be 8 - 50 characters.</div>";
+  				 	error_message += "<div class='alert alert-danger'>Password length must be >= 8 characters.</div>";
   				 }
   				 /*
   				 		If error message == 8
@@ -306,8 +306,9 @@ function profileUpdate()
   					{
   						//Send us one email with the error message
   						//mail("to","From","ERROR profile",xmlHttp.responseText);
-  						error_message = "Important error. Contact with one admin!";
+  						error_message = "<div class='alert alert-danger'>Important error. Contact with one admin!</div>";
   					}
+
 
 
   				 /*
@@ -315,7 +316,7 @@ function profileUpdate()
   					 to the wright div
   				 */
   			 	 document.getElementById("profile-response").style.display = "inline";
-  				 document.getElementById("profile-response").innerHTML = error_message;
+  				 document.getElementById("profile-response").innerHTML = xmlHttp.responseText;
 
   			}
   		}
@@ -325,13 +326,11 @@ function profileUpdate()
   		Server Problem (Timeout probably)
   	*/
   	else {
-  		/*
-  			TODO Something like
+  		  /*
+  			   TODO Something like
+        */
   			document.getElementById("profile-response").style.display ="none";
-  			document.getElementById("profile-response").innerHTML = "Server is offline"	;
-  			OR
-  			TODO window.location("./home");
-  		*/
+  			document.getElementById("profile-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>"	;
   	}
   }
 
