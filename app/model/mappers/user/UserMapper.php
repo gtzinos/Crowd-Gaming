@@ -71,8 +71,8 @@
 				throw new EmailInUseException("This email is in use by another user.");
 
 			$statement = self::getUpdateStatement();
-	
-			$statement->setParameters("sississssiiii",	
+
+			$statement->setParameters("sississsssiiii",	
 				$user->getEmail(),
 				$user->getAccessLevel(),
 				$user->getName(),
@@ -82,11 +82,11 @@
 				$user->getCity(),
 				$user->getAddress(),
 				$user->getPhone(),
-				$user->getId(),
 				$user->getPassword(),
 				$user->getBanned(),
 				$user->getDeleted(),
-				$user->getVerified() );
+				$user->getVerified(),
+				$user->getId() );
 
 			$statement->executeUpdate();
 		}

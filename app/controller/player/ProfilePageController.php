@@ -29,11 +29,22 @@
 
 			if( $user ){
 
+				$_POST["email"] = "test2@test.com";
+				$_POST["newpassword"] = "testtest2";
+				$_POST["oldpassword"] = "testtest";
+				$_POST["name"] = "New Name";
+				$_POST["surname"] = "New Surname";
+				$_POST["gender"] = "1";
+				$_POST["city"] = "New City";
+				$_POST["country"] = "New Country";
+
+
 				// Use exists
 				if( isset($this->params[1]) && $this->params[1]=="ajax"){
-					if( isset($_POST["email"]) && isset($_POST["password"]) &&
-							isset($_POST["name"]) && isset($_POST["surname"]) &&
-							isset($_POST["gender"]) && isset($_POST["city"]) && isset($_POST["country"])){
+					if( isset($_POST["email"])       && isset($_POST["newpassword"]) &&
+						isset($_POST["oldpassword"]) && isset($_POST["name"])        && 
+						isset($_POST["surname"])     &&	isset($_POST["gender"])      && 
+						isset($_POST["city"])        && isset($_POST["country"]) ){
 							$this->updateUser($user , $mapper);
 					}
 				}
@@ -54,7 +65,8 @@
 				Sanitizing
 			 */
 			$email = htmlspecialchars($_POST["email"] , ENT_QUOTES);
-			$password = $_POST["password"];
+			$oldpassword = $_POST["oldpassword"];
+			$newpassword = $_POST["newpassword"];
 			$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 			$surname = htmlspecialchars($_POST["surname"] , ENT_QUOTES);
 			$gender = $_POST["gender"];
@@ -67,6 +79,13 @@
 
 			if( isset($_POST["phone"]) ){
 				$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+			}
+
+			$result = $userMapper->authenticate($user->getEmail() , $_POST["oldpassword"]);
+
+			if( !is_object($result) ){
+				print '12'; // Old password is not correct
+				die();
 			}
 
 			/*
@@ -101,12 +120,14 @@
 				print '6'; // City Validation Error
 				die();
 			}
-			if( strlen($password) < 8 ){
+
+			if( strlen($newpassword) < 8 ){
 				print '7'; // Password Validation Error
 				die();
 			}else{
-				$password = password_hash($password , PASSWORD_DEFAULT);
+				$newpassword = password_hash($newpassword , PASSWORD_DEFAULT);
 			}
+
 			if( isset($address) && ( strlen($address) < 2 || strlen($address) > 40 ) ){
 				print '8'; // Address Validation Error
 				die();
@@ -126,7 +147,7 @@
 			$user->setGender($gender);
 			$user->setCountry($country);
 			$user->setCity($city);
-			$user->setPassword($password);
+			$user->setPassword($newpassword);
 
 			if( isset($address))
 				$user->setAddress($address);
