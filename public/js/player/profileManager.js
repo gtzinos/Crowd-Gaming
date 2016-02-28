@@ -1,32 +1,6 @@
 var xmlHttp;
 
 /*
-  Initialize spinner
-*/
-var opts = {
-  lines: 11 // The number of lines to draw
-, length: 28 // The length of each line
-, width: 14 // The line thickness
-, radius: 32 // The radius of the inner circle
-, scale: 0.5 // Scales overall size of the spinner
-, corners: 1 // Corner roundness (0..1)
-, color: '#000' // #rgb or #rrggbb or array of colors
-, opacity: 0.25 // Opacity of the lines
-, rotate: 0 // The rotation offset
-, direction: 1 // 1: clockwise, -1: counterclockwise
-, speed: 1 // Rounds per second
-, trail: 60 // Afterglow percentage
-, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-, zIndex: 2e9 // The z-index (defaults to 2000000000)
-, className: 'spinner' // The CSS class to assign to the spinner
-, top: '50%' // Top position relative to parent
-, left: '50%' // Left position relative to parent
-, shadow: false // Whether to render a shadow
-, hwaccel: false // Whether to use hardware acceleration
-, position: 'absolute' // Element positioning
-}
-
-/*
   User try to update
   his profile informations
 */
@@ -37,7 +11,9 @@ function profileUpdate()
   	*/
   	 document.getElementById("profile-response").innerHTML = "";
   	 document.getElementById("profile-response").style.display = "none";
-  	 //$(document).find("#profile-response").css('color','red');
+
+     document.getElementById("confirm-response").innerHTML = "";
+  	 document.getElementById("confirm-response").style.display = "none";
 
   		if (window.XMLHttpRequest) {
   			/*
@@ -73,14 +49,9 @@ function profileUpdate()
   			Check the Variables before sending them
   		*/
 
-  		if(userEmail && userConfirmPassword && userNewPassword && userFName &&  userLName && userGender && userCountry && userCity)
+  		if(userEmail && userConfirmPassword && userFName &&  userLName && userGender && userCountry && userCity)
   		{
 
-  			var target = document.getElementById('profile-spinner');
-  			//var spinner = new Spinner(opts).spin(target);
-
-  			spinner = new Spinner(opts).spin();
-  			target.appendChild(spinner.el);
   			/*
   				While spin loading submit button must be disabled
   			*/
@@ -88,9 +59,9 @@ function profileUpdate()
   			/*
   				Milliseconds which user must wait
   				after server response arrived
-  				(Spinner loader)
+  				(loader)
   			*/
-  			var millisecondsToWait = 1500;
+  			var millisecondsToWait = 1000;
 
   			/*
   				After var millisecondsToWait
@@ -165,11 +136,6 @@ function profileUpdate()
   			//console.log(xmlHttp.responseText);
 
   			/*
-  				Remove spinner loader
-  			*/
-  			var target = document.getElementById('profile-spinner');
-  			target.removeChild(spinner.el);
-  			/*
   				After spin loaded submit button must be enabled
   			*/
   			$(document).find('.submit').prop('disabled',false);
@@ -182,28 +148,34 @@ function profileUpdate()
   					Redirect to home page
   				*/
   				document.getElementById("profile-response").style.display = "inline";
-  			//	$(document).find("#profile-response").css('color','green');
   				document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>You have updated your profile successfully!</div>";
 
-  				/*
-  				 Milliseconds which user must wait
-  				 after register completed successfully
-  			 */
-  			 var millisecondsToWait = 2000;
+  			   /*
+              Close Modal
+           */
+           $('.modal').modal('hide');
 
-  			 /*
-  				After var millisecondsToWait
-  				we will show results to the client
-  			*/
-  			 xmlHttp.onreadystatechange = setTimeout(function() {
-  				 /*
-  					 reload to main page
-  				 */
-  				 location.reload();
-  			 }, millisecondsToWait);
+           /*
+             Milliseconds which user must wait
+             before refresh
+             (loader)
+           */
+           var millisecondsToWait = 3000;
+
+           /*
+             After var millisecondsToWait
+             we will refresh the page
+           */
+           xmlHttp.onreadystatechange = setTimeout(function() {
+               /*
+      					 reload profile page
+      				 */
+               location.reload();
+           }, millisecondsToWait);
+
   			}
   			/*
-  				Wrong username or password
+  				Error codes
   			*/
   			else
   			{
@@ -302,7 +274,14 @@ function profileUpdate()
   				 {
   				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
   				 }
-
+           /*
+             If error message == 12
+             Fail password problem
+           */
+           if(xmlHttp.responseText.localeCompare("12") == 0)
+           {
+            error_message += "<div class='alert alert-danger'>Invalid password. Try again!</div>";
+           }
   				 /*
   				 	Else if no error message
   					return something going Wrong
@@ -322,8 +301,8 @@ function profileUpdate()
   				 	 Display the message
   					 to the wright div
   				 */
-  			 	 document.getElementById("profile-response").style.display = "inline";
-  				 document.getElementById("profile-response").innerHTML = xmlHttp.responseText;
+  			 	 document.getElementById("confirm-response").style.display = "inline";
+  				 document.getElementById("confirm-response").innerHTML = error_message;
 
   			}
   		}
@@ -336,8 +315,8 @@ function profileUpdate()
   		  /*
   			   TODO Something like
         */
-  			document.getElementById("profile-response").style.display ="none";
-  			document.getElementById("profile-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>"	;
+  			document.getElementById("confirm-response").style.display ="none";
+  			document.getElementById("confirm-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>"	;
   	}
   }
 
@@ -351,7 +330,9 @@ function deleteAccount()
   */
    document.getElementById("profile-response").innerHTML = "";
    document.getElementById("profile-response").style.display = "none";
-   //$(document).find("#profile-response").css('color','red');
+
+   document.getElementById("confirm-response").innerHTML = "";
+   document.getElementById("confirm-response").style.display = "none";
 
     if (window.XMLHttpRequest) {
       /*
@@ -365,11 +346,6 @@ function deleteAccount()
       xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
 
-    var target = document.getElementById('profile-spinner');
-    //var spinner = new Spinner(opts).spin(target);
-
-    spinner = new Spinner(opts).spin();
-    target.appendChild(spinner.el);
     /*
       While spin loading submit button must be disabled
     */
@@ -377,7 +353,7 @@ function deleteAccount()
     /*
       Milliseconds which user must wait
       after server response arrived
-      (Spinner loader)
+      (loader)
     */
     var millisecondsToWait = 1500;
 
@@ -428,11 +404,6 @@ function responseDeleteAccount()
       //console.log(xmlHttp.responseText);
 
       /*
-        Remove spinner loader
-      */
-      var target = document.getElementById('profile-spinner');
-      target.removeChild(spinner.el);
-      /*
         After spin loaded submit button must be enabled
       */
       $(document).find('.submit').prop('disabled',false);
@@ -445,17 +416,23 @@ function responseDeleteAccount()
           Redirect to home page
         */
         document.getElementById("profile-response").style.display = "inline";
-        //	$(document).find("#profile-response").css('color','green');
         document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>Your account deleted successfully!</div>";
+
+
+        /*
+           Close Modal
+        */
+        $('.modal').modal('hide');
+
         /*
          Milliseconds which user must wait
-         after register completed successfully
+         after delete completed successfully
         */
         var millisecondsToWait = 2000;
 
         /*
         After var millisecondsToWait
-        we will show results to the client
+        for user logout
         */
         xmlHttp.onreadystatechange = setTimeout(function() {
          /*
@@ -488,8 +465,8 @@ function responseDeleteAccount()
            Display the message
            to the wright div
          */
-         document.getElementById("profile-response").style.display = "inline";
-         document.getElementById("profile-response").innerHTML = error_message;
+         document.getElementById("confirm-response").style.display = "inline";
+         document.getElementById("confirm-response").innerHTML = error_message;
 
        }
      }
@@ -501,7 +478,7 @@ function responseDeleteAccount()
  		/*
  			TODO Something like
     */
- 			document.getElementById("profile-response").style.display ="none";
- 			document.getElementById("profile-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>";
+ 			document.getElementById("confirm-response").style.display ="none";
+ 			document.getElementById("confirm-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>";
  	}
 }
