@@ -173,7 +173,7 @@ function responseSignUp() {
 				After var millisecondsToWait
 				we will show results to the client
 			*/
-			 xmlHttp.onreadystatechange = setTimeout(function() {
+			 setTimeout(function() {
 				 /*
 					 reload to main page
 				 */
@@ -204,7 +204,7 @@ function responseSignUp() {
 				 		If error message == 2
 					  First Name length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("2") == 0)
+				 else if(xmlHttp.responseText.localeCompare("2") == 0)
 				 {
 					 error_message += "<div class='alert alert-danger'>First Name length must be 2 - 40 characters.</div>";
 				 }
@@ -212,7 +212,7 @@ function responseSignUp() {
 				 		If error message == 3
 						Last Name length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("3") == 0)
+				 else if(xmlHttp.responseText.localeCompare("3") == 0)
 				 {
 					 error_message += "<div class='alert alert-danger'>Last Name length must be 2 - 40 characters.</div>";
 				 }
@@ -220,7 +220,7 @@ function responseSignUp() {
 				 		If error message == 4
 						Gender value problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("4") == 0)
+				 else if(xmlHttp.responseText.localeCompare("4") == 0)
 				 {
 					 error_message += "<div class='alert alert-danger'>Gender length must be 0 or 1.</div>";
 				 }
@@ -228,7 +228,7 @@ function responseSignUp() {
 				 		If error message == 5
 						Country Name length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("5") == 0)
+				 else if(xmlHttp.responseText.localeCompare("5") == 0)
 				 {
 				 	error_message += "<div class='alert alert-danger'>Country name length must be 2 - 40 characters.</div>";
 				 }
@@ -236,7 +236,7 @@ function responseSignUp() {
 				 		If error message == 6
 					  City Name length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("6") == 0)
+				 else if(xmlHttp.responseText.localeCompare("6") == 0)
 				 {
 				 	error_message += "<div class='alert alert-danger'>City name length must be 2 - 40 characters.</div>";
 				 }
@@ -244,7 +244,7 @@ function responseSignUp() {
 				 		If error message == 7
 						Password length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("7") == 0)
+				 else if(xmlHttp.responseText.localeCompare("7") == 0)
 				 {
 				 	error_message += "<div class='alert alert-danger'>Password length must be 8 - 50 characters.</div>";
 				 }
@@ -252,7 +252,7 @@ function responseSignUp() {
 				 		If error message == 8
 						Address Name length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("8") == 0)
+				 else if(xmlHttp.responseText.localeCompare("8") == 0)
 				 {
 					 error_message += "<div class='alert alert-danger'>Address name length must be 2 - 40 characters.</div>";
 				 }
@@ -260,7 +260,7 @@ function responseSignUp() {
 				 		If error message == 9
 						Phone number length problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("9") == 0)
+				 else if(xmlHttp.responseText.localeCompare("9") == 0)
 				 {
 				 	error_message += "<div class='alert alert-danger'>Phone number length must be 8 - 15 characters.</div>";
 				 }
@@ -268,7 +268,7 @@ function responseSignUp() {
 				 		If error message == 10
 						Email address used problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("10") == 0)
+				 else if(xmlHttp.responseText.localeCompare("10") == 0)
 				 {
 				 	error_message += "<div class='alert alert-danger'>Email address used by another user.</div>";
 				 }
@@ -276,7 +276,7 @@ function responseSignUp() {
 				 	 If error message == 11
 				 	 General database problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("11") == 0)
+				 else if(xmlHttp.responseText.localeCompare("11") == 0)
 				 {
 				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
 				 }
@@ -284,15 +284,16 @@ function responseSignUp() {
 				 	If error message == 12
 				 	General database problem
 				 */
-				 if(xmlHttp.responseText.localeCompare("12") == 0)
+				 else if(xmlHttp.responseText.localeCompare("12") == 0)
 				 {
 				  error_message += "<div class='alert alert-danger'>You must accept our licence.</div>";
 				 }
 				 /*
-				 	Else if no error message
-					return something going Wrong
+						 Something going wrong
 				 */
-
+				 else {
+					 error_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
+				 }
 				 /*
 				 	if(xmlHttp.responseText.localeCompare("") == 0)
 					{
