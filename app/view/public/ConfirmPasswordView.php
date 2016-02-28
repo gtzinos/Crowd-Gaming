@@ -1,13 +1,41 @@
 <? if($section == "CONFIRM_PASSWORD") : ?>
+	<script>
+		/*
+			Confirm Password method
+			(Called before modal shown event)
+		*/
+		function confirmPassword(method)
+		{
+				/*
+					Clear response label
+				*/
+				$("#confirm-response").html('');
+				/*
+					Show modal box
+				*/
+			 	$("#confirmPassword").modal('show');
+				/*
+					Set on click listener
+					on #confirm-button
+				*/
+				$("#confirm-button").on('click',function() {
+					/*
+						parameter name method + ()
+						call e.g updateProfile()
+					*/
+					eval(method + '()');
+				});
+		}
+	</script>
 	<div class="modal fade" id="confirmPassword" role="dialog">
 		<div class="modal-dialog modal-md">
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4><span class="glyphicon glyphicon-lock"></span> Confirm your password </h4>
+					 <h4><span class="glyphicon glyphicon-lock"></span> Confirm your current password </h4>
 				 </div>
 				 <div class="modal-body">
-						<form role="form" class="form-horizontal">
+						<form role="form" method="POST" action="#" class="form-horizontal">
 							<!-- Password Field -->
 							<div class="form-group has-feedback">
 								<div class="col-xs-2">
@@ -33,7 +61,7 @@
 						</form>
 				 </div>
 				 <div class="modal-footer">
-					 <button type="button" class="btn btn-primary btn-md round submit" onclick="profileUpdate()" disabled>Confirm Password</button>
+					 <button id="confirm-button" type="button" class="btn btn-primary btn-md round submit" disabled>Confirm Password</button>
 					 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >Cancel</button>
 				 </div>
 			 </div>

@@ -1,5 +1,5 @@
 <?php
-	
+
 	include '../core/AppLauncher.php';
 
 	/*
@@ -16,7 +16,7 @@
 	 */
 	$controller->defSection("SIGN_IN" , "public/SignInView.php");
 	$controller->defSection("SIGN_UP" , "public/SignUpView.php");
-
+	$controller->defSection("CONFIRM_PASSWORD" , "public/ConfirmPasswordView.php");
 
 
 	/*
@@ -36,7 +36,7 @@
 	}else{
 
 		$controller->setArg("primary-menu"   , "GuestMenu");
-		$controller->setArg("secondary-menu" , "UnauthorizedRightMenu");	
+		$controller->setArg("secondary-menu" , "UnauthorizedRightMenu");
 	}
 
 

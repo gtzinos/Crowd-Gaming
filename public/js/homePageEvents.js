@@ -16,6 +16,7 @@ function keyPressForm(e) {
 
     if(($("#registerModal").data('bs.modal') || {}).isShown)
     {
+
       /*
         If submit button is activated
       */
@@ -47,6 +48,32 @@ function keyPressForm(e) {
           Call sign In function
         */
         signIn();
+      }
+      /*
+        End
+      */
+      return;
+    }
+    /*
+      Else if Register modal is opened
+    */
+    else if(($("#confirmPassword").data('bs.modal') || {}).isShown)
+    {
+      /*
+        Cancel default action from the enter key
+        E.g (Send form data)
+      */
+      event.preventDefault();
+      /*
+        If submit button is activated
+      */
+      var keyPressed = $(document).find("#confirm-button").prop("disabled");
+      if(!keyPressed)
+      {
+        /*
+          Call confirm-button on click function
+        */
+        //$("#confirm-button").click();
       }
       /*
         End
