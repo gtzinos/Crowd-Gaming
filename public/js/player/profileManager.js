@@ -85,7 +85,7 @@ function profileUpdate()
   				Header encryption
   			*/
   			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  		  var variables = "email=" + userEmail + "&oldpassword=" + userConfirmPassword + "&name=" + userFName +
+  		  var variables = "email=" + userEmail + "&currentpassword=" + userConfirmPassword + "&name=" + userFName +
   				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
   				+ userGender;
         /*
@@ -397,7 +397,7 @@ function deleteAccount()
         Header encryption
       */
       xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-      var variables = "oldpassword=" + userConfirmPassword;
+      var variables = "currentpassword=" + userConfirmPassword;
       /*
         Send ajax request
       */
