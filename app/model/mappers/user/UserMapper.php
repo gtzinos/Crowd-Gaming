@@ -119,6 +119,7 @@
 		}
 
 
+
 		/*
 			Removes a user from the database
 		 */
@@ -130,6 +131,17 @@
 			$statement->executeUpdate();
 		}
 
+		public function getIdByEmail($email){
+			$statement = DatabaseConnection::getInstance()->prepareStatement("select id from User where email=?");
+			$statement->setParameters("s" ,$email);
+
+			$resultSet = $statement->execute();
+
+			if($resultSet->next()){
+				return $resultSet->get("id");
+			}
+			return false;
+		}
 
 		/*
 			Checks if an email already exists in the database

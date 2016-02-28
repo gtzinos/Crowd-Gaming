@@ -2,6 +2,8 @@
 
 	include_once '../app/model/domain/user/Player.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
+	include_once '../app/model/mappers/user/ActivationMapper.php';
+	require_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
 	class SignUpController extends Controller{
 
@@ -11,7 +13,7 @@
 		}
 
 		public function run(){
-
+			
 			if( isset($_SESSION["USER_ID"])  ||
 				!(  isset($_POST["email"]) &&
 					isset($_POST["name"]) &&
@@ -113,7 +115,7 @@
 			$player->setCity($city);
 			$player->setAccessLevel(1);
 			$player->setPassword($password);
-			$player->setVerified(true);
+			$player->setVerified(false);
 			$player->setBanned(false);
 			$player->setDeleted(false);
 
@@ -124,31 +126,73 @@
 				$player->setPhone($phone);
 
 
-
+			// random string with 100 chars
+			$activationParameter = base64_encode(openssl_random_pseudo_bytes(75));
+			$activationParameter = str_replace("+" , "A" , $activationParameter);
+			$activationParameter = str_replace("/" , "Z" , $activationParameter); 
+			
 			/*
 				Insert the user in the database
 			 */
 
 			$userMapper = new UserMapper();
+			$activationMapper = new ActivationMapper();
+
 
 			try{
 				DatabaseConnection::getInstance()->startTransaction();
 
 				$userMapper->persist($player);
 
+				$id = $userMapper->getIdByEmail($player->getEmail());
+
+				$activationMapper->insert($id , $activationParameter);
+
+				global $_CONFIG;
+				
+				$mail = new PHPMailer;
+
+				$mail->isSMTP();      
+				$mail->Host = $_CONFIG["SMTP_HOST"];
+				$mail->SMTPAuth = true; 
+				$mail->Username = $_CONFIG["SMTP_USERNAME"];
+				$mail->Password = $_CONFIG["SMTP_PASSWORD"];;
+				$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];;
+				$mail->Port = $_CONFIG["SMTP_PORT"];;
+
+				$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Auto-Moderator');
+				$mail->addAddress($player->getEmail(), $player->getName().' '.$player->getSurname());     // Add a recipient
+
+				$mail->isHTML(true);                                  // Set email format to HTML
+
+				$mail->Subject = 'Account Activation';
+				$mail->Body    = "Thank you for creating an account. \n".
+								 "Please go to this link to activate your account. \nhttp://".
+								  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$activationParameter;
+				$mail->AltBody = "Thank you for creating an account. \n".
+								 "Please go to this link to activate your account. \nhttp://".
+								  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$activationParameter;
+
+				if(!$mail->send()) {
+				    throw new Exception("Email failed to send. ". $mail->ErrorInfo);
+				}
+
 				DatabaseConnection::getInstance()->commit();
 
 				print 'TRUE';
-
 			}catch(EmailInUseException $e){
 				print '10';
 				DatabaseConnection::getInstance()->rollback();
 			}catch(DatabaseException $ex){
 				print '11';
 				DatabaseConnection::getInstance()->rollback();
+			}catch(Exception $ex){
+				print $ex->getMessage().'<br>';
+				print '13'; // Email Error
+				DatabaseConnection::getInstance()->rollback();
 			}
 
-
 		}
+
 
 	}

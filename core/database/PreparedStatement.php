@@ -45,8 +45,7 @@
 
             try{
                 call_user_func_array(array($this->query, 'bind_param'), $params);
-            }
-            catch(Exception $e){
+            }catch(Exception $e){
                 throw new DatabaseException("Error while trying to bind the parameters of query ".$this->queryString);
             }
         }

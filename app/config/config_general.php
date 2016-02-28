@@ -47,3 +47,23 @@
 		Session Timeout in minutes, -1 means disabled
 	*/
 	$_CONFIG["SESSION_TIMEOUT"] = "1800";
+	/*
+		Specify main and backup SMTP 
+	 */
+	$_CONFIG["SMTP_HOST"] = "smtp.gmail.com";
+	/*
+		SMTP username
+	 */
+	$_CONFIG["SMTP_USERNAME"] = "ENTER_EMAIL_HERE";
+	/*
+		SMTP password, DONT COMMIT YOUR PASSWORD TO GITHUB!
+	 */
+	$_CONFIG["SMTP_PASSWORD"] = "ENTER_PASSWORD_HERE";
+	/*
+		TCP port to connect to
+	 */
+	$_CONFIG["SMTP_PORT"] = 587;
+	/*
+		Enable TLS encryption, `ssl` also accepted
+	 */
+	$_CONFIG["SMTP_SECURE"] = "tls";
