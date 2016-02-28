@@ -85,7 +85,7 @@ function profileUpdate()
   				Header encryption
   			*/
   			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  		  var variables = "email=" + userEmail + "&oldpassword=" + userConfirmPassword + "&name=" + userFName +
+  		  var variables = "email=" + userEmail + "&currentpassword=" + userConfirmPassword + "&name=" + userFName +
   				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
   				+ userGender;
         /*
@@ -139,10 +139,6 @@ function profileUpdate()
 
   			//console.log(xmlHttp.responseText);
 
-  			/*
-  				After spin loaded submit button must be enabled
-  			*/
-  			$(document).find('.submit').prop('disabled',false);
   			/*
   				User can login
   			*/
@@ -311,6 +307,11 @@ function profileUpdate()
   			 	 document.getElementById("confirm-response").style.display = "inline";
   				 document.getElementById("confirm-response").innerHTML = error_message;
 
+           /*
+             After update completed submit button must be enabled
+           */
+           $(document).find('.submit').prop('disabled',false);
+
   			}
   		}
 
@@ -397,7 +398,7 @@ function deleteAccount()
         Header encryption
       */
       xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-      var variables = "oldpassword=" + userConfirmPassword;
+      var variables = "currentpassword=" + userConfirmPassword;
       /*
         Send ajax request
       */
@@ -433,10 +434,6 @@ function responseDeleteAccount()
 
       //console.log(xmlHttp.responseText);
 
-      /*
-        After spin loaded submit button must be enabled
-      */
-      $(document).find('.submit').prop('disabled',false);
       /*
         User can login
       */
@@ -511,7 +508,10 @@ function responseDeleteAccount()
          */
          document.getElementById("confirm-response").style.display = "inline";
          document.getElementById("confirm-response").innerHTML = error_message;
-
+         /*
+           After delete completed submit button must be enabled
+         */
+         $(document).find('.submit').prop('disabled',false);
        }
      }
    }

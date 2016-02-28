@@ -6,25 +6,27 @@
 		*/
 		function confirmPassword(method)
 		{
-				/*
-					Clear response label
-				*/
-				$("#confirm-response").html('');
-				/*
-					Show modal box
-				*/
-			 	$("#confirmPassword").modal('show');
+			/*
+				Clear response label
+			*/
+			$("#confirm-response").html('');
+			/*
+				Show modal box
+			*/
+			$("#confirmPassword").modal('show');
 				/*
 					Set on click listener
 					on #confirm-button
 				*/
-				$("#confirm-button").on('click',function() {
+				$( "#confirm-button" ).unbind( "click" );
+				$( "#confirm-button" ).bind( "click", function() {
 					/*
 						parameter name method + ()
 						call e.g updateProfile()
 					*/
 					eval(method + '()');
-				});
+				} );
+
 		}
 	</script>
 	<div class="modal fade" id="confirmPassword" role="dialog">
