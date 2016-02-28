@@ -73,7 +73,7 @@ function keyPressForm(e) {
         /*
           Call confirm-button on click function
         */
-        //$("#confirm-button").click();
+        $("#confirm-button").click();
       }
       /*
         End

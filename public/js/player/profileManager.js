@@ -115,6 +115,10 @@ function profileUpdate()
   		}
   		else
   		{
+        /*
+           Close Modal
+        */
+        $('.modal').modal('hide');
   			document.getElementById("profile-response").style.display = "inline";
   			document.getElementById("profile-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
   		}
@@ -144,16 +148,16 @@ function profileUpdate()
   			*/
   			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
   			{
+          /*
+             Close Modal
+          */
+          $('.modal').modal('hide');
+
   				/*
   					Redirect to home page
   				*/
   				document.getElementById("profile-response").style.display = "inline";
   				document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>You have updated your profile successfully!</div>";
-
-  			   /*
-              Close Modal
-           */
-           $('.modal').modal('hide');
 
            /*
              Milliseconds which user must wait
@@ -166,7 +170,7 @@ function profileUpdate()
              After var millisecondsToWait
              we will refresh the page
            */
-           xmlHttp.onreadystatechange = setTimeout(function() {
+           setTimeout(function() {
                /*
       					 reload profile page
       				 */
@@ -198,7 +202,7 @@ function profileUpdate()
   				 		If error message == 2
   					  First Name length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("2") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("2") == 0)
   				 {
   					 error_message += "<div class='alert alert-danger'>First Name length must be 2 - 40 characters.</div>";
   				 }
@@ -206,7 +210,7 @@ function profileUpdate()
   				 		If error message == 3
   						Last Name length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("3") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("3") == 0)
   				 {
   					 error_message += "<div class='alert alert-danger'>Last Name length must be 2 - 40 characters.</div>";
   				 }
@@ -214,7 +218,7 @@ function profileUpdate()
   				 		If error message == 4
   						Gender value problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("4") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("4") == 0)
   				 {
   					 error_message += "<div class='alert alert-danger'>Gender length must be 0 or 1.</div>";
   				 }
@@ -222,7 +226,7 @@ function profileUpdate()
   				 		If error message == 5
   						Country Name length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("5") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("5") == 0)
   				 {
   				 	error_message += "<div class='alert alert-danger'>Country name length must be 2 - 40 characters.</div>";
   				 }
@@ -230,7 +234,7 @@ function profileUpdate()
   				 		If error message == 6
   					  City Name length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("6") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("6") == 0)
   				 {
   				 	error_message += "<div class='alert alert-danger'>City name length must be 2 - 40 characters.</div>";
   				 }
@@ -238,7 +242,7 @@ function profileUpdate()
   				 		If error message == 7
   						Password length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("7") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("7") == 0)
   				 {
   				 	error_message += "<div class='alert alert-danger'>Password length must be >= 8 characters.</div>";
   				 }
@@ -246,7 +250,7 @@ function profileUpdate()
   				 		If error message == 8
   						Address Name length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("8") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("8") == 0)
   				 {
   					 error_message += "<div class='alert alert-danger'>Address name length must be 2 - 40 characters.</div>";
   				 }
@@ -254,7 +258,7 @@ function profileUpdate()
   				 		If error message == 9
   						Phone number length problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("9") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("9") == 0)
   				 {
   				 	error_message += "<div class='alert alert-danger'>Phone number length must be 8 - 15 characters.</div>";
   				 }
@@ -262,7 +266,7 @@ function profileUpdate()
   				 		If error message == 10
   						Email address used problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("10") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("10") == 0)
   				 {
   				 	error_message += "<div class='alert alert-danger'>Email address used by another user.</div>";
   				 }
@@ -270,7 +274,7 @@ function profileUpdate()
   				 	 If error message == 11
   				 	 General database problem
   				 */
-  				 if(xmlHttp.responseText.localeCompare("11") == 0)
+  				 else if(xmlHttp.responseText.localeCompare("11") == 0)
   				 {
   				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
   				 }
@@ -278,14 +282,17 @@ function profileUpdate()
              If error message == 12
              Fail password problem
            */
-           if(xmlHttp.responseText.localeCompare("12") == 0)
+           else if(xmlHttp.responseText.localeCompare("12") == 0)
            {
             error_message += "<div class='alert alert-danger'>Invalid password. Try again!</div>";
            }
   				 /*
-  				 	Else if no error message
-  					return something going Wrong
+  				 	Something going Wrong
   				 */
+           else
+           {
+ 						error_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
+ 					 }
 
 
   				 	if(xmlHttp.responseText.localeCompare("") == 0)
@@ -347,43 +354,66 @@ function deleteAccount()
     }
 
     /*
-      While spin loading submit button must be disabled
+     Initialize user confirm password
     */
-    $(document).find('.submit').prop('disabled',true);
-    /*
-      Milliseconds which user must wait
-      after server response arrived
-      (loader)
-    */
-    var millisecondsToWait = 1500;
+    var userConfirmPassword = $(".modal").find("#confirm-password").val();
 
     /*
-      After var millisecondsToWait
-      we will show results to the client
+      Check the Variable before sending
     */
-    xmlHttp.onreadystatechange = setTimeout(function() {
+    if(userConfirmPassword)
+    {
+
       /*
-        Response function
+        While spin loading submit button must be disabled
       */
-      responseDeleteAccount();
-    }, millisecondsToWait);
-    /*
-      Url string
-    */
-    var url = "./delete-account";
-    /*
-     Send using POST Method
-    */
-    xmlHttp.open("POST", url, false);
-    /*
-      Header encryption
-    */
-    xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-    var variables = "deleteme=true&accept=true";
-    /*
-      Send ajax request
-    */
-    xmlHttp.send(variables);
+      $(document).find('.submit').prop('disabled',true);
+      /*
+        Milliseconds which user must wait
+        after server response arrived
+        (loader)
+      */
+      var millisecondsToWait = 1000;
+
+      /*
+        After var millisecondsToWait
+        we will show results to the client
+      */
+      xmlHttp.onreadystatechange = setTimeout(function() {
+        /*
+          Response function
+        */
+        responseDeleteAccount();
+      }, millisecondsToWait);
+      /*
+        Url string
+      */
+      var url = "./profile/ajax";
+      /*
+       Send using POST Method
+      */
+      xmlHttp.open("POST", url, false);
+      /*
+        Header encryption
+      */
+      xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+      var variables = "oldpassword=" + userConfirmPassword;
+      /*
+        Send ajax request
+      */
+      xmlHttp.send(variables);
+    }
+    else
+    {
+      /*
+         Close Modal
+         if is opened
+      */
+      $('.modal').modal('hide');
+      document.getElementById("profile-response").style.display = "inline";
+      document.getElementById("profile-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
+    }
+
 }
 /*
   Server response
@@ -413,16 +443,16 @@ function responseDeleteAccount()
       if(xmlHttp.responseText.localeCompare("TRUE") == 0)
       {
         /*
+           Close Modal
+        */
+        $('.modal').modal('hide');
+
+        /*
           Redirect to home page
         */
         document.getElementById("profile-response").style.display = "inline";
         document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>Your account deleted successfully!</div>";
 
-
-        /*
-           Close Modal
-        */
-        $('.modal').modal('hide');
 
         /*
          Milliseconds which user must wait
@@ -434,7 +464,7 @@ function responseDeleteAccount()
         After var millisecondsToWait
         for user logout
         */
-        xmlHttp.onreadystatechange = setTimeout(function() {
+        setTimeout(function() {
          /*
            reload to main page
          */
@@ -454,13 +484,27 @@ function responseDeleteAccount()
 				 var error_message="";
 				 /*
 				 		If error message == 1
-					  ERROR 1
-
-  				 if(xmlHttp.responseText.localeCompare("1") == 0)
-  				 {
-  					 error_message += "<div class='alert alert-danger'>Email address length must be 3 - 50 characters.</div>";
-  				 }
+					  Wrong password
          */
+				 if(xmlHttp.responseText.localeCompare("1") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>Incorrect password.Try again!</div>";
+				 }
+         /*
+				 		If error message == 1
+					  Wrong password
+         */
+				 else if(xmlHttp.responseText.localeCompare("2") == 0)
+				 {
+					 error_message += "<div class='alert alert-danger'>General Database error.</div>";
+				 }
+         /*
+          Something going wrong
+         */
+         else
+         {
+           error_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
+         }
          /*
            Display the message
            to the wright div

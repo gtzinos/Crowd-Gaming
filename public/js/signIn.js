@@ -167,9 +167,39 @@ function responseSignIn() {
 						 If error message == 1
 						 Wrong username or password
 					*/
-					if(xmlHttp.responseText.localeCompare("FALSE") == 0)
+					if(xmlHttp.responseText.localeCompare("1") == 0)
 					{
 					 error_message += "<div class='alert alert-danger'>Wrong username or password.</div>";
+					}
+					/*
+						 If error message == 2
+						 Not verified (Email verification)
+					*/
+					else if(xmlHttp.responseText.localeCompare("2") == 0)
+					{
+					 error_message += "<div class='alert alert-danger'>You must verify your email address.</div>";
+					}
+					/*
+						 If error message == 3
+						 User is deleted
+					*/
+					else if(xmlHttp.responseText.localeCompare("3") == 0)
+					{
+					 error_message += "<div class='alert alert-danger'>This account has deleted.</div>";
+					}
+					/*
+						 If error message == 4
+						 Banned account
+					*/
+					else if(xmlHttp.responseText.localeCompare("4") == 0)
+					{
+					 error_message += "<div class='alert alert-danger'>Your account has banned.</div>";
+					}
+					/*
+							Something going wrong
+					*/
+					else {
+						error_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
 					}
 
 
