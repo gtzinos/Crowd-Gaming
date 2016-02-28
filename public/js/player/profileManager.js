@@ -140,10 +140,6 @@ function profileUpdate()
   			//console.log(xmlHttp.responseText);
 
   			/*
-  				After spin loaded submit button must be enabled
-  			*/
-  			$(document).find('.submit').prop('disabled',false);
-  			/*
   				User can login
   			*/
   			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
@@ -311,6 +307,11 @@ function profileUpdate()
   			 	 document.getElementById("confirm-response").style.display = "inline";
   				 document.getElementById("confirm-response").innerHTML = error_message;
 
+           /*
+             After update completed submit button must be enabled
+           */
+           $(document).find('.submit').prop('disabled',false);
+
   			}
   		}
 
@@ -434,10 +435,6 @@ function responseDeleteAccount()
       //console.log(xmlHttp.responseText);
 
       /*
-        After spin loaded submit button must be enabled
-      */
-      $(document).find('.submit').prop('disabled',false);
-      /*
         User can login
       */
       if(xmlHttp.responseText.localeCompare("TRUE") == 0)
@@ -511,7 +508,10 @@ function responseDeleteAccount()
          */
          document.getElementById("confirm-response").style.display = "inline";
          document.getElementById("confirm-response").innerHTML = error_message;
-
+         /*
+           After delete completed submit button must be enabled
+         */
+         $(document).find('.submit').prop('disabled',false);
        }
      }
    }

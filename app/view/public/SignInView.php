@@ -42,18 +42,36 @@
 							</div>
 								<!-- Check box Field -->
 							<div class="form-group">
-								<div class="col-xs-2"></div>
+								<div class="col-xs-2">
+								</div>
 								<div class="col-xs-7">
 									<label  class="control-label">
 										<input id="signin-remember" type="checkbox" /> Remember Me
 									</label>
 								</div>
+
 							</div>
 						</form>
 				 </div>
 				 <div class="modal-footer">
-					 <button type="button" class="btn btn-primary btn-md round submit" onclick="signIn()" disabled>Sign In</button>
-					 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >Close</button>
+					 <!--<div class="col-xs-5">-->
+						 <button type="button" class="btn btn-primary btn-md round submit" onclick="signIn()" disabled>Sign In</button>
+						 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >Close</button>
+					<!-- </div>
+					 <div class="col-xs-7">
+							 <p>Not a member? <a href="#" onclick="signUpModal()">Sign Up</a></p>
+							<p>Forgot <a href="#">Password?</a></p>
+					 </div> -->
+					 <script>
+					 		function signUpModal()
+							{
+								$('#loginModal').modal('toggle');
+								setTimeout(function() {
+									$('#registerModal').modal('show');
+								},1000);
+
+							}
+					 </script>
 				 </div>
 			 </div>
 		 </div>

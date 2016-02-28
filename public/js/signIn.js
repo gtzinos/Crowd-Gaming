@@ -63,7 +63,7 @@ function signIn() {
 			/*
 				While spin loading submit button must be disabled
 			*/
-			$(document).find('#submit').prop('disabled',true);
+			$(document).find('.submit').prop('disabled',true);
 			/*
 				Milliseconds which user must wait
 				after server response arrived
@@ -141,7 +141,7 @@ function responseSignIn() {
 			/*
 				After spin loaded submit button must be enabled
 			*/
-			$(document).find('#submit').prop('disabled',false);
+			$(document).find('.submit').prop('disabled',false);
 			/*
 				User can login
 			*/
