@@ -29,16 +29,19 @@
 
 			if( $user ){
 
-				// Use exists
 				if( isset($this->params[1]) && $this->params[1]=="ajax"){
 					if( isset($_POST["email"])       &&
-						isset($_POST["oldpassword"]) && isset($_POST["name"])        && 
+						isset($_POST["currentpassword"]) && isset($_POST["name"])        && 
 						isset($_POST["surname"])     &&	isset($_POST["gender"])      && 
 						isset($_POST["city"])        && isset($_POST["country"]) ){
-							$this->updateUser($user , $mapper);
+
+						$this->updateUser($user , $mapper);
+
+					}else if( isset($_POST["currentpassword"]) ){
+
+						$this->deleteUser($user , $mapper);
 					}
 				}
-
 
 				$this->setArg("user" , $user);
 			}else{
@@ -50,12 +53,38 @@
 
 		}
 
+		private function deleteUser($user , $userMapper){
+
+			$currentpassword = $_POST["currentpassword"];
+
+			$result = $userMapper->authenticate($user->getEmail() , $_POST["currentpassword"]);
+
+			if( !is_object($result) ){
+				print '1'; // Old password is not correct
+				die();
+			}
+
+			$user->setDeleted(true);
+
+			try{
+				DatabaseConnection::getInstance()->startTransaction();
+
+				$userMapper->persist($user);
+
+				DatabaseConnection::getInstance()->commit();
+				print  'TRUE'; // No Error , update Successful
+			}catch(DatabaseException $ex){
+				print '2'; // General Database Error
+				DatabaseConnection::getInstance()->rollback();
+			}
+		}
+
 		private function updateUser($user , $userMapper){
 			/*
 				Sanitizing
 			 */
 			$email = htmlspecialchars($_POST["email"] , ENT_QUOTES);
-			$oldpassword = $_POST["oldpassword"];
+			$currentpassword = $_POST["currentpassword"];
 
 			$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 			$surname = htmlspecialchars($_POST["surname"] , ENT_QUOTES);
@@ -75,7 +104,7 @@
 				$newpassword = $_POST["newpassword"];
 			}
 
-			$result = $userMapper->authenticate($user->getEmail() , $_POST["oldpassword"]);
+			$result = $userMapper->authenticate($user->getEmail() , $_POST["currentpassword"]);
 
 			if( !is_object($result) ){
 				print '12'; // Old password is not correct
