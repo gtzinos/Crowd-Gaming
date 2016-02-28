@@ -41,6 +41,9 @@
 				$user->setGender( $resultSet->get("gender") );
 				$user->setCountry( $resultSet->get("country") );
 				$user->setCity( $resultSet->get("city") );
+				$user->setVerified( $resultSet->get("verified") );
+				$user->setDeleted( $resultSet->get("banned") );
+				$user->setBanned( $resultSet->get("banned") );
 
 				if( $resultSet->get("address") !== null )
 					$user->setAddress( $resultSet->get("address") );
@@ -69,7 +72,7 @@
 
 			$statement = self::getUpdateStatement();
 	
-			$statement->setParameters("sississssi",	
+			$statement->setParameters("sississssiiii",	
 				$user->getEmail(),
 				$user->getAccessLevel(),
 				$user->getName(),
@@ -79,7 +82,11 @@
 				$user->getCity(),
 				$user->getAddress(),
 				$user->getPhone(),
-				$user->getId() );
+				$user->getId(),
+				$user->getPassword(),
+				$user->getBanned(),
+				$user->getDeleted(),
+				$user->getVerified() );
 
 			$statement->executeUpdate();
 		}
@@ -92,7 +99,7 @@
 
 			$statement = self::getInsertStatement();
 
-			$statement->setParameters("ssississss",	
+			$statement->setParameters("ssississssiii",	
 				$user->getEmail(),
 				$user->getPassword(),
 				$user->getAccessLevel(),
@@ -102,7 +109,10 @@
 				$user->getCountry(),
 				$user->getCity(),
 				$user->getAddress(),
-				$user->getPhone() );
+				$user->getPhone(),
+				$user->getBanned(),
+				$user->getDeleted(),
+				$user->getVerified()  );
 
 			$statement->executeUpdate();
 
@@ -155,7 +165,7 @@
 			else it returns the user object meaning it was successful.
 		 */
 		public function authenticate($email , $password){
-			$query =	"select User.password, AccessLevel.name, User.access, User.id from User ".
+			$query =	"select User.password, AccessLevel.name, User.access, User.id , User.verified , User.deleted ,User.banned from User ".
 						"inner join AccessLevel on AccessLevel.id = User.access ".
 						"where User.email=?";
 
@@ -165,10 +175,16 @@
 			$set = $preparedStatement->execute();
 
 			if($set->next()){
-				$accessLevel = $set->get("access");
+				$deleted = $set->get("deleted");
+				$verified = $set->get("verified");
+				$banned = $set->get("banned");
 
-				if($accessLevel<0)
-					return $accessLevel;
+				if( !$verified)
+					return "2";
+				else if($deleted)
+					return "3";
+				else if($banned)
+					return "4";
 
 				$hashedPassword = $set->get("password");
 				if(password_verify($password , $hashedPassword)){
@@ -180,7 +196,9 @@
 						$user = new Examiner();
 					else if( $userType == "Moderator");
 						$user = new Moderator();
-
+					$user->setDeleted($deleted);
+					$user->setVerified($verified);
+					$user->setBanned($banned);
 					$user->setId( $set->get("id") );
 					$user->setEmail( $email);
 					$user->setAccessLevel( $set->get("access"));
@@ -201,7 +219,7 @@
 		 */
 		private function getInsertStatement(){
 			if( !isset($this->insertStatement) )
-				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone) values (?,?,?,?,?,?,?,?,?,?)");
+				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			return $this->insertStatement;
 		}
 
@@ -214,13 +232,13 @@
 
 		private function getSelectByIdStatement(){
 			if( !isset($this->selectByIdStatement) )
-				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` FROM `User` WHERE id=?");
+				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` , `verified` , `banned` , `deleted` FROM `User` WHERE id=?");
 			return $this->selectByIdStatement;
 		}
 
 		private function getUpdateStatement(){
 			if( !isset($this->updateStatement)){
-				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=? WHERE `id`=?";
+				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=? ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?";
 
 				$this->updateStatement = DatabaseConnection::getInstance()->prepareStatement($query);
 			}

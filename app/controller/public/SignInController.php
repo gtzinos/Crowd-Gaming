@@ -14,6 +14,7 @@
 				$this->redirect("home");
 			}	
 
+			header('Content-Type: text/plain');
 
 			$userMapper = new UserMapper();
 
@@ -25,12 +26,14 @@
 					$user->login();
 					print 'TRUE';
 				}else{
+					// If $user is not an object i contains the error code
+					// 2: Not verified 3: deleted 4: banned
 					print $user;
 				}
 
 				
 			}else{
-				print 'FALSE';
+				print '1'; // wrong email or password
 			}
 		}
 

@@ -3,20 +3,22 @@
 
 	class User {
 
-		private $id;
-		private $email;
-		private $name;
-		private $surname;
-		private $gender;
-		private $country;
-		private $city;
-		private $address;
-		private $phone;
-		private $lastLogin;
-		private $createdDate;
-		private $accessLevel;
-		private $password;
-
+		private $id; // number 
+		private $email; // string 
+		private $name; // string 
+		private $surname; // string 
+		private $gender; // number , 0 = male , 1 = female
+		private $country; // string
+		private $city; //string 
+		private $address; // string 
+		private $phone; // string
+		private $lastLogin; // string , timestamp in dbms
+		private $createdDate; // string , timestamp in dbms
+		private $accessLevel; // number
+		private $password; // If is set then it the hash of the password
+		private $deleted; //boolean
+		private $banned; //boolean
+		private $verified; //boolean
 
 		public function login(){
 			$_SESSION["USER_LEVEL_STRING"] = get_class($this);
@@ -138,5 +140,29 @@
 
 		public function setPassword($password){
 			$this->password = $password;
+		}
+
+		public function getBanned(){
+			return $this->banned;
+		}
+		
+		public function setBanned($banned){
+			$this->banned = $banned;
+		}
+
+		public function getVerified(){
+			return $this->verified;
+		}
+		
+		public function setVerified($verified){
+			$this->verified = $verified;
+		}	
+
+		public function getDeleted(){
+			return $this->deleted;
+		}
+		
+		public function setDeleted($deleted){
+			$this->deleted = $deleted;
 		}
 	}

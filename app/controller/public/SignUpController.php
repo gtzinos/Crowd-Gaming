@@ -113,6 +113,9 @@
 			$player->setCity($city);
 			$player->setAccessLevel(1);
 			$player->setPassword($password);
+			$player->setVerified(true);
+			$player->setBanned(false);
+			$player->setDeleted(false);
 
 			if( isset($address))
 				$player->setAddress($address);
