@@ -1,5 +1,17 @@
 $(document).ready(function() {
     /*
+      When window loaded
+    */
+    $(window).on('load', function() {
+      /*
+        Focus the first input element
+        from the document form
+        *We need this to call focus event
+        to check the fields
+      */
+      $(document).find("form:not(.filter) :input:visible:enabled:first").focus();
+    });
+    /*
       When a modal box will open
     */
     $('.modal').on('shown.bs.modal', function() {

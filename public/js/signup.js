@@ -280,7 +280,14 @@ function responseSignUp() {
 				 {
 				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
 				 }
-
+				 /*
+				 	If error message == 12
+				 	General database problem
+				 */
+				 if(xmlHttp.responseText.localeCompare("12") == 0)
+				 {
+				  error_message += "<div class='alert alert-danger'>You must accept our licence.</div>";
+				 }
 				 /*
 				 	Else if no error message
 					return something going Wrong

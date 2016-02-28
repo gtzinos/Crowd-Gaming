@@ -154,11 +154,14 @@
     <div class="form-group">
       <div class="col-xs-2"></div>
       <div class="col-xs-7">
-          <button type="button" class="btn btn-primary btn-md round submit" onclick="profileUpdate()" disabled>Save Profile</button>
+          <button type="button" class="btn btn-primary btn-md round submit" data-toggle="modal" data-target="#confirmPassword">Save Profile</button>
           <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" onclick="deleteAccount()">Delete Account</button>
       </div>
     </div>
 
   </form>
+
+  <?php load("CONFIRM_PASSWORD"); ?>
+
 
 <?php endif; ?>

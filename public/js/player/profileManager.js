@@ -27,13 +27,6 @@ var opts = {
 }
 
 /*
-  User must confirm his password
-*/
-function confirmPassword()
-{
-
-}
-/*
   User try to update
   his profile informations
 */
@@ -63,7 +56,8 @@ function profileUpdate()
         user input to variables
   		*/
   		var userEmail = $(document).find("#profile-email").val();
-  		var userPassword = $(document).find("#profile-new-password").val();
+      var userConfirmPassword = $(".modal").find("#confirm-password").val();
+  		var userNewPassword = $(document).find("#profile-new-password").val();
   		var userFName = $(document).find("#profile-fname").val();
   		var userLName = $(document).find("#profile-lname").val();
   		var userGender = $(document).find("#profile-gender").val();
@@ -79,7 +73,7 @@ function profileUpdate()
   			Check the Variables before sending them
   		*/
 
-  		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity)
+  		if(userEmail && userConfirmPassword && userNewPassword && userFName &&  userLName && userGender && userCountry && userCity)
   		{
 
   			var target = document.getElementById('profile-spinner');
@@ -120,7 +114,7 @@ function profileUpdate()
   				Header encryption
   			*/
   			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  		  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
+  		  var variables = "email=" + userEmail + "&oldpassword=" + userConfirmPassword + "&name=" + userFName +
   				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
   				+ userGender;
         /*
@@ -138,7 +132,13 @@ function profileUpdate()
   			{
   				variables = variables + "&phone=" + userPhone;
   			}
-
+        /*
+          If userNewPassword is setted
+        */
+        if(userNewPassword)
+        {
+          variables = variables + "&newpassword=" + userNewPassword;
+        }
   			xmlHttp.send(variables);
 
   		}

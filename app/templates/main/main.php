@@ -72,6 +72,7 @@
 			load("SIGN_IN");
 
 			load("SIGN_UP");
+
 		?>
 	</body>
 
