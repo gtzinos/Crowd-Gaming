@@ -238,7 +238,7 @@
 
 		private function getUpdateStatement(){
 			if( !isset($this->updateStatement)){
-				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=? ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?";
+				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=COALESCE(?,`password`) ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?";
 
 				$this->updateStatement = DatabaseConnection::getInstance()->prepareStatement($query);
 			}

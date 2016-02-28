@@ -29,19 +29,9 @@
 
 			if( $user ){
 
-				$_POST["email"] = "test2@test.com";
-				$_POST["newpassword"] = "testtest2";
-				$_POST["oldpassword"] = "testtest";
-				$_POST["name"] = "New Name";
-				$_POST["surname"] = "New Surname";
-				$_POST["gender"] = "1";
-				$_POST["city"] = "New City";
-				$_POST["country"] = "New Country";
-
-
 				// Use exists
 				if( isset($this->params[1]) && $this->params[1]=="ajax"){
-					if( isset($_POST["email"])       && isset($_POST["newpassword"]) &&
+					if( isset($_POST["email"])       &&
 						isset($_POST["oldpassword"]) && isset($_POST["name"])        && 
 						isset($_POST["surname"])     &&	isset($_POST["gender"])      && 
 						isset($_POST["city"])        && isset($_POST["country"]) ){
@@ -66,7 +56,7 @@
 			 */
 			$email = htmlspecialchars($_POST["email"] , ENT_QUOTES);
 			$oldpassword = $_POST["oldpassword"];
-			$newpassword = $_POST["newpassword"];
+
 			$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 			$surname = htmlspecialchars($_POST["surname"] , ENT_QUOTES);
 			$gender = $_POST["gender"];
@@ -79,6 +69,10 @@
 
 			if( isset($_POST["phone"]) ){
 				$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+			}
+
+			if( isset($_POST["newpassword"]) ){
+				$newpassword = $_POST["newpassword"];
 			}
 
 			$result = $userMapper->authenticate($user->getEmail() , $_POST["oldpassword"]);
@@ -121,10 +115,10 @@
 				die();
 			}
 
-			if( strlen($newpassword) < 8 ){
+			if( isset($newpassword) && strlen($newpassword) < 8 ){
 				print '7'; // Password Validation Error
 				die();
-			}else{
+			}else if( isset($newpassword) ){
 				$newpassword = password_hash($newpassword , PASSWORD_DEFAULT);
 			}
 
@@ -147,8 +141,10 @@
 			$user->setGender($gender);
 			$user->setCountry($country);
 			$user->setCity($city);
-			$user->setPassword($newpassword);
 
+			if( isset($newpassword) )
+				$user->setPassword($newpassword);
+			
 			if( isset($address))
 				$user->setAddress($address);
 
