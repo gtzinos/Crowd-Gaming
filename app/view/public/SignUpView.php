@@ -154,7 +154,9 @@
              <div class="col-xs-7">
              </div>
              <div class="col-xs-5">
-                 <p>Already a member? <a href="#" onclick="signUpModal()">Log In</a></p>
+                 <span >
+                   Already a member? <a href="#" onclick="showModal('loginModal')">Log In</a>
+                 </span>
              </div>
            </div>
 

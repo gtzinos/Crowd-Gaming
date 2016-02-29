@@ -1,4 +1,24 @@
 /*
+  Close all opened modals
+  and open a new one
+*/
+function showModal(modalName)
+{
+  /*
+    Close opened modals
+  */
+  $('.modal').modal('hide');
+
+  /*
+    Open the new one after one second
+  */
+  setTimeout(function() {
+        $('#' + modalName).modal('show');
+  },1000);
+
+}
+
+/*
   Keypress event on login / register forms
 */
 function keyPressForm(e) {
