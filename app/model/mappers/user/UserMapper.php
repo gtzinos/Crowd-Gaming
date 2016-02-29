@@ -170,6 +170,31 @@
 				return false;
 		}
 
+		public function isBanned($userId){
+			$query = "select banned from User where id=?";
+
+			$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+			$statement->setParameters("i" , $userId);
+
+			$resultSet = $statement->execute();
+
+			if($resultSet->next()){
+				$banned = $resultSet->get("banned");
+
+				if( $banned == "0" )
+					return false;
+				else
+					return true;
+			}else{
+				/*
+					Not really banned , if this code executes it means the user
+					doesnt exists. We return true because its safer for the calling
+					code to assume the user is banned than he is not.
+				 */ 
+				return true;
+			}
+		}
+
 
 		/*
 			Returns false if the authentication was failed.

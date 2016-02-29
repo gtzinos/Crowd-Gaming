@@ -28,6 +28,10 @@
 		}
 
 		public function logout(){
+			unset($_SESSION["USER_ID"]);
+			unset($_SESSION["USER_EMAIL"]);
+			unset($_SESSION["USER_LEVEL_STRING"]);
+			unset($_SESSION["USER_LEVEL"]);
 			session_destroy();
 		}
 

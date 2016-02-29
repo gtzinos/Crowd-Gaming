@@ -72,6 +72,8 @@
 				$userMapper->persist($user);
 
 				DatabaseConnection::getInstance()->commit();
+
+				$user->logout();
 				print  'TRUE'; // No Error , update Successful
 			}catch(DatabaseException $ex){
 				print '2'; // General Database Error
