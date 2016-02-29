@@ -127,14 +127,17 @@
 
 
 			// random string with 100 chars
+			// 75 bytes are equal to 100 characters in base64, 6 bits = 1 char. (8*75) /6 = 100
 			$activationParameter = base64_encode(openssl_random_pseudo_bytes(75));
+			// replace + and / with other characters, A Z were choosen for no important reason.
+			// + / mess up he url. Only numbers and 
 			$activationParameter = str_replace("+" , "A" , $activationParameter);
 			$activationParameter = str_replace("/" , "Z" , $activationParameter); 
 			
 			/*
 				Insert the user in the database
 			 */
-
+			
 			$userMapper = new UserMapper();
 			$activationMapper = new ActivationMapper();
 
@@ -179,8 +182,19 @@
 
 				DatabaseConnection::getInstance()->commit();
 
+				/*
+					This variables will be used by the SignUpSuccessController.php
+					to notify the user that the account was created but need to be
+					verified.
+				 */
+				$_SESSION["SIGN_UP_CACHE_EMAIL"] = $player->getEmail();
+				$_SESSION["SIGN_UP_CACHE_SURNAME"] = $player->getSurname();
+				$_SESSION["SIGN_UP_CACHE_NAME"] = $player->getName();
+
+
 				print 'TRUE';
-			}catch(EmailInUseException $e){
+				
+ 			}catch(EmailInUseException $e){
 				print '10';
 				DatabaseConnection::getInstance()->rollback();
 			}catch(DatabaseException $ex){

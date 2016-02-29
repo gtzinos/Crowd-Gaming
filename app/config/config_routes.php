@@ -6,6 +6,7 @@
 	Routes::add( 'contact' , 'public/ContactPageController.php' , $_USER_LEVEL["GUEST"] );
 	Routes::add( 'page_not_found' , 'public/PageNotFoundController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'activate' , 'public/ActivationController.php' , $_USER_LEVEL["GUEST"]);
+	Routes::add( 'signup-success' , 'public/SignUpSuccessController.php' ,$_USER_LEVEL["GUEST"]);
 
 	Routes::add( 'signin' , 'public/SignInController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'signup' , 'public/SignUpController.php' , $_USER_LEVEL["GUEST"]);
