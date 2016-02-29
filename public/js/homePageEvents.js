@@ -15,7 +15,7 @@ function showModal(modalName)
   setTimeout(function() {
         $('#' + modalName).modal('show');
   },1000);
-
+  return false;
 }
 
 /*

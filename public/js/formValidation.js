@@ -48,15 +48,15 @@ $(document).ready(function() {
 
     /*
       If a key pressed (Keyup event)
-      in a input-group class then
+      in a gt-input-group class then
     */
 
-    $('.input-group input, .input-group textarea, .input-group checkbox, .input-group select').on('keyup change focus', function() {
+    $('.gt-input-group input, .gt-input-group textarea, .gt-input-group checkbox, .gt-input-group select').on('keyup change focus', function() {
       /*
-        Initialize variables (Form, div(input-group), button(submit form), span(icon error,success))
+        Initialize variables (Form, div(gt-input-group), button(submit form), span(icon error,success))
       */
       var $form = $(this).closest('form'), //form variable
-      $group = $(this).closest('.input-group'), //div input-group
+      $group = $(this).closest('.gt-input-group'), //div gt-input-group
       $button = $(document).find('.submit'); //submit button (use document cause this cant find it)
 			$icon = $group.find('span'), //icon (success,error)
       first_time = false;
@@ -232,7 +232,7 @@ $(document).ready(function() {
         If user complete successfull the form
         then add button property to enabled
       */
-      if ($form.find('.input-group.has-success [required]').length >= $form.find('.input-group [required]').length && $form.find('.input-group.has-error').length == 0) {
+      if ($form.find('.gt-input-group.has-success [required]').length >= $form.find('.gt-input-group [required]').length && $form.find('.gt-input-group.has-error').length == 0) {
           $button.prop('disabled', false);
       }
       /*
@@ -247,6 +247,6 @@ $(document).ready(function() {
   /*
     Close Change trigger
   */
-  $('.input-group input[required], .input-group textarea[required], .input-group select[required]').trigger('change');
+  $('.gt-input-group input[required], .gt-input-group textarea[required], .gt-input-group select[required]').trigger('change');
 
 });

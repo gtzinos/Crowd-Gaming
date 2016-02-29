@@ -61,8 +61,8 @@
 											 <button type="button" class="btn btn-primary btn-md btn-block round submit" onclick="signIn()" disabled>Sign In</button>
 											</div>
 									</div>
-						<!--	</div> -->
-					</form>
+						</form>
+					</div>
 					<!-- Foot Fields -->
 					<!-- Footer container fluid ( Fluid is a container on a parent container.For this form parent=modal) -->
 					<div class="modal-footer container-fluid">
@@ -82,7 +82,7 @@
 							 <div class="col-xs-12"> </div>
 							 <div style="margin-left:auto;">
 								 <span style="font-size:12px">
-										<a href="#" onclick="showModal('registerModal')">
+										<a href="" onclick="return showModal('registerModal')">
 											Not a member? Sign Up
 										</a>
 								 </span>
@@ -90,6 +90,5 @@
 					</div>
 			 </div>
 		 </div>
-	 </div>
-</div>
+	</div>
 <? endif; ?>
