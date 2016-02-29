@@ -1,0 +1,41 @@
+/*
+  Container for all questionnaires
+*/
+.questionnaire-group
+{
+
+}
+/*
+  Questionnaire Item
+  (For each Questionnaire)
+*/
+.questionnaire-item
+{
+  border-radius: 41px;
+  -moz-border-radius: 41px;
+  -webkit-border-radius: 41px;
+  border: 3px solid #607B8B;
+  margin-top:2%;
+  //background-color: #E0EEEE ;
+
+  color: #4682B4;
+//  font-family: 'Lobster', cursive;
+  font-size: 18px;
+//  font-weight: normal;
+
+//  text-shadow: 1px 1px 4px #607B8B;
+}
+/*
+  Questionnaire Header (Title)
+*/
+.questionnaire-header
+{
+  text-align: justify;;
+}
+/*
+  Questionnaire Informations
+*/
+.questionnaire-info
+{
+
+}

@@ -22,7 +22,7 @@
 	$playerMenu = Menu::create("PlayerMenu");
 
 	$playerMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
-	$playerMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaires") );
+	$playerMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
 	$playerMenu->addItem( MenuItem::create("Become an Examiner" , "LINK" , "become-examiner") );
 	$playerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
 

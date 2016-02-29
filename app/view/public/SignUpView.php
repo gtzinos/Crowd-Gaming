@@ -141,12 +141,24 @@
                     <label id="signup-response" class="responseLabel"></label>
                 </div>
               </div>
+              <div class="form-group">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-7">
+                  <button type="button" class="btn btn-primary btn-md round btn-block submit" onclick="signUp()" disabled>Sign Up</button>
+                </div>
+              </div>
             </form>
 				</div>
 			 <div class="modal-footer">
-				 <button type="button" class="btn btn-primary btn-md round submit" onclick="signUp()" disabled>Sign Up</button>
-				 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal">Close</button>
-			 </div>
+           <div class="col-xs-12">
+             <div class="col-xs-7">
+             </div>
+             <div class="col-xs-5">
+                 <p>Already a member? <a href="#" onclick="signUpModal()">Log In</a></p>
+             </div>
+           </div>
+
+        </div>
 		 </div>
 	 </div>
  </div>

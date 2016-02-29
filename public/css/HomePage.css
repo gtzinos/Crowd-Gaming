@@ -10,7 +10,7 @@
 	padding: 40px;
 	margin:0px;
 	min-height: 100%;
-	
+
 }
 
 .block img{
@@ -23,7 +23,7 @@
 	padding: 0px;
 }
 
-.fill { 
+.fill {
     padding-bottom: 100%;
     margin-bottom: -100%;
 }
