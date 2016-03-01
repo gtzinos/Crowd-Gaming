@@ -8,7 +8,10 @@ function showModal(modalName)
     Close opened modals
   */
   $('.modal').modal('hide');
-
+  /*
+    Clear all response labels
+  */
+  $(document).find('.responseLabel').html('');
   /*
     Open the new one after one second
   */

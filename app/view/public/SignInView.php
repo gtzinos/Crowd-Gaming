@@ -39,7 +39,7 @@
 												</span>
 										</div>
 										<div class="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-4">
-												<span style="font-size:11px">
+												<spa`n style="font-size:12px">
 													<!-- This input help (Remember Me , Forgot password) to be on the same line -->
 													<input id="signin-remember" type="checkbox" style="visibility:hidden"/>
 													<a href="#">Forgot Password?</a>
@@ -48,7 +48,7 @@
 									</div>
 									<!-- Spinner and Response Label Field -->
 									<div class="form-group">
-										<div class="col-xs-offset-5 col-xs-4 ">
+										<div class="col-xs-offset-4 col-xs-8 ">
 											<div id="signin-spinner">
 
 											</div>

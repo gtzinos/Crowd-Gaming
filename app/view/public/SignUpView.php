@@ -130,7 +130,7 @@
                   </div>
                   <!-- Spinner and Response Label Field -->
                   <div class="form-group">
-                    <div class="col-xs-offset-5 col-xs-4 ">
+                    <div class="col-xs-offset-4 col-xs-8 ">
                       <div id="signup-spinner">
 
                       </div>
