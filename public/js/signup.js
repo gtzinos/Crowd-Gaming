@@ -87,44 +87,45 @@ function signUp() {
 				we will show results to the client
 			*/
 			xmlHttp.onreadystatechange = setTimeout(function() {
+				 responseSignUp();
+			}, millisecondsToWait);
 				/*
 					Response function
 				*/
-				responseSignUp();
-			}, millisecondsToWait);
-			/*
-				Url string
-			*/
-			var url = "./signup";
-			/*
-			 Send using POST Method
-			*/
-			xmlHttp.open("POST", url, false);
-			/*
-				Header encryption
-			*/
-			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-		  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
-				"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
-				+ userGender + "&licence=accepted";
 
-			if(userAddress)
-			{
-				variables = variables + "&address=" + userAddress;
+				/*
+					Url string
+				*/
+				var url = "./signup";
+				/*
+				 Send using POST Method
+				*/
+				xmlHttp.open("POST", url, false);
+				/*
+					Header encryption
+				*/
+				xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+			  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
+					"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
+					+ userGender + "&licence=accepted";
+
+				if(userAddress)
+				{
+					variables = variables + "&address=" + userAddress;
+				}
+				if(userPhone)
+				{
+					variables = variables + "&phone=" + userPhone;
+				}
+
+				xmlHttp.send(variables);
+
 			}
-			if(userPhone)
+			else
 			{
-				variables = variables + "&phone=" + userPhone;
+				document.getElementById("signup-response").style.display = "inline";
+				document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
 			}
-
-			xmlHttp.send(variables);
-
-		}
-		else
-		{
-			document.getElementById("signup-response").style.display = "inline";
-			document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
-		}
 
 }
 /*
@@ -177,7 +178,7 @@ function responseSignUp() {
 				 /*
 					 reload to main page
 				 */
-				 location.reload();
+				 $(location).attr("href", "./signup-success");
 			 }, millisecondsToWait);
 			}
 			/*
