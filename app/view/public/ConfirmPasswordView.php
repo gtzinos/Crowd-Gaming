@@ -50,7 +50,7 @@
 							</div>
 							<!-- Spinner and Response Label Field -->
 							<div class="form-group">
-								<div class="col-xs-offset-1 col-xs-9 col-sm-offset-0 col-sm-6">
+								<div class="col-xs-offset-3 col-xs-7 col-sm-offset-3 col-sm-7">
 									<div id="confirm-spinner">
 
 									</div>
