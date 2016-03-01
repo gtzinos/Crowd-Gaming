@@ -12,15 +12,12 @@
       </div>
       <div class="row">
   	  	<h3>
-  				Your account has been successfuly deleted!
+  				Your account has been successfuly deleted.
   			</h3>
       </div>
       <div class="row">
   			<p>
-  				Only thing left to do is to verify your email.
-  				An email has been sent to <?php print get("email"); ?> ,
-  				please click the link that has been sent to you and your
-  				account will be activated.
+  				You cant use this (<?php print get("email"); ?>) email address again.
   			</p>
       </div>
 	</div>

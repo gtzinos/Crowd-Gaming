@@ -5,7 +5,7 @@
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
           <div class="container-fluid">
-                  <form class="form-horizontal">
+                  <form class="form-horizontal" method="POST" action="./contact">
                          <legend class="text-center header">Contact us</legend>
                          <!-- First Name Field -->
                          <div class="form-group has-feedback">
@@ -13,7 +13,7 @@
                                <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                              </div>
                              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
-                                <input class="form-control" id="contact-fname" name="fname" type="text" maxlength="25" placeholder="First Name (Required) *Length >= 2" required >
+                                <input class="form-control" id="contact-fname" name="name" type="text" maxlength="25" placeholder="First Name (Required) *Length >= 2" required >
                                 <span></span>
                              </div>
                          </div>
@@ -23,7 +23,7 @@
                                <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                              </div>
                              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
-                               <input class="form-control" id="contact-lname" type="text" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required >
+                               <input class="form-control" name="surname" id="contact-lname" type="text" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required >
                                <span></span>
                              </div>
                          </div>
@@ -33,7 +33,7 @@
                                     <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
                              </div>
                              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="email">
-                               <input class="form-control" id="contact-email" type="email" maxlength="40" placeholder="Email Address (Required)" required>
+                               <input class="form-control" name="email" id="contact-email" type="email" maxlength="40" placeholder="Email Address (Required)" required>
                                <span></span>
                              </div>
                          </div>
@@ -62,6 +62,87 @@
                             <div class="col-xs-offset-3 col-xs-6 col-md-offset-3 col-md-6 gt-input-group">
                                 <button id="submit" type="submit" class="btn btn-primary btn-lg submit" disabled>Send Message</button>
                             </div>
+                        </div>
+                        <!-- Response Label Field -->
+                        <div class="form-group">
+                          <div class="col-xs-offset-3 col-xs-9 col-sm-offset-3 col-sm-6">
+                            <?php
+                                /*
+                                  Initialize response message
+                                */
+                                $response_message="<label class='alert alert-danger'>";
+                                  /*
+                                    If error-code = 0
+                                    Everything is okay
+                                  */
+                                  if(get("error-code") == 0)
+                                  {
+                                    $response_message = "<label class='alert alert-success'>Your message was sent successfully.We will reply soon.";
+                                  }
+                                  /*
+                                    Else If error-code = 1
+                                    then problem with email validation
+                                  */
+                                  else if(get("error-code") == 1)
+                                  {
+                                    $response_message += "This is not a valid email address.";
+                                  }
+                                  /*
+                                    Else If error-code = 2
+                                    then problem with Name validation
+                                  */
+                                  else if(get("error-code") == 2)
+                                  {
+                                    $response_message += "This is not a valid name.";
+                                  }
+                                  /*
+                                    Else If error-code = 3
+                                    then problem with Surname validation
+                                  */
+                                  else if(get("error-code") == 3)
+                                  {
+                                    $response_message += "This is not a valid surname.";
+                                  }
+                                  /*
+                                    Else If error-code = 4
+                                    then problem with Message validation
+                                  */
+                                  else if(get("error-code") == 4)
+                                  {
+                                    $response_message += "This is not a valid message text.";
+                                  }
+                                  /*
+                                    Else If error-code = 5
+                                    then problem with Phone validation
+                                  */
+                                  else if(get("error-code") == 5)
+                                  {
+                                    $response_message += "This is not a valid phone number.";
+                                  }
+                                  /*
+                                    Else If error-code = 6
+                                    then problem with Name validation
+                                  */
+                                  else if(get("error-code") == 6)
+                                  {
+                                    $response_message += "We are under maintenance. Please try later!";
+                                  }
+                                  /*
+                                    Else one new error occur
+                                  */
+                                  else {
+                                      $response_message += "Something going wrong. Please contact with one administrator!";
+                                  }
+
+                                  if($response_message != "")
+                                  {
+                                    echo $response_message;
+                                    echo "</label>";
+                                  }
+
+                            ?>
+
+                          </div>
                         </div>
                   </form>
           </div>
