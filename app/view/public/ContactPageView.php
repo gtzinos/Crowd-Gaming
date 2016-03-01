@@ -1,5 +1,4 @@
 <?php if($section == "CSS") : ?>
-  <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/ContactPageStyle.css"); ?>">
 
 <?php elseif($section == "JAVASCRIPT") : ?>
 

@@ -465,7 +465,8 @@ function responseDeleteAccount()
          /*
            reload to main page
          */
-         location.reload();
+         //location.reload();
+         $(location).attr("href", "./delete-account-success");
         }, millisecondsToWait);
       }
       /*

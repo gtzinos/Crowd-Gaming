@@ -6,6 +6,7 @@
 
   <div class="container-fluid">
     <form class="form-horizontal">
+         <legend class="text-center header">Some of your informations</legend>
          <!-- Email Field -->
          <div class="form-group has-feedback">
              <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
@@ -136,7 +137,7 @@
          </div>
          <!-- Spinner and Response Label Field -->
          <div class="form-group">
-           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-8">
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
              <div id="profile-spinner">
 
              </div>

@@ -44,8 +44,8 @@
 	 */
 	$unauthorizedRightMenu = Menu::create("UnauthorizedRightMenu");
 
-	$unauthorizedRightMenu->addItem( MenuItem::create("Sign In" , "MODAL" , "#loginModal") );
-	$unauthorizedRightMenu->addItem( MenuItem::create("Sign Up" , "MODAL" , "#registerModal") );
+	$unauthorizedRightMenu->addItem( MenuItem::create("Log In" , "MODAL" , "#loginModal") );
+	$unauthorizedRightMenu->addItem( MenuItem::create("Register" , "MODAL" , "#registerModal") );
 
 
 	/*
