@@ -136,7 +136,7 @@
          </div>
          <!-- Spinner and Response Label Field -->
          <div class="form-group">
-           <div class="col-xs-offset-5 col-xs-4 ">
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-8">
              <div id="profile-spinner">
 
              </div>
@@ -148,7 +148,7 @@
             <div class="col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
               <button type="button" class="btn btn-primary btn-md round submit" onclick="confirmPassword('profileUpdate')">Save Profile</button>
             </div>
-            <div class="col-xs-offset-1 col-xs-5 col-sm-offset-0 col-sm-2">
+            <div class="col-xs-offset-2 col-xs-5 col-sm-offset-0 col-sm-2">
               <button type="button" class="btn btn-primary btn-md round" onclick="confirmPassword('deleteAccount')">Delete Account</button>
             </div>
 
