@@ -60,7 +60,7 @@
 			$result = $userMapper->authenticate($user->getEmail() , $_POST["currentpassword"]);
 
 			if( !is_object($result) ){
-				print '1'; // Old password is not correct
+				print '1'; // password is not correct
 				die();
 			}
 
@@ -74,6 +74,16 @@
 				DatabaseConnection::getInstance()->commit();
 
 				$user->logout();
+				/*
+					This variables will be used by the DeleteAccountSuccessController.php
+					to notify the user that the account was created but need to be
+					verified.
+				 */
+				session_start();
+				$_SESSION["SIGN_UP_CACHE_EMAIL"] = $user->getEmail();
+				$_SESSION["SIGN_UP_CACHE_SURNAME"] = $user->getSurname();
+				$_SESSION["SIGN_UP_CACHE_NAME"] = $user->getName();
+
 				print  'TRUE'; // No Error , update Successful
 			}catch(DatabaseException $ex){
 				print '2'; // General Database Error
