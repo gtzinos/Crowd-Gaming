@@ -75,6 +75,7 @@
                                     If error-code = 0
                                     Everything is okay
                                   */
+                                  
                                   if(get("error-code") == 0)
                                   {
                                     $response_message = "<label class='alert alert-success'>Your message was sent successfully.We will reply soon.";

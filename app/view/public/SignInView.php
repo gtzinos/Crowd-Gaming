@@ -27,10 +27,7 @@
 											</div>
 											<div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8">
 													<input class="form-control" id="signin-password" name="password" type="password" placeholder="Password (Required) *Length >= 8" required >
-														<span>
-															<button onclick="$(document).find('#signin-password').attr('type','text');" class="btn btn-default reveal glyphicon glyphicon-eye-open form-control-feedback">
-														</button>
-													</span>
+													<span> </span>
 											</div>
 									</div>
 									<!-- Check box Field -->
