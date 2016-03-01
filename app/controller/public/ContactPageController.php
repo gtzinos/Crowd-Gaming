@@ -1,4 +1,5 @@
 <?php
+	require_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
 	class ContactPageController extends Controller{
 
@@ -15,6 +16,94 @@
 
 		public function run(){
 
+			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"]) ){
+				$this->sendContactMail();
+			}
+
 		}
+
+		public function sendContactMail(){
+
+			$name = htmlspecialchars( $_POST["name"] , ENT_QUOTES);
+			$surname = htmlspecialchars( $_POST["surname"] , ENT_QUOTES);
+			$email = htmlspecialchars( $_POST["email"] , ENT_QUOTES);
+			$message = htmlspecialchars($_POST["message"] , ENT_QUOTES);
+
+			if( isset( $_POST["phone"] ) )
+				$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+
+			/*
+				Validation
+			 */
+			if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
+				$this->setArg("error-code" , 1); // email validation error
+				return;
+			}
+
+			if( strlen($name) < 2 || strlen($name) > 40 ){
+				$this->setArg("error-code" , 2); // name validation error
+				return;
+			}
+
+			if( strlen($surname) < 2 || strlen($surname) > 40 ){
+				$this->setArg("error-code" , 3); // surname validation error
+				return;
+			}
+
+			if( strlen($message) < 19 || strlen($message) > 255 ){
+				$this->setArg("error-code" , 4); // message validation error
+				return;
+			}
+
+			if( isset($phone) && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
+				$this->setArg("error-code" , 5); // phone validation error
+				return;
+			}
+
+			global $_CONFIG;
+
+
+			$mail = new PHPMailer;
+
+			$mail->isSMTP();      
+			$mail->Host = $_CONFIG["SMTP_HOST"];
+			$mail->SMTPAuth = true; 
+			$mail->Username = $_CONFIG["SMTP_USERNAME"];
+			$mail->Password = $_CONFIG["SMTP_PASSWORD"];
+			$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];
+			$mail->Port = $_CONFIG["SMTP_PORT"];
+
+			$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Contact Support');
+			$mail->addAddress($_CONFIG["CONTACT_EMAIL"], "Contact Support");     // Add a recipient
+
+			$mail->isHTML(true);                                  // Set email format to HTML
+
+			$mail->Subject = 'Contact Support , Client: '.$name.' '.$surname;
+			
+			$mail->Body    = "Contact Mail <br>".
+							 "Name : ".$name.' <br>'.
+							 "Surname : ".$surname.' <br>'.
+							 "Email : ".$email.' <br>'.
+							 "Phone : ". (isset($phone)?$phone:"not given").' <br>'.
+							 "Message  <br> <br>".$message;
+
+			$mail->AltBody = "Contact Mail.\n".
+							 "Name : ".$name.'\n'.
+							 "Surname : ".$surname.'\n'.
+							 "Email : ".$email.'\n'.
+							 "Phone : ". (isset($phone)?$phone:"not given").'\n'.
+							 "Message \n\n".$message;
+
+			if(!$mail->send()) {
+				// Email error
+				$this->setArg("error-code" , 6);
+			}else{
+				// All went good
+				$this->setArg("error-code" , 0);
+			}
+			
+
+		}
+
 
 	}
