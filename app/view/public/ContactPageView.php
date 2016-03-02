@@ -86,7 +86,7 @@
                                   */
                                   else if(get("error-code") == 1)
                                   {
-                                    $response_message += "This is not a valid email address.";
+                                    $response_message .= "This is not a valid email address.";
                                   }
                                   /*
                                     Else If error-code = 2
@@ -94,7 +94,7 @@
                                   */
                                   else if(get("error-code") == 2)
                                   {
-                                    $response_message += "This is not a valid name.";
+                                    $response_message .= "This is not a valid name.";
                                   }
                                   /*
                                     Else If error-code = 3
@@ -102,7 +102,7 @@
                                   */
                                   else if(get("error-code") == 3)
                                   {
-                                    $response_message += "This is not a valid surname.";
+                                    $response_message .= "This is not a valid surname.";
                                   }
                                   /*
                                     Else If error-code = 4
@@ -110,7 +110,7 @@
                                   */
                                   else if(get("error-code") == 4)
                                   {
-                                    $response_message += "This is not a valid message text.";
+                                    $response_message .= "This is not a valid message text.";
                                   }
                                   /*
                                     Else If error-code = 5
@@ -118,7 +118,7 @@
                                   */
                                   else if(get("error-code") == 5)
                                   {
-                                    $response_message += "This is not a valid phone number.";
+                                    $response_message .= "This is not a valid phone number.";
                                   }
                                   /*
                                     Else If error-code = 6
@@ -126,13 +126,13 @@
                                   */
                                   else if(get("error-code") == 6)
                                   {
-                                    $response_message += "We are under maintenance. Please try later!";
+                                    $response_message .= "We are under maintenance. Please try later!";
                                   }
                                   /*
                                     Else one new error occur
                                   */
                                   else {
-                                      $response_message += "Something going wrong. Please contact with one administrator!";
+                                      $response_message .= "Something going wrong. Please contact with one administrator!";
                                   }
 
                                   if($response_message != "")

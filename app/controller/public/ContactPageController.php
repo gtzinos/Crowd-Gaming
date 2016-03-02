@@ -16,8 +16,10 @@
 
 		public function run(){
 
-			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"]) ){
+			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"] , $_POST["phone"]) ){
 				$this->sendContactMail();
+			}else{
+				$this->setArg("error-code" , -1);
 			}
 
 		}
@@ -28,9 +30,7 @@
 			$surname = htmlspecialchars( $_POST["surname"] , ENT_QUOTES);
 			$email = htmlspecialchars( $_POST["email"] , ENT_QUOTES);
 			$message = htmlspecialchars($_POST["message"] , ENT_QUOTES);
-
-			if( isset( $_POST["phone"] ) )
-				$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+			$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
 
 			/*
 				Validation
@@ -55,7 +55,7 @@
 				return;
 			}
 
-			if( isset($phone) && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
+			if( strlen($phone)!=0 && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
 				$this->setArg("error-code" , 5); // phone validation error
 				return;
 			}
@@ -84,14 +84,14 @@
 							 "Name : ".$name.' <br>'.
 							 "Surname : ".$surname.' <br>'.
 							 "Email : ".$email.' <br>'.
-							 "Phone : ". (isset($phone)?$phone:"not given").' <br>'.
+							 "Phone : ". ( strlen($phone)>0?$phone:"not given").' <br>'.
 							 "Message  <br> <br>".$message;
 
 			$mail->AltBody = "Contact Mail.\n".
 							 "Name : ".$name.'\n'.
 							 "Surname : ".$surname.'\n'.
 							 "Email : ".$email.'\n'.
-							 "Phone : ". (isset($phone)?$phone:"not given").'\n'.
+							 "Phone : ". ( strlen($phone)>0?$phone:"not given").'\n'.
 							 "Message \n\n".$message;
 
 			if(!$mail->send()) {
