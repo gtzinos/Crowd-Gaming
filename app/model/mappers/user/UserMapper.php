@@ -56,6 +56,55 @@
 			return false;
 		}
 
+		public function findByEmail($email){
+			$statement = $this->getStatement(
+				"SELECT * FROM `User` WHERE `email`=?");
+
+			$statement->setParameters('s' ,$email);
+
+			$resultSet = $statement->execute();
+
+			if($resultSet->next()){
+
+				$accessLevel = $resultSet->get("access");
+
+				$user = 0;
+				if( $accessLevel == 1 )
+					$user = new Player();
+				else if ( $accessLevel == 2)
+					$user = new Examiner();
+				else if ( $accessLevel == 3)
+					$user = new Moderator();
+
+				$user->setAccessLevel($accessLevel);
+				$user->setId( $resultSet->get("id") );
+				$user->setName( $resultSet->get("name") );
+				$user->setSurname( $resultSet->get("surname") );
+				$user->setEmail( $resultSet->get("email") );
+				$user->setGender( $resultSet->get("gender") );
+				$user->setCountry( $resultSet->get("country") );
+				$user->setCity( $resultSet->get("city") );
+				$user->setVerified( $resultSet->get("verified") );
+				$user->setDeleted( $resultSet->get("deleted") );
+				$user->setBanned( $resultSet->get("banned") );
+				$user->setEmailVerificationToken( $resultSet->get("email_verification_token") );
+				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
+				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
+				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setNewEmail( $resultSet->get("new_email") );
+
+				if( $resultSet->get("address") !== null )
+					$user->setAddress( $resultSet->get("address") );
+
+				if( $resultSet->get("phone") !== null )
+					$user->setPhone( $resultSet->get("phone") ); 
+
+				return $user;
+			}
+
+			return false;
+		}
+
 		public function persist($user){
 			$id =  $user->getId();
 			if( isset( $id ) ){

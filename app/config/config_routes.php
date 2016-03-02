@@ -13,7 +13,8 @@
 	Routes::add( 'delete-account-success' , 'public/DeleteAccountSuccessController.php' ,$_USER_LEVEL["GUEST"]);
 	Routes::add( 'signin' , 'public/SignInController.php' , $_USER_LEVEL["GUEST"]);
 	Routes::add( 'signup' , 'public/SignUpController.php' , $_USER_LEVEL["GUEST"]);
-
+	Routes::add( 'forgot-my-password' , 'public/PasswordRecoveryRequestController.php' , $_USER_LEVEL["GUEST"]);
+	Routes::add( 'password-recovery' , 'public/PasswordRecoveryController.php' , $_USER_LEVEL["GUEST"] );
 
 	Routes::add( 'signout' , 'public/SignOutController.php' , $_USER_LEVEL["PLAYER"]);
 
