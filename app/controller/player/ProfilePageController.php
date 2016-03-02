@@ -1,6 +1,6 @@
 <?php
 	include_once '../app/model/mappers/user/UserMapper.php';
-
+	include_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
 	class ProfilePageController extends Controller{
 
@@ -176,7 +176,21 @@
 			/*
 				Set the data
 			 */
-			$user->setEmail($email);
+			if($user->getEmail() != $email){
+				$user->setNewEmail($email);
+
+				// random string with 40 chars
+				// 30 bytes are equal to 40 characters in base64, 6 bits = 1 char. (8*30) /6 = 40
+				$activationToken = base64_encode(openssl_random_pseudo_bytes(30));
+
+				// append the users email to the token, so it becomes unique
+				$activationToken .= $user->getEmail();
+
+				$activationToken = sha1($activationToken);
+
+				$user->setEmailVerificationToken($activationToken);
+			}
+
 			$user->setName($name);
 			$user->setSurname($surname);
 			$user->setGender($gender);
@@ -200,6 +214,41 @@
 
 				$userMapper->persist($user);
 
+				if( $user->getEmail() != $email ){
+					$userMapper->updateEmailVerificationDate($user);
+
+					global $_CONFIG;
+					$mail = new PHPMailer;
+
+					$mail->isSMTP();      
+					$mail->Host = $_CONFIG["SMTP_HOST"];
+					$mail->SMTPAuth = true; 
+					$mail->Username = $_CONFIG["SMTP_USERNAME"];
+					$mail->Password = $_CONFIG["SMTP_PASSWORD"];;
+					$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];;
+					$mail->Port = $_CONFIG["SMTP_PORT"];;
+
+					$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Auto-Moderator');
+					$mail->addAddress($user->getNewEmail(), $user->getName().' '.$user->getSurname());     // Add a recipient
+
+					$mail->isHTML(true);                                  // Set email format to HTML
+
+					$mail->Subject = 'Email Verification';
+					$mail->Body    = "You have requested to change your email address<br>".
+									 "Please go to this link to verify that this email is indeed yours.<br>".
+									 "After that you must use your new email address to login. Your old email will not be in use anymore<br>http://".
+									  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$user->getEmailVerificationToken();
+
+					$mail->AltBody = "You have requested to change your email address\n".
+									 "Please go to this link to verify that this email is indeed yours.\n".
+									 "After that you must use your new email address to login. Your old email will not be in use anymore\nhttp://".
+									  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$user->getEmailVerificationToken();
+
+					if(!$mail->send()) {
+					    throw new Exception("Email failed to send. ". $mail->ErrorInfo);
+					}
+				}
+
 				DatabaseConnection::getInstance()->commit();
 				print  'TRUE'; // No Error , update Successful
 			}catch(EmailInUseException $e){
@@ -207,6 +256,9 @@
 				DatabaseConnection::getInstance()->rollback();
 			}catch(DatabaseException $ex){
 				print '11'; // General Database Error
+				DatabaseConnection::getInstance()->rollback();
+			}catch(Exception $exx){
+				print '13'; // Could not Send email
 				DatabaseConnection::getInstance()->rollback();
 			}
 		}

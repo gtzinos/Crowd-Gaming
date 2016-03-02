@@ -27,7 +27,6 @@
 				4		: ApplicationText validation error
 				5       : General database error
 			*/
-			$_POST["application_text"] = "Hai, can i be a examinur plox?";
 			
 			$userMapper = new UserMapper;
 			$examinerApplicationMapper = new ExaminerApplicationMapper;

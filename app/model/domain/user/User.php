@@ -19,6 +19,11 @@
 		private $deleted; //boolean
 		private $banned; //boolean
 		private $verified; //boolean
+		private $emailVerificationToken; // sha1 hash
+		private $emailVerificationDate; // timestamp
+		private $passwordRecoveryToken; // sha1 hash
+		private $passwrodRecoveryDate; // timestamp
+		private $newEmail; // string
 
 		public function login(){
 			$_SESSION["USER_LEVEL_STRING"] = get_class($this);
@@ -168,5 +173,45 @@
 		
 		public function setDeleted($deleted){
 			$this->deleted = $deleted;
+		}
+
+		public function getEmailVerificationToken(){
+			return $this->emailVerificationToken;
+		}
+		
+		public function setEmailVerificationToken($emailVerificationToken){
+			$this->emailVerificationToken = $emailVerificationToken;
+		}
+
+		public function getEmailVerificationDate(){
+			return $this->emailVerificationDate;
+		}
+		
+		public function setEmailVerificationDate($emailVerificationDate){
+			$this->emailVerificationDate = $emailVerificationDate;
+		}
+
+		public function getPasswordRecoveryToken(){
+			return $this->passwordRecoveryToken;
+		}
+		
+		public function setPasswordRecoveryToken($passwordRecoveryToken){
+			$this->passwordRecoveryToken = $passwordRecoveryToken;
+		}
+
+		public function getPasswordRecoveryDate(){
+			return $this->passwordRecoveryDate;
+		}
+		
+		public function setPasswordRecoveryDate($passwordRecoveryDate){
+			$this->passwordRecoveryDate = $passwordRecoveryDate;
+		}
+
+		public function getNewEmail(){
+			return $this->newEmail;
+		}
+		
+		public function setNewEmail($newEmail){
+			$this->newEmail = $newEmail;
 		}
 	}

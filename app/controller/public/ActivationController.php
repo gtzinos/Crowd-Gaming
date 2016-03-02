@@ -1,6 +1,5 @@
 <?php
 	include_once '../app/model/mappers/user/UserMapper.php';
-	include_once '../app/model/mappers/user/ActivationMapper.php';
 
 	class ActivationController extends Controller{
 		
@@ -21,10 +20,9 @@
 				$this->redirect("home");
 			$token = $this->params[1];
 
-			//print $token;
-			$activationMapper = new ActivationMapper();
+			$userMapper = new UserMapper();
 
-			$userId = $activationMapper->findByParameter($token);
+			$userId = $userMapper->verifyEmailToken($token);
 
 			if( !$userId ){
 
@@ -32,16 +30,21 @@
 
 			}else{
 
-				$userMapper = new UserMapper();
 				$user = $userMapper->findById($userId);
 
 				$user->setVerified(true);
+				$user->setEmailVerificationToken(null);
+
+
+				if( $user->getNewEmail() !== null){
+					$user->setEmail( $user->getNewEmail() );
+					$user->setNewEmail(null);
+				}
 
 				try{
 					DatabaseConnection::getInstance()->startTransaction();
 
 					$userMapper->persist($user);
-					$activationMapper->delete($userId);
 
 					$this->setArg("error-code" , 0);
 

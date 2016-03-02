@@ -8,7 +8,8 @@
 	class UserMapper extends DataMapper{
 
 		public function findById($id){
-			$statement = $this->getStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` , `verified` , `banned` , `deleted` FROM `User` WHERE id=?");
+			$statement = $this->getStatement(
+				"SELECT * FROM `User` WHERE id=?");
 
 			$statement->setParameters('i' ,$id);
 
@@ -35,8 +36,13 @@
 				$user->setCountry( $resultSet->get("country") );
 				$user->setCity( $resultSet->get("city") );
 				$user->setVerified( $resultSet->get("verified") );
-				$user->setDeleted( $resultSet->get("banned") );
+				$user->setDeleted( $resultSet->get("deleted") );
 				$user->setBanned( $resultSet->get("banned") );
+				$user->setEmailVerificationToken( $resultSet->get("email_verification_token") );
+				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
+				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
+				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setNewEmail( $resultSet->get("new_email") );
 
 				if( $resultSet->get("address") !== null )
 					$user->setAddress( $resultSet->get("address") );
@@ -63,9 +69,17 @@
 			if( self::emailInUseNotByMe($user->getEmail() ,$user->getId() ) )
 				throw new EmailInUseException("This email is in use by another user.");
 
-			$statement = $this->getStatement("UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=COALESCE(?,`password`) ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?");
+			$statement = $this->getStatement(
+				"UPDATE `User` ".
+				"SET `email`=?,`access`=?,`name`=?, `surname`=?, ".
+				"`gender`=?,`country`=?,`city`=?, `address`=?, ".
+				"`phone`=?, `password`=COALESCE(?,`password`) , ".
+				"`banned`=? , `deleted`=? , `verified`=?, ".
+				"`email_verification_token`=?, `password_recovery_token`=?, ".
+				"`new_email`=? ".
+				"WHERE `id`=?");
 
-			$statement->setParameters("sississsssiiii",	
+			$statement->setParameters("sississsssiiisssi",	
 				$user->getEmail(),
 				$user->getAccessLevel(),
 				$user->getName(),
@@ -79,6 +93,9 @@
 				$user->getBanned(),
 				$user->getDeleted(),
 				$user->getVerified(),
+				$user->getEmailVerificationToken(),
+				$user->getPasswordRecoveryToken(),
+				$user->getNewEmail(),
 				$user->getId() );
 
 			$statement->executeUpdate();
@@ -90,9 +107,9 @@
 				throw new EmailInUseException("This email is in use by another user.");
 
 
-			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified,email_verification_token) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-			$statement->setParameters("ssississssiii",	
+			$statement->setParameters("ssississssiiis",	
 				$user->getEmail(),
 				$user->getPassword(),
 				$user->getAccessLevel(),
@@ -105,13 +122,11 @@
 				$user->getPhone(),
 				$user->getBanned(),
 				$user->getDeleted(),
-				$user->getVerified()  );
+				$user->getVerified(),
+				$user->getEmailVerificationToken()  );
 
 			$statement->executeUpdate();
-
 		}
-
-
 
 		/*
 			Removes a user from the database
@@ -140,7 +155,7 @@
 			Checks if an email already exists in the database
 		 */
 		public function emailInUse($email){
-			$statement = $this->getStatement("select email from User where email=?");
+			$statement = $this->getStatement("select email from User where email=? and deleted=0");
 			$statement->setParameters("s" , $email);
 
 			$result = $statement->execute();
@@ -153,7 +168,7 @@
 
 
 		public function emailInUseNotByMe($email , $myId){
-			$statement = $this->getStatement("select email from User where email=? and id<>?");
+			$statement = $this->getStatement("select email from User where email=? and id<>? and deleted=0");
 			$statement->setParameters("si" , $email , $myId);
 
 			$result = $statement->execute();
@@ -190,6 +205,21 @@
 			}
 		}
 
+		public function updateEmailVerificationDate($user){
+			$statement = $this->getStatement("UPDATE `User` SET `email_verification_date`=CURRENT_TIMESTAMP WHERE `id`=?");
+
+			$statement->setParameters("i" , $user->getId());
+
+			$statement->executeUpdate();
+		}
+
+		public function updatePasswordRecoveryDate($user){
+			$statement = $this->getStatement("UPDATE `User` SET `password_recovery_date`=CURRENT_TIMESTAMP WHERE `id`=?");
+
+			$statement->setParameters("i" , $user->getId());
+
+			$statement->executeUpdate();
+		}
 
 		/*
 			Returns false if the authentication was failed.
@@ -199,7 +229,7 @@
 		public function authenticate($email , $password){
 			$query =	"select User.password, AccessLevel.name, User.access, User.id , User.verified , User.deleted ,User.banned from User ".
 						"inner join AccessLevel on AccessLevel.id = User.access ".
-						"where User.email=?";
+						"where User.email=? and User.deleted=0";
 
 			$preparedStatement = $this->getStatement($query);
 			$preparedStatement->setParameters('s' , $email);
@@ -239,6 +269,47 @@
 				}else{
 					return false;
 				}
+			}else{
+				return false;
+			}
+		}
+
+
+		/*
+			Returns the userId that corresponds to the $token.
+			If the token is not valid the function returns false
+		 */
+		public function verifyEmailToken($token){
+
+			$statement = $this->getStatement( "SELECT `id` FROM `User` WHERE `email_verification_token`=? AND TIMESTAMPDIFF(HOUR,`email_verification_date`,CURRENT_TIMESTAMP)<?");
+
+			$statement->setParameters('si',$token , 24);
+
+			$set = $statement->execute();
+
+
+			if($set->next()){
+				return $set->get("id");
+			}else{
+				return false;
+			}
+		}
+
+		/*
+			Returns the userId that corresponds to the $token.
+			If the token is not valid the function returns false
+		 */
+		public function verifyPasswordToken($token){
+
+			$statement = $this->getStatement( "SELECT `id` FROM `User` WHERE `password_recovery_token`=? AND TIMESTAMPDIFF(HOUR,`password_recovery_date`,CURRENT_TIMESTAMP)<?");
+
+			$statement->setParameters('si',$token , 24);
+
+			$set = $statement->execute();
+
+
+			if($set->next()){
+				return $set->get("id");
 			}else{
 				return false;
 			}

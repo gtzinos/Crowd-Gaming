@@ -2,7 +2,6 @@
 
 	include_once '../app/model/domain/user/Player.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
-	include_once '../app/model/mappers/user/ActivationMapper.php';
 	require_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
 	class SignUpController extends Controller{
@@ -54,7 +53,7 @@
 			/*
 				Validation
 			 */
-			if( strlen($email) < 3 || strlen($email) > 50 ){
+			if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
 				print '1';
 				die();
 			}
@@ -113,7 +112,7 @@
 			$player->setGender($gender);
 			$player->setCountry($country);
 			$player->setCity($city);
-			$player->setAccessLevel(1);
+			$player->setAccessLevel(1); // Default account level is (1) Player.
 			$player->setPassword($password);
 			$player->setVerified(false);
 			$player->setBanned(false);
@@ -126,30 +125,32 @@
 				$player->setPhone($phone);
 
 
-			// random string with 100 chars
-			// 75 bytes are equal to 100 characters in base64, 6 bits = 1 char. (8*75) /6 = 100
-			$activationParameter = base64_encode(openssl_random_pseudo_bytes(75));
-			// replace + and / with other characters, A Z were choosen for no important reason.
-			// + / mess up he url. Only numbers and 
-			$activationParameter = str_replace("+" , "A" , $activationParameter);
-			$activationParameter = str_replace("/" , "Z" , $activationParameter); 
+			// random string with 40 chars
+			// 30 bytes are equal to 40 characters in base64, 6 bits = 1 char. (8*30) /6 = 40
+			$activationToken = base64_encode(openssl_random_pseudo_bytes(30));
+
+			// append the users email to the token, so it becomes unique
+			$activationToken .= $player->getEmail();
+
+			$activationToken = sha1($activationToken);
+
+			$player->setEmailVerificationToken($activationToken);
 			
 			/*
 				Insert the user in the database
 			 */
 			
 			$userMapper = new UserMapper();
-			$activationMapper = new ActivationMapper();
 
 
 			try{
 				DatabaseConnection::getInstance()->startTransaction();
 
 				$userMapper->persist($player);
+				
+				$player->setId( $userMapper->getIdByEmail($player->getEmail() ) );
 
-				$id = $userMapper->getIdByEmail($player->getEmail());
-
-				$activationMapper->insert($id , $activationParameter);
+				$userMapper->updateEmailVerificationDate($player);
 
 				global $_CONFIG;
 				
@@ -171,10 +172,10 @@
 				$mail->Subject = 'Account Activation';
 				$mail->Body    = "Thank you for creating an account. \n".
 								 "Please go to this link to activate your account. \nhttp://".
-								  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$activationParameter;
+								  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$player->getEmailVerificationToken();
 				$mail->AltBody = "Thank you for creating an account. \n".
 								 "Please go to this link to activate your account. \nhttp://".
-								  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$activationParameter;
+								  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("activate").'/'.$player->getEmailVerificationToken();
 
 				if(!$mail->send()) {
 				    throw new Exception("Email failed to send. ". $mail->ErrorInfo);
