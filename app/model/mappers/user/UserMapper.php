@@ -6,16 +6,9 @@
 	include_once '../app/model/domain/user/Moderator.php';
 	
 	class UserMapper extends DataMapper{
-		/*
-			Prepared Statements
-		 */
-		private $insertStatement;
-		private $deleteStatement;
-		private $selectByIdStatement;
-		private $updateStatement;
 
 		public function findById($id){
-			$statement = $this->getSelectByIdStatement();
+			$statement = $this->getStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` , `verified` , `banned` , `deleted` FROM `User` WHERE id=?");
 
 			$statement->setParameters('i' ,$id);
 
@@ -70,7 +63,7 @@
 			if( self::emailInUseNotByMe($user->getEmail() ,$user->getId() ) )
 				throw new EmailInUseException("This email is in use by another user.");
 
-			$statement = self::getUpdateStatement();
+			$statement = $this->getStatement("UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=COALESCE(?,`password`) ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?");
 
 			$statement->setParameters("sississsssiiii",	
 				$user->getEmail(),
@@ -97,7 +90,7 @@
 				throw new EmailInUseException("This email is in use by another user.");
 
 
-			$statement = self::getInsertStatement();
+			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
 			$statement->setParameters("ssississssiii",	
 				$user->getEmail(),
@@ -124,7 +117,7 @@
 			Removes a user from the database
 		 */
 		public function delete($user){
-			$statement = $this->getDeleteStatement();
+			$statement = $this->getStatement("delete from user where id=?");
 
 			$statement->setParameters("i" , $user->getId());
 
@@ -132,7 +125,7 @@
 		}
 
 		public function getIdByEmail($email){
-			$statement = DatabaseConnection::getInstance()->prepareStatement("select id from User where email=?");
+			$statement = $this->getStatement("select id from User where email=?");
 			$statement->setParameters("s" ,$email);
 
 			$resultSet = $statement->execute();
@@ -147,7 +140,7 @@
 			Checks if an email already exists in the database
 		 */
 		public function emailInUse($email){
-			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=?");
+			$statement = $this->getStatement("select email from User where email=?");
 			$statement->setParameters("s" , $email);
 
 			$result = $statement->execute();
@@ -158,8 +151,9 @@
 				return false;
 		}
 
+
 		public function emailInUseNotByMe($email , $myId){
-			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=? and id<>?");
+			$statement = $this->getStatement("select email from User where email=? and id<>?");
 			$statement->setParameters("si" , $email , $myId);
 
 			$result = $statement->execute();
@@ -173,7 +167,8 @@
 		public function isBanned($userId){
 			$query = "select banned from User where id=?";
 
-			$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+			$statement = $this->getStatement($query);
+
 			$statement->setParameters("i" , $userId);
 
 			$resultSet = $statement->execute();
@@ -206,7 +201,7 @@
 						"inner join AccessLevel on AccessLevel.id = User.access ".
 						"where User.email=?";
 
-			$preparedStatement = DatabaseConnection::getInstance()->prepareStatement($query);
+			$preparedStatement = $this->getStatement($query);
 			$preparedStatement->setParameters('s' , $email);
 
 			$set = $preparedStatement->execute();
@@ -249,36 +244,4 @@
 			}
 		}
 
-
-		/*
-			Get methods for the prepared statements.
-			The PreparedStatents are created only when needed.
-		 */
-		private function getInsertStatement(){
-			if( !isset($this->insertStatement) )
-				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			return $this->insertStatement;
-		}
-
-		private function getDeleteStatement(){
-			if( !isset($this->deleteStatement) )
-				$this->deleteStatement = DatabaseConnection::getInstance()->prepareStatement("delete from user where id=?");
-			return $this->deleteStatement;
-		}
-
-
-		private function getSelectByIdStatement(){
-			if( !isset($this->selectByIdStatement) )
-				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` , `verified` , `banned` , `deleted` FROM `User` WHERE id=?");
-			return $this->selectByIdStatement;
-		}
-
-		private function getUpdateStatement(){
-			if( !isset($this->updateStatement)){
-				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=COALESCE(?,`password`) ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?";
-
-				$this->updateStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->updateStatement;
-		}
 	}
