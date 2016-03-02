@@ -18,8 +18,6 @@
 
 			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"] , $_POST["phone"]) ){
 				$this->sendContactMail();
-			}else{
-				$this->setArg("error-code" , -1);
 			}
 
 		}

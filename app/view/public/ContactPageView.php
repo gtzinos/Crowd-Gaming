@@ -67,6 +67,8 @@
                         <div class="form-group">
                           <div class="col-xs-offset-3 col-xs-9 col-sm-offset-3 col-sm-6">
                             <?php
+
+                                if(exists("error-code")){
                                 /*
                                   Initialize response message
                                 */
@@ -140,7 +142,7 @@
                                     echo $response_message;
                                     echo "</label>";
                                   }
-
+                                }
                             ?>
 
                           </div>
