@@ -42,7 +42,7 @@
 												<spa`n style="font-size:12px">
 													<!-- This input help (Remember Me , Forgot password) to be on the same line -->
 													<input id="signin-remember" type="checkbox" style="visibility:hidden"/>
-													<a href="#">Forgot Password?</a>
+													<a href="<?php print LinkUtils::generatePageLink("forgot-my-password");?>">Forgot Password?</a>
 												</span>
 										</div>
 									</div>
