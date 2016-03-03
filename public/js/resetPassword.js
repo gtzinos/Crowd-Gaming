@@ -14,7 +14,7 @@ function resetPassword()
 		if(recoveryEmail)
 		{
 			var Required = {
-				  Url() { return webRoot + "recovery-password"; },
+				  Url() { return webRoot + "forgot-my-password"; },
 					SendType() { return "POST"; },
 			    Parameters() {
 						return "email=" + recoveryEmail;
@@ -22,7 +22,6 @@ function resetPassword()
 			};
 			var Optional = {
 				ResponseMethod() { return "responseRecovery"; },
-				DelayTime() { return 1500; },
 				ResponseLabel() { return "recovery-response"; },
 				SubmitButton() { return ".submit"; }
 			};
@@ -69,7 +68,7 @@ function responseRecovery()
 			{
 				$("#recovery-response").show();
 				$("#recovery-response").html("<div class='alert alert-success'>Your password reseted successfully. An email has been sent to your email address. "
-				  	+ " Please click the link that has been sent to you and you will type a new password.</div>");
+				  	+ " Please click the link that has been sent to you and you will asked to type a new password.</div>");
 			}
 			/*
 				Response error
