@@ -24,7 +24,7 @@
 
 				if( is_object($user)){
 					$user->login();
-					print 'TRUE';
+					print '0';
 				}else{
 					// If $user is not an object i contains the error code
 					// 2: Not verified 3: deleted 4: banned

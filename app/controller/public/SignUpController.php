@@ -193,7 +193,7 @@
 				$_SESSION["SIGN_UP_CACHE_NAME"] = $player->getName();
 
 
-				print 'TRUE';
+				print '0';
 				
  			}catch(EmailInUseException $e){
 				print '10';

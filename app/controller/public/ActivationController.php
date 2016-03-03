@@ -26,7 +26,7 @@
 
 			if( !$userId ){
 
-				$this->setArg("error-code" , 1);
+				$this->setArg("response-code" , 1);
 
 			}else{
 
@@ -46,12 +46,12 @@
 
 					$userMapper->persist($user);
 
-					$this->setArg("error-code" , 0);
+					$this->setArg("response-code" , 0);
 
 					DatabaseConnection::getInstance()->commit();
 
 				}catch(DatabaseException $ex){
-					$this->setArg("error-code" , 2);
+					$this->setArg("response-code" , 2);
 					DatabaseConnection::getInstance()->rollback();
 				}
 

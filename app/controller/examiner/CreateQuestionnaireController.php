@@ -17,7 +17,7 @@
 		public function run(){
 
 			/*
-				Error codes
+				Response Codes
 				not set 	: User didnt request questionnaire creation
 				0			: Created successfully
 				1			: Name Validation error
@@ -34,15 +34,15 @@
 
 				if( strlen($name) < 3 || strlen($name) > 40 ){
 					
-					$this->setArg('error-code',1); // Name Validation error
+					$this->setArg('response-code',1); // Name Validation error
 
 				}else if( strlen($description) < 10 || strlen($description) > 255 ){
 					
-					$this->setArg('error-code',2); // Descriptin validation error
+					$this->setArg('response-code',2); // Descriptin validation error
 
 				}else if( strlen($language) < 3 || strlen($language) > 20 ){
 					
-					$this->setArg('error-code',3); // Language validation error
+					$this->setArg('response-code',3); // Language validation error
 
 				}else{
 
@@ -64,12 +64,12 @@
 						$questionnaireMapper->persist($questionnaire);
 
 						DatabaseConnection::getInstance()->commit();
-						$this->setArg('error-code' , 0); // All ok
+						$this->setArg('response-code' , 0); // All ok
 
 					}catch(DatabaseException $ex){
 						
 						DatabaseConnection::getInstance()->rollback();
-						$this->setArg('error-code' , 4); // Database Error
+						$this->setArg('response-code' , 4); // Database Error
 					}
 				}
 			}

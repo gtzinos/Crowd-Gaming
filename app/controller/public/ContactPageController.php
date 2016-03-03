@@ -34,27 +34,27 @@
 				Validation
 			 */
 			if( !filter_var($email, FILTER_VALIDATE_EMAIL) ){
-				$this->setArg("error-code" , 1); // email validation error
+				$this->setArg("response-code" , 1); // email validation error
 				return;
 			}
 
 			if( strlen($name) < 2 || strlen($name) > 40 ){
-				$this->setArg("error-code" , 2); // name validation error
+				$this->setArg("response-code" , 2); // name validation error
 				return;
 			}
 
 			if( strlen($surname) < 2 || strlen($surname) > 40 ){
-				$this->setArg("error-code" , 3); // surname validation error
+				$this->setArg("response-code" , 3); // surname validation error
 				return;
 			}
 
 			if( strlen($message) < 19 || strlen($message) > 255 ){
-				$this->setArg("error-code" , 4); // message validation error
+				$this->setArg("response-code" , 4); // message validation error
 				return;
 			}
 
 			if( strlen($phone)!=0 && ( strlen($phone) < 8 || strlen($phone) > 15 ) ){
-				$this->setArg("error-code" , 5); // phone validation error
+				$this->setArg("response-code" , 5); // phone validation error
 				return;
 			}
 
@@ -94,10 +94,10 @@
 
 			if(!$mail->send()) {
 				// Email error
-				$this->setArg("error-code" , 6);
+				$this->setArg("response-code" , 6);
 			}else{
 				// All went good
-				$this->setArg("error-code" , 0);
+				$this->setArg("response-code" , 0);
 			}
 			
 

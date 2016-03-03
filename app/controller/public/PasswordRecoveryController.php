@@ -16,7 +16,7 @@
 
 		public function run(){
 			/*
-				Error code
+				Response Code
 				not set : The user has not requested yet to change password.
 				0 		: all ok , password was reset
 				1 		: Password validation error
@@ -32,7 +32,7 @@
 
 				if( strlen($password) < 8 ){
 
-					$this->setArg("error-code" , 1); // Password validation error
+					$this->setArg("response-code" , 1); // Password validation error
 				}else{
 
 					$userMapper = new UserMapper;
@@ -52,10 +52,10 @@
 							$userMapper->persist($user);
 
 							DatabaseConnection::getInstance()->commit();
-							$this->setArg("error-code" , 0); // All ok
+							$this->setArg("response-code" , 0); // All ok
 			 			}catch(DatabaseException $ex){
 							DatabaseConnection::getInstance()->rollback();
-							$this->setArg("error-code" , 2); // Database Error
+							$this->setArg("response-code" , 2); // Database Error
 						}
 					}
 				}

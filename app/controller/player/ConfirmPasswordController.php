@@ -59,7 +59,7 @@
           */
   				if( is_object($user)){
             $user->login();
-  					print 'TRUE';
+  					print '0';
   				}
           /*
             Wrong old password

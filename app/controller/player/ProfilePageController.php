@@ -47,7 +47,7 @@
 			}else{
 				// User with id SESSION["USER_ID"] does not exists
 				// This error should never happen
-				$this->setArg("error-code" , 1);
+				$this->setArg("response-code" , 1);
 			}
 
 
@@ -84,7 +84,7 @@
 				$_SESSION["SIGN_UP_CACHE_SURNAME"] = $user->getSurname();
 				$_SESSION["SIGN_UP_CACHE_NAME"] = $user->getName();
 
-				print  'TRUE'; // No Error , update Successful
+				print  '0'; // No Error , update Successful
 			}catch(DatabaseException $ex){
 				print '2'; // General Database Error
 				DatabaseConnection::getInstance()->rollback();
@@ -250,7 +250,7 @@
 				}
 
 				DatabaseConnection::getInstance()->commit();
-				print  'TRUE'; // No Error , update Successful
+				print  '0'; // No Error , update Successful
 			}catch(EmailInUseException $e){
 				print '10'; // Email in use
 				DatabaseConnection::getInstance()->rollback();
