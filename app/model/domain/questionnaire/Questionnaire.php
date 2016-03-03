@@ -10,8 +10,8 @@
 		private $description;
 		private $language;
 		private $public;
-		private $updated;
-		private $creatorId;
+		private $creationDate;
+		private $coordinatorId;
 
 		/*
 			An array of objects of the type QuestionGroup
@@ -68,7 +68,7 @@
 			$this->name = $name;
 		}
 
-		pulbic function getDescription(){
+		public function getDescription(){
 			return $this->description;
 		}
 
@@ -83,19 +83,27 @@
 		public function setPublic($public){
 			$this->public = $public;
 		}
-		public function getCreatorId(){
-			return $this->creatorId;
+		public function getCoordinatorId(){
+			return $this->coordinatorId;
 		}
 		
-		public function setCreatorId($creatorId){
-			$this->creatorId = $creatorId;
+		public function setCoordinatorId($coordinatorId){
+			$this->coordinatorId = $coordinatorId;
 		}
 
 		public function getLanguage(){
 			return $this->language;
 		}
 		
-		public function setLanguage($$language){
+		public function setLanguage($language){
 			$this->language = $language;
+		}
+
+		public function getCreationDate(){
+			return $this->creationDate;
+		}
+		
+		public function setCreationDate($creationDate){
+			$this->creationDate = $creationDate;
 		}
 	}

@@ -5,20 +5,12 @@
 
 	class QuestionnaireMapper extends DataMapper{
 
-		private $selectByIdStatement;
-		private $selectAllStatement;
-		private $selectPublicStatement;
-
-		private $insertStatement;
-		private $updateStatement;
-		private $deleteStatement;
-
 		/*
 			Returns a list of all questionnaires
 		 */
 		public function findAll(){
 
-			$statement = $this->getSelectAllStatement();
+			$statement = $this->getStatement("SELECT `id ,`coordinator_id`, `name`, `description`, `language`, `public`, `creation_date` FROM `Questionnaire`");
 
 			$resultSet = $statement->execute();
 
@@ -28,11 +20,11 @@
 				$questionnaire  = new Questionnaire();
 
 				$questionnaire->setId( $resultSet->get("id") );
-				$questionnaire->setCreatorId( $resultSet->get("creatorid") );
+				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
 				$questionnaire->setPublic( $resultSet->get("public") );
-				$questionnaire->setUpdated( $resultSet->get("updated") );
+				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -45,7 +37,7 @@
 		 */
 		public function findPublic(){
 
-			$statement = $this->getSelectPublicStatement();
+			$statement = $this->getStatement("SELECT `id`, `coordinator_id`, `name`, `description`, `language`, `public`, `creation_date` FROM `Questionnaire` WHERE `public`=1");
 
 			$resultSet = $statement->execute();
 
@@ -55,11 +47,11 @@
 				$questionnaire  = new Questionnaire();
 
 				$questionnaire->setId( $resultSet->get("id") );
-				$questionnaire->setCreatorId( $resultSet->get("creatorid") );
+				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
 				$questionnaire->setPublic( $resultSet->get("public") );
-				$questionnaire->setUpdated( $resultSet->get("updated") );
+				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -72,7 +64,7 @@
 			false if the questionnaire does not exist
 		 */
 		public function findById($questionnaireId){
-			$statement = $this->getSelectByIdStatement();
+			$statement = $this->getStatement("SELECT `coordinator_id`, `name`, `description`, `language`, `public`, `creation_date` FROM `Questionnaire` WHERE id=?");
 			$statement->setParameters('i' , $questionnaireId);
 
 			$resultSet = $statement->execute();
@@ -81,11 +73,11 @@
 				$questionnaire  = new Questionnaire();
 
 				$questionnaire->setId( $questionnaireId );
-				$questionnaire->setCreatorId( $resultSet->get("creatorid") );
+				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
 				$questionnaire->setPublic( $resultSet->get("public") );
-				$questionnaire->setUpdated( $resultSet->get("updated") );
+				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 
 				return $questionnaire;
 			}
@@ -97,7 +89,7 @@
 			Deletes a questionnaire from the database
 		 */
 		public function delete($questionnaire){
-			$statement = $this->getDeleteStatement();
+			$statement = $this->getStatement("DELETE FROM `Questionnaire` WHERE `id`=?");
 
 			$statement->setParameters('i' , $questionnaire->getId() );
 
@@ -109,7 +101,7 @@
 			Saves the state of a questionnaire in the database
 		 */
 		public function persist($questionnaire){
-			if( $questionnaire->getId() !== null){
+			if( $questionnaire->getId() === null){
 				$this->_create($questionnaire);
 			}else{
 				$this->_update($questionnaire);
@@ -120,26 +112,27 @@
 			Inserts the questionnaire to the database
 		 */
 		private function _create($questionnaire){
-			$statement = $this->getInsertStatement();
+			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `language`, `public` ,`creation_date`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)");
 
 			$statement->setParameters( 'isssi' ,
-				$questionnaire->getCreatorId(),
+				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
 				$questionnaire->getLanguage(),
 				$questionnaire->getPublic() );
 
 			$statement->executeUpdate();
+
 		}
 
 		/*
 			Updates a questionnaire in the databae
 		 */
 		private function _update($questionnaire){
-			$statement = $this->getUpdateStatement();
+			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`language`=?,`public`=? WHERE `id`=?");
 
 			$statement->setParameters( 'isssii' ,
-				$questionnaire->getCreatorId(),
+				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
 				$questionnaire->getLanguage(),
@@ -149,54 +142,5 @@
 			$statement->executeUpdate();
 		}
 
-		/*
-			Prepared Statement get Methods
-		 */
-		private function getSelectByIdStatement(){
-			if( !isset( $this->selectByIdStatement ) ){
-				$query = "SELECT `creatorid`, `name`, `description`, `language`, `public`, `updated` FROM `Questionnaire` WHERE id=?";
-				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->selectByIdStatement;
-		}
 
-		private function getSelectAllStatement(){
-			if( !isset( $this->selectAllStatement ) ){
-				$query = "SELECT `id ,`creatorid`, `name`, `description`, `language`, `public`, `updated` FROM `Questionnaire`";
-				$this->selectAllStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->selectAllStatement;
-		}
-
-		private function getSelectPublicStatement(){
-			if( !isset( $this->selectPublicStatement ) ){
-				$query = "SELECT `id`, `creatorid`, `name`, `description`, `language`, `public`, `updated` FROM `Questionnaire` WHERE `public`=1";
-				$this->selectPublicStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->selectPublicStatement;
-		}
-
-		private function getInsertStatement(){
-			if( $this->insertStatement ){
-				$query = "INSERT INTO `Questionnaire`(`creatorid`, `name`, `description`, `language`, `public`) VALUES (?,?,?,?,?)";
-				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->insertStatement;
-		}
-
-		private function getUpdateStatement(){
-			if( $this->updateStatement ){
-				$query = "UPDATE `Questionnaire` SET  `creatorid`=?,`name`=?,`description`=?,`language`=?,`public`=? WHERE `id`=?";
-				$this->updateStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->updateStatement;
-		}
-
-		private function getDeleteStatement(){
-			if( $this->deleteStatement ){
-				$query = "DELETE FROM `Questionnaire` WHERE `id`=?";
-				$this->deleteStatement = DatabaseConnection::getInstance()->prepareStatement($query);
-			}
-			return $this->deleteStatement;
-		}
 	}

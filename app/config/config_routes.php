@@ -23,6 +23,9 @@
 	Routes::add( 'questionnaireslist' , 'player/QuestionnairesListController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'become-examiner' , 'player/ExaminerApplicationController.php' , $_USER_LEVEL["PLAYER"]);
 
+
+	Routes::add( 'create-questionnaire' , 'examiner/CreateQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
+	
 	
 	/*
 		The Page to load when the page parameter is not defined
