@@ -3,7 +3,7 @@
 	include_once '../app/model/mappers/user/ActivationMapper.php';
 
 	class ActivationController extends Controller{
-		
+
 		public function init(){
 			global $_CONFIG;
 
@@ -12,7 +12,7 @@
 			$this->defSection('CSS','public/ActivationView.php');
 			$this->defSection('JAVASCRIPT','public/ActivationView.php');
 			$this->defSection('MAIN_CONTENT','public/ActivationView.php');
-			
+
 		}
 
 		public function run(){
@@ -53,9 +53,9 @@
 				}
 
 
-				
+
 			}
-			
+
 		}
 
 	}

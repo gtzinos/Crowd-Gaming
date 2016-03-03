@@ -9,7 +9,7 @@
 		Leave empty if the public folder IS the root.
 		WEB_ROOT Must end with '/' if exists.
 	 */
-	$_CONFIG["WEB_ROOT"] = "Treasure-Thess-Website/public/";
+	$_CONFIG["WEB_ROOT"] = "./Treasure-Thess-Website/public/";
 	/*
 		Version number
 	*/
@@ -48,17 +48,22 @@
 	*/
 	$_CONFIG["SESSION_TIMEOUT"] = "1800";
 	/*
-		Specify main and backup SMTP 
+		This will be the email address that the system will
+		send the messages from the Contact page
+	 */
+	$_CONFIG["CONTACT_EMAIL"] = "geotzinos@gmail.com";
+	/*
+		Specify main and backup SMTP
 	 */
 	$_CONFIG["SMTP_HOST"] = "smtp.gmail.com";
 	/*
 		SMTP username
 	 */
-	$_CONFIG["SMTP_USERNAME"] = "ENTER_EMAIL_HERE";
+	$_CONFIG["SMTP_USERNAME"] = "tzinos.team@gmail.com";
 	/*
 		SMTP password, DONT COMMIT YOUR PASSWORD TO GITHUB!
 	 */
-	$_CONFIG["SMTP_PASSWORD"] = "ENTER_PASSWORD_HERE";
+	$_CONFIG["SMTP_PASSWORD"] = "1994gt31";
 	/*
 		TCP port to connect to
 	 */

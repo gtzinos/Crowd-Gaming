@@ -1,26 +1,22 @@
-var xmlHttp;
+function loadit() {
+
+
+			$(document).find("#signup-email").val("geotzinos@gmail.com");
+			$(document).find("#signup-password").val("geotzinos@gmail.com");
+			$(document).find("#signup-repeat").val("geotzinos@gmail.com");
+			$(document).find("#signup-fname").val("geotzinos@gmail.com");
+			$(document).find("#signup-lname").val("geotzinos@gmail.com");
+			$(document).find("#signup-gender").val("1");
+			$(document).find("#signup-country").val("geotzinos@gmail.com");
+			$(document).find("#signup-city").val("geotzinos@gmail.com");
+			$(document).find("#signup-licence").prop('checked',true);
+			$(document).find(".submit").attr('disabled',false);
+
+	}
 /*
 	Try to Sign Up Method
 */
-function signUp() {
-	/*
-		Initialize response label
-	*/
-	 document.getElementById("signup-response").innerHTML = "";
-	 document.getElementById("signup-response").style.display = "none";
-	 //$(document).find("#signup-response").css('color','red');
-
-		if (window.XMLHttpRequest) {
-			/*
-			 code for IE7+, Firefox, Chrome, Opera, Safari
-			*/
-			xmlHttp = new XMLHttpRequest();
-		} else {
-			/*
-			 code for IE6, IE5
-			*/
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
+	function signUpFromForm() {
 
 		/*
 			Store user input to variables
@@ -44,90 +40,43 @@ function signUp() {
 		if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity && userAcceptLicence)
 		{
 
-			var opts = {
-				lines: 11 // The number of lines to draw
-			, length: 28 // The length of each line
-			, width: 14 // The line thickness
-			, radius: 32 // The radius of the inner circle
-			, scale: 0.5 // Scales overall size of the spinner
-			, corners: 1 // Corner roundness (0..1)
-			, color: '#000' // #rgb or #rrggbb or array of colors
-			, opacity: 0.25 // Opacity of the lines
-			, rotate: 0 // The rotation offset
-			, direction: 1 // 1: clockwise, -1: counterclockwise
-			, speed: 1 // Rounds per second
-			, trail: 60 // Afterglow percentage
-			, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-			, zIndex: 2e9 // The z-index (defaults to 2000000000)
-			, className: 'spinner' // The CSS class to assign to the spinner
-			, top: '50%' // Top position relative to parent
-			, left: '50%' // Left position relative to parent
-			, shadow: false // Whether to render a shadow
-			, hwaccel: false // Whether to use hardware acceleration
-			, position: 'absolute' // Element positioning
-			}
-			var target = document.getElementById('signup-spinner');
-			//var spinner = new Spinner(opts).spin(target);
+			var Required = {
+				  Url() { return webRoot + "signup"; },
+					SendType() { return "POST"; },
+				  variables : "",
+			    Parameters() {
+						this.variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
+							"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
+							+ userGender + "&licence=accepted";
 
-			spinner = new Spinner(opts).spin();
-			target.appendChild(spinner.el);
+						if(userAddress)
+						{
+							this.variables += "&address=" + userAddress;
+						}
+						if(userPhone)
+						{
+							this.variables += "&phone=" + userPhone;
+						}
+						return this.variables;
+					}
+			};
+			var Optional = {
+				ResponseMethod() { return "responseSignUp"; },
+				DelayTime() { return 1500; },
+				ResponseLabel() { return "#signup-response"; },
+				SpinnerLoader() { return "#signup-spinner"; },
+				SubmitButton() { return ".submit"; }
+			};
 			/*
-				While spin loading submit button must be disabled
+				Send ajax request
 			*/
-			$(document).find('.submit').prop('disabled',true);
-			/*
-				Milliseconds which user must wait
-				after server response arrived
-				(Spinner loader)
-			*/
-			var millisecondsToWait = 1500;
-
-			/*
-				After var millisecondsToWait
-				we will show results to the client
-			*/
-			xmlHttp.onreadystatechange = setTimeout(function() {
-				 responseSignUp();
-			}, millisecondsToWait);
-				/*
-					Response function
-				*/
-
-				/*
-					Url string
-				*/
-				var url = "./signup";
-				/*
-				 Send using POST Method
-				*/
-				xmlHttp.open("POST", url, false);
-				/*
-					Header encryption
-				*/
-				xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			  var variables = "email=" + userEmail + "&password=" + userPassword + "&name=" + userFName +
-					"&surname=" + userLName + "&country=" + userCountry + "&city=" + userCity + "&gender="
-					+ userGender + "&licence=accepted";
-
-				if(userAddress)
-				{
-					variables = variables + "&address=" + userAddress;
-				}
-				if(userPhone)
-				{
-					variables = variables + "&phone=" + userPhone;
-				}
-
-				xmlHttp.send(variables);
-
-			}
-			else
-			{
-				document.getElementById("signup-response").style.display = "inline";
-				document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>You must fill all fields! </div>";
-			}
-
-}
+			sendAjaxRequest(Required,Optional);
+		}
+		else {
+			$("#signup-response").show();
+			$("#signup-response").html("'<div class='alert alert-danger'>You must fill all fields.</div>");
+		}
+	}
 /*
 	Method called after response
 */
@@ -140,7 +89,6 @@ function responseSignUp() {
 			/*
 				Debug
 			*/
-
 			//console.log(xmlHttp.responseText);
 
 			/*
@@ -157,12 +105,13 @@ function responseSignUp() {
 			*/
 			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
 			{
+
 				/*
 					Redirect to home page
 				*/
-				document.getElementById("signup-response").style.display = "inline";
+				$("signup-response").show();
 			//	$(document).find("#signup-response").css('color','green');
-				document.getElementById("signup-response").innerHTML = "<div class='alert alert-success'>You have registered successfully!</div>";
+				$("signup-response").html("<div class='alert alert-success'>You have registered successfully!</div>");
 
 				/*
 				 Milliseconds which user must wait
@@ -190,7 +139,6 @@ function responseSignUp() {
 						Display an error message
 						depending on the response message
 					*/
-
 
 				 var error_message="";
 				 /*
@@ -308,8 +256,8 @@ function responseSignUp() {
 				 	 Display the message
 					 to the wright div
 				 */
-			 	 document.getElementById("signup-response").style.display = "inline";
-				 document.getElementById("signup-response").innerHTML = error_message;
+			 	 $("#signup-response").show();
+				 $("#signup-response").html(error_message);
 
 			}
 		}
@@ -322,8 +270,8 @@ function responseSignUp() {
 			/*
 				TODO Something like
 			*/
-			document.getElementById("signup-response").style.display ="none";
-			document.getElementById("signup-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>"	;
+			$("#signup-response").hide();
+			$("#signup-response").html("<div class='alert alert-danger'>Server is offline</div>");
 
 	}
 }
