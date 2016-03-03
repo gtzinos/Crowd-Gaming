@@ -21,7 +21,55 @@
 								 <!-- Response Label Field -->
 								 <div class="form-group">
 									 <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
-										 <label id="reset-response" class="responseLabel"></label>
+										 <label id="reset-response" class="responseLabel">
+											 	<?php
+												/*
+													If server responsed
+												*/
+												if(exists("error-code")){
+													/*
+														Initialize response message
+													*/
+													$response_message="<label class='alert alert-danger'>";
+													/*
+														If error-code = 0
+														Everything is okay
+													*/
+
+													if(get("error-code") == 0)
+													{
+														$response_message = "<label class='alert alert-success'>Your password changed. Now you can login with the new one.";
+													}
+													/*
+														If error-code = 1
+														invalid password
+													*/
+													else if (get("error-code") == 1)
+													{
+														$response_message .= "This not a valid password";
+													}
+													/*
+														If error-code = 1
+														General database error
+													*/
+													else if (get("error-code") == 2)
+													{
+														$response_message .= "General database error. Please try later!";
+													}
+													/*
+														Else a new error returned
+													*/
+													else
+													{
+														$response_message .= "Something going wrong. Please contact with one administrator!";
+													}
+													/*
+														Echo responsed message
+													*/
+													echo $response_message;
+												}
+												?>
+										 </label>
 									 </div>
 								 </div>
 								 <!-- Reset password Button Field -->
