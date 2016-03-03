@@ -49,7 +49,7 @@ function keyPressForm(e) {
         /*
           Call sign Up function
         */
-        signUp();
+        signUpFromForm();
       }
       /*
         End
@@ -70,7 +70,7 @@ function keyPressForm(e) {
         /*
           Call sign In function
         */
-        signIn();
+        signInFromForm();
       }
       /*
         End

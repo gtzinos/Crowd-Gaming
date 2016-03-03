@@ -23,12 +23,12 @@ var xmlHttp;
 		/*
 			If all required variables setted
 		*/
-		if(Required.Url() && Required.SendType() && Required.Parameters())
+		if(Required.Url && Required.SendType && Required.Parameters)
 		{
 				/*
 					If response-label exists
 				*/
-				if(Optional.ResponseLabel())
+				if(Optional.ResponseLabel)
 				{
 					/*
 						Initialize response label
@@ -78,7 +78,7 @@ var xmlHttp;
 					/*
 						If spinner loader exist
 					*/
-					if(Optional.SpinnerLoader())
+					if(Optional.SpinnerLoader)
 					{
 						var target = document.getElementById(Optional.SpinnerLoader()); //(Optional.SpinnerLoader()).get(0); //like getElementById
 
@@ -91,7 +91,7 @@ var xmlHttp;
 						 must be disabled
 					*/
 
-					if(Optional.SubmitButton())
+					if(Optional.SubmitButton)
 					{
 						$(document).find(Optional.SubmitButton()).prop('disabled',true);
 					}
@@ -101,11 +101,11 @@ var xmlHttp;
 						after server response arrived
 						(Spinner loader)
 					*/
-					if(Optional.ResponseMethod())
+					if(Optional.ResponseMethod)
 					{
 						var millisecondsToWait = 0;
 
-						if(Optional.DelayTime())
+						if(Optional.DelayTime)
 						{
 							millisecondsToWait = Optional.DelayTime();
 						}
@@ -132,7 +132,7 @@ var xmlHttp;
 
 						xmlHttp.send(Required.Parameters());
 			}
-			else if(Optional.ResponseLabel())
+			else if(Optional.ResponseLabel)
 			{
 				$(Optional.ResponseLabel()).show(); //css('display', 'inline-block'); //equivalent of show()
 				$(Optional.ResponseLabel()).html("'<div class='alert alert-danger'>You didnt send all required parameter (Url,SendType,Parameters)</div>");

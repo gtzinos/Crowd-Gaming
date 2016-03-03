@@ -3,20 +3,13 @@
 	include_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
 	class PasswordRecoveryRequestController extends Controller{
-		
+
 		public function init(){
-			global $_CONFIG;
-
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
-
-			$this->defSection('CSS','public/PasswordRecoveryRequestView.php');
-			$this->defSection('JAVASCRIPT','public/PasswordRecoveryRequestView.php');
-			$this->defSection('MAIN_CONTENT','public/PasswordRecoveryRequestView.php');
-			
+			$this->setHeadless(true);
 		}
 
 		public function run(){
-			
+
 			if( isset($_SESSION["USER_ID"]) )
 				$this->redirect("");
 
@@ -43,12 +36,12 @@
 						$userMapper->updatePasswordRecoveryDate($user);
 
 						global $_CONFIG;
-						
+
 						$mail = new PHPMailer;
 
-						$mail->isSMTP();      
+						$mail->isSMTP();
 						$mail->Host = $_CONFIG["SMTP_HOST"];
-						$mail->SMTPAuth = true; 
+						$mail->SMTPAuth = true;
 						$mail->Username = $_CONFIG["SMTP_USERNAME"];
 						$mail->Password = $_CONFIG["SMTP_PASSWORD"];;
 						$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];;

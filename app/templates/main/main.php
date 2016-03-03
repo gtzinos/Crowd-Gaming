@@ -84,6 +84,7 @@
 
 			load("SIGN_UP");
 
+	 		load("PASSWORD_RECOVERY");
 		?>
 	</body>
 

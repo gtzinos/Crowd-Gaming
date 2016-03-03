@@ -32,17 +32,17 @@
 									</div>
 									<!-- Check box Field -->
 									<div class="form-group">
-										<div class="col-xs-offset-1 col-xs-5 col-sm-offset-4 col-sm-4">
+										<div class="col-xs-offset-4 col-xs-4 col-sm-offset-4 col-sm-4">
 												<span style="font-size:12px">
 													<input id="signin-remember" type="checkbox" />
 													Remember
 												</span>
 										</div>
-										<div class="col-xs-offset-0 col-xs-6 col-sm-offset-0 col-sm-4">
+										<div class="col-xs-offset-0 col-xs-4 col-sm-offset-0 col-sm-4">
 												<spa`n style="font-size:12px">
 													<!-- This input help (Remember Me , Forgot password) to be on the same line -->
 													<input id="signin-remember" type="checkbox" style="visibility:hidden"/>
-													<a href="<?php print LinkUtils::generatePageLink("forgot-my-password");?>">Forgot Password?</a>
+													<a href="#" onclick="return showModal('PasswordRecoveryModal')">Forgot Password?</a>
 												</span>
 										</div>
 									</div>

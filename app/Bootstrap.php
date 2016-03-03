@@ -17,6 +17,7 @@
 	$controller->defSection("SIGN_IN" , "public/SignInView.php");
 	$controller->defSection("SIGN_UP" , "public/SignUpView.php");
 	$controller->defSection("CONFIRM_PASSWORD" , "public/ConfirmPasswordView.php");
+	$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestView.php");
 	/*
 		Check if user was banned in the meanwhile
 	 */
