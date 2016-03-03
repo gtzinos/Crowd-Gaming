@@ -15,6 +15,13 @@
 		}
 
 		public function run(){
+			/*
+				Error code
+				not set : The user has not requested yet to change password.
+				0 		: all ok , password was reset
+				1 		: Password validation error
+				2 		: Database Error
+			 */
 
 			if( isset($_SESSION["USER_ID"]) || !isset($this->params[1]) )
 				$this->redirect(""); 

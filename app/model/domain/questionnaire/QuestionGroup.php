@@ -51,7 +51,7 @@
 			$this->name = $name;
 		}
 
-		pulbic function getDescription(){
+		public function getDescription(){
 			return $this->description;
 		}
 

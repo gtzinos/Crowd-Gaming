@@ -30,7 +30,11 @@
 		Examiner Menu
 	 */
 	$examinerMenu = Menu::create("ExaminerMenu");
-	//Add menu items here
+	$examinerMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
+	$examinerMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
+	$examinerMenu->addItem( MenuItem::create("Create Questionnaire" , "LINK" , "create-questionnaire") );
+	$examinerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
+
 
 
 	/*
