@@ -17,12 +17,11 @@
 	$controller->defSection("SIGN_IN" , "public/SignInView.php");
 	$controller->defSection("SIGN_UP" , "public/SignUpView.php");
 	$controller->defSection("CONFIRM_PASSWORD" , "public/ConfirmPasswordView.php");
-
 	/*
 		Check if user was banned in the meanwhile
 	 */
 	if( isset($_SESSION["USER_ID"]) ){
-		
+
 		include_once '../app/model/mappers/user/UserMapper.php';
 
 		$userMapper = new UserMapper();

@@ -58,7 +58,7 @@
 									<!-- Login Button Field -->
 									<div class="form-group">
 										 <div class="col-xs-offset-4 col-xs-4">
-											 <button type="button" class="btn btn-primary btn-md btn-block round submit" onclick="signIn()" disabled>Sign In</button>
+											 <button type="button" class="btn btn-primary btn-md btn-block round submit" onclick="signInFromForm()" disabled>Sign In</button>
 											</div>
 									</div>
 						</form>
@@ -72,12 +72,42 @@
 										<img src="<?php print LinkUtils::generatePublicLink('img/social/facebook.png'); ?>" width="40px" height="35px" />
 									</a>
 							 </div>
-							 <!-- Google account icon -->
-							 <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
-									<a href="#">
-										<img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" width="40px" height="35px" />
-								 </a>
-							 </div>
+							 <!-- Google account icon
+									 <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2" onclick="onSignIn">
+												<img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" width="40px" height="35px" />
+									 </div>
+ 					 			-->
+
+								<!-- Google account icon -->
+								<div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2 g-signin2" data-onsuccess="onSignIn" data-theme="dark">
+										 <img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" width="40px" height="35px" />
+								</div>
+
+							 <script>
+								 function onSignIn(googleUser) {
+									 // Useful data for your client-side scripts:
+									 var profile = googleUser.getBasicProfile();
+
+									 if(profile == null)
+									 {
+										 window.alert("not ok");
+									 }
+									 else
+									 {
+										 window.alert("ok");
+									 }
+									 console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+									 console.log("Name: " + profile.getName());
+									 console.log("Image URL: " + profile.getImageUrl());
+									 console.log("Email: " + profile.getEmail());
+
+									 // The ID token you need to pass to your backend:
+									 var id_token = googleUser.getAuthResponse().id_token;
+									 console.log("ID Token: " + id_token);
+								 };
+							 </script>
+
+
 							 <br><br>
 							 <div class="col-xs-12"> </div>
 							 <div style="margin-left:auto;">

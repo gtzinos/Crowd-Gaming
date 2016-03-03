@@ -35,7 +35,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8" data-equal="signup-password">
-                          <input class="form-control" type="password" placeholder="Repeat Password (Required)" required >
+                          <input class="form-control" id="signup-repeat" type="password" placeholder="Repeat Password (Required)" required >
                           <span></span>
                       </div>
                   </div>
@@ -140,7 +140,7 @@
                   <!-- Login Button Field -->
                   <div class="form-group">
                      <div class="col-xs-offset-1 col-xs-5 col-sm-offset-4">
-                       <button type="button" class="btn btn-primary btn-md btn-block round submit" onclick="signUp()" disabled>Register Now</button>
+                       <button type="button" class="btn btn-primary btn-md btn-block round submit" onclick="signUpFromForm()" disabled>Register Now</button>
                       </div>
                   </div>
             </form>

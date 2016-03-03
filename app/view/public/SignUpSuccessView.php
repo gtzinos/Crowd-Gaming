@@ -9,7 +9,7 @@
 				Hello <?php print get("name") .' '. get("surname"); ?>
 			</h1>
 	  	<h3>
-				Your account has been successfuly created!
+				Your account has been successfully created!
 			</h3>
 			<p>
 				Only thing left to do is to verify your email.
