@@ -37,7 +37,7 @@
 					 <h4><span class="glyphicon glyphicon-lock"></span> Confirm your current password </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
-						<form class="form-horizontal">
+						<form onsubmit="return false" class="form-horizontal">
 							<!-- Password Field -->
 							<div class="form-group has-feedback">
 									<div class="col-xs-offset-1 col-xs-2 col-sm-offset-1 col-sm-2">
@@ -68,7 +68,9 @@
 								 <button id="confirm-button" type="button" class="btn btn-primary btn-md round submit" disabled>Confirm Password</button>
 							 </div>
 							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
-								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >Cancel</button>
+								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >
+									 Cancel
+								 </button>
 							 </div>
 						</div>
 				 </div>

@@ -2,7 +2,7 @@
 	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class PasswordRecoveryController extends Controller{
-		
+
 		public function init(){
 			global $_CONFIG;
 
@@ -11,7 +11,7 @@
 			$this->defSection('CSS','public/PasswordRecoveryView.php');
 			$this->defSection('JAVASCRIPT','public/PasswordRecoveryView.php');
 			$this->defSection('MAIN_CONTENT','public/PasswordRecoveryView.php');
-			
+
 		}
 
 		public function run(){
@@ -23,8 +23,8 @@
 				2 		: Database Error
 			 */
 
-			if( isset($_SESSION["USER_ID"]) || !isset($this->params[1]) )
-				$this->redirect(""); 
+			if( isset($_SESSION["USER_ID"]) || !isset($this->params[1]))
+				$this->redirect("");
 
 			if ( isset( $_POST["password"]) ){
 
@@ -58,7 +58,7 @@
 							$this->setArg("error-code" , 2); // Database Error
 						}
 					}
-				}	
+				}
 			}
 
 		}

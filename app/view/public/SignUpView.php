@@ -8,7 +8,7 @@
        </div>
        <div class="modal-body container-fluid">
 
-          <form class="form-horizontal">
+          <form onsubmit="return false" class="form-horizontal">
               <!-- Email Field -->
                   <div class="form-group has-feedback">
                       <div class="col-xs-offset-1 col-xs-3 col-md-offset-1 col-md-3">

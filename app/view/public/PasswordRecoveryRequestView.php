@@ -11,7 +11,7 @@
 			 </div>
 			 <div class="modal-body container-fluid">
 
-					<form class="form-horizontal" method="POST" >
+					<form onsubmit="return false" class="form-horizontal" method="POST" >
 						<!-- Email Field -->
 						<div class="form-group has-feedback">
 								<div class="col-xs-offset-1 col-xs-2 col-sm-offset-1 col-sm-2">

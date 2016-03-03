@@ -1,18 +1,3 @@
-function loadit() {
-
-
-			$(document).find("#signup-email").val("geotzinos@gmail.com");
-			$(document).find("#signup-password").val("geotzinos@gmail.com");
-			$(document).find("#signup-repeat").val("geotzinos@gmail.com");
-			$(document).find("#signup-fname").val("geotzinos@gmail.com");
-			$(document).find("#signup-lname").val("geotzinos@gmail.com");
-			$(document).find("#signup-gender").val("1");
-			$(document).find("#signup-country").val("geotzinos@gmail.com");
-			$(document).find("#signup-city").val("geotzinos@gmail.com");
-			$(document).find("#signup-licence").prop('checked',true);
-			$(document).find(".submit").attr('disabled',false);
-
-	}
 /*
 	Try to Sign Up Method
 */

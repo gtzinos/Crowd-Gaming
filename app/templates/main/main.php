@@ -41,7 +41,7 @@
 		?>
 	</head>
 
-	<body onload="loadit()" onkeypress="keyPressForm(event)">
+	<body onkeypress="keyPressForm(event)">
 		<!-- Menu bar place -->
 		<nav class="navbar navbar-inverse">
 		  	<div class="container-fluid">

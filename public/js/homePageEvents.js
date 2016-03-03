@@ -104,6 +104,32 @@ function keyPressForm(e) {
       return;
     }
     /*
+      Else if Reset Password modal is opened
+    */
+    else if(($("#PasswordRecoveryModal").data('bs.modal') || {}).isShown)
+    {
+      /*
+        Cancel default action from the enter key
+        E.g (Send form data)
+      */
+      event.preventDefault();
+      /*
+        If submit button is activated
+      */
+      var keyPressed = $(document).find("#recovery-button").prop("disabled");
+      if(!keyPressed)
+      {
+        /*
+          Call confirm-button on click function
+        */
+        $("#recovery-button").click();
+      }
+      /*
+        End
+      */
+      return;
+    }
+    /*
       Else if is a contact form then ...
       TODO Call contactForm
     */
