@@ -6,7 +6,8 @@
 
 	<div class="container-fluid">
 
-					<form class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" action="./password-recovery">
+					<form id="form1" class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" action="<?php echo LinkUtils::generatePageLink('password-recovery'); ?>" >
+
 								 <legend class="text-center header">Enter a new password</legend>
 								 <!-- New Password Field -->
 								 <div class="form-group has-feedback">
@@ -80,4 +81,5 @@
 								 </div>
 					</form>
 		</div>
+
 <?php endif; ?>

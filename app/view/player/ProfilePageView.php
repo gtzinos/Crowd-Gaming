@@ -141,7 +141,20 @@
              <div id="profile-spinner">
 
              </div>
-             <label id="profile-response" class="responseLabel"></label>
+             <label id="profile-response" class="responseLabel">
+               <?php
+                  /*
+                    If user had value on getNewEmail
+                    then he have to verify his new email address
+                  */
+                  if(get("user")->getNewEmail() != "")
+                  {
+                    echo "<script>$('#profile-response').show() </script>";
+                    echo "<div class='alert alert-danger'>You must verify your new email address " . strval(get("user")->getNewEmail()) . "   </div>";
+
+                  }
+               ?>
+             </label>
            </div>
          </div>
          <!-- Login Button Field -->
