@@ -16,7 +16,7 @@ function signInFromForm() {
 		if(userEmail && userPassword)
 		{
 			var Required = {
-				  Url() { return webRoot + "signup"; },
+				  Url() { return webRoot + "signin"; },
 					SendType() { return "POST"; },
 				  variables : "",
 			    Parameters() {
