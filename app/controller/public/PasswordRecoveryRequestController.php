@@ -53,12 +53,12 @@
 						$mail->isHTML(true);                                  // Set email format to HTML
 
 						$mail->Subject = 'Password Recovery';
-						$mail->Body    = "You have request to reset your password.<br>".
+						$mail->Body    = "You have requested to reset your password.<br>".
 										 "Please go to this link and set a new password.<br>".
 										 "If you didnt request to change your password please ignore this message.<br>http://".
 										  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("password-recovery").'/'.$user->getPasswordRecoveryToken();
 
-						$mail->AltBody = "You have request to reset your password. \n".
+						$mail->AltBody = "You have requested to reset your password. \n".
 										 "Please go to this link and set a new password. \n".
 										 "If you didnt request to change your password please ignore this message. \nhttp://".
 										  $_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("password-recovery").'/'.$user->getPasswordRecoveryToken();
@@ -75,7 +75,7 @@
 
 				}
 
-				$this->setArg("error-code" ,0);
+				print 'TRUE';
 			}
 
 
