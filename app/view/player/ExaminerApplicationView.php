@@ -29,53 +29,53 @@
 						<label id="request-examiner-response">
 								<?php
 
-									if(exists("error-code"))
+									if(exists("response-code"))
 									{
 										/*
-											If error-code == 0
+											If response-code == 0
 											then request sended successfully
 										*/
-										if(get("error-code") == 0)
+										if(get("response-code") == 0)
 										{
 											echo "<div class='alert alert-success'>Request for examiner application sended successfully.</div>";
 										}
 										/*
-											Else If error-code == 1
+											Else If response-code == 1
 											then user = examiner
 										*/
-										else if(get("error-code") == 1)
+										else if(get("response-code") == 1)
 										{
 											echo "<div class='alert alert-success'>You have already (examiner or moderator) access on our server.</div>";
 										}
 										/*
-											Else If error-code == 1
+											Else If response-code == 1
 											then user must fill all informations
 										*/
-										else if(get("error-code") == 2)
+										else if(get("response-code") == 2)
 										{
 											echo "<div class='alert alert-danger'>You must fill all of <a href='" . LinkUtils::generatePageLink('profile') . "'>Profile</a> Informations</div>";
 										}
 										/*
-											Else If error-code == 3
+											Else If response-code == 3
 											then User has already an active application
 										*/
-										else if(get("error-code") == 3)
+										else if(get("response-code") == 3)
 										{
 											echo "<div class='alert alert-danger'>You have already an active request application. Please wait for an administrator response.</div>";
 										}
 										/*
-											Else If error-code == 4
+											Else If response-code == 4
 											then ApplicationText validation error
 										*/
-										else if(get("error-code") == 4)
+										else if(get("response-code") == 4)
 										{
 											echo "<div class='alert alert-danger'>This is not a valid text. You must explain us why you should be an examiner.</div>";
 										}
 										/*
-											Else If error-code == 5
+											Else If response-code == 5
 											then General database error
 										*/
-										else if(get("error-code") == 5)
+										else if(get("response-code") == 5)
 										{
 											echo "<div class='alert alert-danger'>General database error. Please try later!</div>";
 										}
