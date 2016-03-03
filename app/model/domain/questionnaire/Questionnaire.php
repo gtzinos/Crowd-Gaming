@@ -75,4 +75,27 @@
 		public function setDescription($description){
 			$this->description = $description;
 		}
+
+		public function getPublic(){
+			return $this->public;
+		}
+		
+		public function setPublic($public){
+			$this->public = $public;
+		}
+		public function getCreatorId(){
+			return $this->creatorId;
+		}
+		
+		public function setCreatorId($creatorId){
+			$this->creatorId = $creatorId;
+		}
+
+		public function getLanguage(){
+			return $this->language;
+		}
+		
+		public function setLanguage($$language){
+			$this->language = $language;
+		}
 	}

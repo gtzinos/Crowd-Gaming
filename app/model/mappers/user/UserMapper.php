@@ -6,16 +6,10 @@
 	include_once '../app/model/domain/user/Moderator.php';
 	
 	class UserMapper extends DataMapper{
-		/*
-			Prepared Statements
-		 */
-		private $insertStatement;
-		private $deleteStatement;
-		private $selectByIdStatement;
-		private $updateStatement;
 
 		public function findById($id){
-			$statement = $this->getSelectByIdStatement();
+			$statement = $this->getStatement(
+				"SELECT * FROM `User` WHERE id=?");
 
 			$statement->setParameters('i' ,$id);
 
@@ -42,8 +36,62 @@
 				$user->setCountry( $resultSet->get("country") );
 				$user->setCity( $resultSet->get("city") );
 				$user->setVerified( $resultSet->get("verified") );
-				$user->setDeleted( $resultSet->get("banned") );
+				$user->setDeleted( $resultSet->get("deleted") );
 				$user->setBanned( $resultSet->get("banned") );
+				$user->setEmailVerificationToken( $resultSet->get("email_verification_token") );
+				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
+				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
+				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setNewEmail( $resultSet->get("new_email") );
+
+				if( $resultSet->get("address") !== null )
+					$user->setAddress( $resultSet->get("address") );
+
+				if( $resultSet->get("phone") !== null )
+					$user->setPhone( $resultSet->get("phone") ); 
+
+				return $user;
+			}
+
+			return false;
+		}
+
+		public function findByEmail($email){
+			$statement = $this->getStatement(
+				"SELECT * FROM `User` WHERE `email`=?");
+
+			$statement->setParameters('s' ,$email);
+
+			$resultSet = $statement->execute();
+
+			if($resultSet->next()){
+
+				$accessLevel = $resultSet->get("access");
+
+				$user = 0;
+				if( $accessLevel == 1 )
+					$user = new Player();
+				else if ( $accessLevel == 2)
+					$user = new Examiner();
+				else if ( $accessLevel == 3)
+					$user = new Moderator();
+
+				$user->setAccessLevel($accessLevel);
+				$user->setId( $resultSet->get("id") );
+				$user->setName( $resultSet->get("name") );
+				$user->setSurname( $resultSet->get("surname") );
+				$user->setEmail( $resultSet->get("email") );
+				$user->setGender( $resultSet->get("gender") );
+				$user->setCountry( $resultSet->get("country") );
+				$user->setCity( $resultSet->get("city") );
+				$user->setVerified( $resultSet->get("verified") );
+				$user->setDeleted( $resultSet->get("deleted") );
+				$user->setBanned( $resultSet->get("banned") );
+				$user->setEmailVerificationToken( $resultSet->get("email_verification_token") );
+				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
+				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
+				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setNewEmail( $resultSet->get("new_email") );
 
 				if( $resultSet->get("address") !== null )
 					$user->setAddress( $resultSet->get("address") );
@@ -70,9 +118,17 @@
 			if( self::emailInUseNotByMe($user->getEmail() ,$user->getId() ) )
 				throw new EmailInUseException("This email is in use by another user.");
 
-			$statement = self::getUpdateStatement();
+			$statement = $this->getStatement(
+				"UPDATE `User` ".
+				"SET `email`=?,`access`=?,`name`=?, `surname`=?, ".
+				"`gender`=?,`country`=?,`city`=?, `address`=?, ".
+				"`phone`=?, `password`=COALESCE(?,`password`) , ".
+				"`banned`=? , `deleted`=? , `verified`=?, ".
+				"`email_verification_token`=?, `password_recovery_token`=?, ".
+				"`new_email`=? ".
+				"WHERE `id`=?");
 
-			$statement->setParameters("sississsssiiii",	
+			$statement->setParameters("sississsssiiisssi",	
 				$user->getEmail(),
 				$user->getAccessLevel(),
 				$user->getName(),
@@ -86,6 +142,9 @@
 				$user->getBanned(),
 				$user->getDeleted(),
 				$user->getVerified(),
+				$user->getEmailVerificationToken(),
+				$user->getPasswordRecoveryToken(),
+				$user->getNewEmail(),
 				$user->getId() );
 
 			$statement->executeUpdate();
@@ -97,9 +156,9 @@
 				throw new EmailInUseException("This email is in use by another user.");
 
 
-			$statement = self::getInsertStatement();
+			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified,email_verification_token) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-			$statement->setParameters("ssississssiii",	
+			$statement->setParameters("ssississssiiis",	
 				$user->getEmail(),
 				$user->getPassword(),
 				$user->getAccessLevel(),
@@ -112,19 +171,17 @@
 				$user->getPhone(),
 				$user->getBanned(),
 				$user->getDeleted(),
-				$user->getVerified()  );
+				$user->getVerified(),
+				$user->getEmailVerificationToken()  );
 
 			$statement->executeUpdate();
-
 		}
-
-
 
 		/*
 			Removes a user from the database
 		 */
 		public function delete($user){
-			$statement = $this->getDeleteStatement();
+			$statement = $this->getStatement("delete from user where id=?");
 
 			$statement->setParameters("i" , $user->getId());
 
@@ -132,7 +189,7 @@
 		}
 
 		public function getIdByEmail($email){
-			$statement = DatabaseConnection::getInstance()->prepareStatement("select id from User where email=?");
+			$statement = $this->getStatement("select id from User where email=?");
 			$statement->setParameters("s" ,$email);
 
 			$resultSet = $statement->execute();
@@ -147,7 +204,7 @@
 			Checks if an email already exists in the database
 		 */
 		public function emailInUse($email){
-			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=?");
+			$statement = $this->getStatement("select email from User where email=? and deleted=0");
 			$statement->setParameters("s" , $email);
 
 			$result = $statement->execute();
@@ -158,8 +215,9 @@
 				return false;
 		}
 
+
 		public function emailInUseNotByMe($email , $myId){
-			$statement = DatabaseConnection::getInstance()->prepareStatement("select email from User where email=? and id<>?");
+			$statement = $this->getStatement("select email from User where email=? and id<>? and deleted=0");
 			$statement->setParameters("si" , $email , $myId);
 
 			$result = $statement->execute();
@@ -173,7 +231,8 @@
 		public function isBanned($userId){
 			$query = "select banned from User where id=?";
 
-			$statement = DatabaseConnection::getInstance()->prepareStatement($query);
+			$statement = $this->getStatement($query);
+
 			$statement->setParameters("i" , $userId);
 
 			$resultSet = $statement->execute();
@@ -195,6 +254,21 @@
 			}
 		}
 
+		public function updateEmailVerificationDate($user){
+			$statement = $this->getStatement("UPDATE `User` SET `email_verification_date`=CURRENT_TIMESTAMP WHERE `id`=?");
+
+			$statement->setParameters("i" , $user->getId());
+
+			$statement->executeUpdate();
+		}
+
+		public function updatePasswordRecoveryDate($user){
+			$statement = $this->getStatement("UPDATE `User` SET `password_recovery_date`=CURRENT_TIMESTAMP WHERE `id`=?");
+
+			$statement->setParameters("i" , $user->getId());
+
+			$statement->executeUpdate();
+		}
 
 		/*
 			Returns false if the authentication was failed.
@@ -204,9 +278,9 @@
 		public function authenticate($email , $password){
 			$query =	"select User.password, AccessLevel.name, User.access, User.id , User.verified , User.deleted ,User.banned from User ".
 						"inner join AccessLevel on AccessLevel.id = User.access ".
-						"where User.email=?";
+						"where User.email=? and User.deleted=0";
 
-			$preparedStatement = DatabaseConnection::getInstance()->prepareStatement($query);
+			$preparedStatement = $this->getStatement($query);
 			$preparedStatement->setParameters('s' , $email);
 
 			$set = $preparedStatement->execute();
@@ -251,34 +325,43 @@
 
 
 		/*
-			Get methods for the prepared statements.
-			The PreparedStatents are created only when needed.
+			Returns the userId that corresponds to the $token.
+			If the token is not valid the function returns false
 		 */
-		private function getInsertStatement(){
-			if( !isset($this->insertStatement) )
-				$this->insertStatement = DatabaseConnection::getInstance()->prepareStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
-			return $this->insertStatement;
-		}
+		public function verifyEmailToken($token){
 
-		private function getDeleteStatement(){
-			if( !isset($this->deleteStatement) )
-				$this->deleteStatement = DatabaseConnection::getInstance()->prepareStatement("delete from user where id=?");
-			return $this->deleteStatement;
-		}
+			$statement = $this->getStatement( "SELECT `id` FROM `User` WHERE `email_verification_token`=? AND TIMESTAMPDIFF(HOUR,`email_verification_date`,CURRENT_TIMESTAMP)<?");
+
+			$statement->setParameters('si',$token , 24);
+
+			$set = $statement->execute();
 
 
-		private function getSelectByIdStatement(){
-			if( !isset($this->selectByIdStatement) )
-				$this->selectByIdStatement = DatabaseConnection::getInstance()->prepareStatement("SELECT `id`, `email`, `access`, `name`, `surname`, `gender`, `country`, `city`, `address`, `phone`, `last_login` , `verified` , `banned` , `deleted` FROM `User` WHERE id=?");
-			return $this->selectByIdStatement;
-		}
-
-		private function getUpdateStatement(){
-			if( !isset($this->updateStatement)){
-				$query = "UPDATE `User` SET `email`=?,`access`=?,`name`=?,`surname`=?,`gender`=?,`country`=?,`city`=?,`address`=?,`phone`=?, `password`=COALESCE(?,`password`) ,`banned`=? , `deleted`=? , `verified`=? WHERE `id`=?";
-
-				$this->updateStatement = DatabaseConnection::getInstance()->prepareStatement($query);
+			if($set->next()){
+				return $set->get("id");
+			}else{
+				return false;
 			}
-			return $this->updateStatement;
 		}
+
+		/*
+			Returns the userId that corresponds to the $token.
+			If the token is not valid the function returns false
+		 */
+		public function verifyPasswordToken($token){
+
+			$statement = $this->getStatement( "SELECT `id` FROM `User` WHERE `password_recovery_token`=? AND TIMESTAMPDIFF(HOUR,`password_recovery_date`,CURRENT_TIMESTAMP)<?");
+
+			$statement->setParameters('si',$token , 24);
+
+			$set = $statement->execute();
+
+
+			if($set->next()){
+				return $set->get("id");
+			}else{
+				return false;
+			}
+		}
+
 	}

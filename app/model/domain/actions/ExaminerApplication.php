@@ -3,6 +3,7 @@
 	class ExaminerApplication{
 
 		private $id;
+		private $userId;
 		private $accepted;
 		private $applicationText;
 		private $applicationDate;
@@ -13,6 +14,14 @@
 			
 		public function setId($id){
 			$this->id = $id;
+		}
+
+		public function getUserId(){
+			return $this->userId;
+		}
+		
+		public function setUserId($userId){
+			$this->userId = $userId;
 		}
 
 		public function isAccepted(){
