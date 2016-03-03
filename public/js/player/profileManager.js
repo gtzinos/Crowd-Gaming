@@ -21,7 +21,7 @@ function profileUpdate()
   			*/
   			xmlHttp = new XMLHttpRequest();
   		} else {
-  			/*
+  			/*response-code
   			 code for IE6, IE5
   			*/
   			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
@@ -142,7 +142,7 @@ function profileUpdate()
   			/*
   				User can login
   			*/
-  			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
+  			if(xmlHttp.responseText.localeCompare("0") == 0)
   			{
           /*
              Close Modal
@@ -175,127 +175,127 @@ function profileUpdate()
 
   			}
   			/*
-  				Error codes
+  				response codes
   			*/
   			else
   			{
   					/*
-  						Display an error message
+  						Display an response message
   						depending on the response message
   					*/
 
 
-  				 var error_message="";
+  				 var response_message="";
   				 /*
-  				 		If error message == 1
+  				 		If response message == 1
   						Email address length problem
   				 */
   				 if(xmlHttp.responseText.localeCompare("1") == 0)
   				 {
-  					 error_message += "<div class='alert alert-danger'>Email address length must be 3 - 50 characters.</div>";
+  					 response_message += "<div class='alert alert-danger'>Email address length must be 3 - 50 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 2
+  				 		If response message == 2
   					  First Name length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("2") == 0)
   				 {
-  					 error_message += "<div class='alert alert-danger'>First Name length must be 2 - 40 characters.</div>";
+  					 response_message += "<div class='alert alert-danger'>First Name length must be 2 - 40 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 3
+  				 		If response message == 3
   						Last Name length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("3") == 0)
   				 {
-  					 error_message += "<div class='alert alert-danger'>Last Name length must be 2 - 40 characters.</div>";
+  					 response_message += "<div class='alert alert-danger'>Last Name length must be 2 - 40 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 4
+  				 		If response message == 4
   						Gender value problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("4") == 0)
   				 {
-  					 error_message += "<div class='alert alert-danger'>Gender length must be 0 or 1.</div>";
+  					 response_message += "<div class='alert alert-danger'>Gender length must be 0 or 1.</div>";
   				 }
   				 /*
-  				 		If error message == 5
+  				 		If response message == 5
   						Country Name length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("5") == 0)
   				 {
-  				 	error_message += "<div class='alert alert-danger'>Country name length must be 2 - 40 characters.</div>";
+  				 	response_message += "<div class='alert alert-danger'>Country name length must be 2 - 40 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 6
+  				 		If response message == 6
   					  City Name length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("6") == 0)
   				 {
-  				 	error_message += "<div class='alert alert-danger'>City name length must be 2 - 40 characters.</div>";
+  				 	response_message += "<div class='alert alert-danger'>City name length must be 2 - 40 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 7
+  				 		If response message == 7
   						Password length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("7") == 0)
   				 {
-  				 	error_message += "<div class='alert alert-danger'>Password length must be >= 8 characters.</div>";
+  				 	response_message += "<div class='alert alert-danger'>Password length must be >= 8 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 8
+  				 		If response message == 8
   						Address Name length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("8") == 0)
   				 {
-  					 error_message += "<div class='alert alert-danger'>Address name length must be 2 - 40 characters.</div>";
+  					 response_message += "<div class='alert alert-danger'>Address name length must be 2 - 40 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 9
+  				 		If response message == 9
   						Phone number length problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("9") == 0)
   				 {
-  				 	error_message += "<div class='alert alert-danger'>Phone number length must be 8 - 15 characters.</div>";
+  				 	response_message += "<div class='alert alert-danger'>Phone number length must be 8 - 15 characters.</div>";
   				 }
   				 /*
-  				 		If error message == 10
+  				 		If response message == 10
   						Email address used problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("10") == 0)
   				 {
-  				 	error_message += "<div class='alert alert-danger'>Email address used by another user.</div>";
+  				 	response_message += "<div class='alert alert-danger'>Email address used by another user.</div>";
   				 }
   				 /*
-  				 	 If error message == 11
+  				 	 If response message == 11
   				 	 General database problem
   				 */
   				 else if(xmlHttp.responseText.localeCompare("11") == 0)
   				 {
-  				  error_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
+  				  response_message += "<div class='alert alert-danger'>We are sorry about this. Please try Later.</div>";
   				 }
            /*
-             If error message == 12
+             If response message == 12
              Fail password problem
            */
            else if(xmlHttp.responseText.localeCompare("12") == 0)
            {
-            error_message += "<div class='alert alert-danger'>Invalid password. Try again!</div>";
+            response_message += "<div class='alert alert-danger'>Invalid password. Try again!</div>";
            }
   				 /*
   				 	Something going Wrong
   				 */
            else
            {
- 						error_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
+ 						response_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
  					 }
 
 
   				 	if(xmlHttp.responseText.localeCompare("") == 0)
   					{
-  						//Send us one email with the error message
-  						//mail("to","From","ERROR profile",xmlHttp.responseText);
-  						error_message = "<div class='alert alert-danger'>Important error. Contact with one admin!</div>";
+  						//Send us one email with the response message
+  						//mail("to","From","response profile",xmlHttp.responseText);
+  						response_message = "<div class='alert alert-danger'>Important response. Contact with one admin!</div>";
   					}
 
 
@@ -305,7 +305,7 @@ function profileUpdate()
   					 to the wright div
   				 */
   			 	 document.getElementById("confirm-response").style.display = "inline";
-  				 document.getElementById("confirm-response").innerHTML = error_message;
+  				 document.getElementById("confirm-response").innerHTML = response_message;
 
            /*
              After update completed submit button must be enabled
@@ -437,7 +437,7 @@ function responseDeleteAccount()
       /*
         User can login
       */
-      if(xmlHttp.responseText.localeCompare("TRUE") == 0)
+      if(xmlHttp.responseText.localeCompare("0") == 0)
       {
         /*
            Close Modal
@@ -475,40 +475,40 @@ function responseDeleteAccount()
 			else
 			{
 					/*
-						Display an error message
+						Display an response message
 						depending on the response message
 					*/
 
-				 var error_message="";
+				 var response_message="";
 				 /*
-				 		If error message == 1
+				 		If response message == 1
 					  Wrong password
          */
 				 if(xmlHttp.responseText.localeCompare("1") == 0)
 				 {
-					 error_message += "<div class='alert alert-danger'>Incorrect password.Try again!</div>";
+					 response_message += "<div class='alert alert-danger'>Incorrect password.Try again!</div>";
 				 }
          /*
-				 		If error message == 1
+				 		If response message == 1
 					  Wrong password
          */
 				 else if(xmlHttp.responseText.localeCompare("2") == 0)
 				 {
-					 error_message += "<div class='alert alert-danger'>General Database error.</div>";
+					 response_message += "<div class='alert alert-danger'>General Database response.</div>";
 				 }
          /*
           Something going wrong
          */
          else
          {
-           error_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
+           response_message += "<div class='alert alert-danger'>Something going wrong. Please try later!</div>";
          }
          /*
            Display the message
            to the wright div
          */
          document.getElementById("confirm-response").style.display = "inline";
-         document.getElementById("confirm-response").innerHTML = error_message;
+         document.getElementById("confirm-response").innerHTML = response_message;
          /*
            After delete completed submit button must be enabled
          */

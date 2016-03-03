@@ -64,41 +64,41 @@ function responseRecovery()
 			/*
 				User reset password successfully
 			*/
-			if(xmlHttp.responseText.localeCompare("TRUE") == 0)
+			if(xmlHttp.responseText.localeCompare("0") == 0)
 			{
 				$("#recovery-response").show();
 				$("#recovery-response").html("<div class='alert alert-success'>Your password reseted successfully. An email has been sent to your email address. "
 				  	+ " Please click the link that has been sent to you and you will asked to type a new password.</div>");
 			}
 			/*
-				Response error
+				Response message
 			*/
 			else
 			{
 					/*
-						Display an error message
+						Display an response message
 					*/
 
-					var error_message = "";
+					var response_message = "";
 					/*
-						 If error message == 1
+						 If response message == 1
 						 Invalid email address
 					*/
 					if(xmlHttp.responseText.localeCompare("1") == 0)
 					{
-					 error_message += "<div class='alert alert-danger'>This is not a valid email address.</div>";
+					 response_message += "<div class='alert alert-danger'>This is not a valid email address.</div>";
 					}
 					/*
 							Something going wrong
 					*/
 					else {
-						error_message += "<div class='alert alert-danger'>Something going wrong. Contact with one administrator!</div>";
+						response_message += "<div class='alert alert-danger'>Something going wrong. Contact with one administrator!</div>";
 					}
 
 
 
 				 $("#recovery-response").show();
-				 $("#recovery-response").html(error_message);
+				 $("#recovery-response").html(response_message);
 			}
 		}
 

@@ -27,33 +27,33 @@
 												/*
 													If server responsed
 												*/
-												if(exists("error-code")){
+												if(exists("response-code")){
 													/*
 														Initialize response message
 													*/
 													$response_message="<label class='alert alert-danger'>";
 													/*
-														If error-code = 0
+														If response-code = 0
 														Everything is okay
 													*/
 
-													if(get("error-code") == 0)
+													if(get("response-code") == 0)
 													{
 														$response_message = "<label class='alert alert-success'>Your password changed. Now you can login with the new one.";
 													}
 													/*
-														If error-code = 1
+														If response-code = 1
 														invalid password
 													*/
-													else if (get("error-code") == 1)
+													else if (get("response-code") == 1)
 													{
 														$response_message .= "This not a valid password";
 													}
 													/*
-														If error-code = 1
+														If response-code = 1
 														General database error
 													*/
-													else if (get("error-code") == 2)
+													else if (get("response-code") == 2)
 													{
 														$response_message .= "General database error. Please try later!";
 													}

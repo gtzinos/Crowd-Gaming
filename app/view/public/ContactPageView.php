@@ -68,65 +68,65 @@
                           <div class="col-xs-offset-3 col-xs-9 col-sm-offset-3 col-sm-6">
                             <?php
 
-                                if(exists("error-code")){
+                                if(exists("response-code")){
                                 /*
                                   Initialize response message
                                 */
                                 $response_message="<label class='alert alert-danger'>";
                                   /*
-                                    If error-code = 0
+                                    If response-code = 0
                                     Everything is okay
                                   */
 
-                                  if(get("error-code") == 0)
+                                  if(get("response-code") == 0)
                                   {
                                     $response_message = "<label class='alert alert-success'>Your message was sent successfully. We will reply soon.";
                                   }
                                   /*
-                                    Else If error-code = 1
+                                    Else If response-code = 1
                                     then problem with email validation
                                   */
-                                  else if(get("error-code") == 1)
+                                  else if(get("response-code") == 1)
                                   {
                                     $response_message .= "This is not a valid email address.";
                                   }
                                   /*
-                                    Else If error-code = 2
+                                    Else If response-code = 2
                                     then problem with Name validation
                                   */
-                                  else if(get("error-code") == 2)
+                                  else if(get("response-code") == 2)
                                   {
                                     $response_message .= "This is not a valid name.";
                                   }
                                   /*
-                                    Else If error-code = 3
+                                    Else If response-code = 3
                                     then problem with Surname validation
                                   */
-                                  else if(get("error-code") == 3)
+                                  else if(get("response-code") == 3)
                                   {
                                     $response_message .= "This is not a valid surname.";
                                   }
                                   /*
-                                    Else If error-code = 4
+                                    Else If response-code = 4
                                     then problem with Message validation
                                   */
-                                  else if(get("error-code") == 4)
+                                  else if(get("response-code") == 4)
                                   {
                                     $response_message .= "This is not a valid message text.";
                                   }
                                   /*
-                                    Else If error-code = 5
+                                    Else If response-code = 5
                                     then problem with Phone validation
                                   */
-                                  else if(get("error-code") == 5)
+                                  else if(get("response-code") == 5)
                                   {
                                     $response_message .= "This is not a valid phone number.";
                                   }
                                   /*
-                                    Else If error-code = 6
+                                    Else If response-code = 6
                                     then problem with Name validation
                                   */
-                                  else if(get("error-code") == 6)
+                                  else if(get("response-code") == 6)
                                   {
                                     $response_message .= "We are under maintenance. Please try later!";
                                   }
