@@ -63,8 +63,8 @@ function loadit() {
 			var Optional = {
 				ResponseMethod() { return "responseSignUp"; },
 				DelayTime() { return 1500; },
-				ResponseLabel() { return "#signup-response"; },
-				SpinnerLoader() { return "#signup-spinner"; },
+				ResponseLabel() { return "signup-response"; },
+				SpinnerLoader() { return "signup-spinner"; },
 				SubmitButton() { return ".submit"; }
 			};
 			/*

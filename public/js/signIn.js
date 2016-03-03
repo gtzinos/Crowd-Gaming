@@ -2,26 +2,8 @@ var xmlHttp;
 /*
 	Try to Sign In Method
 */
-function signIn() {
-	/*
-		Initialize response label
-	*/
-	 document.getElementById("signin-response").innerHTML = "";
-	 document.getElementById("signin-response").style.display = "none";
-
-		if (window.XMLHttpRequest) {
+function signInFromForm() {
 			/*
-			 code for IE7+, Firefox, Chrome, Opera, Safari
-			*/
-			xmlHttp = new XMLHttpRequest();
-		} else {
-			/*
-			 code for IE6, IE5
-			*/
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-
-		/*
 			Store user input to variables
 		*/
 		var userEmail = $(document).find("#signin-email").val();
@@ -33,79 +15,38 @@ function signIn() {
 
 		if(userEmail && userPassword)
 		{
-			var opts = {
-				lines: 11 // The number of lines to draw
-			, length: 28 // The length of each line
-			, width: 14 // The line thickness
-			, radius: 32 // The radius of the inner circle
-			, scale: 0.5 // Scales overall size of the spinner
-			, corners: 1 // Corner roundness (0..1)
-			, color: '#000' // #rgb or #rrggbb or array of colors
-			, opacity: 0.25 // Opacity of the lines
-			, rotate: 0 // The rotation offset
-			, direction: 1 // 1: clockwise, -1: counterclockwise
-			, speed: 1 // Rounds per second
-			, trail: 60 // Afterglow percentage
-			, fps: 20 // Frames per second when using setTimeout() as a fallback for CSS
-			, zIndex: 2e9 // The z-index (defaults to 2000000000)
-			, className: 'spinner' // The CSS class to assign to the spinner
-			, top: '50%' // Top position relative to parent
-			, left: '50%' // Left position relative to parent
-			, shadow: false // Whether to render a shadow
-			, hwaccel: false // Whether to use hardware acceleration
-			, position: 'absolute' // Element positioning
-			}
-			var target = document.getElementById('signin-spinner');
-			//var spinner = new Spinner(opts).spin(target);
+			var Required = {
+				  Url() { return webRoot + "signup"; },
+					SendType() { return "POST"; },
+				  variables : "",
+			    Parameters() {
+						/*
+							Variables we will send
+						*/
+						this.variables = "email=" + userEmail + "&password=" +  userPassword;
 
-			spinner = new Spinner(opts).spin();
-			target.appendChild(spinner.el);
-			/*
-				While spin loading submit button must be disabled
-			*/
-			$(document).find('.submit').prop('disabled',true);
-			/*
-				Milliseconds which user must wait
-				after server response arrived
-				(Spinner loader)
-			*/
-			var millisecondsToWait = 1500;
+						/*
+							If user needs to remember him
+						*/
+						if(userRememberMe == "true")
+						{
+							this.variables += "&remember=true";
+						}
 
+						return this.variables;
+					}
+			};
+			var Optional = {
+				ResponseMethod() { return "responseSignIn"; },
+				DelayTime() { return 1500; },
+				ResponseLabel() { return "signin-response"; },
+				SpinnerLoader() { return "signin-spinner"; },
+				SubmitButton() { return ".submit"; }
+			};
 			/*
-				After var millisecondsToWait
-				we will show results to the client
+				Send ajax request
 			*/
-			xmlHttp.onreadystatechange = setTimeout(function() {
-				/*
-					Response function
-				*/
-				responseSignIn();
-			}, millisecondsToWait);
-			/*
-				Url string
-			*/
-			var url = webRoot+"signin";
-			/*
-			 Send using POST Method
-			*/
-			xmlHttp.open("POST", url, false);
-			/*
-				Header encryption
-			*/
-			xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-			/*
-				Variables we will send
-			*/
-			var variables = "email=" + userEmail + "&password=" +  userPassword;
-
-			/*
-				If user needs to remember him
-			*/
-			if(userRememberMe == "true")
-			{
-				variables += "&remember=true";
-			}
-			xmlHttp.send(variables);
+			sendAjaxRequest(Required,Optional);
 
 		}
 		else
@@ -113,8 +54,8 @@ function signIn() {
 			/*
 				Response failed login message
 			*/
-			document.getElementById("signin-response").style.display = "inline";
-			document.getElementById("signin-response").innerHTML = "<div class='alert alert-danger'>Username or Password cannot be empty. </div>";
+			$("#signin-response").show();
+			$("#signin-response").html("<div class='alert alert-danger'>Username or Password cannot be empty. </div>");
 		}
 
 }
@@ -204,8 +145,8 @@ function responseSignIn() {
 
 
 
-			 	 document.getElementById("signin-response").style.display = "inline";
-				 document.getElementById("signin-response").innerHTML = error_message;
+			 	 $("#signin-response").show();
+				 $("#signin-response").html(error_message);
 			}
 		}
 
@@ -217,7 +158,7 @@ function responseSignIn() {
 			/*
 				TODO Something like
 			*/
-			document.getElementById("signin-response").style.display ="none";
-			document.getElementById("signin-response").innerHTML = "<div class='alert alert-danger'>Server is offline</div>";
+			$("#signin-response").show();
+			$("#signin-response").html("<div class='alert alert-danger'>Server is offline</div>");
 	}
 }
