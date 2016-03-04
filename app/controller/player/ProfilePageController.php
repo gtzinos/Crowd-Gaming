@@ -202,9 +202,13 @@
 			
 			if( isset($address))
 				$user->setAddress($address);
+			else
+				$user->setAddress(null);
 
 			if( isset($phone))
 				$user->setPhone($phone);
+			else
+				$user->setPhone(null);
 
 			/*
 				Update the user in the database

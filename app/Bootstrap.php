@@ -12,13 +12,6 @@
 
 
 	/*
-		Define View sections that must be loaded for all controllers.
-	 */
-	$controller->defSection("SIGN_IN" , "public/SignInView.php");
-	$controller->defSection("SIGN_UP" , "public/SignUpView.php");
-	$controller->defSection("CONFIRM_PASSWORD" , "public/ConfirmPasswordView.php");
-	$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestView.php");
-	/*
 		Check if user was banned in the meanwhile
 	 */
 	if( isset($_SESSION["USER_ID"]) ){
@@ -38,9 +31,11 @@
 
 
 	/*
-		Select the correct menus
+		Select the correct menus and define View sections that must be loaded for all controllers.
 	 */
 	if( isset($_SESSION["USER_ID"])){
+		
+		$controller->defSection("CONFIRM_PASSWORD" , "public/ConfirmPasswordView.php");
 
 		if( $_SESSION["USER_LEVEL"] == 1){
 			$controller->setArg("primary-menu" , "PlayerMenu");
@@ -52,6 +47,11 @@
 
 		$controller->setArg("secondary-menu" , "authorizedRightMenu");
 	}else{
+
+		$controller->defSection("SIGN_IN" , "public/SignInView.php");
+		$controller->defSection("SIGN_UP" , "public/SignUpView.php");
+		$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestView.php");
+		
 
 		$controller->setArg("primary-menu"   , "GuestMenu");
 		$controller->setArg("secondary-menu" , "UnauthorizedRightMenu");
