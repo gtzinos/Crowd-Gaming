@@ -39,9 +39,9 @@
 												</span>
 										</div>
 										<div class="col-xs-offset-0 col-xs-4 col-sm-offset-0 col-sm-4">
-												<spa`n style="font-size:12px">
+												<span style="font-size:12px">
 													<!-- This input help (Remember Me , Forgot password) to be on the same line -->
-													<input id="signin-remember" type="checkbox" style="visibility:hidden"/>
+													<input id="signin-forgot" type="checkbox" style="visibility:hidden"/>
 													<a href="#" onclick="return showModal('PasswordRecoveryModal')">Forgot Password?</a>
 												</span>
 										</div>
@@ -69,7 +69,7 @@
 							<!-- Facebook icon -->
 							 <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
 									<a href="#">
-										<img src="<?php print LinkUtils::generatePublicLink('img/social/facebook.png'); ?>" width="40px" height="35px" />
+										<img src="<?php print LinkUtils::generatePublicLink('img/social/facebook.png'); ?>" alt="Login via Facebook" width="40" height="35" />
 									</a>
 							 </div>
 							 <!-- Google account icon
@@ -80,7 +80,7 @@
 
 								<!-- Google account icon -->
 								<div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2 g-signin2" data-onsuccess="onSignIn" data-theme="dark">
-										 <img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" width="40px" height="35px" />
+										 <img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>"  alt="Login via Google Plus" width="40" height="35" />
 								</div>
 
 							 <script>

@@ -5,8 +5,24 @@
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
 	<div class="container-fluid">
-
-					<form id="form1" class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" action="<?php echo LinkUtils::generatePageLink('password-recovery'); ?>" >
+					<?php
+						if(exists("response-code")) {
+							if(get("response-code") == 3)
+							{
+								print "
+									<div class='form-group'>
+										<div class='col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6 text-center'>
+											<label class='alert alert-danger'>
+												<p> Reset password taken expired. </p>
+											</label>
+										</div>
+									</div>
+								";
+								die;
+							}
+						}
+					?>
+					<form class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" >
 
 								 <legend class="text-center header">Enter a new password</legend>
 								 <!-- New Password Field -->
@@ -15,59 +31,61 @@
 											 <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 										 </div>
 										 <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8">
-												 <input type="password" class="form-control" placeholder="Password (Required) *Length >= 8" required />
+												 <input type="password" name="password" class="form-control" placeholder="Password (Required) *Length >= 8" required />
 												 <span></span>
 										 </div>
 								 </div>
 								 <!-- Response Label Field -->
 								 <div class="form-group">
 									 <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
-										 <label id="reset-response" class="responseLabel">
+										 <label id="reset-response">
+
 											 	<?php
 												/*
 													If server responsed
 												*/
 												if(exists("response-code")){
-													/*
-														Initialize response message
-													*/
-													$response_message="<label class='alert alert-danger'>";
-													/*
-														If response-code = 0
-														Everything is okay
-													*/
+														/*
+															Initialize response message
+														*/
+														$response_message="<label class='alert alert-danger'>";
+														/*
+															If response-code = 0
+															Everything is okay
+														*/
 
-													if(get("response-code") == 0)
-													{
-														$response_message = "<label class='alert alert-success'>Your password changed. Now you can login with the new one.";
-													}
-													/*
-														If response-code = 1
-														invalid password
-													*/
-													else if (get("response-code") == 1)
-													{
-														$response_message .= "This not a valid password";
-													}
-													/*
-														If response-code = 1
-														General database error
-													*/
-													else if (get("response-code") == 2)
-													{
-														$response_message .= "General database error. Please try later!";
-													}
-													/*
-														Else a new error returned
-													*/
-													else
-													{
-														$response_message .= "Something going wrong. Please contact with one administrator!";
-													}
-													/*
-														Echo responsed message
-													*/
-													echo $response_message;
+														if(get("response-code") == 0)
+														{
+																$response_message = "<label class='alert alert-success'>Your password changed. Now you can login with the new one.";
+														}
+														/*
+															If response-code = 1
+															invalid password
+														*/
+														else if (get("response-code") == 1)
+														{
+															$response_message .= "This not a valid password";
+														}
+														/*
+															If response-code = 1
+															General database error
+														*/
+														else if (get("response-code") == 2)
+														{
+															$response_message .= "General database error. Please try later!";
+														}
+														/*
+															Else a new error returned
+														*/
+														else
+														{
+															$response_message .= "Something going wrong. Please contact with one administrator!";
+														}
+														$response_message .= "</label>";
+														/*
+															Echo responsed message
+														*/
+														echo $response_message;
 												}
 												?>
 										 </label>
@@ -76,7 +94,7 @@
 								 <!-- Reset password Button Field -->
 								 <div class="form-group">
 										<div class="col-xs-offset-3 col-xs-6 col-sm-offset-3 col-sm-6">
-											<button id="reset-button" type="button" class="btn btn-primary btn-md round submit" type="submit" disabled>Reset Password</button>
+											<button id="reset-button" class="btn btn-primary btn-md round submit" type="submit" disabled>Reset Password</button>
 										</div>
 								 </div>
 					</form>

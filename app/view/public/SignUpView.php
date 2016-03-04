@@ -66,7 +66,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="select">
                         <select class="form-control" id="signup-gender" required>
-                          <option selected>Gender (Required)</option>
+                          <option value="" disabled selected>Gender (Required)</option>
                           <option value="0">Male</option>
                           <option value="1">Female</option>
                         </select>
@@ -151,13 +151,13 @@
               <!-- Facebook icon -->
                <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
                   <a href="#">
-                    <img src="<?php print LinkUtils::generatePublicLink('img/social/facebook.png'); ?>" width="40px" height="35px" />
+                    <img src="<?php print LinkUtils::generatePublicLink('img/social/facebook.png'); ?>" alt="Login via Facebook" width="40" height="35" />
                   </a>
                </div>
                <!-- Google account icon -->
                <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
                   <a href="#">
-                    <img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" width="40px" height="35px" />
+                    <img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" alt="Login via Google Plus" width="40" height="35" />
                  </a>
                </div>
                <br><br>

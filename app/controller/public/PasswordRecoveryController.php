@@ -5,6 +5,20 @@
 
 		public function init(){
 			global $_CONFIG;
+			/*
+				Invalid activation link
+			*/
+			if(!isset($this->params[1]))
+			{
+				$this->redirect("home");
+			}
+			/*
+				Taken expired
+			*/
+			else if((new UserMapper)->verifyPasswordToken($this->params[1]) <= 0)
+			{
+				$this->setArg("response-code" , 3);
+			}
 
 			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
@@ -57,6 +71,13 @@
 							DatabaseConnection::getInstance()->rollback();
 							$this->setArg("response-code" , 2); // Database Error
 						}
+					}
+					/*
+						Invalid activation link
+					*/
+					else
+					{
+						$this->redirect("");
 					}
 				}
 			}

@@ -8,16 +8,16 @@
 		/*
 			Everything is ok
 		*/
-		if(get("error-code") == 0)
+		if(get("response-code") == 0)
 		{
-			echo "<h1>Register completed successfull.</h1>";
-			echo "<p>Now you can log in on our system.</p>";
+			echo "<h1>Your email verified successfully.</h1>";
+			echo "<p>Now you can log in with this on our system.</p>";
 		}
 		/*
 			Error code = 1
 			Invalid activation link
 		*/
-		else if(get("error-code") == 1)
+		else if(get("response-code") == 1)
 		{
 			echo "<h1>Invalid activation link.</h1>";
 		}
@@ -25,7 +25,7 @@
 			Error code = 2
 			General database error
 		*/
-		else if(get("error-code") == 2)
+		else if(get("response-code") == 2)
 		{
 			echo "<h1>Something going wrong (General Database Error)</h1>";
 		}
