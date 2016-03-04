@@ -3,10 +3,11 @@
 
 	class Question {
 
-		private $id;
-		private $name;
-		private $questionText;
-		private $timeToAnswer;
+		private $id; // number
+		private $questionGroupId; // number
+		private $questionText; // string 
+		private $timeToAnswer; // number
+		private $creation_date; // string , timestamp in database
 
 		/*
 			Array of objects of the type Answer
@@ -37,14 +38,13 @@
 			$this->setEdited(true);
 			$this->id = $id;
 		}
-	
-		public function getName(){
-			return $this->name;
+			
+		public function getQuestionGroupId(){
+			return $this->questionGroupId;
 		}
-
-		public function setName($name){
-			$this->setEdited(true);
-			$this->name = $name;
+		
+		public function setQuestionGroupId($questionGroupId){
+			$this->questionGroupId = $questionGroupId;
 		}
 
 		public function getQuestionText(){
@@ -65,5 +65,11 @@
 			$this->timeToAnswer = $timeToAnswer;
 		}
 
+		public function getCreationDate(){
+			return $this->creationDate;
+		}
 		
+		public function setCreationDate($creationDate){
+			$this->creationDate = $creationDate;
+		}
 	}
