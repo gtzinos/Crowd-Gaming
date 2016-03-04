@@ -56,7 +56,6 @@
 		}
 
 		public function setId($id){
-			$this->setEdited(true);
 			$this->id = $id;
 		}
 

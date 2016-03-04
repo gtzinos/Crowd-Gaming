@@ -19,7 +19,7 @@
 
 				$question->setId( $set->get("id") );
 				$question->setQuestionGroupId( $set->get("qid") );
-				$question->setName( $set->get("name") );
+				$question->setQuestionText( $set->get("question") );
 				$question->setTimeToAnswer( $set->get("time_to_answer") );
 				$question->setCreationDate( $set->get("creation_date") );
 
@@ -44,7 +44,7 @@
 
 				$question->setId( $set->get("id") );
 				$question->setQuestionGroupId( $set->get("qid") );
-				$question->setName( $set->get("name") );
+				$question->setQuestionText( $set->get("question") );
 				$question->setTimeToAnswer( $set->get("time_to_answer") );
 				$question->setCreationDate( $set->get("creation_date") );
 
@@ -67,7 +67,7 @@
 
 				$question->setId( $set->get("id") );
 				$question->setQuestionGroupId( $set->get("qid") );
-				$question->setName( $set->get("name") );
+				$question->setQuestionText( $set->get("question") );
 				$question->setTimeToAnswer( $set->get("time_to_answer") );
 				$question->setCreationDate( $set->get("creation_date") );
 
@@ -107,7 +107,7 @@
 		}
 
 		private function _update($question){
-			$query = "UPDATE `Question` SET `gid`=?,`question`=?,`time_to_answer`=? WHERE `id`=";
+			$query = "UPDATE `Question` SET `gid`=?,`question`=?,`time_to_answer`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 

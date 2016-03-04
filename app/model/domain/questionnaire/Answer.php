@@ -1,8 +1,11 @@
 <?php
 	class Answer{
 		private $id;
+		private $questionId;
+		private $description;
 		private $correct;
-		private $text;
+		private $answerText;
+		private $creationDate;
 
 		/*
 			Set and Get Methods bellow
@@ -13,8 +16,23 @@
 		}
 
 		public function setId($id){
-			$this->setEdited(true);
 			$this->id = $id;
+		}
+
+		public function getQuestionId(){
+			return $this->questionId;
+		}
+		
+		public function setQuestionId($questionId){
+			$this->questionId = $questionId;
+		}
+
+		public function getDescription(){
+			return $this->description;
+		}
+		
+		public function setDescription($description){
+			$this->description = $description;
 		}
 
 		public function isCorrect(){
@@ -22,16 +40,22 @@
 		}
 
 		public function setCorrect($correct){
-			$this->setEdited(true);
 			$this->correct = $correct;
 		}
 
-		public function getText(){
-			return $this->text;
+		public function getAnswerText(){
+			return $this->answerText;
 		}
 
-		public function setText($text){
-			$this->setEdited(true);
-			$this->text = $text;
+		public function setAnswerText($answerText){
+			$this->answerText = $answerText;
+		}
+
+		public function getCreationDate(){
+			return $this->creationDate;
+		}
+		
+		public function setCreationDate($creationDate){
+			$this->creationDate = $creationDate;
 		}
 	}

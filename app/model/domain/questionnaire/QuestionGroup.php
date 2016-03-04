@@ -39,7 +39,6 @@
 		}
 
 		public function setId($id){
-			$this->setEdited(true);
 			$this->id = $id;
 		}
 
@@ -72,7 +71,6 @@
 		}
 
 		public function setAltitude($altitude){
-			$this->setEdited(true);
 			$this->altitude = $altitude;
 		}
 
@@ -81,7 +79,6 @@
 		}
 
 		public function setLongtitude($longtitude){
-			$this->setEdited(true);
 			$this->longtitude= $longtitude;
 		}
 
@@ -90,7 +87,6 @@
 		}
 
 		public function setAltitudeDeviation($altitudeDeviation){
-			$this->setEdited(true);
 			$this->altitudeDeviation = $altitudeDeviation;
 		}
 
@@ -99,7 +95,6 @@
 		}
 
 		public function setLongtitudeDeviation($longtitudeDeviation){
-			$this->setEdited(true);
 			$this->longtitudeDeviation= $longtitudeDeviation;
 		}
 

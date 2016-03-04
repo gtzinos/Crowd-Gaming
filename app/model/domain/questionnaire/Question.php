@@ -35,7 +35,6 @@
 		}
 
 		public function setId($id){
-			$this->setEdited(true);
 			$this->id = $id;
 		}
 			
@@ -52,7 +51,6 @@
 		}
 
 		public function setQuestionText($questionText){
-			$this->setEdited(true);
 			$this->questionText = $questionText;
 		}
 
@@ -61,7 +59,6 @@
 		}
 
 		public function setTimeToAnswer($timeToAnswer){
-			$this->setEdited(true);
 			$this->timeToAnswer = $timeToAnswer;
 		}
 
