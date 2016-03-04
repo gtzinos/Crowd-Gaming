@@ -3,15 +3,15 @@
 
 	class QuestionGroup {
 
-		private $id;
-		private $name;
-		private $description;
-		private $altitude;
-		private $longtitude;
-		private $altitudeDeviation;
-		private $longtitudeDeviation;
-
-
+		private $id; // number
+		private $questionnaireId; // number
+		private $name; // string
+		private $description; // string
+		private $altitude; // number
+		private $longtitude; // number
+		private $altitudeDeviation; // number
+		private $longtitudeDeviation; // number
+		private $creationDate; // string , timestamp in database
 
 		/*
 			Array with objects of the type Question
@@ -41,6 +41,14 @@
 		public function setId($id){
 			$this->setEdited(true);
 			$this->id = $id;
+		}
+
+		public function getQuestionnaireId(){
+			return $this->questionnaireId;
+		}
+		
+		public function setQuestionnaireId($questionnaireId){
+			$this->questionnaireId = $questionnaireId;
 		}
 
 		public function getName(){
@@ -93,5 +101,13 @@
 		public function setLongtitudeDeviation($longtitudeDeviation){
 			$this->setEdited(true);
 			$this->longtitudeDeviation= $longtitudeDeviation;
+		}
+
+		public function getCreationDate(){
+			return $this->creationDate;
+		}
+		
+		public function setCreationDate($creationDate){
+			$this->creationDate = $creationDate;
 		}
 	}
