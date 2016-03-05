@@ -24,9 +24,9 @@
 				The array items have the below properties
 				"questionnaire"  		: the questionnaire object
 				"participations" 		: The number of players
-				"user-participations" 	: Boolean that shows whether the user participates as a player
+				"user-participates" 	: Boolean that shows whether the user participates as a player
 				access them like this
-				
+
 				$questionnaires[ $key ]["questionnaire"];
 			 */
 			$questionnaires = $questionnaireMapper->findPublicWithInfo(10 , 0);
