@@ -1,3 +1,30 @@
+
+/*
+  Bind a Method on an element
+  #1 PARAMETER : Modal Name (Optional)
+  #2 Element Name (Required)
+  #3 PARAMETER : Method Name (Required)
+*/
+function bindMethod(modal,element,method)
+{
+    //if()
+    showModal(modal);
+    /*
+      Set on click listener
+      on #confirm-button
+    */
+    $(element).unbind( "click" );
+    $(element).bind( "click", function() {
+      /*
+        parameter name method + ()
+        call e.g updateProfile()
+      */
+      eval(method + '()');
+    } );
+
+}
+
+
 /*
   Close all opened modals
   and open a new one

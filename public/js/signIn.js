@@ -3,7 +3,7 @@ var xmlHttp;
 	Try to Sign In Method
 */
 function signInFromForm() {
-			/*
+		/*
 			Store user input to variables
 		*/
 		var userEmail = $(document).find("#signin-email").val();

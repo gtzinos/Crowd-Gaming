@@ -8,10 +8,11 @@
 			/*
 				Invalid activation link
 			*/
-			if(!isset($this->params[1]))
+			if(!isset($this->params[1]) || $this->params[1] == "")
 			{
 				$this->redirect("home");
 			}
+
 			/*
 				Taken expired
 			*/
