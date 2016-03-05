@@ -2,8 +2,52 @@
 
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/questionnaire/Questionnaire.php';
+	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
 	class QuestionnaireMapper extends DataMapper{
+
+
+		/*
+			Return
+		 */
+		public function findPublicWithInfo($limit , $offset){
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+FROM `Questionnaire`
+LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id`
+WHERE `Questionnaire`.`public`=1
+GROUP BY `Questionnaire`.`id`
+ORDER BY `Questionnaire`.`id` DESC
+LIMIT ?,?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $offset ,$limit );
+			
+			$resultSet = $statement->execute();
+
+			$participationMapper = new ParticipationMapper;
+
+			// init the array that will be returned
+			$questionnaires = array();
+
+			while( $resultSet->next() ){
+				$questionnaire  = new Questionnaire();
+
+				$questionnaire->setId( $resultSet->get("id") );
+				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
+				$questionnaire->setDescription( $resultSet->get("description") );
+				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setPublic( $resultSet->get("public") );
+				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+
+				$arrayItem["questionnaire"] = $questionnaire;
+				$arrayItem["participations"] = $resultSet->get("participations");
+				$arrayItem["user-participates"] = $participationMapper->playerParticipates($_SESSION["USER_ID"] , $questionnaire->getId() );
+
+				$questionnaires[] = $arrayItem;
+			}
+
+			return $questionnaires;
+		}
 
 		/*
 			Returns a list of all questionnaires

@@ -75,6 +75,17 @@
 			$this->description = $description;
 		}
 
+		public function getSmallDescription(){
+			$description = $this->description;
+
+			$description = strip_tags($description);
+
+			if( count($description) > 30 )
+				$description = substr($description, 30);
+			
+			return $description;
+		}
+
 		public function getPublic(){
 			return $this->public;
 		}
