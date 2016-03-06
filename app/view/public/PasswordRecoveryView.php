@@ -7,19 +7,59 @@
 	<div class="container-fluid">
 					<?php
 						if(exists("response-code")) {
-							if(get("response-code") == 3)
+							/*
+								Initialize response message
+							*/
+							$response_message="	<div class='form-group'>
+								<div class='col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6 text-center'>";
+
+							/*
+								If response-code = 0
+								Everything is okay
+							*/
+
+							if(get("response-code") == 0)
 							{
-								print "
-									<div class='form-group'>
-										<div class='col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6 text-center'>
-											<label class='alert alert-danger'>
-												<p> Reset password taken expired. </p>
-											</label>
-										</div>
-									</div>
-								";
-								die;
+									$response_message .= "<label class='alert alert-success'>Your password has changed. Now you can login with the new one.";
+
 							}
+							/*
+								If response-code = 1
+								invalid password
+							*/
+							else if (get("response-code") == 1)
+							{
+								$response_message .= "<label class='alert alert-danger'>This not a valid password";
+							}
+							/*
+								Else If response-code = 2
+								General database error
+							*/
+							else if (get("response-code") == 2)
+							{
+								$response_message .= "<label class='alert alert-danger'>General database error. Please try later!";
+							}
+							/*
+								Else If response-code = 3
+								Expired taken id
+							*/
+							else if(get("response-code") == 3)
+							{
+								$response_message .= "<label class='alert alert-danger'>Reset password taken expired.";
+							}
+							/*
+								Else a new error returned
+							*/
+							else
+							{
+								$response_message .= "<label class='alert alert-danger'>Something going wrong. Please contact with one administrator!";
+							}
+							$response_message .= "</label>";
+							/*
+								Echo responsed message
+							*/
+							echo $response_message;
+							return;
 						}
 					?>
 					<form class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" >

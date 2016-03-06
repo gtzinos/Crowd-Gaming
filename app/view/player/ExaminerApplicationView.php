@@ -13,7 +13,7 @@
 								<span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
 						</div>
 						<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="20">
-								<textarea class="form-control" maxlength="250" name="application_text" placeholder="Why you should be an examiner on our server ?" required></textarea>
+								<textarea class="form-control" <?php if(exists("response-code")) { if(get("response-code") >= 0) echo "maxlength='0'"; } else { echo "maxlength='255'"; }  ?> name="application_text" placeholder="Why you should be an examiner on our server ?" required></textarea>
 								<span></span>
 						</div>
 				</div>
