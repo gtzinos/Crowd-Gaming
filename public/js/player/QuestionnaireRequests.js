@@ -1,25 +1,48 @@
 /*
+  Options for one questionnaire
+  #1 PARAMETER : Questionnaire id (Required)
+*/
+function optionsForQuestionnaire(questionnaire_id)
+{
+  showModal("joinQuestionnaire");
+}
+
+/*
+  #Click join Button
+  #Open modal
+  #Bind event
+*/
+function showJoinQuestionnaire(questionnaire_id)
+{
+  bindMethod("joinQuestionnaire","#join-questionnaire-button","joinQuestionnaire(" + questionnaire_id + ")");
+}
+/*
   #Click join Button
   #Open modal
   #Bind event
 */
 function joinQuestionnaire(questionnaire_id)
 {
-  bindMethod("joinQuestionnaire","#join-questionnaire-button","sendQuestionnaireRequest(" + questionnaire_id + ",1)");
+  var request = $("#request-join-type").val()
+  bindMethod("joinQuestionnaire","#join-questionnaire-button","sendQuestionnaireRequest(" + questionnaire_id + ")," + request + ",'#join-questionnaire-response'");
 }
-
+/*
+  UnJoin one questionnaire
+*/
+function unJoinQuestionnaire(questionnaire_id)
+{
+  sendQuestionnaireRequest(questionnaire_id,2,"");
+}
 /*
   Send request to join questionnaire
 */
-function sendQuestionnaireRequest(questionnaire_id,request_type)
+function sendQuestionnaireRequest(questionnaire_id,request_type,response_label)
 {
 
   /*
     Check the Variables before sending them
   */
-
-  if(userEmail && userPassword)
-  {
+  if(true) {
     var Required = {
         Url() { return webRoot + "signin"; },
         SendType() { return "POST"; },

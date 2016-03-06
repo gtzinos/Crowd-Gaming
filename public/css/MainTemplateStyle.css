@@ -41,6 +41,22 @@ body,html{
 		font-size: 35px;
 		color: #36A0FF;
 }
+
+/*
+	Increase icon size class
+*/
+.mediumicon {
+		font-size: 24px;
+		color: #36A0FF;
+}
+
+/*
+	Increase icon size class
+*/
+.smallicon {
+		font-size: 16px;
+		color: #36A0FF;
+}
 /*
 	Increase material-icons size class
 */

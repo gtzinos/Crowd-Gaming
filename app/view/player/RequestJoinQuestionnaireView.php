@@ -5,7 +5,7 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dimdiss="modal">&times;</button>
-					 <h4><span class="glyphicon glyphicon-lock"></span> Request to join our questionnaire </h4>
+					 <h4><span class="glyphicon glyphicon-lock"></span> Options for this questionnaire </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form onsubmit="return false" class="form-horizontal">
@@ -14,7 +14,7 @@
                   <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                       <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
                   </div>
-                  <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="1">
+                  <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="length" data-length="1">
                       <textarea class="form-control" maxlength="250" id="request-join-message" name="message" placeholder="Send us something (Optional)" ></textarea>
                       <span></span>
                   </div>
@@ -24,9 +24,9 @@
 									<div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
 										<span class="text-center"><i class="material-icons bigicon">mood</i></span>
 									</div>
-									<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="select">
+									<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="select">
 										<select class="form-control" id="request-join-type" required>
-											<option value="" disabled selected>What you need ? </option>
+											<option value="" disabled selected>What do you want ? </option>
 											<option value="1" >I want to play</option>
 											<?php
 												/*
