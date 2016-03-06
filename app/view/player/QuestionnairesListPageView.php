@@ -76,10 +76,10 @@
 									 "
 									 				. $questionnaires["participations"] .
 									 "		</div>
-									 			<div class='col-xs-offset-4 col-xs-4 col-sm-offset-8 col-sm-4'>
+									 			<div class='col-xs-offset-4 col-xs-4 col-sm-offset-10 col-sm-2'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""
 													. LinkUtils::generatePageLink('questionnaire') . "/"
-												  . $questionnaires["questionnaire"]->getId() . "\">	Learn More
+												  . $questionnaires["questionnaire"]->getId() . "\">More Info
 													</a>
 												</div>
 											</div>
@@ -124,5 +124,4 @@
 		</center>
 	</div>
 
-<?php load("REQUEST_JOIN_QUESTIONNAIRE"); ?>
 <?php endif; ?>

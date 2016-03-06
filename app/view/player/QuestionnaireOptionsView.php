@@ -1,6 +1,6 @@
-<? if($section == "REQUEST_JOIN_QUESTIONNAIRE") : ?>
+<? if($section == "QUESTIONNAIRE_OPTIONS") : ?>
 
-	<div class="modal fade" id="joinQuestionnaire" role="dialog">
+	<div class="modal fade" id="questionnaire-options" role="dialog">
 		<div class="modal-dialog modal-md">
 			<div class="modal-content">
 				 <div class="modal-header">
@@ -9,7 +9,40 @@
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form onsubmit="return false" class="form-horizontal">
-              <!-- Message Text Field -->
+							<!-- Request type Field -->
+							<div class="form-group has-feedback">
+									<div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+										<span class="text-center"><i class="material-icons bigicon">mood</i></span>
+									</div>
+									<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="select">
+
+										<select class="form-control" id="request-join-type" required>
+											<option value="" disabled selected>What do you want ? </option>
+											<?php
+												if(!get("questionnaire")["active-player-request"])
+												{
+													echo "<option value='1' >I want to play</option>";
+												}
+												else {
+													echo "<option value='-1' >I dont want to play</option>";
+												}
+
+												if(!get("questionnaire")["active-examiner-request"])
+												{
+													echo "<option value='2' >I want to be an examiner</option>";
+												}
+												else
+												{
+													echo "<option value='-2' >I dont want to be an examiner</option>";
+												}
+
+											?>
+
+										</select>
+										<span></span>
+									</div>
+							</div>
+							<!-- Message Text Field -->
               <div class="form-group has-feedback">
                   <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                       <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
@@ -19,24 +52,7 @@
                       <span></span>
                   </div>
               </div>
-							<!-- Request type Field -->
-							<div class="form-group has-feedback">
-									<div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
-										<span class="text-center"><i class="material-icons bigicon">mood</i></span>
-									</div>
-									<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="select">
-										<select class="form-control" id="request-join-type" required>
-											<option value="" disabled selected>What do you want ? </option>
-											<option value="1" >I want to play</option>
-											<?php
-												/*
-													TODO : We need array of request types
-												*/
-											?>
-										</select>
-										<span></span>
-									</div>
-							</div>
+
 							<!-- Spinner and Response Label Field -->
 							<div class="form-group">
 								<div class="col-xs-offset-3 col-xs-7 col-sm-offset-3 col-sm-7">

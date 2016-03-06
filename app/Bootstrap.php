@@ -36,7 +36,7 @@
 	if( isset($_SESSION["USER_ID"])){
 
 		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordView.php");
-		$controller->defSection("REQUEST_JOIN_QUESTIONNAIRE" , "player/RequestJoinQuestionnaireView.php");
+		$controller->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
 
 		if( $_SESSION["USER_LEVEL"] == 1){
 			$controller->setArg("primary-menu" , "PlayerMenu");

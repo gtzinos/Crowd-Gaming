@@ -2,7 +2,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 
 	class QuestionnaireController extends Controller{
-		
+
 		public function init(){
 			global $_CONFIG;
 
@@ -11,14 +11,14 @@
 			$this->defSection('CSS','player/QuestionnaireView.php');
 			$this->defSection('JAVASCRIPT','player/QuestionnaireView.php');
 			$this->defSection('MAIN_CONTENT','player/QuestionnaireView.php');
-			
+
 		}
 
 		public function run(){
 			if( !isset( $this->params[1] ) ){
 				$this->redirect("questionnaireslist");
 			}
-
+			
 			$questionnaireMapper = new QuestionnaireMapper;
 
 			$questionnaireInfo = null;
