@@ -5,16 +5,14 @@
 
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <legend class="text-center header"> Enjoy our questionnaires </legend>
-
+	<!-- Sort by form -->
 	<div class="form-group container-fluid">
 		<div class='col-xs-12 row'>
 			<label for="questionnaire-sort">Sort By:</label>
 		</div>
 		<div class="col-xs-12 col-sm-2 row">
-
 			<form class="form-horizontal" method="GET">
-				<select id="sortname" name="sort" class="form-control" onchange="this.form.submit()">
-
+				<select id="sortmethod" name="sort" class="form-control" onchange="this.form.submit()">
 					<option value='date'>Date</option>
 					<option value='name'>Name</option>
 					<option value='pop'>Popularity</option>
@@ -22,16 +20,31 @@
 			</form>
 		</div>
 	</div>
+	<!-- Script to change the selected index -->
 	<script>
-			$('#sortname').val("<?php echo get("sort") ?>");
+			$('#sortmethod').val("<?php echo get("sort") ?>");
 	</script>
 
+	<!-- Questionnaires list design -->
 	<div class="container-fluid col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
 	  <div class="panel-group" id="accordion">
 		<?php
-
+			/*
+					For each questionnaire
+			*/
 		  foreach(get("questionnaires") as $questionnaires)
 			{
+				/*
+					First of all we need
+					to find the correct image.
+					public / private icon
+				*/
+				$icon = 'fa fa-globe';
+				if($questionnaires["questionnaire"] -> getPublic() == 0)
+				{
+					$icon = 'glyphicon glyphicon-lock';
+				}
+
 				/*
 					Design for each questionnaire
 				*/
@@ -48,7 +61,7 @@
 									<div id='collapse" . $questionnaires["questionnaire"]->getId() . "' class='panel-collapse collapse'>
 										<div class='panel-body'>
 											<div class='questionnaire-time' style='margin-left:98%;'>
-												<span> <i class='fa fa-globe smallicon'></i> </span>
+												<span> <i class='" . $icon . " smallicon'></i> </span>
 											</div>
 											<div class='questionnaire-description col-xs-12'>
 										"
@@ -79,20 +92,36 @@
 		</div>
 	</div>
 
+	<!-- Pager form -->
 	<div class="container-fluid col-xs-12 col-sm-offset-2 col-sm-8	">
-		<ul class="pager">
-		  <li class="previous"><a href="#"><label><</label></a></li>
-			<li>
-				<label>
+
+		<center>
+			<ul class="pagination">
 					<?php
-						if(!isset($_GET['qp']))
-							$_GET['qp'] = 1;
-						echo "Page " . $_GET['qp'];
+							$pageLink = LinkUtils::generatePageLink('questionnaireslist') . '\\' . get('sort') . '\\';
+
+							echo "<li> <a href='" . $pageLink . '1' ."'>I<</a></li>";
+							if(get('page') > 1)
+							{
+								echo "<li> <a href='" . $pageLink . (get("page")-1) ."'>" . (get("page")-1) . "</a></li>";
+							}
+							else
+							{
+								echo "<li class='disabled'> <a href='href='#' onclick='return false'>.</a></li>";
+							}
+							echo "<li class='active'> <a onclick='return false'>" . get("page") . "</a></li>";
+
+							if(get("page") < 3)
+							{
+								echo "<li> <a href='" . $pageLink . (get("page")+1) ."'>" . (get("page")+1) . "</a></li>";
+							}
+							else {
+								echo "<li class='disabled'> <a href='href='#' onclick='return false'>.</a></li>";
+							}
+							echo "<li> <a href='" . $pageLink . '1' ."'>>I</a></li>";
 					?>
-				</label>
-			</li>
-		  <li class="next"><a href="#"><label>></label></a></li>
-		</ul>
+			</ul>
+		</center>
 	</div>
 
 <?php load("REQUEST_JOIN_QUESTIONNAIRE"); ?>
