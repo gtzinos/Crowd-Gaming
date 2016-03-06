@@ -3,6 +3,7 @@
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/questionnaire/Questionnaire.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/actions/RequestMapper.php';
 
 	class QuestionnaireMapper extends DataMapper{
 
@@ -10,14 +11,22 @@
 		/*
 			Return
 		 */
-		public function findPublicWithInfo($limit , $offset){
+		public function findWithInfo($sorting , $limit , $offset , $public){
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
-LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id`
-WHERE `Questionnaire`.`public`=1
-GROUP BY `Questionnaire`.`id`
-ORDER BY `Questionnaire`.`id` DESC
-LIMIT ?,?";
+LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` ";
+
+			if($public)
+				$query .= "WHERE `Questionnaire`.`public`=1 ";
+
+			$query .= "GROUP BY `Questionnaire`.`id` ";
+			
+			if( $sorting == 0 )
+				$query .= "ORDER BY `Questionnaire`.`id` DESC LIMIT ?,?";
+			else if( $sorting == 1)
+				$query .= "ORDER BY `Questionnaire`.`name` DESC LIMIT ?,?";
+			else if( $sorting == 2)
+				$query .= "ORDER BY participations DESC LIMIT ?,?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $offset ,$limit );
@@ -25,6 +34,7 @@ LIMIT ?,?";
 			$resultSet = $statement->execute();
 
 			$participationMapper = new ParticipationMapper;
+			$requestMapper = new RequestMapper;
 
 			// init the array that will be returned
 			$questionnaires = array();
@@ -42,12 +52,15 @@ LIMIT ?,?";
 				$arrayItem["questionnaire"] = $questionnaire;
 				$arrayItem["participations"] = $resultSet->get("participations");
 				$arrayItem["user-participates"] = $participationMapper->playerParticipates($_SESSION["USER_ID"] , $questionnaire->getId() );
-
+				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
+				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaires[] = $arrayItem;
 			}
 
 			return $questionnaires;
 		}
+
+
 
 		/*
 			Returns a list of all questionnaires

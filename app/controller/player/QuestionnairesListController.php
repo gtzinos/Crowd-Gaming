@@ -17,20 +17,59 @@
 		}
 
 		public function run(){
+			$sorting = 0;
+			$page = 1;
+
+			if( isset( $this->params[1] , $this->params[2]) ){
+
+				if($this->params[1] == 'name' ){
+					$sorting = 1;
+				}else if($this->params[1] == 'pop' ){
+					$sorting = 2;
+				}
+
+				if( is_numeric($this->params[2]) ){
+					$page = $this->params[2];
+				}
+
+			}else if( isset($this->params[1]) ){
+
+				if($this->params[1] == 'name' ){
+					$sorting = 1;
+				}else if($this->params[1] == 'pop' ){
+					$sorting = 2;
+				}else if( is_numeric($this->params[1]) ){
+					$page = $this->params[1];
+				}
+			}
 
 			$questionnaireMapper = new QuestionnaireMapper;
 
 			/*
 				The array items have the below properties
-				"questionnaire"  		: the questionnaire object
-				"participations" 		: The number of players
-				"user-participates" 	: Boolean that shows whether the user participates as a player
+				"questionnaire"  			: the questionnaire object
+				"participations" 			: The number of players
+				"user-participates" 		: Boolean that shows whether the user participates as a player
+				"active-player-request"		: Boolean that shows if the user has an active request to join the questionnaire as Player
+				"active-examiner-request" 	: Boolean that shows if the user has an active request to join the questionnaire as Examiner
 				access them like this
 
 				$questionnaires[ $key ]["questionnaire"];
 			 */
-			$questionnaires = $questionnaireMapper->findPublicWithInfo(10 , 0);
+			$questionnaires = null;
 
+			if( $_SESSION["USER_LEVEL"] > 1 ){
+				/*
+					Get all questionnaires
+				 */
+				$questionnaires = $questionnaireMapper->findWithInfo($sorting , 10 , 10*($page-1) , false );
+			}else{
+				/*
+					Get only public ones
+				 */
+				$questionnaires = $questionnaireMapper->findWithInfo($sorting , 10 , 10*($page-1) , true);
+			}
+			
 
 			$this->setArg("questionnaires" , $questionnaires);
 

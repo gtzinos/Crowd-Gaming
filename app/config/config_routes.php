@@ -22,7 +22,7 @@
 	Routes::add( 'confirm_password' , 'player/ConfirmPasswordController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'questionnaireslist' , 'player/QuestionnairesListController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'become-examiner' , 'player/ExaminerApplicationController.php' , $_USER_LEVEL["PLAYER"]);
-
+	Routes::add( 'questionnaire' , 'player/QuestionnaireController.php' , $_USER_LEVEL["PLAYER"]);
 
 	Routes::add( 'create-questionnaire' , 'examiner/CreateQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	
