@@ -13,6 +13,28 @@
 			$this->defSection('JAVASCRIPT','player/QuestionnairesListPageView.php');
 			$this->defSection('MAIN_CONTENT','player/QuestionnairesListPageView.php');
 
+			$page = null;
+
+			if( isset($_GET["sort"]) ){ 
+				if($_GET["sort"] == 'name')
+					$page = "questionnaireslist/name";
+				else if($_GET["sort"] == 'date')
+					$page = "questionnaireslist/date";
+				else if($_GET["sort"] == 'pop')
+					$page = "questionnaireslist/pop";
+			}
+
+			if( isset($_GET["page"]) ){
+				if( is_numeric($_GET["page"]) ){
+					if( $page === null)
+						$page = "questionnaireslist/".$_GET["page"];
+					else
+						$page.= "/".$_GET["page"];
+				}
+			}
+
+			if( $page !== null)
+				$this->redirect($page);
 
 		}
 
@@ -42,6 +64,9 @@
 					$page = $this->params[1];
 				}
 			}
+			
+			$this->setArg("sort" , $sorting);
+			$this->setArg("page" , $page); 
 
 			$questionnaireMapper = new QuestionnaireMapper;
 
