@@ -11,15 +11,20 @@
 			<label for="questionnaire-sort">Sort By:</label>
 		</div>
 		<div class="col-xs-12 col-sm-2 row">
+
 			<form class="form-horizontal" method="GET">
-				<select name="sort" class="form-control" onchange="this.form.submit()" >
-					<option value='new'>Date</option>
+				<select id="sortname" name="sort" class="form-control" onchange="this.form.submit()">
+
+					<option value='date'>Date</option>
 					<option value='name'>Name</option>
 					<option value='pop'>Popularity</option>
 				</select>
 			</form>
 		</div>
 	</div>
+	<script>
+			$('#sortname').val("<?php echo get("sort") ?>");
+	</script>
 
 	<div class="container-fluid col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
 	  <div class="panel-group" id="accordion">
@@ -60,7 +65,7 @@
 									 "		</div>
 									 			<div class='col-xs-offset-4 col-xs-4 col-sm-offset-8 col-sm-4'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""
-													. LinkUtils::generatePageLink('become-examiner') . "/"
+													. LinkUtils::generatePageLink('questionnaire') . "/"
 												  . $questionnaires["questionnaire"]->getId() . "\">	Learn More
 													</a>
 												</div>

@@ -20,17 +20,17 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$query .= "WHERE `Questionnaire`.`public`=1 ";
 
 			$query .= "GROUP BY `Questionnaire`.`id` ";
-			
-			if( $sorting == 0 )
+
+			if( $sorting == "date" )
 				$query .= "ORDER BY `Questionnaire`.`id` DESC LIMIT ?,?";
-			else if( $sorting == 1)
+			else if( $sorting == "name")
 				$query .= "ORDER BY `Questionnaire`.`name` DESC LIMIT ?,?";
-			else if( $sorting == 2)
+			else if( $sorting == "pop")
 				$query .= "ORDER BY participations DESC LIMIT ?,?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $offset ,$limit );
-			
+
 			$resultSet = $statement->execute();
 
 			$participationMapper = new ParticipationMapper;

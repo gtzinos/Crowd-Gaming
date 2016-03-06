@@ -15,7 +15,7 @@
 
 			$page = null;
 
-			if( isset($_GET["sort"]) ){ 
+			if( isset($_GET["sort"]) ){
 				if($_GET["sort"] == 'name')
 					$page = "questionnaireslist/name";
 				else if($_GET["sort"] == 'date')
@@ -39,15 +39,13 @@
 		}
 
 		public function run(){
-			$sorting = 0;
+			$sorting = 'date';
 			$page = 1;
 
 			if( isset( $this->params[1] , $this->params[2]) ){
 
-				if($this->params[1] == 'name' ){
-					$sorting = 1;
-				}else if($this->params[1] == 'pop' ){
-					$sorting = 2;
+				if($this->params[1] == 'name' || $this->params[1] == 'pop'){
+					$sorting = $this->params[1];
 				}
 
 				if( is_numeric($this->params[2]) ){
@@ -56,18 +54,17 @@
 
 			}else if( isset($this->params[1]) ){
 
-				if($this->params[1] == 'name' ){
-					$sorting = 1;
-				}else if($this->params[1] == 'pop' ){
-					$sorting = 2;
-				}else if( is_numeric($this->params[1]) ){
+				if($this->params[1] == 'name' || $this->params[1] == 'pop'){
+					$sorting = $this->params[1];
+				}
+				else if( is_numeric($this->params[1]) ){
 					$page = $this->params[1];
 				}
 			}
-			
-			$this->setArg("sort" , $sorting);
-			$this->setArg("page" , $page); 
 
+			$this->setArg("sort" , $sorting);
+			$this->setArg("page" , $page);
+			
 			$questionnaireMapper = new QuestionnaireMapper;
 
 			/*
@@ -94,7 +91,7 @@
 				 */
 				$questionnaires = $questionnaireMapper->findWithInfo($sorting , 10 , 10*($page-1) , true);
 			}
-			
+
 
 			$this->setArg("questionnaires" , $questionnaires);
 
