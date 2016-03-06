@@ -60,7 +60,48 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return $questionnaires;
 		}
 
+		/*
+			Return
+		 */
+		public function findWithInfoById($questionnaireId , $public){
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+FROM `Questionnaire`
+LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` WHERE `Questionnaire`.`id`=? ";
+			
+			if($public)
+				$query .= "AND `Questionnaire`.`public`=1 ";
+			$query .= "GROUP BY `Questionnaire`.`id` ";
 
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId);
+			
+			$resultSet = $statement->execute();
+
+			$participationMapper = new ParticipationMapper;
+			$requestMapper = new RequestMapper;
+
+
+			if( $resultSet->next() ){
+				$questionnaire  = new Questionnaire();
+
+				$questionnaire->setId( $resultSet->get("id") );
+				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
+				$questionnaire->setDescription( $resultSet->get("description") );
+				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setPublic( $resultSet->get("public") );
+				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+
+				$questionnaireInfo["questionnaire"] = $questionnaire;
+				$questionnaireInfo["participations"] = $resultSet->get("participations");
+				$questionnaireInfo["user-participates"] = $participationMapper->playerParticipates($_SESSION["USER_ID"] , $questionnaire->getId() );
+				$questionnaireInfo["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
+				$questionnaireInfo["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
+				
+				return $questionnaireInfo;
+			}
+
+			return $null;
+		}
 
 		/*
 			Returns a list of all questionnaires
