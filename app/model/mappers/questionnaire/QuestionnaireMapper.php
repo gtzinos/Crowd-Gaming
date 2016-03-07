@@ -7,12 +7,11 @@
 
 	class QuestionnaireMapper extends DataMapper{
 
-
 		/*
 			Return
 		 */
 		public function findWithInfo($sorting , $limit , $offset , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , `Questionnaire`.`language` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` ";
 
@@ -46,6 +45,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setLanguage( $resultSet->get("language"));
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 
@@ -65,7 +65,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			Return
 		 */
 		public function findWithInfoById($questionnaireId , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`creation_date` , `Questionnaire`.`language` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` WHERE `Questionnaire`.`id`=? ";
 			
@@ -89,6 +89,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setLanguage( $resultSet->get("language"));
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 
@@ -109,7 +110,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			$query = "SELECT ceil(count(*)/10 ) as counter FROM `Questionnaire`";
 
 			if( $public )
-				$query .= " `public`=1";
+				$query .= " WHERE `public`=1";
 
 			$statement = $this->getStatement($query);
 
