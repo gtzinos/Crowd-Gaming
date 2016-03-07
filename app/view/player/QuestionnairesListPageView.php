@@ -98,7 +98,7 @@
 		<center>
 			<ul class="pagination">
 					<?php
-							$pageLink = LinkUtils::generatePageLink('questionnaireslist') . '\\' . get('sort') . '\\';
+							$pageLink = LinkUtils::generatePageLink('questionnaireslist') . '/' . get('sort') . '/';
 
 							echo "<li> <a href='" . $pageLink . '1' ."'>I<</a></li>";
 							if(get('page') > 1)
