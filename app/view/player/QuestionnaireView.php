@@ -31,7 +31,7 @@
 			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
 				<a>Members :
 					<?php
-						if(get("questionnaire")["user-participates"])
+						if(get("questionnaire")["player-participation"])
 						{
 							echo "You and ";
 						}

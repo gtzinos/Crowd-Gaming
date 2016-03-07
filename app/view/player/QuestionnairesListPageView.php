@@ -88,6 +88,11 @@
 							</div>
 						  ";
 			}
+
+			if(get("pages_count") == 0)
+			{
+				echo "<center><label class='alert alert-danger'>We dont have questionnaires in our database.</label></center>";
+			}
 		?>
 		</div>
 	</div>
@@ -101,7 +106,7 @@
 							$pageLink = LinkUtils::generatePageLink('questionnaireslist') . '/' . get('sort') . '/';
 
 							echo "<li> <a href='" . $pageLink . '1' ."'>I<</a></li>";
-							if(get('page') > 1)
+							if(get("page") > 1 && get("pages_count") > 1)
 							{
 								echo "<li> <a href='" . $pageLink . (get("page")-1) ."'>" . (get("page")-1) . "</a></li>";
 							}
@@ -109,16 +114,25 @@
 							{
 								echo "<li class='disabled'> <a href='href='#' onclick='return false'>.</a></li>";
 							}
+
 							echo "<li class='active'> <a onclick='return false'>" . get("page") . "</a></li>";
 
-							if(get("page") < 3)
+							if(get("page") < get("pages_count"))
 							{
 								echo "<li> <a href='" . $pageLink . (get("page")+1) ."'>" . (get("page")+1) . "</a></li>";
 							}
 							else {
 								echo "<li class='disabled'> <a href='href='#' onclick='return false'>.</a></li>";
 							}
-							echo "<li> <a href='" . $pageLink . '1' ."'>>I</a></li>";
+
+							if(get("pages_count") > 0)
+							{
+								echo "<li> <a href='" . $pageLink . get("pages_count") ."'>>I</a></li>";
+							}
+							else {
+								echo "<li> <a href='" . $pageLink . '1' ."'>>I</a></li>";
+							}
+
 					?>
 			</ul>
 		</center>
