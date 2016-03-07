@@ -51,7 +51,8 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 
 				$arrayItem["questionnaire"] = $questionnaire;
 				$arrayItem["participations"] = $resultSet->get("participations");
-				$arrayItem["user-participates"] = $participationMapper->playerParticipates($_SESSION["USER_ID"] , $questionnaire->getId() );
+				$arrayItem["player-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
+				$arrayItem["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
 				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaires[] = $arrayItem;
@@ -93,7 +94,8 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 
 				$questionnaireInfo["questionnaire"] = $questionnaire;
 				$questionnaireInfo["participations"] = $resultSet->get("participations");
-				$questionnaireInfo["user-participates"] = $participationMapper->playerParticipates($_SESSION["USER_ID"] , $questionnaire->getId() );
+				$questionnaireInfo["player-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
+				$questionnaireInfo["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
 				$questionnaireInfo["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				
@@ -101,6 +103,22 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			}
 
 			return $null;
+		}
+
+		public function getNumberOfPages( $public ){
+			$query = "SELECT ceil(count(*)/10 ) as counter FROM `Questionnaire`";
+
+			if( $public )
+				$query .= " `public`=1";
+
+			$statement = $this->getStatement($query);
+
+			$res = $statement->execute();
+
+			if( $res->next() ){
+				return $res->get("counter");
+			}
+			return 0;
 		}
 
 		/*

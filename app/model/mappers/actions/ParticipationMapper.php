@@ -5,11 +5,11 @@
 
 	class ParticipationMapper extends DataMapper{
 
-		public function playerParticipates($playerId , $questionnaireId){
-			$query = "SELECT `user_id` FROM `QuestionnaireParticipation` WHERE `user_id`=? AND `questionnaire_id`=? AND `participation_type`=1";
+		public function participates($playerId , $questionnaireId , $type){
+			$query = "SELECT `user_id` FROM `QuestionnaireParticipation` WHERE `user_id`=? AND `questionnaire_id`=? AND `participation_type`=?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('ii',$playerId,$questionnaireId);
+			$statement->setParameters('iii',$playerId,$questionnaireId,$type);
 
 			$set = $statement->execute();
 
@@ -19,6 +19,7 @@
 				return false;
 			}
 		}
+
 
 
 	}

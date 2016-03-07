@@ -71,7 +71,8 @@
 				The array items have the below properties
 				"questionnaire"  			: the questionnaire object
 				"participations" 			: The number of players
-				"user-participates" 		: Boolean that shows whether the user participates as a player
+				"player-participation" 		: Boolean that shows whether the user participates as a player
+				"examiner-participation"	: Boolean that shows whether the user participates as an examiner
 				"active-player-request"		: Boolean that shows if the user has an active request to join the questionnaire as Player
 				"active-examiner-request" 	: Boolean that shows if the user has an active request to join the questionnaire as Examiner
 				access them like this
@@ -79,20 +80,25 @@
 				$questionnaires[ $key ]["questionnaire"];
 			 */
 			$questionnaires = null;
+			$pagesCount = null;
 
 			if( $_SESSION["USER_LEVEL"] > 1 ){
 				/*
 					Get all questionnaires
 				 */
 				$questionnaires = $questionnaireMapper->findWithInfo($sorting , 10 , 10*($page-1) , false );
+				$pagesCount = $questionnaireMapper->getNumberOfPages(false);
 			}else{
 				/*
 					Get only public ones
 				 */
 				$questionnaires = $questionnaireMapper->findWithInfo($sorting , 10 , 10*($page-1) , true);
+				$pagesCount = $questionnaireMapper->getNumberOfPages(true);
 			}
 
+			
 
+			$this->setArg("pages_count" , $pagesCount);
 			$this->setArg("questionnaires" , $questionnaires);
 
 		}
