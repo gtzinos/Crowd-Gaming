@@ -16,6 +16,7 @@
 									</div>
 									<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="select">
 
+										<select name="option" class="form-control" id="request-join-type" required>
 											<option value="" disabled selected>What do you want ? </option>
 											<?php
 												/*
@@ -37,7 +38,7 @@
 													If he have an active player request
 												*/
 												else if(get("questionnaire")["active-player-request"]) {
-													echo "<option value='-1' >Please delete my request to be a player</option>";
+													echo "<option value='2' >Please delete my request to be a player</option>";
 												}
 												/*
 													If he is an accepted player
@@ -46,7 +47,7 @@
 													/*
 														He can unjoin from the players list
 													*/
-													echo "<option value='-1' >I dont want to be a player on this questionnaire</option>";
+													echo "<option value='3' >I dont want to be a player on this questionnaire</option>";
 												}
 
 												/*
@@ -66,7 +67,7 @@
 																/*
 																	He can send a request to be one
 																*/
-																echo "<option value='2' >I want to be an examiner on this questionnaire</option>";
+																echo "<option value='4' >I want to be an examiner on this questionnaire</option>";
 															}
 															/*
 																If he had an active examiner request
@@ -76,7 +77,7 @@
 																/*
 																	He can delete his request
 																*/
-																echo "<option value='-1' >Please delete my request to be an examiner</option>";
+																echo "<option value='5' >Please delete my request to be an examiner</option>";
 															}
 															/*
 																If he is one of the examiners
@@ -86,7 +87,7 @@
 																/*
 																	He can unjoin from examiner list
 																*/
-																echo "<option value='-2' >I dont want to be an examiner for this questionnaire</option>";
+																echo "<option value='6' >I dont want to be an examiner for this questionnaire</option>";
 															}
 													}
 												}
