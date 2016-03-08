@@ -23,7 +23,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			if( $sorting == "date" )
 				$query .= "ORDER BY `Questionnaire`.`id` DESC LIMIT ?,?";
 			else if( $sorting == "name")
-				$query .= "ORDER BY `Questionnaire`.`name` DESC LIMIT ?,?";
+				$query .= "ORDER BY `Questionnaire`.`name` LIMIT ?,?";
 			else if( $sorting == "pop")
 				$query .= "ORDER BY participations DESC LIMIT ?,?";
 

@@ -60,4 +60,12 @@
 		public function setResponse($response){
 			$this->response = $response;
 		}
+
+		public function getResponseText(){
+			return $this->responseText;
+		}
+		
+		public function setResponseText($responseText){
+			$this->responseText = $responseText;
+		}
 	}
