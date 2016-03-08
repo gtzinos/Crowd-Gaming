@@ -13,7 +13,7 @@
 
 			$set = $statement->execute();
 
-			if($set->getRowCount()>0){
+			if($set->next()){
 				$participation = new Participation;
 				$participation->setUserId( $set->get("user_id") );
 				$participation->setQuestionnaireId( $set->get("questionnaire_id") );

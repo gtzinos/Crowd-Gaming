@@ -18,7 +18,7 @@
 
 			$res = $statement->execute();
 
-			if( $res->getRowCount() >0 ){
+			if( $res->next() ){
 				
 				$questionnaireRequest = new QuestionnaireRequest;
 				$questionnaireRequest->setId( $res->get("id") );
@@ -43,7 +43,7 @@
 
 			$res = $statement->execute();
 
-			if( $res->getRowCount() >0 ){
+			if( $res->next() ){
 				
 				$questionnaireRequest = new QuestionnaireRequest;
 				$questionnaireRequest->setId( $res->get("id") );
@@ -116,7 +116,8 @@
 		}
 
 		private function _update($request){
-			$query = "INSERT INTO `UPDATE `QuestionnaireRequest` SET `user_id`=?,`questionnaire_id`=?,`request_type`=?,`request_text`=?,`response_text`=?,`accepted`=? WHERE `id`=?";
+			$query = "UPDATE `QuestionnaireRequest` SET `user_id`=?,`questionnaire_id`=?,`request_type`=?,`request_text`=?,`response_text`=?,`accepted`=? WHERE `id`=?";
+			
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('iiissii',

@@ -15,7 +15,18 @@
 		}
 
 		public function run(){
+			/*
+				Output is "response-code" argument
 
+				not set : User didnt send the form
+				0		: Message was sent
+				1		: Email validation error
+				2		: Name validation error
+				3		: Surname validation error
+				4		: Messsage validation error
+				5		: Phone validation error
+				6		: Could not send email
+			 */
 			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"] , $_POST["phone"]) ){
 				$this->sendContactMail();
 			}

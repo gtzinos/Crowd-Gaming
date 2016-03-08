@@ -22,7 +22,34 @@
 		}
 
 		public function run(){
+			/*
+				Output
 
+				if it is ajax and action is delete
+					0 : no error
+					1 : Password is not correct
+					2 : General database error
+
+				if it is ajax and action is update
+					0  : no error
+					1  : email validation error
+					2  : name validation error
+					3  : surname validation error
+					4  : gender validation error
+					5  : country validation error
+					6  : city validation error
+					7  : password validation error
+					8  : address validation error
+					9  : phone validation error
+					10 : Email in use
+					11 : General Database Error
+					12 : Password not correct
+					13 : Could not send mail
+
+				if not ajax, the argument "response-code" is the output
+					not set : all ok
+					1		: $_SESSION["USER_ID"] does not exists ( very unlikely this will happen)
+			 */
 			$mapper = new UserMapper();
 
 			$user = $mapper->findById( $_SESSION["USER_ID"] );

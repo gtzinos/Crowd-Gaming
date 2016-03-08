@@ -15,6 +15,14 @@
 		}
 
 		public function run(){
+			/*
+				Output is "response-code" argument
+				
+				0  : All ok
+				1  : Invalid token
+				2  : Database Error
+
+			 */
 
 			if(!isset($this->params[1]) )
 				$this->redirect("home");

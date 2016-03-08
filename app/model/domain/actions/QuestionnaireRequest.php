@@ -7,6 +7,7 @@
 		private $questionnaireId; // number
 		private $requestType; // number
 		private $requestText; // string
+		private $requestDate; // string , timestamp in sql
 		private $responseText; // string
 		private $response; // boolean
 
@@ -51,6 +52,14 @@
 		
 		public function setRequestText($requestText){
 			$this->requestText = $requestText;
+		}
+
+		public function getRequestDate(){
+			return $this->requestDate;
+		}
+		
+		public function setRequestDate($requestDate){
+			$this->requestDate = $requestDate;
 		}
 		
 		public function getResponse(){

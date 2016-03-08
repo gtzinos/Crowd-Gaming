@@ -25,25 +25,6 @@
 			if( !isset( $this->params[1] ) ){
 				$this->redirect("questionnaireslist");
 			}
-			
-			/*
-				Fetch the questionnaire
-				Players can only see the public questionnaires
-			 */
-			$questionnaireMapper = new QuestionnaireMapper;
-			$questionnaireInfo = null;
-			if( $_SESSION["USER_LEVEL"] > 1)
-				$questionnaireInfo = $questionnaireMapper->findWithInfoById( $this->params[1] , false );
-			else
-				$questionnaireInfo = $questionnaireMapper->findWithInfoById( $this->params[1] , true);
-
-			/*
-				Questionnaire does not exists
-				Redirect the page to the list
-			 */
-			if($questionnaireInfo === null)
-				$this->redirect("questionnaireslist");
-
 
 			/*
 				User actions regarding the questionnaire
@@ -67,15 +48,32 @@
 				12 : General Database Error
 			 */
 			if( isset($_POST["option"])){
-				$this->handleQuestionnaireRequest($questionnaireInfo);
+				$this->handleQuestionnaireRequest($this->params[1]);
 			}
 
+			/*
+				Fetch the questionnaire
+				Players can only see the public questionnaires
+			 */
+			$questionnaireMapper = new QuestionnaireMapper;
+			$questionnaireInfo = null;
+			if( $_SESSION["USER_LEVEL"] > 1)
+				$questionnaireInfo = $questionnaireMapper->findWithInfoById( $this->params[1] , false );
+			else
+				$questionnaireInfo = $questionnaireMapper->findWithInfoById( $this->params[1] , true);
+
+			/*
+				Questionnaire does not exists
+				Redirect the page to the list
+			 */
+			if($questionnaireInfo === null)
+				$this->redirect("questionnaireslist");
 
 			$this->setArg("questionnaire" , $questionnaireInfo);
 		}
 
 
-		public function handleQuestionnaireRequest($questionnaireInfo){
+		public function handleQuestionnaireRequest($questionnaireId){
 			
 			$message = null;
 
@@ -102,10 +100,10 @@
 				/*
 					Player participation request
 				 */
-				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireInfo["questionnaire"]->getId() , 1 ) ){
+				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 1 ) ){
 					$this->setArg("response-code" , 3); // Player already participates
 					return;
-				}else if( $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaireInfo["questionnaire"]->getId()) ){
+				}else if( $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaireId) ){
 					$this->setArg("response-code" , 4); // Player has already an active request
 					return;
 				}
@@ -114,13 +112,13 @@
 				$questionnaireRequest->setUserId($_SESSION["USER_ID"]);
 				$questionnaireRequest->setRequestType(1); // Player Participation Request
 				$questionnaireRequest->setRequestText($message);
-				$questionnaireRequest->setQuestionnaireId($questionnaireInfo["questionnaire"]->getId());
+				$questionnaireRequest->setQuestionnaireId($questionnaireId);
 
 			}else if($_POST["option"] == 2){
 				/*
 					Delete active player participation request
 				 */
-				$questionnaireRequest = $requestMapper->getActivePlayerRequest($_SESSION["USER_ID"] , $questionnaireInfo["questionnaire"]->getId());
+				$questionnaireRequest = $requestMapper->getActivePlayerRequest($_SESSION["USER_ID"] , $questionnaireId);
 
 				if( $questionnaireRequest === null){
 					$this->setArg("response-code" , 5); // User has no active request to delete
@@ -133,7 +131,7 @@
 				/*
 					Remove Player Participation
 				 */
-				$participation = $participationMapper->findParticipation($_SESSION["USER_ID"] , $questionnaireInfo["questionnaire"]->getId() , 1 );
+				$participation = $participationMapper->findParticipation($_SESSION["USER_ID"] , $questionnaireId , 1 );
 
 				if($participation === null){
 					$this->setArg("response-code" , 6); // User didnt participate as player
@@ -149,10 +147,10 @@
 					return;
 				}
 
-				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireInfo["questionnaire"]->getId() , 2 ) ){
+				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 2 ) ){
 					$this->setArg("response-code" , 8); // Examiner already participates
 					return;
-				}else if( $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaireInfo["questionnaire"]->getId()) ){
+				}else if( $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaireId) ){
 					$this->setArg("response-code" , 9); // Examiner already has an active request
 					return;
 				}
@@ -161,7 +159,7 @@
 				$questionnaireRequest->setUserId($_SESSION["USER_ID"]);
 				$questionnaireRequest->setRequestType(2); // Player Participation Request
 				$questionnaireRequest->setRequestText($message);
-				$questionnaireRequest->setQuestionnaireId( $questionnaireInfo["questionnaire"]->getId() );
+				$questionnaireRequest->setQuestionnaireId( $questionnaireId );
 
 			}else if($_POST["option"] == 5){
 				/*
@@ -172,7 +170,7 @@
 					return;
 				}
 
-				$questionnaireRequest = $requestMapper->getActiveExaminerRequest($_SESSION["USER_ID"] , $questionnaireInfo["questionnaire"]->getId());
+				$questionnaireRequest = $requestMapper->getActiveExaminerRequest($_SESSION["USER_ID"] , $questionnaireId);
 
 				if( $questionnaireRequest === null){
 					$this->setArg("response-code" , 10); // User has no active examiner request to delete
@@ -190,7 +188,7 @@
 					return;
 				}
 
-				$participation = $participationMapper->findParticipation($_SESSION["USER_ID"] , $questionnaireInfo["questionnaire"]->getId() , 2 );
+				$participation = $participationMapper->findParticipation($_SESSION["USER_ID"] , $questionnaireId , 2 );
 
 				if($participation === null){
 					$this->setArg("response-code" , 11); // User is not participating as examiner

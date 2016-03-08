@@ -10,6 +10,11 @@
 
 		public function run(){
 
+			/*
+				Ajax Controller
+				output is always 0
+			 */
+
 			if( isset($_SESSION["USER_ID"]) )
 				$this->redirect("");
 
