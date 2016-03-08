@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-md">
     <div class="modal-content">
        <div class="modal-header">
-         <button type="button" class="close" data-dimdiss="modal">&times;</button>
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
          <h4><span class="glyphicon glyphicon-lock"></span> Register Page</h4>
        </div>
        <div class="modal-body container-fluid">

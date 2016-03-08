@@ -1,7 +1,7 @@
 <?php if($section == "CSS") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/player/QuestionnairesList.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
-	
+
 
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <legend class="text-center header"> Enjoy our questionnaires </legend>
@@ -84,7 +84,7 @@
 
 									 			//	. $questionnaires["participations"] .
 									echo "		</div>
-									 			<div class='col-xs-offset-4 col-xs-4 col-sm-offset-10 col-sm-2'>
+									 			<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""
 													. LinkUtils::generatePageLink('questionnaire') . "/"
 												  . $questionnaires["questionnaire"]->getId() . "\">Read More
