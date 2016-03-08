@@ -47,7 +47,8 @@
 				11 : User is not participating as examiner
 				12 : General Database Error
 			 */
-			if( isset($_POST["option"])){
+			if( isset($_POST["player-join"]) || isset($_POST["player-unjoin"]) || isset($_POST["player-cancel-request"]) ||
+				isset($_POST["examiner-join"]) || isset($_POST["examiner-unjoin"]) || isset($_POST["examiner-cancel-request"]) ){
 				$this->handleQuestionnaireRequest($this->params[1]);
 			}
 
@@ -96,7 +97,7 @@
 			$participation = null;
 
 
-			if( $_POST["option"] == 1 ){
+			if( isset( $_POST["player-join"]) ){
 				/*
 					Player participation request
 				 */
@@ -114,7 +115,7 @@
 				$questionnaireRequest->setRequestText($message);
 				$questionnaireRequest->setQuestionnaireId($questionnaireId);
 
-			}else if($_POST["option"] == 2){
+			}else if( isset($_POST["player-cancel-request"]) ){
 				/*
 					Delete active player participation request
 				 */
@@ -127,7 +128,7 @@
 
 				$questionnaireRequest->setResponse(false);
 
-			}else if($_POST["option"] == 3){
+			}else if( isset($_POST["player-unjoin"]) ){
 				/*
 					Remove Player Participation
 				 */
@@ -138,7 +139,7 @@
 					return;
 				}
 
-			}else if($_POST["option"] == 4){
+			}else if( isset($_POST["examiner-join"]) ){
 				/*
 					Examiner participation request
 				 */
@@ -161,7 +162,7 @@
 				$questionnaireRequest->setRequestText($message);
 				$questionnaireRequest->setQuestionnaireId( $questionnaireId );
 
-			}else if($_POST["option"] == 5){
+			}else if( isset($_POST["examiner-cancel-request"]) ){
 				/*
 					Delete active examiner participation request
 				 */
@@ -179,7 +180,7 @@
 
 				$questionnaireRequest->setResponse(false);
 
-			}else if($_POST["option"] == 6){
+			}else if( isset($_POST["examiner-unjoin"]) ){
 				/*
 					Remove Examiner Participation
 				 */
