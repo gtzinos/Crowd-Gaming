@@ -110,7 +110,8 @@
 		}
 
 		public function getCreationDate(){
-			return $this->creationDate;
+			$dateParts = explode(" ",$this->creationDate);
+			return $dateParts[0];
 		}
 		
 		public function setCreationDate($creationDate){

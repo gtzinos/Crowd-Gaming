@@ -26,6 +26,9 @@
 		if($userMapper->isBanned($_SESSION["USER_ID"])){
 			$user = new User();
 			$user->logout();
+		}else{
+			// Check if the user level has changed
+			$_SESSION["USER_LEVEL"] = $userMapper->findUserLevel($_SESSION["USER_ID"]);
 		}
 	}
 

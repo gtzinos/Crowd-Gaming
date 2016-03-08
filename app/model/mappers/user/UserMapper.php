@@ -254,6 +254,19 @@
 			}
 		}
 
+		public function findUserLevel($userId){
+			$statement = $this->getStatement("SELECT `access` FROM `User` WHERE `id`=?");
+
+			$statement->setParameters('i' , $userId);
+
+			$set = $statement->execute();
+
+			if($set->next()){
+				return $set->get("access");
+			}
+			return 0;
+		}
+
 		public function updateEmailVerificationDate($user){
 			$statement = $this->getStatement("UPDATE `User` SET `email_verification_date`=CURRENT_TIMESTAMP WHERE `id`=?");
 
