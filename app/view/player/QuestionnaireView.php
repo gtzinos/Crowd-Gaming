@@ -1,7 +1,7 @@
 <?php if($section == "CSS") : ?>
 
 <?php elseif($section == "JAVASCRIPT") : ?>
-
+<script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireRequests.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<?php
 		/*
@@ -45,7 +45,7 @@
 		</div>
 		<br>
 		<div class="row">
-			<div>
+			<div class="col-xs-12 col-sm-offset-1 col-sm-7">
 				<?php
 						/*
 							0  : All ok
@@ -62,7 +62,7 @@
 							11 : User is not participating as examiner
 							12 : General Database Error
 						*/
-						
+
 						/*
 							Server response
 						*/
@@ -75,7 +75,8 @@
 								Initialize user option
 							*/
 							$option = -1;
-							if(isset($_POST["option"]) && is_integer($_POST["option"])) $option = $_POST["option"];
+
+							if(isset($_POST["option"]) && filter_var($_POST['option'], FILTER_VALIDATE_INT)) $option = $_POST["option"];
 
 								/*
 									If response-code = 0
@@ -93,7 +94,7 @@
 									*/
 									if($option == 1)
 									{
-										$response_message .= "You sent a request to be a player on this questionnaire.";
+										$response_message .= "Your request to be a player on this questionnaire sended successfully.";
 									}
 									/*
 										User option == 2
@@ -247,11 +248,126 @@
 						}
 				?>
 			</div>
-			<div style="margin-left:73%">
-				<button class="btn btn-primary round" type="button" onclick="showModal('questionnaire-options')">Options</button>
-			</div>
-		</div>
+					<form method="POST">
+					<?php
+						/*
+							If he is logged in
+						*/
+						if(isset($_SESSION["USER_LEVEL"])) {
+							/*
+								Simple player
+							*/
+							if($_SESSION["USER_LEVEL"] == 1)
+							{
 
+								/*
+									If he isnt a player
+									and he didnt have an active request to be a player
+								*/
+								if(!get("questionnaire")["active-player-request"] && !get("questionnaire")["player-participation"])
+								{
+									/*
+										He can make a request to be a player
+									*/
+									echo "<button type='button' class='btn btn-primary round' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" >Join questionnaire </button>";
+								}
+								/*
+									If he have an active player request
+								*/
+								else if(get("questionnaire")["active-player-request"]) {
+									echo "<button type='submit' class='btn btn-primary round' name='player-cancel-request' >Delete join request</button>";
+								}
+								/*
+									If he is an accepted player
+								*/
+								else if(get("questionnaire")["player-participation"]) {
+									/*
+										He can unjoin from the players list
+									*/
+									echo "<button type='submit' class='btn btn-primary' name='player-unjoin' >Unjoin as player</button>";
+								}
+							}
+							/*
+								Else If he is an examiner
+							*/
+							else if($_SESSION["USER_LEVEL"] >= 2) {
+								/*
+									Echo dropdown button
+								*/
+								echo "<div class='dropdown' style='margin-left:73%'>
+										    <button class='btn btn-primary dropdown-toggle round' type='button' data-toggle='dropdown'>Options
+											  <span class='caret'></span></button>
+											  <ul class='dropdown-menu'>
+									";
+
+
+									/*
+										If he isnt a player
+										and he didnt have an active request to be a player
+									*/
+									if(!get("questionnaire")["active-player-request"] && !get("questionnaire")["player-participation"])
+									{
+										/*
+											He can make a request to be a player
+										*/
+										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join questionnaire' > </li>";
+									}
+									/*
+										If he have an active player request
+									*/
+									else if(get("questionnaire")["active-player-request"]) {
+										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete join request' > </li>";
+									}
+									/*
+										If he is an accepted player
+									*/
+									else if(get("questionnaire")["player-participation"]) {
+										/*
+											He can unjoin from the players list
+										*/
+										echo "<li><input type='submit' class='btn btn-link' name='player-unjoin' value='Unjoin as player' > </li>";
+									}
+								/*
+									If he isnt an examiner and
+									he didnt have an active request to be a examiner
+								*/
+									if(!get("questionnaire")["active-examiner-request"] && !get("questionnaire")["examiner-participation"])
+									{
+										/*
+											He can send a request to be one
+										*/
+										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Send examiner request' > </li>";
+									}
+									/*
+										If he had an active examiner request
+									*/
+									else if(get("questionnaire")["active-examiner-request"])
+									{
+										/*
+											He can delete his request
+										*/
+										echo "<li><input type='submit' class='btn btn-link' name='examiner-cancel-request' value='Delete examiner request' > </li>";
+									}
+									/*
+										If he is one of the examiners
+									*/
+									else if(get("questionnaire")["examiner-participation"])
+									{
+										/*
+											He can unjoin from examiner list
+										*/
+										echo "<li><input type='submit' class='btn btn-link' name='examiner-unjoin' value='Unjoin as examiner' > </li>";
+									}
+									/*
+										Close dropdown button
+									*/
+									echo "</ul></div>";
+							}
+						}
+					?>
+		    </ul>
+			</div>
+			</form>
 	</div>
 
 <?php load("QUESTIONNAIRE_OPTIONS"); ?>

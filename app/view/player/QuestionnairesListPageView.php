@@ -1,7 +1,7 @@
 <?php if($section == "CSS") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/player/QuestionnairesList.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
-	<script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireRequests.js"); ?>"></script>
+	
 
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <legend class="text-center header"> Enjoy our questionnaires </legend>
@@ -24,7 +24,6 @@
 	<script>
 			$('#sortmethod').val("<?php echo get("sort") ?>");
 	</script>
-
 	<!-- Questionnaires list design -->
 	<div class="container-fluid col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
 	  <div class="panel-group" id="accordion">
@@ -73,13 +72,22 @@
 													<label>
 														Members
 													</label> :
-									 "
-									 				. $questionnaires["participations"] .
-									 "		</div>
+									 ";
+
+
+					 						if($questionnaires["player-participation"])
+					 						{
+					 							echo "You and ";
+					 						}
+					 						echo $questionnaires["participations"] . " users";
+
+
+									 			//	. $questionnaires["participations"] .
+									echo "		</div>
 									 			<div class='col-xs-offset-4 col-xs-4 col-sm-offset-10 col-sm-2'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""
 													. LinkUtils::generatePageLink('questionnaire') . "/"
-												  . $questionnaires["questionnaire"]->getId() . "\">More Info
+												  . $questionnaires["questionnaire"]->getId() . "\">Read More
 													</a>
 												</div>
 											</div>
@@ -102,6 +110,7 @@
 
 		<center>
 			<ul class="pagination">
+
 					<?php
 							$pageLink = LinkUtils::generatePageLink('questionnaireslist') . '/' . get('sort') . '/';
 
