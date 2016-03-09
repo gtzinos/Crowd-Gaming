@@ -64,7 +64,7 @@
         }
 
         public function exists($variable){
-            return isset($this->args[$variable]);
+            return array_key_exists($variable, $this->args);
         }
 
         public function defSection($section , $viewFile){

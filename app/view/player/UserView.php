@@ -8,7 +8,12 @@
 		/*
 			Emfanise mono liga stoixeia , px onoma , eponumo ktlp.
 		 */
-		var_dump( get("user") );
+
+		if(exists("user")){
+			var_dump( get("user") );
+		}else{
+			print 'User doesnt exist';
+		}
 	?>
 
 <?php endif; ?>

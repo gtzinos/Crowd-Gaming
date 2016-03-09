@@ -30,7 +30,8 @@
 
 			$user = $userMapper->findById( $this->params[1] );
 
-			$this->setArg("user" , $user);
+			if($user !== null )
+				$this->setArg("user" , $user);
 		}
 
 	}
