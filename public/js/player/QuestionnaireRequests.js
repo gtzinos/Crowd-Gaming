@@ -7,7 +7,7 @@
 function sendQuestionnaireRequest(request_name,request_value)
 {
   $("#send-request-button").attr('name',request_name);
-  $("#send-request-button").html(request_value);
+  $("#send-request-button").html(request_value);  
 
   showModal('questionnaire-options');
 }

@@ -40,6 +40,7 @@
 
 		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordView.php");
 		$controller->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
+		$controller->defSection("QUESTIONNAIRE_MEMBERS" , "player/QuestionnaireMembersView.php");
 
 		if( $_SESSION["USER_LEVEL"] == 1){
 			$controller->setArg("primary-menu" , "PlayerMenu");

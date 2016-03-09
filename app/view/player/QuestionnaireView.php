@@ -29,7 +29,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
-				<a>Members :
+				<a onclick="showModal('questionnaire-modal')">Members :
 					<?php
 						if(get("questionnaire")["player-participation"])
 						{
@@ -269,13 +269,13 @@
 									/*
 										He can make a request to be a player
 									*/
-									echo "<button type='button' class='btn btn-primary round' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" >Join questionnaire </button>";
+									echo "<button type='button' class='btn btn-primary round' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" >Join as player</button>";
 								}
 								/*
 									If he have an active player request
 								*/
 								else if(get("questionnaire")["active-player-request"]) {
-									echo "<button type='submit' class='btn btn-primary round' name='player-cancel-request' >Delete join request</button>";
+									echo "<button type='submit' class='btn btn-primary round' name='player-cancel-request' >Delete player request</button>";
 								}
 								/*
 									If he is an accepted player
@@ -310,13 +310,13 @@
 										/*
 											He can make a request to be a player
 										*/
-										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join questionnaire' > </li>";
+										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join as player' > </li>";
 									}
 									/*
 										If he have an active player request
 									*/
 									else if(get("questionnaire")["active-player-request"]) {
-										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete join request' > </li>";
+										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete player request' > </li>";
 									}
 									/*
 										If he is an accepted player
@@ -336,7 +336,7 @@
 										/*
 											He can send a request to be one
 										*/
-										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Send examiner request' > </li>";
+										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Join as examiner' > </li>";
 									}
 									/*
 										If he had an active examiner request
@@ -371,4 +371,6 @@
 	</div>
 
 <?php load("QUESTIONNAIRE_OPTIONS"); ?>
+<?php load("QUESTIONNAIRE_MEMBERS"); ?>
+
 <?php endif; ?>

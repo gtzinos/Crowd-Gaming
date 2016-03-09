@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	include_once 'QuestionGroup.php';
 
@@ -82,21 +82,21 @@
 
 			if( count($description) > 30 )
 				$description = substr($description, 30);
-			
+
 			return $description;
 		}
 
 		public function getPublic(){
 			return $this->public;
 		}
-		
+
 		public function setPublic($public){
 			$this->public = $public;
 		}
 		public function getCoordinatorId(){
 			return $this->coordinatorId;
 		}
-		
+
 		public function setCoordinatorId($coordinatorId){
 			$this->coordinatorId = $coordinatorId;
 		}
@@ -104,16 +104,16 @@
 		public function getLanguage(){
 			return $this->language;
 		}
-		
+
 		public function setLanguage($language){
 			$this->language = $language;
 		}
 
-		public function getCreationDate(){
+		public function getCreationDate() {
 			$dateParts = explode(" ",$this->creationDate);
 			return $dateParts[0];
 		}
-		
+
 		public function setCreationDate($creationDate){
 			$this->creationDate = $creationDate;
 		}

@@ -38,10 +38,10 @@
 					to find the correct image.
 					public / private icon
 				*/
-				$icon = 'fa fa-globe';
-				if($questionnaires["questionnaire"] -> getPublic() == 0)
+				$icon = "class='glyphicon glyphicon-unchecked' title='Not Joined'";
+				if($questionnaires["player-participation"] == 1)
 				{
-					$icon = 'glyphicon glyphicon-lock';
+					$icon = "class='fa fa-check-square-o' title='Joined'";
 				}
 
 				/*
@@ -60,7 +60,7 @@
 									<div id='collapse" . $questionnaires["questionnaire"]->getId() . "' class='panel-collapse collapse'>
 										<div class='panel-body'>
 											<div class='questionnaire-time' style='margin-left:98%;'>
-												<span> <i class='" . $icon . " smallicon'></i> </span>
+												<span> <i " . $icon . "></i> </span>
 											</div>
 											<div class='questionnaire-description col-xs-12'>
 										"
@@ -68,23 +68,36 @@
 									 "  	. . .
 									 		</div>
 											<div class='questionnaire-more-info'>
-												<div style='margin-top:1%' class='col-xs-offset-0 col-xs-12'>
-													<label>
-														Members
-													</label> :
 									 ";
+								 	if($_SESSION['USER_LEVEL'] >= 2) {
+										echo "
+														<div class='col-xs-12'>Status : ";
+								 		/*
+											If questionnaire is public
+										*/
+				 						if($questionnaires["questionnaire"] -> getPublic() == 1 )
+				 						{
+				 							echo "<span style='color:green'>Public </span></div>";
+				 						}
+										/*
+											Else If questionnaire is private
+										*/
+										else
+										{
+											echo "<span style='color:red'>Private </span></div>";
+										}
+										echo "</div>";
+									}
 
-
-					 						if($questionnaires["player-participation"])
-					 						{
-					 							echo "You and ";
-					 						}
-					 						echo $questionnaires["participations"] . " users";
-
-
-									 			//	. $questionnaires["participations"] .
-									echo "		</div>
-									 			<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>
+									echo "<div class='col-xs-12'>  ";
+									/*
+										If questionnaire is public
+									*/
+									if($questionnaires["questionnaire"] -> getPublic() == 1 )
+									{
+										echo "<span style='color:grey'> <i class='fi-lock'> </i>Password required</span></div>";
+									}
+									echo "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""
 													. LinkUtils::generatePageLink('questionnaire') . "/"
 												  . $questionnaires["questionnaire"]->getId() . "\">Read More
@@ -93,7 +106,6 @@
 											</div>
 									  </div>
 									</div>
-							</div>
 						  ";
 			}
 
@@ -121,7 +133,7 @@
 							}
 							else
 							{
-								echo "<li class='disabled'> <a href='href='#' onclick='return false'>.</a></li>";
+								echo "<li class='disabled'> <a 'href='#' onclick='return false'>.</a></li>";
 							}
 
 							echo "<li class='active'> <a onclick='return false'>" . get("page") . "</a></li>";
@@ -131,7 +143,7 @@
 								echo "<li> <a href='" . $pageLink . (get("page")+1) ."'>" . (get("page")+1) . "</a></li>";
 							}
 							else {
-								echo "<li class='disabled'> <a href='href='#' onclick='return false'>.</a></li>";
+								echo "<li class='disabled'> <a href='#' onclick='return false'>.</a></li>";
 							}
 
 							if(get("pages_count") > 0)
