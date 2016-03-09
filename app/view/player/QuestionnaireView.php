@@ -275,6 +275,16 @@
 							If he is logged in
 						*/
 						if(isset($_SESSION["USER_LEVEL"])) {
+
+							/*
+								Echo dropdown button
+							*/
+							echo "<div class='dropdown' style='margin-left:73%'>
+											<button class='btn btn-primary dropdown-toggle round' type='button' data-toggle='dropdown'>Options
+											<span class='caret'></span></button>
+											<ul class='dropdown-menu'>
+								";
+
 							/*
 								Simple player
 							*/
@@ -290,13 +300,13 @@
 									/*
 										He can make a request to be a player
 									*/
-									echo "<button type='button' class='btn btn-primary round' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" >Join questionnaire </button>";
+									echo "<li><input type='button' class='btn btn-link' value='Join questionnaire' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" /> </li>";
 								}
 								/*
 									If he have an active player request
 								*/
 								else if(get("questionnaire")["active-player-request"]) {
-									echo "<button type='submit' class='btn btn-primary round' name='player-cancel-request' >Delete join request</button>";
+									echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete join request' ></li>";
 								}
 								/*
 									If he is an accepted player
@@ -305,22 +315,13 @@
 									/*
 										He can unjoin from the players list
 									*/
-									echo "<button type='submit' class='btn btn-primary' name='player-unjoin' >Unjoin as player</button>";
+									echo "<li> <input type='submit' class='btn btn-link' name='player-unjoin' value='Unjoin as player'></li>";
 								}
 							}
 							/*
 								Else If he is an examiner
 							*/
 							else if($_SESSION["USER_LEVEL"] >= 2) {
-								/*
-									Echo dropdown button
-								*/
-								echo "<div class='dropdown' style='margin-left:73%'>
-										    <button class='btn btn-primary dropdown-toggle round' type='button' data-toggle='dropdown'>Options
-											  <span class='caret'></span></button>
-											  <ul class='dropdown-menu'>
-									";
-
 
 									/*
 										If he isnt a player
@@ -380,17 +381,17 @@
 										echo "<li><input type='submit' class='btn btn-link' name='examiner-unjoin' value='Unjoin as examiner' > </li>";
 									}
 
-									/*
-										Contact with the coordinator
-									*/
-									echo "<li><input type='button' onclick=\"showModal('contact-modal')\" class='btn btn-link' value='Ask something' > </li>";
-
-
-									/*
-										Close dropdown button
-									*/
-									echo "</ul></div>";
 							}
+
+							/*
+								Contact with the coordinator
+							*/
+							echo "<li><input type='button' onclick=\"showModal('contact-modal')\" class='btn btn-link' value='Ask something' > </li>";
+
+							/*
+								Close dropdown button
+							*/
+							echo "</ul></div>";
 						}
 					?>
 		    </ul>
