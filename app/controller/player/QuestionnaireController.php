@@ -79,6 +79,8 @@
 				"active-player-request"		: Boolean that shows if the user has an active request to join the questionnaire as Player
 				"active-examiner-request" 	: Boolean that shows if the user has an active request to join the questionnaire as Examiner
 				"examiners-participating"   : All the examiners participating in this questionnaire, an array of Users objects.
+				"players-participating"		: All the players participating in this questionnaire, an array of Users objects.
+				"coordinator"				: The coordinator user , User object.
 				access them like this
 
 				$questionnaires[ $key ]["questionnaire"];

@@ -102,7 +102,9 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$questionnaireInfo["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["examiners-participating"] = $userMapper->findUsersByQuestionnaire($questionnaire->getId() , 2 );
-
+				$questionnaireInfo["players-participating"] = $userMapper->findUsersByQuestionnaire($questionnaire->getId() , 1);
+				$questionnaireInfo["coordinator"] = $userMapper->findById( $questionnaire->getCoordinatorId() );
+				
 				return $questionnaireInfo;
 			}
 
