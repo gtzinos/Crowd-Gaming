@@ -98,71 +98,65 @@
 								Initialize response message
 							*/
 							$response_message="<label class='alert alert-danger'>";
+
 							/*
-								Initialize user option
+								If response-code = 0
+								Everything are okay
 							*/
-							$option = -1;
-
-							if(isset($_POST["option"]) && filter_var($_POST['option'], FILTER_VALIDATE_INT)) $option = $_POST["option"];
-
+							if(get("response-code") == 0)
+							{
 								/*
-									If response-code = 0
-									Everything are okay
+									Initialize success class
 								*/
-								if(get("response-code") == 0)
+								$response_message = "<label class='alert alert-success'>";
+								/*
+									User option == 1
+									he need to be a player
+								*/
+								if(isset($_POST['player-join']))
 								{
-									/*
-										Initialize success class
-									*/
-									$response_message = "<label class='alert alert-success'>";
-									/*
-										User option == 1
-										he need to be a player
-									*/
-									if($option == 1)
-									{
-										$response_message .= "Your request to be a player on this questionnaire sended successfully.";
-									}
-									/*
-										User option == 2
-										he needs to delete player request
-									*/
-									else if($option == 2)
-									{
-										$response_message .= "Your request to be a player deleted successfully.";
-									}
-									/*
-										User option == 3
-										he needs to unjoin as player
-									*/
-									else if($option == 3)
-									{
-										$response_message .= "You are no longer a player on this questionnaire.";
-									}
-									/*
-										User option == 4s
-										he needs to be an examiner
-									*/
-									else if($option == 4)
-									{
-										$response_message .= "You sent a request to be an examiner on this questionnaire.";
-									}
-									/*
-										User option == 5
-										he needs to delete examiner request
-									*/
-									else if($option == 5)
-									{
-										$response_message .= "Your request to be an examiner deleted successfully.";
-									}
-									/*
-										User option == 6
-										he needs to unjoin from examiners list
-									*/
-									else if($option == 6)
-									{
-										$response_message .= "You are no longer an examiner on this questionnaire.";
-									}
+									$response_message .= "Your request to be a player on this questionnaire sended successfully.";
+								}
+								/*
+									User option == 2
+									he needs to delete player request
+								*/
+								else if(isset($_POST['player-cancel-request']))
+								{
+									$response_message .= "Your request to be a player deleted successfully.";
+								}
+								/*
+									User option == 3
+									he needs to unjoin as player
+								*/
+								else if(isset($_POST['player-unjoin']))
+								{
+									$response_message .= "You are no longer a player on this questionnaire.";
+								}
+								/*
+									User option == 4s
+									he needs to be an examiner
+								*/
+								else if(isset($_POST['examiner-join']))
+								{
+									$response_message .= "You sent a request to be an examiner on this questionnaire.";
+								}
+								/*
+									User option == 5
+									he needs to delete examiner request
+								*/
+								else if(isset($_POST['examiner-cancel-request']))
+								{
+									$response_message .= "Your request to be an examiner deleted successfully.";
+								}
+								/*
+									User option == 6
+									he needs to unjoin from examiners list
+								*/
+								else if(isset($_POST['examiner-unjoin']))
+								{
+									$response_message .= "You are no longer an examiner on this questionnaire.";
+								}
 							}
 							/*
 								Else If response-code = 1
