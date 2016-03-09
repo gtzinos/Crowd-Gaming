@@ -7,8 +7,10 @@
 */
 function bindMethod(modal,element,method)
 {
-    //if()
-    showModal(modal);
+    if(modal != "")
+    {
+      showModal(modal);
+    }    
     /*
       Set on click listener
       on #confirm-button

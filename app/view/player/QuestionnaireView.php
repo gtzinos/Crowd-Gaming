@@ -17,7 +17,19 @@
 				<label> Posted : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
 			<div class="questionnaire-public col-xs-12 col-sm-offset-3 col-sm-3">
-					<span class="mediumicon"> <i class='fa fa-globe'></i> </span>
+				<?php
+						/*
+							First of all we need
+							to find the correct image.
+							public / private icon
+						*/
+						$icon = "class='glyphicon glyphicon-unchecked' title='Not Joined'";
+						if(get("questionnaire")["player-participation"] == 1)
+						{
+							$icon = "class='fa fa-check-square-o' title='Joined'";
+						}
+				 ?>
+					<span class="mediumicon"> <i <?php echo $icon ?> ></i> </span>
 			</div>
 		</div>
 		<div class="row">
@@ -29,18 +41,33 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
+				<?php
+				/*
+					If questionnaire is public
+				*/
+				if($questionnaire -> getPublic() == 1 )
+				{
+					echo "<span style='color:grey'> <i class='fi-lock'> </i>Password required</span>";
+				}
+				?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
 				<a onclick="showModal('questionnaire-modal')">Members :
 					<?php
 						if(get("questionnaire")["player-participation"])
 						{
 							echo "You and ";
 						}
-						echo get("questionnaire")["participations"] . " users";
+						$users=0;
+						if(get("questionnaire")["participations"] > 0)
+						{
+							$users = get("questionnaire")["participations"]-1;
+						}
+						echo  	$users . " users";
 					?>
 				</a>
-			</div>
-			<div class="col-xs-12 col-sm-offset-2 col-sm-3">
-				Language : <?php echo $questionnaire->getLanguage(); ?>
 			</div>
 		</div>
 		<br>
@@ -269,13 +296,13 @@
 									/*
 										He can make a request to be a player
 									*/
-									echo "<button type='button' class='btn btn-primary round' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" >Join as player</button>";
+									echo "<button type='button' class='btn btn-primary round' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" >Join questionnaire </button>";
 								}
 								/*
 									If he have an active player request
 								*/
 								else if(get("questionnaire")["active-player-request"]) {
-									echo "<button type='submit' class='btn btn-primary round' name='player-cancel-request' >Delete player request</button>";
+									echo "<button type='submit' class='btn btn-primary round' name='player-cancel-request' >Delete join request</button>";
 								}
 								/*
 									If he is an accepted player
@@ -310,13 +337,13 @@
 										/*
 											He can make a request to be a player
 										*/
-										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join as player' > </li>";
+										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join questionnaire' > </li>";
 									}
 									/*
 										If he have an active player request
 									*/
 									else if(get("questionnaire")["active-player-request"]) {
-										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete player request' > </li>";
+										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete join request' > </li>";
 									}
 									/*
 										If he is an accepted player
@@ -336,7 +363,7 @@
 										/*
 											He can send a request to be one
 										*/
-										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Join as examiner' > </li>";
+										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Send examiner request' > </li>";
 									}
 									/*
 										If he had an active examiner request
@@ -358,6 +385,13 @@
 										*/
 										echo "<li><input type='submit' class='btn btn-link' name='examiner-unjoin' value='Unjoin as examiner' > </li>";
 									}
+
+									/*
+										Contact with the coordinator
+									*/
+									echo "<li><input type='button' onclick=\"showModal('contact-modal')\" class='btn btn-link' value='Ask something' > </li>";
+
+
 									/*
 										Close dropdown button
 									*/
@@ -370,7 +404,10 @@
 			</form>
 	</div>
 
-<?php load("QUESTIONNAIRE_OPTIONS"); ?>
-<?php load("QUESTIONNAIRE_MEMBERS"); ?>
+<?php
+	load("QUESTIONNAIRE_OPTIONS");
+	load("QUESTIONNAIRE_MEMBERS");
+	load("CONTACT_WITH_ONE_EMAIL");
+?>
 
 <?php endif; ?>
