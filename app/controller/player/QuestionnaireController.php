@@ -70,6 +70,19 @@
 			if($questionnaireInfo === null)
 				$this->redirect("questionnaireslist");
 
+			/*
+				The array items have the below properties
+				"questionnaire"  			: the questionnaire object
+				"participations" 			: The number of players
+				"player-participation" 		: Boolean that shows whether the user participates as a player
+				"examiner-participation"	: Boolean that shows whether the user participates as an examiner
+				"active-player-request"		: Boolean that shows if the user has an active request to join the questionnaire as Player
+				"active-examiner-request" 	: Boolean that shows if the user has an active request to join the questionnaire as Examiner
+				"examiners-participating"   : All the examiners participating in this questionnaire, an array of Users objects.
+				access them like this
+
+				$questionnaires[ $key ]["questionnaire"];
+			 */
 			$this->setArg("questionnaire" , $questionnaireInfo);
 		}
 

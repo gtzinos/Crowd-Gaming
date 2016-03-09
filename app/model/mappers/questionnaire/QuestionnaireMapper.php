@@ -4,6 +4,7 @@
 	include_once '../app/model/domain/questionnaire/Questionnaire.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/RequestMapper.php';
+	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class QuestionnaireMapper extends DataMapper{
 
@@ -80,6 +81,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 
 			$participationMapper = new ParticipationMapper;
 			$requestMapper = new RequestMapper;
+			$userMapper = new UserMapper;
 
 
 			if( $resultSet->next() ){
@@ -99,7 +101,8 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$questionnaireInfo["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
 				$questionnaireInfo["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
-				
+				$questionnaireInfo["examiners-participating"] = $userMapper->findUsersByQuestionnaire($questionnaire->getId() , 2 );
+
 				return $questionnaireInfo;
 			}
 
