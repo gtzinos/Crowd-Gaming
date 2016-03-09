@@ -106,7 +106,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				return $questionnaireInfo;
 			}
 
-			return $null;
+			return null;
 		}
 
 		public function getNumberOfPages( $public ){
@@ -202,7 +202,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				return $questionnaire;
 			}
 
-			return false;
+			return null;
 		}
 
 		/*

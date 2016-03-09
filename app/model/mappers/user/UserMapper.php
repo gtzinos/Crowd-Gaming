@@ -53,7 +53,7 @@
 				return $user;
 			}
 
-			return false;
+			return null;
 		}
 
 		public function findByEmail($email){
@@ -102,7 +102,7 @@
 				return $user;
 			}
 
-			return false;
+			return null;
 		}
 
 		public function findUsersByQuestionnaire($questionnaireId,$participationType){
@@ -250,7 +250,7 @@
 			if($resultSet->next()){
 				return $resultSet->get("id");
 			}
-			return false;
+			return null;
 		}
 
 		/*
@@ -382,10 +382,10 @@
 
 					return $user;
 				}else{
-					return false;
+					return null;
 				}
 			}else{
-				return false;
+				return null;
 			}
 		}
 
@@ -406,7 +406,7 @@
 			if($set->next()){
 				return $set->get("id");
 			}else{
-				return false;
+				return 0;
 			}
 		}
 
@@ -426,7 +426,7 @@
 			if($set->next()){
 				return $set->get("id");
 			}else{
-				return false;
+				return 0;
 			}
 		}
 

@@ -76,7 +76,7 @@
 
 				return $answer;
 			}else
-				return false;
+				return null;
 		}
 
 		public function delete($answer){
