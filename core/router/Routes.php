@@ -25,5 +25,19 @@
 		
 		}
 
+		public static function getByRegex($url){
+
+			foreach (self::$routes as $pattern => $controller) {
+				if( preg_match( '/'.$pattern.'/', $url) ){
+					return $controller["controller"];				
+				}
+			}
+
+			global $_CONFIG;
+
+			http_response_code(404);
+			return self::getByRegex($_CONFIG["404_ROUTE"]);
+		}
+
 
 	}

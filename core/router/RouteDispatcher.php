@@ -3,7 +3,6 @@
 	class RouteDispatcher{
 
 		public function dispatch($uri){
-			
 			$params = explode("/" , $uri);
 
 			/*
@@ -21,5 +20,23 @@
 			return $route;
 		}
 
+		public function dispatchWithRegex($uri){
+			
+			/*
+				Get the correct Controller
+			 */
+			$route["controller"] = Routes::getByRegex($uri);
+
+			$params = explode("/" , $uri);
+			
+			foreach ($params as $key => $value) {
+				if( empty($value) )
+					unset($params[$key]);
+			}
+
+			$route["parameters"] = $params;
+
+			return $route;
+		}
 
 	}
