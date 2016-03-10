@@ -2,7 +2,7 @@
 	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class UserController extends Controller{
-		
+
 		public function init(){
 			global $_CONFIG;
 
@@ -11,7 +11,7 @@
 			$this->defSection('CSS','player/UserView.php');
 			$this->defSection('JAVASCRIPT','player/UserView.php');
 			$this->defSection('MAIN_CONTENT','player/UserView.php');
-			
+
 		}
 
 		public function run(){
@@ -29,6 +29,11 @@
 
 
 			$user = $userMapper->findById( $this->params[1] );
+
+			if($user->getId() == $_SESSION['USER_ID'])
+			{
+				$this->redirect("profile");
+			}
 
 			if($user !== null )
 				$this->setArg("user" , $user);

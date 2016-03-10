@@ -10,6 +10,7 @@
 		private $description;
 		private $language;
 		private $public;
+		private $message_required;
 		private $creationDate;
 		private $coordinatorId;
 
@@ -93,6 +94,15 @@
 		public function setPublic($public){
 			$this->public = $public;
 		}
+
+		public function getMessageRequired(){
+			return $this->message_required;
+		}
+
+		public function setMessageRequired($message_required){
+			$this->message_required = $message_required;
+		}
+
 		public function getCoordinatorId(){
 			return $this->coordinatorId;
 		}

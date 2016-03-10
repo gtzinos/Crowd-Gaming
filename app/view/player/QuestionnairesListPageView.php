@@ -86,9 +86,9 @@
 										{
 											echo "<span style='color:red'>Private </span></div>";
 										}
-										echo "</div>";
 									}
 
+									echo "</div>";
 									echo "<div class='col-xs-12'>  ";
 									/*
 										If questionnaire is public

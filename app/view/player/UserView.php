@@ -9,10 +9,16 @@
 			Emfanise mono liga stoixeia , px onoma , eponumo ktlp.
 		 */
 
-		if(exists("user")){
+		if(exists("user"))
+		{
 			var_dump( get("user") );
-		}else{
-			print 'User doesnt exist';
+		}
+		/*
+			User doesnt exists
+		*/
+		else
+		{
+			echo "<div class='text-center'> <label class='alert alert-danger '> User doesn't exist </label> </div>";
 		}
 	?>
 
