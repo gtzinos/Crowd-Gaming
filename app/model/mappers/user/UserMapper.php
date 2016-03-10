@@ -106,7 +106,7 @@
 		}
 
 		public function findAllParticipants($questionnaireId){
-			$query = "SELECT `User`.*,`QuestionnaireParticipation`.`participation_type` FROM `User` INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`user_id`=`User`.`id` WHERE `QuestionnaireParticipation`.`questionnaire_id`=? ORDER BY `User`.access DESC";
+			$query = "SELECT `User`.*,`QuestionnaireParticipation`.`participation_type` FROM `User` INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`user_id`=`User`.`id` WHERE `QuestionnaireParticipation`.`questionnaire_id`=? ORDER BY `QuestionnaireParticipation`.`participation_type` DESC";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' ,$questionnaireId);

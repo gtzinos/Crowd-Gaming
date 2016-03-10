@@ -274,7 +274,7 @@
 
 			$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Contact Support');
 			$mail->addAddress( $questionnaireInfo["coordinator"]->getEmail() , "Contact Support");     // Add a recipient
-			
+
 			$mail->isHTML(true);  // Set email format to HTML
 
 			$mail->Subject = 'Questionnaire Contact, '.$questionnaireInfo["questionnaire"]->getName();
@@ -301,8 +301,6 @@
 				// All went good
 				$this->setArg("response-code" , 0);
 			}
-
-
 
 		}
 
