@@ -7,7 +7,7 @@
 					 <h4><span class="glyphicon glyphicon-lock"></span> Ask Something </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
-						<form id="contact-form" onsubmit="return !$('#contact-submit-modal').prop('disabled')" class="form-horizontal">
+						<form id="contact-form" onsubmit="return !$('#contact-coordinator').prop('disabled')" method="POST" class="form-horizontal">
               <div class="form-group has-feedback">
                   <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                       <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
@@ -23,9 +23,9 @@
 				<div class="modal-footer container-fluid">
 						<!-- Send Email / Cancel Button Field -->
 						<div class="form-group">
-							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-0 col-sm-4">
+							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-3 col-sm-4">
 								 <!-- A Script will add on click method -->
-								 <button id="contact-submit-modal" type="button" class="btn btn-primary btn-md round submit" onclick="$('#contact-form').submit()" disabled>Send Message</button>
+								 <button id="contact-coordinator" type="button" class="btn btn-primary btn-md round submit" onclick="$('#contact-form').submit()" disabled>Send Message</button>
 							 </div>
 							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
 								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >

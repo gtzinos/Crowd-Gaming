@@ -51,7 +51,7 @@
 				11 : User is not participating as examiner
 				12 : General Database Error
 				13 : Contact Message , Validation Error
-				14 : Contact Message , Email Error 
+				14 : Contact Message , Email Error
 			 */
 			if( isset($_POST["player-join"]) || isset($_POST["player-unjoin"]) || isset($_POST["player-cancel-request"]) ||
 				isset($_POST["examiner-join"]) || isset($_POST["examiner-unjoin"]) || isset($_POST["examiner-cancel-request"]) ){
@@ -76,8 +76,8 @@
 			if($questionnaireInfo === null)
 				$this->redirect("questionnaireslist");
 
-			if( isset( $_GET["contact-message"]) ){
-				$this->sendMailToCoordinator($_GET["contact-message"] , $questionnaireInfo);
+					if( isset( $_POST["contact-message"]) ){
+				$this->sendMailToCoordinator($_POST["contact-message"] , $questionnaireInfo);
 			}
 
 			/*
@@ -99,7 +99,7 @@
 
 
 		public function handleQuestionnaireRequest($questionnaireId){
-			
+
 			$message = null;
 
 			/*
@@ -163,7 +163,7 @@
 					return;
 				}
 
-			}else if( isset($_POST["examiner-join"]) ){
+			}else if( isset($_POST["examASDFiner-join"]) ){
 				/*
 					Examiner participation request
 				 */
@@ -264,9 +264,9 @@
 
 			$mail = new PHPMailer;
 
-			$mail->isSMTP();      
+			$mail->isSMTP();
 			$mail->Host = $_CONFIG["SMTP_HOST"];
-			$mail->SMTPAuth = true; 
+			$mail->SMTPAuth = true;
 			$mail->Username = $_CONFIG["SMTP_USERNAME"];
 			$mail->Password = $_CONFIG["SMTP_PASSWORD"];
 			$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];
@@ -278,14 +278,15 @@
 			$mail->isHTML(true);  // Set email format to HTML
 
 			$mail->Subject = 'Questionnaire Contact, '.$questionnaireInfo["questionnaire"]->getName();
-			
+
 			$mail->Body    = "Questionnaire Contact <br>".
 							 "About Questionnaire : ".$questionnaireInfo["questionnaire"]->getName(). ' id='.$questionnaireInfo["questionnaire"]->getId().'<br>'.
-							 "Id : ".$user->getId().'<br>'.
+							 "<a href='" . LinkUtils::generatePageLink('user') ."/" .
+							 $user->getId() . "' target='_blank'>View Profile</a>" .'<br>'.
 							 "Name : ".$user->getName().' <br>'.
 							 "Surname : ".$user->getSurname().' <br>'.
 							 "Email : ".$user->getEmail().' <br>'.
-							 "Message  <br> <br>".$message;
+							 "Message :  <br> <br>".$message;
 
 			$mail->AltBody = "Questionnaire Contact \n".
 							 "About Questionnaire : ".$questionnaireInfo["questionnaire"]->getName(). ' id='.$questionnaireInfo["questionnaire"]->getId().'\n'.
@@ -293,7 +294,7 @@
 							 "Name : ".$user->getName().' \n'.
 							 "Surname : ".$user->getSurname().' \n'.
 							 "Email : ".$user->getEmail().' \n'.
-							 "Message  \n \n".$message;
+							 "Message : \n \n".$message;
 
 			if(!$mail->send()) {
 				$this->setArg("response-code" , 14); // Email Error

@@ -13,7 +13,7 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="-xs-12 col-sm-offset-1 col-sm-5">
+			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
 				<label> Posted : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
 			<div class="questionnaire-public col-xs-12 col-sm-offset-3 col-sm-3">
@@ -45,9 +45,9 @@
 				/*
 					If questionnaire is public
 				*/
-				if($questionnaire -> getPublic() == 1 )
+				if($questionnaire -> getMessageRequired() == 1 )
 				{
-					echo "<span style='color:grey'> <i class='fi-lock'> </i>Password required</span>";
+					echo "<span style='color:grey'> <i class='fi-lock'> </i>Message required</span>";
 				}
 				?>
 			</div>
@@ -148,6 +148,13 @@
 								else if(isset($_POST['examiner-cancel-request']))
 								{
 									$response_message .= "Your request to be an examiner deleted successfully.";
+								}
+								/*
+									he needs to contact with coordinator
+								*/
+								else if(isset($_POST['contact-message']))
+								{
+									$response_message .= "Your message sended successfully.";
 								}
 								/*
 									User option == 6
@@ -253,6 +260,22 @@
 							else if(get("response-code") == 12)
 							{
 								$response_message .= "General Database Error. Please try later!";
+							}
+							/*
+								Else If response-code = 13
+								then not a valid message
+							*/
+							else if(get("response-code") == 13)
+							{
+								$response_message .= "This is not a valid message text.";
+							}
+							/*
+								Else If response-code = 14
+								then cant send emails right now
+							*/
+							else if(get("response-code") == 14)
+							{
+								$response_message .= "We can't send emails right now. Please try later!";
 							}
 							/*
 								Else one new error occur
