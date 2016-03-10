@@ -323,7 +323,13 @@
 									/*
 										He can make a request to be a player
 									*/
-									echo "<li><input type='button' class='btn btn-link' value='Join questionnaire' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" /> </li>";
+									if($questionnaire -> getMessageRequired() == 1 )
+									{
+										echo "<li><input type='button' class='btn btn-link' value='Join questionnaire' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" /> </li>";
+									}
+									else {
+										echo "<li><input type='submit' class='btn btn-link' value='Join questionnaire' name='player-join' /> </li>";
+									}
 								}
 								/*
 									If he have an active player request
@@ -355,7 +361,14 @@
 										/*
 											He can make a request to be a player
 										*/
-										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join questionnaire' > </li>";
+										if($questionnaire -> getMessageRequired() == 1 )
+										{
+											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join questionnaire' > </li>";
+										}
+										else {
+											echo "<li><input type='submit' class='btn btn-link' name='player-join' value='Join questionnaire' > </li>";
+										}
+
 									}
 									/*
 										If he have an active player request
@@ -381,7 +394,14 @@
 										/*
 											He can send a request to be one
 										*/
-										echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Send examiner request' > </li>";
+										if($questionnaire -> getMessageRequired() == 1 )
+										{
+											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Send examiner request' > </li>";
+										}
+										else {
+											echo "<li><input type='submit' class='btn btn-link' name='examiner-join' value='Send examiner request' > </li>";
+										}
+
 									}
 									/*
 										If he had an active examiner request

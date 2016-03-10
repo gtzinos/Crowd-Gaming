@@ -163,7 +163,7 @@
 					return;
 				}
 
-			}else if( isset($_POST["examASDFiner-join"]) ){
+			}else if( isset($_POST["examiner-join"]) ){
 				/*
 					Examiner participation request
 				 */
