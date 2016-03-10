@@ -2,7 +2,9 @@
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/RequestMapper.php';
+	include_once '../app/model/mappers/user/UserMapper.php';
 	include_once '../app/model/domain/actions/QuestionnaireRequest.php';
+	include_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
 	class QuestionnaireController extends Controller{
 
@@ -48,6 +50,8 @@
 				10 : User has no active examiner request to delete
 				11 : User is not participating as examiner
 				12 : General Database Error
+				13 : Contact Message , Validation Error
+				14 : Contact Message , Email Error 
 			 */
 			if( isset($_POST["player-join"]) || isset($_POST["player-unjoin"]) || isset($_POST["player-cancel-request"]) ||
 				isset($_POST["examiner-join"]) || isset($_POST["examiner-unjoin"]) || isset($_POST["examiner-cancel-request"]) ){
@@ -72,8 +76,8 @@
 			if($questionnaireInfo === null)
 				$this->redirect("questionnaireslist");
 
-			if( isset( $_POST["contact-message"]) ){
-				$this->sendMailToCoordinator($_POST["contact-message"]);
+			if( isset( $_GET["contact-message"]) ){
+				$this->sendMailToCoordinator($_GET["contact-message"] , $questionnaireInfo);
 			}
 
 			/*
@@ -242,8 +246,62 @@
 			}
 		}
 
-		public function sendMailToCoordinator($message){
-			/// TODO
+		public function sendMailToCoordinator($message , $questionnaireInfo){
+
+			$message = htmlspecialchars($message, ENT_QUOTES);
+
+			if( strlen($message) < 19 || strlen($message) > 255 ){
+				$this->setArg("response-code" , 13); // Contact Message Validation Error
+				return;
+			}
+
+			$userMapper = new userMapper;
+			$user = $userMapper->findById($_SESSION["USER_ID"]);
+
+
+			global $_CONFIG;
+
+
+			$mail = new PHPMailer;
+
+			$mail->isSMTP();      
+			$mail->Host = $_CONFIG["SMTP_HOST"];
+			$mail->SMTPAuth = true; 
+			$mail->Username = $_CONFIG["SMTP_USERNAME"];
+			$mail->Password = $_CONFIG["SMTP_PASSWORD"];
+			$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];
+			$mail->Port = $_CONFIG["SMTP_PORT"];
+
+			$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Contact Support');
+			$mail->addAddress( $questionnaireInfo["coordinator"]->getEmail() , "Contact Support");     // Add a recipient
+			
+			$mail->isHTML(true);  // Set email format to HTML
+
+			$mail->Subject = 'Questionnaire Contact, '.$questionnaireInfo["questionnaire"]->getName();
+			
+			$mail->Body    = "Questionnaire Contact <br>".
+							 "About Questionnaire : ".$questionnaireInfo["questionnaire"]->getName(). ' id='.$questionnaireInfo["questionnaire"]->getId().'<br>'.
+							 "Id : ".$user->getId().'<br>'.
+							 "Name : ".$user->getName().' <br>'.
+							 "Surname : ".$user->getSurname().' <br>'.
+							 "Email : ".$user->getEmail().' <br>'.
+							 "Message  <br> <br>".$message;
+
+			$mail->AltBody = "Questionnaire Contact \n".
+							 "About Questionnaire : ".$questionnaireInfo["questionnaire"]->getName(). ' id='.$questionnaireInfo["questionnaire"]->getId().'\n'.
+							 "Id : ".$user->getId().'\n'.
+							 "Name : ".$user->getName().' \n'.
+							 "Surname : ".$user->getSurname().' \n'.
+							 "Email : ".$user->getEmail().' \n'.
+							 "Message  \n \n".$message;
+
+			if(!$mail->send()) {
+				$this->setArg("response-code" , 14); // Email Error
+			}else{
+				// All went good
+				$this->setArg("response-code" , 0);
+			}
+
 
 
 		}
