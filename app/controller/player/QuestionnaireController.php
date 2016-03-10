@@ -26,6 +26,8 @@
 				$this->redirect("questionnaireslist");
 			}
 
+
+
 			/*
 				User actions regarding the questionnaire
 				eg , ParticipationRequest, remove Participation etc.
@@ -70,6 +72,10 @@
 			if($questionnaireInfo === null)
 				$this->redirect("questionnaireslist");
 
+			if( isset( $_POST["contact-message"]) ){
+				$this->sendMailToCoordinator($_POST["contact-message"]);
+			}
+
 			/*
 				The array items have the below properties
 				"questionnaire"  			: the questionnaire object
@@ -78,8 +84,7 @@
 				"examiner-participation"	: Boolean that shows whether the user participates as an examiner
 				"active-player-request"		: Boolean that shows if the user has an active request to join the questionnaire as Player
 				"active-examiner-request" 	: Boolean that shows if the user has an active request to join the questionnaire as Examiner
-				"examiners-participating"   : All the examiners participating in this questionnaire, an array of Users objects.
-				"players-participating"		: All the players participating in this questionnaire, an array of Users objects.
+				"members-participating"     : All the members participating in this questionnaire, an array of Users objects.
 				"coordinator"				: The coordinator user , User object.
 				access them like this
 
@@ -235,7 +240,10 @@
 				DatabaseConnection::getInstance()->rollback();
 				$this->setArg("response-code" , 12); // General database error
 			}
+		}
 
+		public function sendMailToCoordinator($message){
+			/// TODO
 
 
 		}

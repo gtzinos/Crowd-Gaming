@@ -105,6 +105,62 @@
 			return null;
 		}
 
+		public function findAllParticipants($questionnaireId){
+			$query = "SELECT `User`.*,`QuestionnaireParticipation`.`participation_type` FROM `User` INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`user_id`=`User`.`id` WHERE `QuestionnaireParticipation`.`questionnaire_id`=? ORDER BY `User`.access DESC";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' ,$questionnaireId);
+
+			$set = $statement->execute();
+
+			$members = array();
+
+			while($set->next()){
+				
+				if( array_key_exists( $set->get("id") , $members) ){
+					if( $set->get("participation_type") == 1)
+						$members[$set->get("id")]["player-participation"] = true;
+					else if ( $set->get("participation_type") == 2 )
+						$members[$set->get("id")]["examiner-participation"] = true;
+				}else{
+					$user = new User;
+					$user->setAccessLevel( $set->get("access"));
+					$user->setId( $set->get("id") );
+					$user->setName( $set->get("name") );
+					$user->setSurname( $set->get("surname") );
+					$user->setEmail( $set->get("email") );
+					$user->setGender( $set->get("gender") );
+					$user->setCountry( $set->get("country") );
+					$user->setCity( $set->get("city") );
+					$user->setVerified( $set->get("verified") );
+					$user->setDeleted( $set->get("deleted") );
+					$user->setBanned( $set->get("banned") );
+					$user->setEmailVerificationToken( $set->get("email_verification_token") );
+					$user->setEmailVerificationDate( $set->get("email_verification_date") );
+					$user->setPasswordRecoveryToken( $set->get("password_recovery_token") );
+					$user->setPasswordRecoveryDate( $set->get("password_recovery_date") );
+					$user->setNewEmail( $set->get("new_email") );
+					if( $set->get("address") !== null )
+						$user->setAddress( $set->get("address") );
+
+					if( $set->get("phone") !== null )
+						$user->setPhone( $set->get("phone") ); 
+
+					$members[$user->getId()]["user"] = $user;
+
+					if( $set->get("participation_type") == 1){
+						$members[$set->get("id")]["player-participation"] = true;
+						$members[$set->get("id")]["examiner-participation"] = false;
+					}else if ( $set->get("participation_type") == 2 ){
+						$members[$set->get("id")]["player-participation"] = false;
+						$members[$set->get("id")]["examiner-participation"] = true;
+					}
+				}
+
+			} 
+			return $members;
+		}
+
 		public function findUsersByQuestionnaire($questionnaireId,$participationType){
 			$query = "SELECT `User`.* FROM `User` INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`user_id`=`User`.`id` WHERE `QuestionnaireParticipation`.`questionnaire_id`=? AND `QuestionnaireParticipation`.`participation_type`=?";
 
