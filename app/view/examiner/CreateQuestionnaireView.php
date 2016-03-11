@@ -2,36 +2,38 @@
 
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/manageQuestionnaires.js"); ?>"></script>
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+<script>tinymce.init({ selector:'textarea' });</script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
 			<legend class="text-center header">Create a new questionnaire</legend>
 			<form method="POST" class="form-horizontal" action="return false">
 					<!-- Questionnaire Name -->
 					<div class="form-group has-feedback">
-							<div class="col-xs-offset-0 col-xs-2 col-md-offset-2 col-md-1">
-								<span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
+							<div class="col-xs-offset-0 col-xs-2 col-md-offset-3 col-md-9">
+								<label for="email">Name</label>
 							</div>
-							<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
+							<div class="col-xs-offset-1 col-xs-9 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
 								 <input class="form-control" id="questionnaire-name" type="text" maxlength="255" placeholder="Questionnaire name (Required) *Length >= 2" required >
 								 <span></span>
 							</div>
 					</div>
 					<!-- Questionnaire Description -->
 					<div class="form-group has-feedback">
-							<div class="col-xs-offset-0 col-xs-2 col-md-offset-2 col-md-1">
-								<span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
+							<div class="col-xs-offset-0 col-xs-2 col-md-offset-3 col-md-9">
+								<label for="email">Description</label>
 							</div>
-							<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="20">
-								 <textarea style="height:100px" class="form-control" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" required ></textarea>
+							<div class="col-xs-offset-1 col-xs-9 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="20">
+								 <textarea style="height:150px" class="form-control" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" required ></textarea>
 								 <span></span>
 							</div>
 					</div>
 					<!-- Message Required -->
 					<div class="form-group has-feedback">
-							<div class="col-xs-offset-0 col-xs-2 col-md-offset-2 col-md-1">
-								<span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
+							<div class="col-xs-offset-0 col-xs-2 col-md-offset-3 col-md-9">
+								<label for="email">Message Required</label>
 							</div>
-							<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
+							<div class="col-xs-offset-1 col-xs-9 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
 								<select id="message-required" class="form-control">
 									<option value="-" disabled selected>Message Required ? </option>
 									<option value="no">No</option>
