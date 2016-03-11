@@ -271,7 +271,8 @@
 			$mail->Password = $_CONFIG["SMTP_PASSWORD"];
 			$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];
 			$mail->Port = $_CONFIG["SMTP_PORT"];
-
+			$mail->CharSet = 'UTF-8';
+			
 			$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Contact Support');
 			$mail->addAddress( $questionnaireInfo["coordinator"]->getEmail() , "Contact Support");     // Add a recipient
 

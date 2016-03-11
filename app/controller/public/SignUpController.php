@@ -160,9 +160,10 @@
 				$mail->Host = $_CONFIG["SMTP_HOST"];
 				$mail->SMTPAuth = true; 
 				$mail->Username = $_CONFIG["SMTP_USERNAME"];
-				$mail->Password = $_CONFIG["SMTP_PASSWORD"];;
-				$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];;
-				$mail->Port = $_CONFIG["SMTP_PORT"];;
+				$mail->Password = $_CONFIG["SMTP_PASSWORD"];
+				$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];
+				$mail->Port = $_CONFIG["SMTP_PORT"];
+				$mail->CharSet = 'UTF-8';
 
 				$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Auto-Moderator');
 				$mail->addAddress($player->getEmail(), $player->getName().' '.$player->getSurname());     // Add a recipient
