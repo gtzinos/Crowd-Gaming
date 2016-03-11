@@ -54,7 +54,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$arrayItem["questionnaire"] = $questionnaire;
 				$arrayItem["participations"] = $resultSet->get("participations");
 				$arrayItem["player-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
-				$arrayItem["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
+				$arrayItem["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 2);
 				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaires[] = $arrayItem;
@@ -100,7 +100,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				$questionnaireInfo["questionnaire"] = $questionnaire;
 				$questionnaireInfo["participations"] = $resultSet->get("participations");
 				$questionnaireInfo["player-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
-				$questionnaireInfo["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 1);
+				$questionnaireInfo["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 2);
 				$questionnaireInfo["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["members-participating"] = $userMapper->findAllParticipants($questionnaire->getId());

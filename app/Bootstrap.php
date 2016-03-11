@@ -39,9 +39,7 @@
 	if( isset($_SESSION["USER_ID"])){
 
 		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordView.php");
-		$controller->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
-		$controller->defSection("QUESTIONNAIRE_MEMBERS" , "player/QuestionnaireMembersView.php");
-		$controller->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
+
 
 		if( $_SESSION["USER_LEVEL"] == 1){
 			$controller->setArg("primary-menu" , "PlayerMenu");

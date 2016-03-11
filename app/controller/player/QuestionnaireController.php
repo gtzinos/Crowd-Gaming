@@ -16,6 +16,9 @@
 			$this->defSection('CSS','player/QuestionnaireView.php');
 			$this->defSection('JAVASCRIPT','player/QuestionnaireView.php');
 			$this->defSection('MAIN_CONTENT','player/QuestionnaireView.php');
+			$this->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
+			$this->defSection("QUESTIONNAIRE_MEMBERS" , "player/QuestionnaireMembersView.php");
+			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
 
 		}
 
