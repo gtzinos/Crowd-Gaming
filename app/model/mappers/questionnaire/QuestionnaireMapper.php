@@ -112,6 +112,21 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return null;
 		}
 
+		public function isMessageRequired( $questionnaireId ){
+			$query = "SELECT `message_required` FROM `Questionnaire` WHERE `id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId);
+
+			$set = $statement->execute();
+
+			if( $set->next() ){
+				if( $set->get("message_required") == 1)
+					return true;
+			}
+			return false;
+		}
+
 		public function getNumberOfPages( $public ){
 			$query = "SELECT ceil(count(*)/10 ) as counter FROM `Questionnaire`";
 

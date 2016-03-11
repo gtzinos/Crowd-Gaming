@@ -27,6 +27,7 @@
 			if( !isset( $this->params[1] ) ){
 				$this->redirect("questionnaireslist");
 			}
+			$questionnaireMapper = new QuestionnaireMapper;
 
 
 
@@ -52,17 +53,17 @@
 				12 : General Database Error
 				13 : Contact Message , Validation Error
 				14 : Contact Message , Email Error
+				15 : Message is Required
 			 */
 			if( isset($_POST["player-join"]) || isset($_POST["player-unjoin"]) || isset($_POST["player-cancel-request"]) ||
 				isset($_POST["examiner-join"]) || isset($_POST["examiner-unjoin"]) || isset($_POST["examiner-cancel-request"]) ){
-				$this->handleQuestionnaireRequest($this->params[1]);
+				$this->handleQuestionnaireRequest($this->params[1] , $questionnaireMapper->isMessageRequired($this->params[1]) );
 			}
 
 			/*
 				Fetch the questionnaire
 				Players can only see the public questionnaires
 			 */
-			$questionnaireMapper = new QuestionnaireMapper;
 			$questionnaireInfo = null;
 			if( $_SESSION["USER_LEVEL"] > 1)
 				$questionnaireInfo = $questionnaireMapper->findWithInfoById( $this->params[1] , false );
@@ -98,7 +99,7 @@
 		}
 
 
-		public function handleQuestionnaireRequest($questionnaireId){
+		public function handleQuestionnaireRequest($questionnaireId , $messageRequired){
 
 			$message = null;
 
@@ -106,11 +107,12 @@
 				Validate message if exists
 			 */
 			if( isset($_POST["message"]) ){
-				if(strlen($_POST["message"])<20 && strlen($_POST["message"])>255 ){
+				if( $_POST["message"]!="" && ( strlen($_POST["message"])<20 || strlen($_POST["message"])>255) ){
 					$this->setArg("response-code" , 1); // Message validation error
 					return;
+				}else if( $_POST["message"] != "" ){
+					$message = htmlspecialchars($_POST["message"] , ENT_QUOTES);
 				}
-				$message = htmlspecialchars($_POST["message"] , ENT_QUOTES);
 			}
 
 
@@ -130,6 +132,9 @@
 					return;
 				}else if( $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaireId) ){
 					$this->setArg("response-code" , 4); // Player has already an active request
+					return;
+				}else if( $messageRequired && $message===null){
+					$this->setArg("response-code" , 15); // Message is required
 					return;
 				}
 
@@ -177,6 +182,9 @@
 					return;
 				}else if( $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaireId) ){
 					$this->setArg("response-code" , 9); // Examiner already has an active request
+					return;
+				}else if( $messageRequired && $message===null){
+					$this->setArg("response-code" , 15); // Message is required
 					return;
 				}
 
