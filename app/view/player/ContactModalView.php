@@ -23,11 +23,11 @@
 				<div class="modal-footer container-fluid">
 						<!-- Send Email / Cancel Button Field -->
 						<div class="form-group">
-							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-3 col-sm-4">
+							 <div class="col-xs-offset-2 col-xs-5 col-sm-offset-3 col-sm-4">
 								 <!-- A Script will add on click method -->
 								 <button id="contact-coordinator" type="button" class="btn btn-primary btn-md round submit" onclick="$('#contact-form').submit()" disabled>Send Message</button>
 							 </div>
-							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
+							 <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
 								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >
 									 Cancel
 								 </button>
