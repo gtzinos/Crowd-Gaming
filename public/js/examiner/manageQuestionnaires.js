@@ -1,3 +1,4 @@
+$("#editor")
 /*
   Create questionnaire
 */
@@ -7,10 +8,12 @@ function createQuestionnaire()
     Initialize variables
   */
   var name = $("#questionnaire-name").val();
-  var description = $("#questionnaire-description").val();
+  var descriptionHTML = tinymce.activeEditor.getContent();
+  var descriptionClearText = tinymce.activeEditor.getContent({format : 'text'});
   var message_required = $("#message-required").val();
 
-  if(name && description)
+
+  if(name && descriptionClearText.length >= 31)
   {
     var Required = {
         Url() { return webRoot + "create-questionnaire"; },
@@ -20,7 +23,7 @@ function createQuestionnaire()
           /*
             Variables we will send
           */
-          this.variables = "name=" + name + "&description=" +  description;
+          this.variables = "name=" + name + "&description=" +  descriptionHTML;
 
           if(message_required == "-") {
               message_required = "no";
