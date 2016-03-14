@@ -34,10 +34,10 @@
 				<div class="modal-footer container-fluid">
 						<!-- Reset password Confirm / Cancel Button Field -->
 						<div class="form-group">
-							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-3 col-sm-4">
+							 <div class="col-xs-offset-1 col-xs-4 col-sm-offset-2 col-sm-4">
 								 <button id="confirm-button" type="button" class="btn btn-primary btn-md round submit" onclick="resetPassword()" disabled>Reset Password</button>
 							 </div>
-							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
+							 <div class="col-xs-offset-2 col-xs-2 col-sm-offset-0 col-sm-2">
 								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >Cancel</button>
 							 </div>
 						</div>

@@ -11,7 +11,7 @@
           <form onsubmit="return false" class="form-horizontal">
               <!-- Email Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3 col-md-offset-1 col-md-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                              <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 col-md-offset-0 col-md-8 block gt-input-group" data-validate="email">
@@ -21,7 +21,7 @@
                   </div>
                   <!-- First Password Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8">
@@ -31,7 +31,7 @@
                   </div>
                   <!-- Second Password Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8" data-equal="signup-password">
@@ -41,7 +41,7 @@
                   </div>
                   <!-- First Name Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="2">
@@ -51,7 +51,7 @@
                   </div>
                   <!-- Last Name Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="2">
@@ -61,7 +61,7 @@
                   </div>
                   <!-- Gender Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="fi-male-female bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="select">
@@ -75,7 +75,7 @@
                   </div>
                   <!-- Country Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-globe bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="3">
@@ -85,7 +85,7 @@
                   </div>
                   <!-- City Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="material-icons bigicon">location_city</i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="3">
@@ -95,7 +95,7 @@
                   </div>
                   <!-- Address Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-home bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="5">
@@ -105,7 +105,7 @@
                   </div>
                   <!-- Phone Field -->
                   <div class="form-group has-feedback">
-                      <div class="col-xs-offset-1 col-xs-3">
+                      <div class="col-xs-offset-1 col-xs-2">
                         <span class="text-center"><i class="glyphicon glyphicon-earphone bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="phone">
@@ -116,7 +116,7 @@
                   <!-- Accept Licence Field -->
                   <div class="form-group has-feedback">
                       <div class="gt-input-group" data-validate="accept-checkbox">
-                          <div class="col-xs-offset-4 col-xs-6 col-sm-offset-4 col-sm-4" >
+                          <div class="col-xs-offset-3 col-xs-6 col-sm-offset-3 col-sm-4" >
                             <label class="control-label" style="font-size:12px">
                               <input id="signup-licence" type="checkbox" required />
                               Accept the <a href="#" target="_blank" >Licence</a>
@@ -130,44 +130,46 @@
                   </div>
                   <!-- Spinner and Response Label Field -->
                   <div class="form-group">
-                    <div class="col-xs-offset-4 col-xs-8 ">
+                    <div class="col-xs-offset-3 col-xs-8 ">
+                      <label id="signup-response" style="display:block" class="responseLabel text-center">sdfa</label>
                       <div id="signup-spinner">
 
                       </div>
-                      <label id="signup-response" class="responseLabel"></label>
+
                     </div>
                   </div>
                   <!-- Login Button Field -->
                   <div class="form-group">
-                     <div class="col-xs-offset-1 col-xs-5 col-sm-offset-4">
-                       <button type="button" class="btn btn-primary btn-md btn-block round submit" onclick="signUpFromForm()" disabled>Register Now</button>
+                     <div class="col-xs-offset-3 col-xs-8 col-sm-offset-3">
+                       <button type="button" class="btn btn-primary btn-md btn-block submit" onclick="signUpFromForm()" disabled>Register Now</button>
                       </div>
                   </div>
             </form>
+            <div style="margin-left:auto;width:143px">
+              <span style="font-size:12px">
+                  Already a member? <a href="" onclick="return showModal('loginModal')">Log In</a>
+              </span>
+            </div>
           </div>
+
           <!-- Foot Fields -->
           <!-- Footer container fluid ( Fluid is a container on a parent container.For this form parent=modal) -->
+          <!-- footer comment
           <div class="modal-footer container-fluid">
-              <!-- Facebook icon -->
-               <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
+
+               <div class="col-xs-offset-0 col-xs-2 col-sm-offset-0 col-sm-2">
                   <a href="#">
                     <img src="<?php print LinkUtils::generatePublicLink('img/social/facebook.png'); ?>" alt="Login via Facebook" width="40" height="35" />
                   </a>
                </div>
-               <!-- Google account icon -->
-               <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
+               <div class="col-xs-offset-0 col-xs-2 col-sm-offset-0 col-sm-2">
                   <a href="#">
                     <img src="<?php print LinkUtils::generatePublicLink('img/social/google.png'); ?>" alt="Login via Google Plus" width="40" height="35" />
                  </a>
                </div>
-               <br><br>
-               <div class="col-xs-12"> </div>
-               <div style="margin-left:auto;">
-                 <span style="font-size:12px">
-                     Already a member? <a href="" onclick="return showModal('loginModal')">Log In</a>
-                 </span>
-               </div>
+
           </div>
+        -->
        </div>
      </div>
 </div>

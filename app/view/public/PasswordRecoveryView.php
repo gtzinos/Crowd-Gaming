@@ -134,7 +134,7 @@
 								 <!-- Reset password Button Field -->
 								 <div class="form-group">
 										<div class="col-xs-offset-3 col-xs-6 col-sm-offset-3 col-sm-6">
-											<button id="reset-button" class="btn btn-primary btn-md round submit" type="submit" disabled>Reset Password</button>
+											<button id="reset-button" class="btn btn-primary btn-md submit" type="submit" disabled>Reset Password</button>
 										</div>
 								 </div>
 					</form>
