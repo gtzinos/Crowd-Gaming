@@ -23,6 +23,7 @@
 		private $emailVerificationDate; // timestamp
 		private $passwordRecoveryToken; // sha1 hash
 		private $passwrodRecoveryDate; // timestamp
+		private $apiToken; // sha1 hash
 		private $newEmail; // string
 
 		public function login(){
@@ -213,5 +214,13 @@
 		
 		public function setNewEmail($newEmail){
 			$this->newEmail = $newEmail;
+		}
+
+		public function getApiToken(){
+			return $this->apiToken;
+		}
+		
+		public function setApiToken($apiToken){
+			$this->apiToken = $apiToken;
 		}
 	}

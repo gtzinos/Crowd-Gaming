@@ -18,10 +18,11 @@
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
-				$question->setQuestionGroupId( $set->get("qid") );
+				$question->setQuestionGroupId( $set->get("question_group_id") );
 				$question->setQuestionText( $set->get("question") );
 				$question->setTimeToAnswer( $set->get("time_to_answer") );
 				$question->setCreationDate( $set->get("creation_date") );
+				$question->setMultiplier( $set->get("multiplier") );
 
 				$questions[] = $question;
 			}
@@ -30,7 +31,7 @@
 		}
 
 		public function findByQuestionGroup($questionGroupId){
-			$query = "SELECT * FROM `Question` WHERE `qid`=?";
+			$query = "SELECT * FROM `Question` WHERE `question_group_id`=?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' , $questionGroupId);
@@ -43,10 +44,11 @@
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
-				$question->setQuestionGroupId( $set->get("qid") );
+				$question->setQuestionGroupId( $set->get("question_group_id") );
 				$question->setQuestionText( $set->get("question") );
 				$question->setTimeToAnswer( $set->get("time_to_answer") );
 				$question->setCreationDate( $set->get("creation_date") );
+				$question->setMultiplier( $set->get("multiplier") );
 
 				$questions[] = $question;
 			}
@@ -66,10 +68,11 @@
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
-				$question->setQuestionGroupId( $set->get("qid") );
+				$question->setQuestionGroupId( $set->get("question_group_id") );
 				$question->setQuestionText( $set->get("question") );
 				$question->setTimeToAnswer( $set->get("time_to_answer") );
 				$question->setCreationDate( $set->get("creation_date") );
+				$question->setMultiplier( $set->get("multiplier") );
 
 				return $question;
 			}else
@@ -94,20 +97,7 @@
 		}
 
 		private function _create($question){
-			$query = "INSERT INTO `Question`(`gid`, `question`, `time_to_answer`, `creation_date`) VALUES (?,?,?,CURRENT_TIMESTAMP)";
-
-			$statement = $this->getStatement($query);
-
-			$statement->setParameters('isi' , 
-				$question->getQuestionGroupId(),
-				$question->getQuestionText(),
-				$question->getTimeToAnswer() );
-
-			$statement->executeUpdate();
-		}
-
-		private function _update($question){
-			$query = "UPDATE `Question` SET `gid`=?,`question`=?,`time_to_answer`=? WHERE `id`=?";
+			$query = "INSERT INTO `Question`(`question_group_id`, `question`, `time_to_answer`, `creation_date` , `multiplier` ) VALUES (?,?,?,CURRENT_TIMESTAMP,?)";
 
 			$statement = $this->getStatement($query);
 
@@ -115,6 +105,21 @@
 				$question->getQuestionGroupId(),
 				$question->getQuestionText(),
 				$question->getTimeToAnswer(),
+				$qustionn->getMultiplier() );
+
+			$statement->executeUpdate();
+		}
+
+		private function _update($question){
+			$query = "UPDATE `Question` SET `question_group_id`=?,`question`=?,`time_to_answer`=? ,`multiplier`=? WHERE `id`=?";
+
+			$statement = $this->getStatement($query);
+
+			$statement->setParameters('isi' , 
+				$question->getQuestionGroupId(),
+				$question->getQuestionText(),
+				$question->getTimeToAnswer(),
+				$question->getMultiplier(),
 				$question->getId() );
 
 			$statement->executeUpdate();

@@ -135,7 +135,15 @@
 			$activationToken = sha1($activationToken);
 
 			$player->setEmailVerificationToken($activationToken);
+
+
+			$apiToken =  base64_encode(openssl_random_pseudo_bytes(30));
+			$apiToken.= $player->getEmail();
+			$apiToken = sha1($apiToken);
+
+			$player->setApiToken($apiToken);
 			
+
 			/*
 				Insert the user in the database
 			 */

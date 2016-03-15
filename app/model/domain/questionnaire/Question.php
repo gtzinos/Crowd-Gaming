@@ -7,7 +7,8 @@
 		private $questionGroupId; // number
 		private $questionText; // string 
 		private $timeToAnswer; // number
-		private $creation_date; // string , timestamp in database
+		private $creationDate; // string , timestamp in database
+		private $multiplier; // float
 
 		/*
 			Array of objects of the type Answer
@@ -68,5 +69,13 @@
 		
 		public function setCreationDate($creationDate){
 			$this->creationDate = $creationDate;
+		}
+
+		public function getMultiplier(){
+			return $this->multiplier;
+		}
+		
+		public function setMultiplier($multiplier){
+			$this->multiplier = $multiplier;
 		}
 	}
