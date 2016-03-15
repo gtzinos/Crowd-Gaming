@@ -12,11 +12,10 @@ function createQuestionnaire()
   var descriptionClearText = tinymce.activeEditor.getContent({format : 'text'});
   var message_required = $("#message-required").val();
 
-
   if(name && descriptionClearText.length >= 31)
   {
     var Required = {
-        Url() { return webRoot + "create-questionnaire"; },
+        Url() { return webRoot + "questionnaire-create/ajax"; },
         SendType() { return "POST"; },
         variables : "",
         Parameters() {
@@ -67,6 +66,14 @@ function responseCreateQuestionnaire()
 	*/
 	if (xmlHttp.readyState == 4) {
 		if (xmlHttp.status == 200) {
+      /*
+        0			: Created successfully
+        1			: Name Validation error
+        2			: Description Validation error
+        3			: Message Required Error
+        4			: Database Error
+      */
+
 			/*
 				Debug
 			*/
@@ -84,11 +91,58 @@ function responseCreateQuestionnaire()
          $("#questionnaire-create-response").show();
          $("#questionnaire-create-response").html("<div class='alert alert-success'>Your questionnaire created successfully.</div>");
 			}
+
       /*
         If server responsed with an error code
       */
       else {
+        /*
+          Display an response message
+        */
+        var response_message = "";
+        /*
+           If response message == 1
+           Name Validation error
+        */
+        if(xmlHttp.responseText.localeCompare("1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This is not a valid questionnaire name.</div>";
+        }
+        /*
+           If response message == 2
+           Description Validation error
+        */
+        else if(xmlHttp.responseText.localeCompare("2") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This is not a valid questionnaire description.</div>";
+        }
+        /*
+           If response message == 3
+           Message Required Error
+        */
+        else if(xmlHttp.responseText.localeCompare("3") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This is not a valid message required option.</div>";
+        }
+        /*
+           If response message == 4
+           Database Error
+        */
+        else if(xmlHttp.responseText.localeCompare("4") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>General database error. Please try later!</div>";
+        }
+        /*
+            Something going wrong
+        */
+        else {
+          response_message += "<div class='alert alert-danger'>Something going wrong. Contact with one administrator!</div>";
+        }
 
+
+
+       $("#questionnaire-create-response").show();
+       $("#questionnaire-create-response").html(xmlHttp.responseText);
       }
     }
   }

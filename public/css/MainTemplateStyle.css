@@ -14,7 +14,15 @@ body,html{
        color: #36A0FF;
        font-size: 27px;
        padding: 10px;
-   }
+}
+
+/*
+	Full width { 100% of available width }
+*/
+.full-width
+{
+	display: block;
+}
 
 /*
 	Round Buttons

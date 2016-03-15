@@ -325,17 +325,17 @@
 									*/
 									if($questionnaire -> getMessageRequired() == 1 )
 									{
-										echo "<li><input type='button' class='btn btn-link' value='Join questionnaire' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" /> </li>";
+										echo "<li><input type='button' class='btn btn-link' value='Join as player' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" /> </li>";
 									}
 									else {
-										echo "<li><input type='submit' class='btn btn-link' value='Join questionnaire' name='player-join' /> </li>";
+										echo "<li><input type='submit' class='btn btn-link' value='Join as player' name='player-join' /> </li>";
 									}
 								}
 								/*
 									If he have an active player request
 								*/
 								else if(get("questionnaire")["active-player-request"]) {
-									echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete join request' ></li>";
+									echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete player request' ></li>";
 								}
 								/*
 									If he is an accepted player
@@ -363,10 +363,10 @@
 										*/
 										if($questionnaire -> getMessageRequired() == 1 )
 										{
-											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join questionnaire' > </li>";
+											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('player-join','Join as player');\" value='Join as player' > </li>";
 										}
 										else {
-											echo "<li><input type='submit' class='btn btn-link' name='player-join' value='Join questionnaire' > </li>";
+											echo "<li><input type='submit' class='btn btn-link' name='player-join' value='Join as player' > </li>";
 										}
 
 									}
@@ -374,7 +374,7 @@
 										If he have an active player request
 									*/
 									else if(get("questionnaire")["active-player-request"]) {
-										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete join request' > </li>";
+										echo "<li><input type='submit' class='btn btn-link' name='player-cancel-request' value='Delete player request' > </li>";
 									}
 									/*
 										If he is an accepted player
@@ -396,10 +396,10 @@
 										*/
 										if($questionnaire -> getMessageRequired() == 1 )
 										{
-											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Send examiner request' > </li>";
+											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Join as examiner' > </li>";
 										}
 										else {
-											echo "<li><input type='submit' class='btn btn-link' name='examiner-join' value='Send examiner request' > </li>";
+											echo "<li><input type='submit' class='btn btn-link' name='examiner-join' value='Join as examiner' > </li>";
 										}
 
 									}
