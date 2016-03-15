@@ -21,7 +21,7 @@
 		}
 
 		public function hasActiveApplication($userId){
-			$statement = $this->getStatement("SELECT `id` FROM `ExaminerApplication` WHERE `uid`=? AND `accepted` IS NULL");
+			$statement = $this->getStatement("SELECT `id` FROM `ExaminerApplication` WHERE `user_id`=? AND `accepted` IS NULL");
 
 			$statement->setParameters('i' , $userId);
 
@@ -35,7 +35,7 @@
 		}
 
 		public function findById($applicationId){
-			$statement = $this->getStatement("SELECT `uid`, `accepted`, `date`, `application_text` FROM `ExaminerApplication` WHERE `id`=?");
+			$statement = $this->getStatement("SELECT `user_id`, `accepted`, `date`, `application_text` FROM `ExaminerApplication` WHERE `id`=?");
 
 			$statement->setParameters('i' , $applicationId);
 
@@ -48,7 +48,7 @@
 				$examinerApplication->setAccepted( $set->get("accepted") );
 				$examinerApplication->setApplicationText( $set->get("application_text") );
 				$examinerApplication->setApplicationDate( $set->get("date") );
-				$examinerApplication->setUserId( $set->get("uid") );
+				$examinerApplication->setUserId( $set->get("user_id") );
 
 				return $examinerApplication;
 			}else{
@@ -57,7 +57,7 @@
 		}
 
 		private function _create($examinerApplication){
-			$statement = $this->getStatement("INSERT INTO `ExaminerApplication` (`uid`,`date`, `application_text`) VALUES ( ? , CURRENT_TIMESTAMP,?)");
+			$statement = $this->getStatement("INSERT INTO `ExaminerApplication` (`user_id`,`date`, `application_text`) VALUES ( ? , CURRENT_TIMESTAMP,?)");
 			
 			$statement->setParameters("is", $examinerApplication->getUserId() , $examinerApplication->getApplicationText() );
 
@@ -65,7 +65,7 @@
 		}
 
 		private function _update($examinerApplication){
-			$statement = $this->getStatement("UPDATE `ExaminerApplication` SET `uid`=?,`accepted`=?,`application_text`=? WHERE `id`=?");
+			$statement = $this->getStatement("UPDATE `ExaminerApplication` SET `user_id`=?,`accepted`=?,`application_text`=? WHERE `id`=?");
 
 			$statement->setParameters("iisi",
 				$examinerApplication->getUserId() ,
