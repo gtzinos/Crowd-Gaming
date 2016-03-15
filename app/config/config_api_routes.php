@@ -8,7 +8,7 @@
 		Third parameter is not important. RESTful api should not use session, so $_SESSION["USER_LEVEL"] cant be used.
 	 */
 	Routes::add( 'invalid_request' , 'api/InvalidRequestController.php' , 0 );
-	Routes::add( 'authenticate' , 'api/AutheticationController.php' , 0 );
+	Routes::add( 'authenticate' , 'api/AuthenticationController.php' , 0 );
 	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question\/[0-9]+\/answer' , 'api/AnswerController.php' , 0);
 	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question' , 'api/QuestionController.php' , 0);
 	Routes::add( 'questionnaire\/[0-9]+\/group' , 'api/QuestionGroupController.php' , 0);

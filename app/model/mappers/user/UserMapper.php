@@ -405,8 +405,7 @@
 			else it returns the user object meaning it was successful.
 		 */
 		public function authenticate($email , $password){
-			$query =	"select User.password, AccessLevel.name, User.access, User.id , User.verified , User.deleted ,User.banned from User ".
-						"inner join AccessLevel on AccessLevel.id = User.access ".
+			$query =	"select User.* from User ".
 						"where User.email=? and User.deleted=0";
 
 			$preparedStatement = $this->getStatement($query);
@@ -429,15 +428,19 @@
 				$hashedPassword = $set->get("password");
 				if(password_verify($password , $hashedPassword)){
 					$user = 0;
-					$userType = $set->get("name");
-					if( $userType == "Player" )
+					$userType = $set->get("access");
+					if( $userType == "1" )
 						$user = new Player();
-					else if( $userType == "Examiner")
+					else if( $userType == "2")
 						$user = new Examiner();
-					else if( $userType == "Moderator");
+					else if( $userType == "3");
 						$user = new Moderator();
+
 					$user->setDeleted($deleted);
 					$user->setVerified($verified);
+					$user->setName($set->get("name"));
+					$user->setSurname($set->get("surname"));
+					$user->setApiToken($set->get("api_token"));
 					$user->setBanned($banned);
 					$user->setId( $set->get("id") );
 					$user->setEmail( $email);

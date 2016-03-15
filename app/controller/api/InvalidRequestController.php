@@ -1,16 +1,17 @@
 <?php
+	include_once 'AuthenticatedController.php';
 
-	class InvalidRequestController extends Controller{
+	class InvalidRequestController extends AuthenticatedController{
 		
 		public function init(){
-			$this->setHeadless(true);
-			
+
 		}
 
 		public function run(){
+			$userId = $this->authenticateToken();
 
 			$response["code"] = "400";
-			$response["verbal"] = "Invalid Request";
+			$response["message"] = "Invalid Request";
 
 			print json_encode($response);
 		}
