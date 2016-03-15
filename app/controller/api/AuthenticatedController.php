@@ -4,6 +4,7 @@
 	abstract class AuthenticatedController extends Controller{
 		
 		protected function authenticateToken(){
+			// User with id 2 exists, this is for testing only.
 			return 2;
 			$headers = getallheaders();
 

@@ -113,6 +113,19 @@
 				return null;
 		}
 
+		public function groupBelongsTo($groupId , $questionnaireId){
+			$query  = "SELECT `Questionnaire`.`id` FROM `QuestionGroup` INNER JOIN `Questionnaire` ON `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` WHERE `QuestionGroup`.`id`=? AND `QuestionGroup`.`questionnaire_id`=? ";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $groupId , $questionnaireId);
+			
+			$set = $statement->execute();
+
+			if($set->getRowCount() > 0)
+				return true;
+			return false;
+		}
+
 		public function delete($questionGroup){
 			$query = "DELETE FROM `QuestionGroup` WHERE `id`=?";
 

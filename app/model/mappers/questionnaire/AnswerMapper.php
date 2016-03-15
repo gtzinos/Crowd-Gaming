@@ -3,7 +3,7 @@
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/questionnaire/Answer.php';
 
-	class Answer extends DataMapper{
+	class AnswerMapper extends DataMapper{
 
 		
 		public function findAll(){
@@ -35,7 +35,7 @@
 			$query = "SELECT * FROM `Answer` WHERE `question_id`=?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('i' , $answerGroupId);
+			$statement->setParameters('i' , $questionId);
 
 			$set = $statement->execute();
 

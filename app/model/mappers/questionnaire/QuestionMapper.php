@@ -2,8 +2,9 @@
 
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/questionnaire/Question.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
-	class Question extends DataMapper{
+	class QuestionMapper extends DataMapper{
 
 		
 		public function findAll(){
@@ -28,6 +29,37 @@
 			}
 
 			return $questions;
+		}
+
+		public function findNextQuestion($userId , $groupId){
+
+			$userAnswerMapper = new UserAnswerMapper;
+
+			$questionsAnsweredCount = $userAnswerMapper->findAnswersCountByGroup($groupId,$userId);
+
+			$query = "SELECT `Question`.* FROM `Question` ".
+					 "WHERE `Question`.`question_group_id`=? ".
+					 "LIMIT ?,1";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii',$groupId,$questionsAnsweredCount);
+
+			$set = $statement->execute();
+
+			if($set->next()){
+				$question = new Question;
+
+				$question->setId( $set->get("id") );
+				$question->setQuestionGroupId( $set->get("question_group_id") );
+				$question->setQuestionText( $set->get("question") );
+				$question->setTimeToAnswer( $set->get("time_to_answer") );
+				$question->setCreationDate( $set->get("creation_date") );
+				$question->setMultiplier( $set->get("multiplier") );
+
+				return $question;
+			}
+			return null;
+
 		}
 
 		public function findByQuestionGroup($questionGroupId){
