@@ -131,7 +131,7 @@
                   <!-- Spinner and Response Label Field -->
                   <div class="form-group">
                     <div class="col-xs-offset-3 col-xs-8 ">
-                      <label id="signup-response" style="display:block" class="responseLabel text-center">sdfa</label>
+                      <label id="signup-response" style="display:block" class="responseLabel text-center"></label>
                       <div id="signup-spinner">
 
                       </div>
