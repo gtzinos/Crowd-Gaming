@@ -8,9 +8,9 @@
 		private $name; // string
 		private $description; // string
 		private $altitude; // number
-		private $longtitude; // number
+		private $longitude; // number
 		private $altitudeDeviation; // number
-		private $longtitudeDeviation; // number
+		private $longitudeDeviation; // number
 		private $creationDate; // string , timestamp in database
 
 		/*
@@ -74,12 +74,12 @@
 			$this->altitude = $altitude;
 		}
 
-		public function getLongtitude(){
-			return $this->longtitude;
+		public function getLongitude(){
+			return $this->longitude;
 		}
 
-		public function setLongtitude($longtitude){
-			$this->longtitude= $longtitude;
+		public function setLongitude($longitude){
+			$this->longitude= $longitude;
 		}
 
 		public function getAltitudeDeviation(){
@@ -90,12 +90,12 @@
 			$this->altitudeDeviation = $altitudeDeviation;
 		}
 
-		public function getLongtitudeDeviation(){
-			return $this->longtitudeDeviation;
+		public function getLongitudeDeviation(){
+			return $this->longitudeDeviation;
 		}
 
-		public function setLongtitudeDeviation($longtitudeDeviation){
-			$this->longtitudeDeviation= $longtitudeDeviation;
+		public function setLongitudeDeviation($longitudeDeviation){
+			$this->longitudeDeviation= $longitudeDeviation;
 		}
 
 		public function getCreationDate(){

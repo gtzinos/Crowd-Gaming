@@ -21,9 +21,9 @@
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setAltitude( $set->get("altitude") );
-				$questionGroup->setLongtitude( $set->get("longtitude") );
+				$questionGroup->setLongitude( $set->get("longitude") );
 				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongtitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -50,15 +50,41 @@
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setAltitude( $set->get("altitude") );
-				$questionGroup->setLongtitude( $set->get("longtitude") );
+				$questionGroup->setLongitude( $set->get("longitude") );
 				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongtitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
 			}
 
 			return $questionGroups;
+		}
+
+		public function findByQuestionnaireAndId($questionGroupId , $questionnaireId){
+			$query = "SELECT * FROM `QuestionGroup` WHERE `id`=? AND `questionnaire_id`=?";
+			
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $questionGroupId , $questionnaireId);
+
+			$set = $statement->execute();
+
+			if($set->next()){
+				$questionGroup = new QuestionGroup;
+
+				$questionGroup->setId( $set->get("id") );
+				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
+				$questionGroup->setName( $set->get("name") );
+				$questionGroup->setDescription( $set->get("description") );
+				$questionGroup->setAltitude( $set->get("altitude") );
+				$questionGroup->setLongitude( $set->get("longitude") );
+				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
+				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setCreationDate( $set->get("creation_date") );
+
+				return $questionGroup;
+			}else
+				return null;
 		}
 
 		public function findById($questionGroupId){
@@ -77,9 +103,9 @@
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setAltitude( $set->get("altitude") );
-				$questionGroup->setLongtitude( $set->get("longtitude") );
+				$questionGroup->setLongitude( $set->get("longitude") );
 				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongtitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
@@ -114,9 +140,9 @@
 				$questionGroup->getName(),
 				$questionGroup->getDescription(),
 				$questionGroup->getAltitude(),
-				$questionGroup->getLongtitude(),
+				$questionGroup->getLongitude(),
 				$questionGroup->getAltitudeDeviation(),
-				$questionGroup->getLongtitudeDeviation() );
+				$questionGroup->getLongitudeDeviation() );
 
 			$statement->executeUpdate();
 		}
@@ -131,9 +157,9 @@
 				$questionGroup->getName(),
 				$questionGroup->getDescription(),
 				$questionGroup->getAltitude(),
-				$questionGroup->getLongtitude(),
+				$questionGroup->getLongitude(),
 				$questionGroup->getAltitudeDeviation(),
-				$questionGroup->getLongtitudeDeviation(),
+				$questionGroup->getLongitudeDeviation(),
 				$questionGroup->getId() );
 
 			$statement->executeUpdate();
