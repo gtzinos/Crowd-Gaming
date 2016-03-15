@@ -251,9 +251,9 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			Inserts the questionnaire to the database
 		 */
 		private function _create($questionnaire){
-			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`) VALUES (?,?,?,?,?,?,CURRENT_TIMESTAMP)");
+			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)");
 
-			$statement->setParameters( 'isssii' ,
+			$statement->setParameters( 'issii' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
