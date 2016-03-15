@@ -1,7 +1,7 @@
 <?php
 	include_once 'AuthenticatedController.php';
 
-	class GetScoreController extends AuthenticatedController{
+	class UserAnswerController extends AuthenticatedController{
 		
 		public function init(){
 		}

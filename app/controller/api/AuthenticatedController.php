@@ -4,6 +4,7 @@
 	abstract class AuthenticatedController extends Controller{
 		
 		protected function authenticateToken(){
+			return 2;
 			$headers = getallheaders();
 
 			/*
