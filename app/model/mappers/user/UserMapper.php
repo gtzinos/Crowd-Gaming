@@ -42,6 +42,7 @@
 				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
 				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
 				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setApiToken($resultSet->get("api_token"));
 				$user->setNewEmail( $resultSet->get("new_email") );
 
 				if( $resultSet->get("address") !== null )
@@ -91,6 +92,7 @@
 				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
 				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
 				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setApiToken($resultSet->get("api_token"));
 				$user->setNewEmail( $resultSet->get("new_email") );
 
 				if( $resultSet->get("address") !== null )
@@ -139,6 +141,7 @@
 					$user->setEmailVerificationDate( $set->get("email_verification_date") );
 					$user->setPasswordRecoveryToken( $set->get("password_recovery_token") );
 					$user->setPasswordRecoveryDate( $set->get("password_recovery_date") );
+					$user->setApiToken($resultSet->get("api_token"));
 					$user->setNewEmail( $set->get("new_email") );
 					if( $set->get("address") !== null )
 						$user->setAddress( $set->get("address") );
@@ -200,6 +203,7 @@
 				$user->setEmailVerificationDate( $resultSet->get("email_verification_date") );
 				$user->setPasswordRecoveryToken( $resultSet->get("password_recovery_token") );
 				$user->setPasswordRecoveryDate( $resultSet->get("password_recovery_date") );
+				$user->setApiToken($resultSet->get("api_token"));
 				$user->setNewEmail( $resultSet->get("new_email") );
 
 				if( $resultSet->get("address") !== null )
@@ -234,10 +238,11 @@
 				"`phone`=?, `password`=COALESCE(?,`password`) , ".
 				"`banned`=? , `deleted`=? , `verified`=?, ".
 				"`email_verification_token`=?, `password_recovery_token`=?, ".
+				"`api_token`=? ,".
 				"`new_email`=? ".
 				"WHERE `id`=?");
 
-			$statement->setParameters("sississsssiiisssi",	
+			$statement->setParameters("sississsssiiissssi",	
 				$user->getEmail(),
 				$user->getAccessLevel(),
 				$user->getName(),
@@ -253,6 +258,7 @@
 				$user->getVerified(),
 				$user->getEmailVerificationToken(),
 				$user->getPasswordRecoveryToken(),
+				$user->getApiToken(),
 				$user->getNewEmail(),
 				$user->getId() );
 
@@ -265,9 +271,9 @@
 				throw new EmailInUseException("This email is in use by another user.");
 
 
-			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified,email_verification_token) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified,email_verification_token,api_token) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-			$statement->setParameters("ssississssiiis",	
+			$statement->setParameters("ssississssiiiss",	
 				$user->getEmail(),
 				$user->getPassword(),
 				$user->getAccessLevel(),
@@ -281,7 +287,8 @@
 				$user->getBanned(),
 				$user->getDeleted(),
 				$user->getVerified(),
-				$user->getEmailVerificationToken()  );
+				$user->getEmailVerificationToken(),
+				$user->getApiToken()  );
 
 			$statement->executeUpdate();
 		}
@@ -398,8 +405,7 @@
 			else it returns the user object meaning it was successful.
 		 */
 		public function authenticate($email , $password){
-			$query =	"select User.password, AccessLevel.name, User.access, User.id , User.verified , User.deleted ,User.banned from User ".
-						"inner join AccessLevel on AccessLevel.id = User.access ".
+			$query =	"select User.* from User ".
 						"where User.email=? and User.deleted=0";
 
 			$preparedStatement = $this->getStatement($query);
@@ -422,15 +428,19 @@
 				$hashedPassword = $set->get("password");
 				if(password_verify($password , $hashedPassword)){
 					$user = 0;
-					$userType = $set->get("name");
-					if( $userType == "Player" )
+					$userType = $set->get("access");
+					if( $userType == "1" )
 						$user = new Player();
-					else if( $userType == "Examiner")
+					else if( $userType == "2")
 						$user = new Examiner();
-					else if( $userType == "Moderator");
+					else if( $userType == "3");
 						$user = new Moderator();
+
 					$user->setDeleted($deleted);
 					$user->setVerified($verified);
+					$user->setName($set->get("name"));
+					$user->setSurname($set->get("surname"));
+					$user->setApiToken($set->get("api_token"));
 					$user->setBanned($banned);
 					$user->setId( $set->get("id") );
 					$user->setEmail( $email);
@@ -440,6 +450,50 @@
 				}else{
 					return null;
 				}
+			}else{
+				return null;
+			}
+		}
+
+		public function authenticateByToken($token){
+			$query =	"select AccessLevel.name, User.access, User.id , User.verified , User.deleted ,User.banned from User ".
+						"inner join AccessLevel on AccessLevel.id = User.access ".
+						"where User.api_token=?";
+
+			$preparedStatement = $this->getStatement($query);
+			$preparedStatement->setParameters('s' , $token);
+
+			$set = $preparedStatement->execute();
+
+			if($set->next()){
+				$deleted = $set->get("deleted");
+				$verified = $set->get("verified");
+				$banned = $set->get("banned");
+
+				if( !$verified)
+					return "2";
+				else if($deleted)
+					return "3";
+				else if($banned)
+					return "4";
+
+				$user = 0;
+				$userType = $set->get("name");
+				if( $userType == "Player" )
+					$user = new Player();
+				else if( $userType == "Examiner")
+					$user = new Examiner();
+				else if( $userType == "Moderator");
+					$user = new Moderator();
+					
+				$user->setDeleted($deleted);
+				$user->setVerified($verified);
+				$user->setBanned($banned);
+				$user->setId( $set->get("id") );
+				$user->setEmail( $email);
+				$user->setAccessLevel( $set->get("access"));
+
+				return $user;
 			}else{
 				return null;
 			}

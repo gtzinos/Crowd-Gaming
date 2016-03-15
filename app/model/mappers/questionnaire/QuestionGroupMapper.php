@@ -17,7 +17,7 @@
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("qid") );
+				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setAltitude( $set->get("altitude") );
@@ -33,7 +33,7 @@
 		}
 
 		public function findByQuestionnaire($questionnaireId){
-			$query = "SELECT * FROM `QuestionGroup` WHERE `qid`=?";
+			$query = "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' , $questionnaireId);
@@ -46,7 +46,7 @@
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("qid") );
+				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setAltitude( $set->get("altitude") );
@@ -73,7 +73,7 @@
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("qid") );
+				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setAltitude( $set->get("altitude") );
@@ -105,7 +105,7 @@
 		}
 
 		private function _create($questionGroup){
-			$query = "INSERT INTO `QuestionGroup`(`qid`, `name`, `description`, `altitude`, `longitude`, `deviationA`, `deviationL`, `creation_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`, `description`, `altitude`, `longitude`, `deviationA`, `deviationL`, `creation_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
 
@@ -122,7 +122,7 @@
 		}
 
 		private function _update($questionGroup){
-			$query = "UPDATE `QuestionGroup` SET `qid`=?,`name`=?,`description`=?,`altitude`=?,`longitude`=?,`deviationA`=?,`deviationL`=? WHERE `id`=?";
+			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`description`=?,`altitude`=?,`longitude`=?,`deviationA`=?,`deviationL`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 

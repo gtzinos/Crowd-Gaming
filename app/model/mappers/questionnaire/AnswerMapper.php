@@ -18,20 +18,21 @@
 				$answer = new Answer;
 
 				$answer->setId( $set->get("id") );
-				$answer->setQuestionId( $set->get("qid") );
+				$answer->setQuestionId( $set->get("question_id") );
 				$answer->setAnswerText( $set->get("answer") );
 				$answer->setDescription( $set->get("description") );
-				$answer->setCorrect( $set->get("isCorrect") );
+				$answer->setCorrect( $set->get("is_correct") );
 				$answer->setCreationDate( $set->get("creation_date") );
 
 				$answers[] = $answer;
 			}
 
+
 			return $answers;
 		}
 
 		public function findByQuestion($questionId){
-			$query = "SELECT * FROM `Answer` WHERE `qid`=?";
+			$query = "SELECT * FROM `Answer` WHERE `question_id`=?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' , $answerGroupId);
@@ -44,10 +45,10 @@
 				$answer = new Answer;
 
 				$answer->setId( $set->get("id") );
-				$answer->setQuestionId( $set->get("qid") );
+				$answer->setQuestionId( $set->get("question_id") );
 				$answer->setAnswerText( $set->get("answer") );
 				$answer->setDescription( $set->get("description") );
-				$answer->setCorrect( $set->get("isCorrect") );
+				$answer->setCorrect( $set->get("is_correct") );
 				$answer->setCreationDate( $set->get("creation_date") );
 
 				$answers[] = $answer;
@@ -68,10 +69,10 @@
 				$answer = new Answer;
 
 				$answer->setId( $set->get("id") );
-				$answer->setQuestionId( $set->get("qid") );
+				$answer->setQuestionId( $set->get("question_id") );
 				$answer->setAnswerText( $set->get("answer") );
 				$answer->setDescription( $set->get("description") );
-				$answer->setCorrect( $set->get("isCorrect") );
+				$answer->setCorrect( $set->get("is_correct") );
 				$answer->setCreationDate( $set->get("creation_date") );
 
 				return $answer;
@@ -97,7 +98,7 @@
 		}
 
 		private function _create($answer){
-			$query = "INSERT INTO `Answer`(`qid`, `answer`, `description`, `isCorrect`, `creation_date`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+			$query = "INSERT INTO `Answer`(`question_id`, `answer`, `description`, `is_correct`, `creation_date`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
 
@@ -105,13 +106,13 @@
 				$answer->getQuestionId(),
 				$answer->getAnswerText(),
 				$answer->getDescription(),
-				$answer->isCorrect() );
+				$answer->is_correct() );
 
 			$statement->executeUpdate();
 		}
 
 		private function _update($answer){
-			$query = "UUPDATE `Answer` SET `qid`=?,`answer`=?,`description`=?,`isCorrect`=? WHERE `id`=?";
+			$query = "UUPDATE `Answer` SET `question_id`=?,`answer`=?,`description`=?,`is_correct`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 
@@ -119,7 +120,7 @@
 				$answer->getQuestionId(),
 				$answer->getAnswerText(),
 				$answer->getDescription(),
-				$answer->isCorrect() ,
+				$answer->is_correct() ,
 				$answer->getId() );
 
 			$statement->executeUpdate();

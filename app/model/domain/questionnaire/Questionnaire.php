@@ -8,7 +8,6 @@
 		private $id;
 		private $name;
 		private $description;
-		private $language;
 		private $public;
 		private $message_required;
 		private $creationDate;
@@ -109,14 +108,6 @@
 
 		public function setCoordinatorId($coordinatorId){
 			$this->coordinatorId = $coordinatorId;
-		}
-
-		public function getLanguage(){
-			return $this->language;
-		}
-
-		public function setLanguage($language){
-			$this->language = $language;
 		}
 
 		public function getCreationDate() {
