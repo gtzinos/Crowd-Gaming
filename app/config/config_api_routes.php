@@ -9,12 +9,12 @@
 	 */
 	Routes::add( 'invalid_request' , 'api/InvalidRequestController.php' , 0 );
 	Routes::add( 'authenticate' , 'api/AuthenticationController.php' , 0 );
-	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question\/[0-9]+\/answer' , 'api/AnswerController.php' , 0);
-	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question' , 'api/QuestionController.php' , 0);
-	Routes::add( 'questionnaire\/[0-9]+\/group' , 'api/QuestionGroupController.php' , 0);
-	Routes::add( 'questionnaire' , 'api/QuestionnaireController.php' , 0);
+	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question\/[0-9]+\/answer' , 'api/GetAnswerController.php' , 0);
+	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question' , 'api/GetQuestionController.php' , 0);
+	Routes::add( 'questionnaire\/[0-9]+\/group' , 'api/GetQuestionGroupController.php' , 0);
+	Routes::add( 'questionnaire' , 'api/GetQuestionnaireController.php' , 0);
 	Routes::add( 'answer\/[0-9]+' , 'api/UserAnswerController.php' , 0);
-	Routes::add( 'score\/[0-9]+' , 'api/ScoreController.php' , 0);
+	Routes::add( 'score\/[0-9]+' , 'api/GetScoreController.php' , 0);
 	
 	/*
 		The Page to load when the page parameter is not defined

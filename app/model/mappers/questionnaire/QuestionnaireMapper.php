@@ -8,8 +8,13 @@
 
 	class QuestionnaireMapper extends DataMapper{
 
-		/*
-			Return
+		/**
+		 * Finds information about questionnaires
+		 * @param  [string] $sorting [How the questionnaires must be sorted]
+		 * @param  [int] $limit   [The number of rows to returns]
+		 * @param  [int] $offset  [The offset]
+		 * @param  [boolean] $public  [True if only public questionnaires must be accessed];
+		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfo($sorting , $limit , $offset , $public){
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
@@ -62,8 +67,11 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return $questionnaires;
 		}
 
-		/*
-			Return
+		/**
+		 * Finds information about a questionnaire
+		 * @param  [int] $questionnaireId [The id of the questionnaire to find]
+		 * @param  [boolean] $public  [True if only public questionnaires must be accessed];
+		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfoById($questionnaireId , $public){
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
@@ -110,6 +118,11 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return null;
 		}
 
+		/**
+		 * Checks if the message is required for a questionnaire
+		 * @param  [int]  $questionnaireId [The id of the questionnaire]
+		 * @return boolean                  [The result]
+		 */
 		public function isMessageRequired( $questionnaireId ){
 			$query = "SELECT `message_required` FROM `Questionnaire` WHERE `id`=?";
 
@@ -125,6 +138,11 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return false;
 		}
 
+		/**
+		 * [Returns the number of pages required to show all questionnaires]
+		 * @param  [boolean] $public [if true , only public questionnaire will be counted]
+		 * @return [int]         [the number of pages]
+		 */
 		public function getNumberOfPages( $public ){
 			$query = "SELECT ceil(count(*)/10 ) as counter FROM `Questionnaire`";
 
@@ -221,6 +239,77 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 				return $questionnaire;
 			}
 
+			return null;
+		}
+
+
+		/**
+		 * Finds all the questionnaires that the users participates
+		 * @param  [int] $userId            [The users id]
+		 * @param  [int] $participationType [The type of participation]
+		 * @return [array of Questionnaire Objects]                    [The questionnaires]
+		 */
+		public function findQuestionnairesByParticipation($userId , $participationType){
+			$query = "SELECT * FROM `Questionnaire` ".
+			         "INNER JOIN `QuestionnaireParticipation` ".
+			         "ON `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` ".
+			         "WHERE `QuestionnaireParticipation`.`participation_type`=? AND `QuestionnaireParticipation`.`user_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("ii" , $participationType,$userId);
+			$set = $statement->execute();
+
+			$questionnaires = array();
+
+			while($set->next()){
+				$questionnaire  = new Questionnaire();
+
+				$questionnaire->setId( $set->get("id") );
+				$questionnaire->setCoordinatorId( $set->get("coordinator_id") );
+				$questionnaire->setDescription( $set->get("description") );
+				$questionnaire->setName( $set->get("name") );
+				$questionnaire->setPublic( $set->get("public") );
+				$questionnaire->setMessageRequired( $set->get("message_required") );
+				$questionnaire->setCreationDate( $set->get("creation_date") );
+
+				$questionnaires[] = $questionnaire;
+			}
+
+			return $questionnaires;
+		}
+
+		/**
+		 * Find the questionnaire if the user participates.
+		 * @param  [int] $userId            [The users id]
+		 * @param  [int] $questionnaireId   [The questionnaire id]
+		 * @param  [int] $participationType [The type of participation]
+		 * @return [Questionnaire Object]                    [The Questionnaire]
+		 */
+		public function findQuestionnaireByParticipation($userId ,$questionnaireId, $participationType){
+			$query = "SELECT * FROM `Questionnaire` ".
+			         "INNER JOIN `QuestionnaireParticipation` ".
+			         "ON `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` ".
+			         "WHERE `QuestionnaireParticipation`.`participation_type`=? AND `Questionnaire`.`id`=? AND`QuestionnaireParticipation`.`user_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("iii" , $participationType, $questionnaireId , $userId);
+			$set = $statement->execute();
+
+
+			if($set->next()){
+				$questionnaire  = new Questionnaire();
+
+				$questionnaire->setId( $set->get("id") );
+				$questionnaire->setCoordinatorId( $set->get("coordinator_id") );
+				$questionnaire->setDescription( $set->get("description") );
+				$questionnaire->setName( $set->get("name") );
+				$questionnaire->setPublic( $set->get("public") );
+				$questionnaire->setMessageRequired( $set->get("message_required") );
+				$questionnaire->setCreationDate( $set->get("creation_date") );
+
+				return $questionnaire;
+			}
+			
 			return null;
 		}
 
