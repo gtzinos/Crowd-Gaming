@@ -5,20 +5,23 @@
 	class CreateQuestionnaireController extends Controller{
 		
 		public function init(){
-			global $_CONFIG;
+			if( isset($this->params[1]) && $this->params[1]=="ajax"){
+				$this->setHeadless(true);
+			}else{
+				global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->defSection('CSS','examiner/CreateQuestionnaireView.php');
-			$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireView.php');
-			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireView.php');
-			
+				$this->defSection('CSS','examiner/CreateQuestionnaireView.php');
+				$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireView.php');
+				$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireView.php');
+			}			
 		}
 
 		public function run(){
 
 			/*
-				Response Codes
+				Response Codes (Ajax)
 				not set 	: User didnt request questionnaire creation
 				0			: Created successfully
 				1			: Name Validation error
@@ -27,7 +30,7 @@
 				4			: Database Error
 			 */
 			
-			if( isset( $_POST["name"] ,  $_POST["description"] , $_POST["message_required"] ) ){
+			if( isset($this->params[1], $_POST["name"] ,  $_POST["description"] , $_POST["message_required"] ) && $this->params[1]=="ajax" ){
 
 				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 
@@ -37,17 +40,17 @@
 
 				$messageRequired = $_POST["message_required"];
 
-				if( strlen($name) < 3 || strlen($name) > 40 ){
+				if( strlen($name) < 3 ){
 					
-					$this->setArg('response-code',1); // Name Validation error
+					print 1; // Name Validation error
 
 				}else if( strlen($description) < 30 ){
 					
-					$this->setArg('response-code',2); // Descriptin validation error
+					print 2; // Descriptin validation error
 
 				}else if( $messageRequired != "no" && $messageRequired != "yes"){
 
-					$this->setArg("response-code",3); // Message required error
+					print 3; // Message required error
 
 				}else{
 
@@ -69,12 +72,12 @@
 						$questionnaireMapper->persist($questionnaire);
 
 						DatabaseConnection::getInstance()->commit();
-						$this->setArg('response-code' , 0); // All ok
+						print 0; // All ok
 
 					}catch(DatabaseException $ex){
 						
 						DatabaseConnection::getInstance()->rollback();
-						$this->setArg('response-code' , 4); // Database Error
+						print 4; // Database Error
 					}
 				}
 			}
