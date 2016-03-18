@@ -71,7 +71,7 @@
 											 <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 										 </div>
 										 <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8">
-												 <input type="password" name="password" class="form-control" placeholder="Password (Required) *Length >= 8" required />
+												 <input type="password" name="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" placeholder="Password (Required) *Length >= 8" required />
 												 <span></span>
 										 </div>
 								 </div>

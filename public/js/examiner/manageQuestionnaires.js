@@ -27,7 +27,8 @@ function createQuestionnaire()
           if(message_required == "-") {
               message_required = "no";
           }
-          this.variables = "&message_required=" + message_required;
+          
+          this.variables .= "&message_required=" + message_required;
 
           return this.variables;
         }

@@ -1,4 +1,13 @@
+
 $(document).ready(function() {
+    /*
+      On focus change
+      hide other tooltips
+    */
+    $("gt-input-group").on("focusout",function() {
+      $("[data-toggle='tooltip']").tooltip("hide");
+    });
+
     /*
       When window loaded
     */
@@ -57,10 +66,15 @@ $(document).ready(function() {
       */
       var $form = $(this).closest('form'), //form variable
       $group = $(this).closest('.gt-input-group'), //div gt-input-group
-      $button = $(document).find('.submit'); //submit button (use document cause this cant find it)
+      $input = $group.find('.form-control'),
+      $button = $(document).find('.submit'), //submit button (use document cause this cant find it)
 			$icon = $group.find('span'), //icon (success,error)
-      first_time = false;
 			state = false; //default state
+      if(!$input.attr("data-placement"))
+      {
+          $input.attr("data-placement","top");
+      }
+      var first_time = false;
 
       /*
         If is a list
@@ -216,6 +230,14 @@ $(document).ready(function() {
   		else if (state)
       {
   				$group.removeClass('has-error');
+          /*
+            If have a tooltip attribute
+          */
+          if($input.attr("data-toggle") && $input.attr("data-toggle") == "tooltip")
+          {
+            $input.tooltip('destroy')
+                  .removeAttr("data-original-title");
+          }
   				$group.addClass('has-success');
   				$icon.attr('class', 'glyphicon glyphicon-ok form-control-feedback');
   		}
@@ -224,8 +246,35 @@ $(document).ready(function() {
         then add an error class icon
       */
       else if(!state){
+          /*
+            Remove success class (error-icon)
+          */
           $group.removeClass('has-success');
+          /*
+            If have a tooltip attribute
+          */
+          if($input.attr("data-toggle") && $input.attr("data-toggle") == "tooltip")
+          {
+            /*
+              If attr gt-error-message not initialized
+            */
+            if(!$input.attr("gt-error-message")) $input.attr("gt-error-message","Wrong input value.");
+            /*
+              Else gt-error-message initialized
+            */
+            else $input.attr("data-original-title",$input.attr("gt-error-message"));
+          }
+          /*
+            If tooltip is hidden
+          */
+          $input.tooltip('show');
+          /*
+            Add error class (error-icon)
+          */
           $group.addClass('has-error');
+          /*
+            Add error icon
+          */
   				$icon.attr('class', 'glyphicon glyphicon-remove form-control-feedback');
   		}
       /*

@@ -153,7 +153,7 @@ function profileUpdate()
   					Redirect to home page
   				*/
   				document.getElementById("profile-response").style.display = "inline";
-  				document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>You have updated your profile successfully!</div>";
+  				document.getElementById("profile-response").innerHTML = "<div class='alert alert-success'>Your profile updated successfully.</div>";
 
            /*
              Milliseconds which user must wait

@@ -15,7 +15,7 @@
                              <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 col-md-offset-0 col-md-8 block gt-input-group" data-validate="email">
-                          <input class="form-control" id="signup-email" type="email" maxlength="40" placeholder="Email (Required)" required >
+                          <input class="form-control" data-toggle="tooltip" gt-error-message="Not a valid email address" id="signup-email" type="email" maxlength="40" placeholder="Email (Required)" required >
                           <span></span>
                       </div>
                   </div>
@@ -25,7 +25,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8">
-                          <input class="form-control" id="signup-password" type="password" placeholder="Password (Required) *Length >= 8" required >
+                          <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="signup-password" type="password" placeholder="Password (Required) *Length >= 8" required >
                           <span></span>
                       </div>
                   </div>
@@ -35,7 +35,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8" data-equal="signup-password">
-                          <input class="form-control" id="signup-repeat" type="password" placeholder="Repeat Password (Required)" required >
+                          <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="signup-repeat" type="password" placeholder="Repeat Password (Required)" required >
                           <span></span>
                       </div>
                   </div>
@@ -45,7 +45,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="2">
-                          <input class="form-control" id="signup-fname" maxlength="25" type="text" placeholder="First Name (Required) *Length >= 2" required >
+                          <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="signup-fname" maxlength="25" type="text" placeholder="First Name (Required) *Length >= 2" required >
                           <span></span>
                       </div>
                   </div>
@@ -55,7 +55,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="2">
-                          <input class="form-control" id="signup-lname" maxlength="25" type="text" placeholder="Last Name (Required) *Length >= 2" required >
+                          <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="signup-lname" maxlength="25" type="text" placeholder="Last Name (Required) *Length >= 2" required >
                           <span></span>
                       </div>
                   </div>
@@ -65,7 +65,7 @@
                         <span class="text-center"><i class="fi-male-female bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="select">
-                        <select class="form-control" id="signup-gender" required>
+                        <select class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" id="signup-gender" required>
                           <option value="" disabled selected>Gender (Required)</option>
                           <option value="0">Male</option>
                           <option value="1">Female</option>
@@ -79,7 +79,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-globe bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="3">
-                          <input class="form-control" id="signup-country" maxlength="25" type="text" placeholder="Country (Required) *Length >= 3" required >
+                          <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 3 characters" id="signup-country" maxlength="25" type="text" placeholder="Country (Required) *Length >= 3" required >
                           <span></span>
                       </div>
                   </div>
@@ -89,7 +89,7 @@
                         <span class="text-center"><i class="material-icons bigicon">location_city</i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="3">
-                          <input class="form-control" id="signup-city" maxlength="25" type="text" placeholder="City (Required) *Length >= 3" required >
+                          <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 3 characters" id="signup-city" maxlength="25" type="text" placeholder="City (Required) *Length >= 3" required >
                           <span></span>
                       </div>
                   </div>
@@ -99,7 +99,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-home bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="5">
-                          <input class="form-control" id="signup-address" maxlength="25" type="text" placeholder="Address (Optional) *Length >= 5" >
+                          <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 5 characters" id="signup-address" maxlength="25" type="text" placeholder="Address (Optional) *Length >= 5" >
                           <span></span>
                       </div>
                   </div>
@@ -109,7 +109,7 @@
                         <span class="text-center"><i class="glyphicon glyphicon-earphone bigicon"></i></span>
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="phone">
-                          <input class="form-control" id="signup-phone" maxlength="15" type="text" placeholder="Phone (Optional)" >
+                          <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain 10 number" id="signup-phone" maxlength="15" type="text" placeholder="Phone (Optional)" >
                           <span></span>
                       </div>
                   </div>

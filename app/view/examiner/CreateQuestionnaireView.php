@@ -14,7 +14,7 @@
 								<label for="email">Name</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
-								 <input class="form-control" id="questionnaire-name" type="text" maxlength="255" placeholder="Questionnaire name (Required)" >
+								 <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="questionnaire-name" type="text" maxlength="255" placeholder="Questionnaire name (Required)" >
 								 <span></span>
 							</div>
 					</div>
@@ -24,7 +24,7 @@
 								<label for="email">Description</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="30">
-								 <textarea style="height:150px" id="editor" class="form-control" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" ></textarea>
+								 <textarea style="height:150px" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" class="form-control" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" ></textarea>
 								 	<span></span>
 							</div>
 					</div>
@@ -34,7 +34,7 @@
 								<label for="email">Would you like users send a password ?</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
-								<select id="message-required" class="form-control" required>
+								<select id="message-required" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
 									<option value="-" disabled selected>Message Required</option>
 									<option value="no">No</option>
 									<option value="yes">Yes</option>

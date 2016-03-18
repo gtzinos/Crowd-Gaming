@@ -18,7 +18,7 @@
 											 <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
 								</div>
 								<div class="col-xs-offset-0 col-xs-7 gt-input-group" data-validate="email">
-										<input class="form-control" id="recovery-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
+										<input class="form-control" data-toggle="tooltip" gt-error-message="Not a valid email address" id="recovery-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
 										<span></span>
 								</div>
 						</div>

@@ -16,7 +16,7 @@
                       <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
                   </div>
                   <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="length" data-length="1">
-                      <textarea class="form-control" maxlength="250" name="message" placeholder="Would you like to send us something ? (Optional)" ></textarea>
+                      <textarea class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 characters" maxlength="250" name="message" placeholder="Would you like to send us something ? (Optional)" ></textarea>
                       <span></span>
                   </div>
               </div>

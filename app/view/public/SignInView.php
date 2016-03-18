@@ -16,7 +16,7 @@
 														 <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
 											</div>
 											<div class="col-xs-offset-0 col-xs-8 col-md-offset-0 col-md-8 block gt-input-group" data-validate="email">
-													<input class="form-control" id="signin-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
+													<input class="form-control"  data-toggle="tooltip" gt-error-message="Not a valid email address" id="signin-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
 													<span></span>
 											</div>
 									</div>
@@ -26,7 +26,7 @@
 												<span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 											</div>
 											<div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8">
-													<input class="form-control" id="signin-password" name="password" type="password" placeholder="Password (Required) *Length >= 8" required >
+													<input class="form-control" id="signin-password"  data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" name="password" type="password" placeholder="Password (Required) *Length >= 8" required >
 													<span> </span>
 											</div>
 									</div>

@@ -44,7 +44,7 @@
 										<span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 									</div>
 									<div class="col-xs-offset-0 col-xs-7 gt-input-group" data-validate="length" data-length="8">
-											<input class="form-control" id="confirm-password" type="password" placeholder="Password (Required) *Length >= 8" required >
+											<input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="confirm-password" type="password" placeholder="Password (Required) *Length >= 8" required >
 											<span></span>
 									</div>
 							</div>
