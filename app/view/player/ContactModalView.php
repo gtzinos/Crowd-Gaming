@@ -13,7 +13,7 @@
                       <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
                   </div>
                   <div class="col-xs-offset-1 col-xs-7 col-md-offset-1 col-md-7 gt-input-group" data-validate="length" data-length="10">
-                      <textarea class="form-control" maxlength="1000" id="contact-message" style="height:60px" name="contact-message" placeholder="Write a message. (Required)" required></textarea>
+                      <textarea class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 10 characters" maxlength="1000" id="contact-message" style="height:60px" name="contact-message" placeholder="Write a message. (Required)" required></textarea>
                       <span></span>
                   </div>
               </div>

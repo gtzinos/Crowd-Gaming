@@ -1,3 +1,16 @@
+/*
+  Include javascript file from a javascript file
+*/
+var head = document.getElementsByTagName('head')[0];
+var script;
+var include =
+  function(path)
+  {
+   script = document.createElement('script');
+   script.type = 'text/javascript';
+   script.src = path;
+   head.appendChild(script);
+ };
 
 /*
   Bind a Method on an element
@@ -10,7 +23,7 @@ function bindMethod(modal,element,method)
     if(modal != "")
     {
       showModal(modal);
-    }    
+    }
     /*
       Set on click listener
       on #confirm-button

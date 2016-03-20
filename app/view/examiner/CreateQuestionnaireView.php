@@ -2,7 +2,17 @@
 
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script>tinymce.init({ selector:'textarea' });</script>
+<script>
+	tinymce.init({
+    selector: "textarea.mce-editor",
+    setup : function(ed) {
+        ed.on("change", function(e){
+						$('#editor').html(tinymce.activeEditor.getContent({format : 'text'}));
+						$('#editor').focus();
+			});
+   }
+ });
+</script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/manageQuestionnaires.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
@@ -24,7 +34,7 @@
 								<label for="email">Description</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="30">
-								 <textarea style="height:150px" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" class="form-control" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" ></textarea>
+								 <textarea class="form-control mce-editor" style="height:150px" id="editor" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" ></textarea>
 								 	<span></span>
 							</div>
 					</div>
