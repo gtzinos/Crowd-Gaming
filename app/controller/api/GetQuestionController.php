@@ -12,6 +12,7 @@
 
 		public function run(){
 			$userId = $this->authenticateToken();
+			$coordinates = $this->getCoordinates();	
 
 			$questionnaireId = $this->params[1];
 			$groupId = $this->params[3];
@@ -23,7 +24,17 @@
 
 			$response = array();
 
-			if( !$participationMapper->participates($userId , $questionnaireId , 1)  ){
+			/*
+				Check if coordinates were given
+			 */
+			if( $coordinates == null){
+				$response["code"] = "403";
+				$response["message"] = "Forbidden, Coordinates not provided.";
+
+				http_response_code(403);
+
+
+			}else if( !$participationMapper->participates($userId , $questionnaireId , 1)  ){
 				/*
 					User doesnt participate to this questionnaire.
 				 */
@@ -40,6 +51,13 @@
 				$response["message"] = "Not Found, Group doesnt not exist or doesnt belong to questionnaire";
 
 				http_response_code(404);
+
+			}else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) ){
+
+				$response["code"] = "403";
+				$response["message"] = "Forbidden, Invalid location.";
+
+				http_response_code(403);
 
 			}else{
 				/*

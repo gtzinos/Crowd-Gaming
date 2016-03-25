@@ -7,9 +7,9 @@
 		private $questionnaireId; // number
 		private $name; // string
 		private $description; // string
-		private $altitude; // number
+		private $latitude; // number
 		private $longitude; // number
-		private $altitudeDeviation; // number
+		private $latitudeDeviation; // number
 		private $longitudeDeviation; // number
 		private $creationDate; // string , timestamp in database
 
@@ -66,12 +66,12 @@
 			$this->description = $description;
 		}
 
-		public function getAltitude(){
-			return $this->altitude;
+		public function getLatitude(){
+			return $this->latitude;
 		}
 
-		public function setAltitude($altitude){
-			$this->altitude = $altitude;
+		public function setLatitude($latitude){
+			$this->latitude = $latitude;
 		}
 
 		public function getLongitude(){
@@ -82,12 +82,12 @@
 			$this->longitude= $longitude;
 		}
 
-		public function getAltitudeDeviation(){
-			return $this->altitudeDeviation;
+		public function getLatitudeDeviation(){
+			return $this->latitudeDeviation;
 		}
 
-		public function setAltitudeDeviation($altitudeDeviation){
-			$this->altitudeDeviation = $altitudeDeviation;
+		public function setLatitudeDeviation($latitudeDeviation){
+			$this->latitudeDeviation = $latitudeDeviation;
 		}
 
 		public function getLongitudeDeviation(){

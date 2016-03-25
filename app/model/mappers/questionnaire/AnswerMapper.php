@@ -80,6 +80,19 @@
 				return null;
 		}
 
+		public function answerBelongsToQuestion($answerId , $questionId){
+			$query = "SELECT * FROM `Answer` WHERE `id`=? AND `question_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' ,$answerId , $questionId);
+
+			$set = $statement->execute();
+
+			if($set->getRowCount() >0)
+				return true;
+			return false;
+		}
+
 		public function delete($answer){
 			$query = "DELETE FROM `Answer` WHERE `id`=?";
 

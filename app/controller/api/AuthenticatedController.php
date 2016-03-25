@@ -4,8 +4,6 @@
 	abstract class AuthenticatedController extends Controller{
 		
 		protected function authenticateToken(){
-			// User with id 2 exists, this is for testing only.
-			return 2;
 			$headers = getallheaders();
 
 			/*
@@ -31,5 +29,18 @@
 
 			print json_encode($response);
 			die();
+		}
+
+		protected function getCoordinates(){
+			$headers = getallheaders();
+
+			if( isset( $headers["X-Coordinates"] ) ){
+				$args = explode( ";" ,$headers["X-Coordinates"]  );
+
+				$coordinates["latitude"] = $args[0];
+				$coordinates["longitude"] = $args[1];
+				return $coordinates;
+			}
+			return null;
 		}
 	}

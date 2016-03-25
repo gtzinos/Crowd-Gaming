@@ -20,10 +20,10 @@
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
-				$questionGroup->setAltitude( $set->get("altitude") );
+				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
+				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -49,10 +49,10 @@
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
-				$questionGroup->setAltitude( $set->get("altitude") );
+				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
+				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -76,10 +76,10 @@
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
-				$questionGroup->setAltitude( $set->get("altitude") );
+				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
+				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
@@ -102,15 +102,31 @@
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setDescription( $set->get("description") );
-				$questionGroup->setAltitude( $set->get("altitude") );
+				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setAltitudeDeviation( $set->get("deviationA") );
-				$questionGroup->setLongitudeDeviation( $set->get("deviationL") );			
+				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
+				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
 			}else
 				return null;
+		}
+
+		public function verifyLocation($groupId , $latitude , $longitude){
+			$query = "SELECT * FROM `QuestionGroup` ".
+					 "WHERE `id`=? ".
+					 "AND `latitude`-`latitude_deviation` < ? AND `latitude`+`latitude_deviation` > ? " . // Latitude check
+					 "AND `longitude`-`longitude_deviation` < ? AND `longitude`+`longitude_deviation` > ? "; // Longitude Check
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("idddd", $groupId , $latitude,$latitude,$longitude,$longitude);
+
+			$set = $statement->execute();
+
+			if($set->getRowCount() >0)
+				return true;
+			return false;
 		}
 
 		public function groupBelongsTo($groupId , $questionnaireId){
@@ -144,34 +160,34 @@
 		}
 
 		private function _create($questionGroup){
-			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`, `description`, `altitude`, `longitude`, `deviationA`, `deviationL`, `creation_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`, `description`, `latitude`, `longitude`, `latitude_deviation`, `longitude_deviation`, `creation_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('issssss' , 
+			$statement->setParameters('issdddd' , 
 				$questionGroup->getQuestionnaireId(),
 				$questionGroup->getName(),
 				$questionGroup->getDescription(),
-				$questionGroup->getAltitude(),
+				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
-				$questionGroup->getAltitudeDeviation(),
+				$questionGroup->getLatitudeDeviation(),
 				$questionGroup->getLongitudeDeviation() );
 
 			$statement->executeUpdate();
 		}
 
 		private function _update($questionGroup){
-			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`description`=?,`altitude`=?,`longitude`=?,`deviationA`=?,`deviationL`=? WHERE `id`=?";
+			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`description`=?,`latitude`=?,`longitude`=?,`latitude_deviation`=?,`longitude_deviation`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('issssssi' , 
+			$statement->setParameters('issddddi' , 
 				$questionGroup->getQuestionnaireId(),
 				$questionGroup->getName(),
 				$questionGroup->getDescription(),
-				$questionGroup->getAltitude(),
+				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
-				$questionGroup->getAltitudeDeviation(),
+				$questionGroup->getLatitudeDeviation(),
 				$questionGroup->getLongitudeDeviation(),
 				$questionGroup->getId() );
 

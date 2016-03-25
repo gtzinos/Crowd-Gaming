@@ -141,7 +141,7 @@
 					$user->setEmailVerificationDate( $set->get("email_verification_date") );
 					$user->setPasswordRecoveryToken( $set->get("password_recovery_token") );
 					$user->setPasswordRecoveryDate( $set->get("password_recovery_date") );
-					$user->setApiToken($resultSet->get("api_token"));
+					$user->setApiToken($set->get("api_token"));
 					$user->setNewEmail( $set->get("new_email") );
 					if( $set->get("address") !== null )
 						$user->setAddress( $set->get("address") );

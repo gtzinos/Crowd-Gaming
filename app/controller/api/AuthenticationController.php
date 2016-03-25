@@ -8,9 +8,12 @@
 		}
 
 		public function run(){
+			$httpBody = file_get_contents('php://input');
+			$parameters = json_decode($httpBody,true);
 
 			$response = array();
-			if( !isset( $this->params[1]  ,$this->params[2])  ){
+
+			if( !isset( $parameters["email"]  ,$parameters["password"])  ){
 				$response["code"] = "404";
 				$response["message"] = "Username or password or both were not given.";
 
@@ -20,7 +23,7 @@
 
 			$userMapper = new UserMapper;
 
-			$user = $userMapper->authenticate( $this->params[1] , $this->params[2] );
+			$user = $userMapper->authenticate( $parameters["email"] , $parameters["password"] );
 
 			if( is_object( $user ) ){
 

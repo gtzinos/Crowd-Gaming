@@ -47,9 +47,9 @@
 
 					$arrayItem["name"] = $questionGroup->getName();
 					$arrayItem["description"] = $questionGroup->getDescription();
-					$arrayItem["altitude"] = $questionGroup->getAltitude();
+					$arrayItem["latitude"] = $questionGroup->getLatitude();
 					$arrayItem["longitude"] = $questionGroup->getLongitude();
-					$arrayItem["altitude-deviation"] = $questionGroup->getAltitudeDeviation();
+					$arrayItem["latitude-deviation"] = $questionGroup->getLatitudeDeviation();
 					$arrayItem["longitude-deviation"] = $questionGroup->getLongitudeDeviation();
 					$arrayItem["creation_date"] = $questionGroup->getCreationDate();
 					$arrayItem["id"] = $questionGroup->getId();
@@ -71,9 +71,9 @@
 
 					$response["question-group"]["name"] = $questionGroup->getName();
 					$response["question-group"]["description"] = $questionGroup->getDescription();
-					$response["question-group"]["altitude"] = $questionGroup->getAltitude();
+					$response["question-group"]["latitude"] = $questionGroup->getLatitude();
 					$response["question-group"]["longitude"] = $questionGroup->getLongitude();
-					$response["question-group"]["altitude-deviation"] = $questionGroup->getAltitudeDeviation();
+					$response["question-group"]["latitude-deviation"] = $questionGroup->getLatitudeDeviation();
 					$response["question-group"]["longitude-deviation"] = $questionGroup->getLongitudeDeviation();
 					$response["question-group"]["creation_date"] = $questionGroup->getCreationDate();
 					$response["question-group"]["id"] = $questionGroup->getId();

@@ -62,6 +62,27 @@
 
 		}
 
+		public function findGroupIdIfParticipates($questionId , $userId , $participationType , $latitude , $longitude){
+			$query = "SELECT `QuestionGroup`.`id` FROM `QuestionGroup` ".
+					 "INNER JOIN `Question` on `Question`.`question_group_id`=`QuestionGroup`.`id` ".
+					 "INNER JOIN `Questionnaire` on `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` ".
+					 "INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` ".
+					 "WHERE `Question`.`id`=? AND `QuestionnaireParticipation`.`user_id`=? AND `QuestionnaireParticipation`.`participation_type`=? ".
+					 "AND `QuestionGroup`.`latitude`-`QuestionGroup`.`latitude_deviation` < ? AND `QuestionGroup`.`latitude`+`QuestionGroup`.`latitude_deviation` > ? " . // Latitude check
+					 "AND `QuestionGroup`.`longitude`-`QuestionGroup`.`longitude_deviation` < ? AND `QuestionGroup`.`longitude`+`QuestionGroup`.`longitude_deviation` > ? "; // Longitude Check
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('iiidddd' , $questionId , $userId,$participationType , $latitude , $latitude , $longitude, $longitude);
+
+
+			$set = $statement->execute();
+
+			if($set->next()){
+				return $set->get("id");
+			}
+			return null;
+		}
+
 		public function findByQuestionGroup($questionGroupId){
 			$query = "SELECT * FROM `Question` WHERE `question_group_id`=?";
 
