@@ -5,7 +5,7 @@
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
   <div class="container-fluid">
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="profile-form">
          <legend class="text-center header">Your personal profile info</legend>
          <!-- Email Field -->
          <div class="form-group has-feedback">
@@ -13,8 +13,8 @@
                     <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="email">
-                 <input value="<?php if(get("user")) echo get("user")->getEmail(); ?>"class="form-control"  data-toggle="tooltip" gt-error-message="Not a valid email address" type="email" id="profile-email" maxlength="40" placeholder="Email (Required)" required>
-                 <span></span>
+                 <input value="<?php if(get("user")) echo get("user")->getEmail(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid email address" type="email" id="profile-email" maxlength="40" placeholder="Email (Required)" required>
+                 <span class="gt-icon"></span>
              </div>
          </div>
          <!-- New Password Field -->
@@ -24,7 +24,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8">
                  <input type="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="profile-new-password" placeholder="New Password (Optional)" />
-                 <span></span>
+                 <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Repeat Password Field -->
@@ -33,8 +33,8 @@
                <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8" data-equal="profile-new-password">
-                    <input type="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="profile-repeat-password" placeholder="Repeat Password (Optional)" />
-                 <span></span>
+                 <input type="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="profile-repeat-password" placeholder="Repeat Password (Optional)" />
+                 <span class="gt-icon"></span>
              </div>
          </div>
          <!-- First Name Field -->
@@ -44,7 +44,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
                  <input value="<?php if(get("user")) echo get("user")->getName(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" type="text" id="profile-fname" maxlength="25" placeholder="First Name (Required) *Length >= 2" required />
-                 <span></span>
+                 <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Last Name Field -->
@@ -54,7 +54,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
                <input value="<?php if(get("user")) echo get("user")->getSurname(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" type="text" id="profile-lname" maxlength="25" placeholder="Last Name (Required) *Length >= 2" required/>
-               <span></span>
+               <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Gender Field -->
@@ -92,7 +92,7 @@
                  }
                 ?>
                </select>
-               <span></span>
+               <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Country Field -->
@@ -102,7 +102,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="3">
                <input value="<?php if(get("user")) echo get("user")->getCountry(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 3 characters" type="text" id="profile-country" maxlength="25" placeholder="Country (Required) *Length >= 3"  required />
-               <span></span>
+               <span class="gt-icon"></span>
              </div>
          </div>
          <!-- City Field -->
@@ -112,7 +112,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="3">
                <input value="<?php if(get("user")) echo get("user")->getCity(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 3 characters" type="text" id="profile-city" maxlength="25" placeholder="City (Required) *Length >= 3" required/>
-               <span></span>
+               <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Address Field -->
@@ -122,7 +122,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="5">
                <input value="<?php if(get("user")) if(get("user")->getAddress()) echo get("user")->getAddress(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 5 characters" type="text" id="profile-address" maxlength="25" placeholder="Address (Optional) *Length >= 5"/>
-               <span></span>
+               <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Phone Field -->
@@ -132,7 +132,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="phone">
                <input value="<?php if(get("user")) if(get("user")->getPhone()) echo get("user")->getPhone(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain 10 numbers" type="text" id="profile-phone" maxlength="15" placeholder="Phone (Optional)"/>
-               <span></span>
+               <span class="gt-icon"></span>
              </div>
          </div>
          <!-- Spinner and Response Label Field -->
@@ -160,7 +160,7 @@
          <!-- Login Button Field -->
          <div class="form-group">
             <div class="col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
-              <button type="button" class="btn btn-primary btn-md round submit" onclick="confirmPassword('profileUpdate')">Save Profile</button>
+              <button type="button" form="profile-form" class="btn btn-primary btn-md round gt-submit" onclick="confirmPassword('profileUpdate')">Save Profile</button>
             </div>
             <div class="col-xs-offset-2 col-xs-5 col-sm-offset-0 col-sm-2">
               <button type="button" class="btn btn-primary btn-md round" onclick="confirmPassword('deleteAccount')">Delete Account</button>

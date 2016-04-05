@@ -25,7 +25,7 @@
 		<!-- Google Sign In -->
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/formValidation.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-formvalidator/gt-formvalidator.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/AjaxRequests.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>

@@ -1,19 +1,8 @@
 <?php if($section == "CSS") : ?>
 
 <?php elseif($section == "JAVASCRIPT") : ?>
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-<script>
-	tinymce.init({
-    selector: "textarea.mce-editor",
-    setup : function(ed) {
-        ed.on("change", function(e){
-						$('#editor').html(tinymce.activeEditor.getContent({format : 'text'}));
-						$('#editor').focus();
-			});
-   }
- });
-</script>
-<script src="<?php print LinkUtils::generatePublicLink("js/examiner/manageQuestionnaires.js"); ?>"></script>
+		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/examiner/manageQuestionnaires.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
 			<legend class="text-center header">Create a new questionnaire</legend>
@@ -25,7 +14,7 @@
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
 								 <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="questionnaire-name" type="text" maxlength="255" placeholder="Questionnaire name (Required)" >
-								 <span></span>
+								 <span class="gt-icon"></span>
 							</div>
 					</div>
 					<!-- Questionnaire Description -->
@@ -35,7 +24,7 @@
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="30">
 								 <textarea class="form-control mce-editor" style="height:150px" id="editor" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" ></textarea>
-								 	<span></span>
+								 	<span class="gt-icon"></span>
 							</div>
 					</div>
 					<!-- Message Required -->
@@ -49,13 +38,13 @@
 									<option value="no">No</option>
 									<option value="yes">Yes</option>
 								</select>
-								 <span></span>
+								 <span class="gt-icon"></span>
 							</div>
 					</div>
 					<br>
 					<!-- Create questionnaire submit button -->
 					<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6">
-						<button type="button" class="btn btn-primary submit" onclick="createQuestionnaire()" >Create questionnaire</button>
+						<button type="button" class="btn btn-primary gt-submit" onclick="createQuestionnaire()">Create questionnaire</button>
 					</div>
 					<!-- Response Label Field -->
           <div class="form-group" style="margin-top:5%">
@@ -74,4 +63,5 @@
 
 
 	</div>
+
 <?php endif; ?>

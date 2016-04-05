@@ -14,7 +14,7 @@
                   </div>
                   <div class="col-xs-offset-1 col-xs-7 col-md-offset-1 col-md-7 gt-input-group" data-validate="length" data-length="10">
                       <textarea class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 10 characters" maxlength="1000" id="contact-message" style="height:60px" name="contact-message" placeholder="Write a message. (Required)" required></textarea>
-                      <span></span>
+                      <span class="gt-icon"></span>
                   </div>
               </div>
 						</form>
@@ -25,7 +25,7 @@
 						<div class="form-group">
 							 <div class="col-xs-offset-2 col-xs-5 col-sm-offset-3 col-sm-4">
 								 <!-- A Script will add on click method -->
-								 <button id="contact-coordinator" type="button" class="btn btn-primary btn-md round submit" onclick="$('#contact-form').submit()" disabled>Send Message</button>
+								 <button id="contact-coordinator" type="button" class="btn btn-primary btn-md round gt-submit" onclick="$('#contact-form').submit()" disabled>Send Message</button>
 							 </div>
 							 <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-2">
 								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >

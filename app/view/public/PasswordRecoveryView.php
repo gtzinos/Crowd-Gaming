@@ -62,7 +62,7 @@
 							return;
 						}
 					?>
-					<form class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" >
+					<form id="password-recovery-view-form" class="form-horizontal" onsubmit="return !$('#reset-button').prop('disabled')" method="POST" >
 
 								 <legend class="text-center header">Enter a new password</legend>
 								 <!-- New Password Field -->
@@ -72,7 +72,7 @@
 										 </div>
 										 <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8">
 												 <input type="password" name="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" placeholder="Password (Required) *Length >= 8" required />
-												 <span></span>
+												 <span class="gt-icon"></span>
 										 </div>
 								 </div>
 								 <!-- Response Label Field -->
@@ -134,7 +134,7 @@
 								 <!-- Reset password Button Field -->
 								 <div class="form-group">
 										<div class="col-xs-offset-3 col-xs-6 col-sm-offset-3 col-sm-6">
-											<button id="reset-button" class="btn btn-primary btn-md submit" type="submit" disabled>Reset Password</button>
+											<button id="reset-button" form="password-recovery-view-form" class="btn btn-primary btn-md gt-submit" type="submit" disabled>Reset Password</button>
 										</div>
 								 </div>
 					</form>

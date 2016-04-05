@@ -8,7 +8,7 @@
        </div>
        <div class="modal-body container-fluid">
 
-          <form onsubmit="return false" class="form-horizontal">
+          <form id="signup-form" onsubmit="return false" class="form-horizontal">
               <!-- Email Field -->
                   <div class="form-group has-feedback">
                       <div class="col-xs-offset-1 col-xs-2">
@@ -16,7 +16,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 col-md-offset-0 col-md-8 block gt-input-group" data-validate="email">
                           <input class="form-control" data-toggle="tooltip" gt-error-message="Not a valid email address" id="signup-email" type="email" maxlength="40" placeholder="Email (Required)" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- First Password Field -->
@@ -26,7 +26,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8">
                           <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="signup-password" type="password" placeholder="Password (Required) *Length >= 8" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Second Password Field -->
@@ -36,7 +36,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8" data-equal="signup-password">
                           <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="signup-repeat" type="password" placeholder="Repeat Password (Required)" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- First Name Field -->
@@ -46,7 +46,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="2">
                           <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="signup-fname" maxlength="25" type="text" placeholder="First Name (Required) *Length >= 2" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Last Name Field -->
@@ -56,7 +56,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="2">
                           <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="signup-lname" maxlength="25" type="text" placeholder="Last Name (Required) *Length >= 2" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Gender Field -->
@@ -70,7 +70,7 @@
                           <option value="0">Male</option>
                           <option value="1">Female</option>
                         </select>
-                        <span></span>
+                        <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Country Field -->
@@ -80,7 +80,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="3">
                           <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 3 characters" id="signup-country" maxlength="25" type="text" placeholder="Country (Required) *Length >= 3" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- City Field -->
@@ -90,7 +90,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="3">
                           <input class="form-control"  data-toggle="tooltip" gt-error-message="Must contain at least 3 characters" id="signup-city" maxlength="25" type="text" placeholder="City (Required) *Length >= 3" required >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Address Field -->
@@ -100,7 +100,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="5">
                           <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 5 characters" id="signup-address" maxlength="25" type="text" placeholder="Address (Optional) *Length >= 5" >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Phone Field -->
@@ -110,7 +110,7 @@
                       </div>
                       <div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="phone">
                           <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain 10 number" id="signup-phone" maxlength="15" type="text" placeholder="Phone (Optional)" >
-                          <span></span>
+                          <span class="gt-icon"></span>
                       </div>
                   </div>
                   <!-- Accept Licence Field -->
@@ -123,7 +123,7 @@
                             </label>
                           </div>
                           <div class="col-xs-offset-0 col-xs-1 col-sm-offset-0 col-sm-2 ">
-                            <span> </span>
+                            <span class="gt-icon"> </span>
                           </div>
                       </div>
 
@@ -138,10 +138,10 @@
 
                     </div>
                   </div>
-                  <!-- Login Button Field -->
+                  <!-- Register Button Field -->
                   <div class="form-group">
                      <div class="col-xs-offset-3 col-xs-8 col-sm-offset-3">
-                       <button type="button" class="btn btn-primary btn-md btn-block submit" onclick="signUpFromForm()" disabled>Register Now</button>
+                       <button type="button" form="signup-form" class="btn btn-primary btn-md btn-block gt-submit" onclick="signUpFromForm()" disabled>Register Now</button>
                       </div>
                   </div>
             </form>

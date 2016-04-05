@@ -13,23 +13,31 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
+			<div class="col-xs-12 col-sm-offset-1 col-sm-2">
 				<label> Posted : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
-			<div class="questionnaire-public col-xs-12 col-sm-offset-3 col-sm-3">
-				<?php
-						/*
-							First of all we need
-							to find the correct image.
-							public / private icon
-						*/
-						$icon = "class='glyphicon glyphicon-unchecked' title='Not Joined'";
-						if(get("questionnaire")["player-participation"] == 1)
-						{
-							$icon = "class='fa fa-check-square-o' title='Joined'";
-						}
-				 ?>
-					<span class="mediumicon"> <i <?php echo $icon ?> ></i> </span>
+			<div class="questionnaire-public col-xs-12 col-sm-offset-6 col-sm-3">
+					<?php
+							/*
+								First of all we need
+								to find the correct image.
+								public / private icon
+							*/
+							$icon = "class='glyphicon glyphicon-unchecked' title='Not Joined'";
+							if(get("questionnaire")["player-participation"] == 1)
+							{
+								$icon = "class='fa fa-check-square-o' title='Joined'";
+							}
+						?>
+					 <span class="mediumicon"> <i <?php echo $icon ?> ></i> </span>
+
+
+					 <?php
+					 		if($_SESSION["USER_LEVEL"] >= 2)
+							{
+								echo "<a class='mediumicon' href='" . LinkUtils::generatePageLink("questionnaire-edit") . "'><i class='fa fa-wrench'> </i></a>";
+							}
+					 ?>
 			</div>
 		</div>
 		<div class="row">

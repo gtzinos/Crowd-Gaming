@@ -34,17 +34,17 @@ $(document).ready(function() {
         /*
           If we can find a button with attribute name = form.name
         */
-        if(button.filter("[form='" + form.prop("name") + "']").length)
+        if(button.filter("[form='" + form.prop("id") + "']").length)
         {
-          button = button.filter("[form='" + form.prop("name") + "']");
+          button = button.filter("[form='" + form.prop("id") + "']");
         }
       }
       /*
         Search button from the whole document
       */
-      else if($(document).find(".gt-submit,input[type='submit'],[type='button'],button").filter("[form='" + form.prop("name") + "']").length > 0)
+      else if($(document).find(".gt-submit,input[type='submit'],[type='button'],button").filter("[form='" + form.prop("id") + "']").length > 0)
       {
-        button = $(document).find(".gt-submit,input[type='submit'],[type='button'],button").filter("[form='" + form.prop("name") + "']");
+        button = $(document).find(".gt-submit,input[type='submit'],[type='button'],button").filter("[form='" + form.prop("id") + "']");
       }
       /*
         If something go wrong

@@ -8,7 +8,7 @@
 			 </div>
 			 <div class="modal-body container-fluid">
 
-					<form onsubmit="return false" class="form-horizontal">
+					<form id="signin-form" onsubmit="return false" class="form-horizontal">
 									<!-- Email Field -->
 									<div class="form-group has-feedback">
 											<div class="col-xs-offset-1 col-xs-2 col-md-offset-1 col-md-2">
@@ -16,8 +16,8 @@
 														 <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
 											</div>
 											<div class="col-xs-offset-0 col-xs-8 col-md-offset-0 col-md-8 block gt-input-group" data-validate="email">
-													<input class="form-control"  data-toggle="tooltip" gt-error-message="Not a valid email address" id="signin-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
-													<span></span>
+													<input class="form-control" data-toggle="tooltip" gt-error-message="Not a valid email address" id="signin-email" name="email" type="email" maxlength="40" placeholder="Email (Required)" required >
+													<span class="gt-icon"></span>
 											</div>
 									</div>
 									<!-- Password Field -->
@@ -26,8 +26,8 @@
 												<span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
 											</div>
 											<div class="col-xs-offset-0 col-xs-8 block gt-input-group" data-validate="length" data-length="8">
-													<input class="form-control" id="signin-password"  data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" name="password" type="password" placeholder="Password (Required) *Length >= 8" required >
-													<span> </span>
+													<input class="form-control" id="signin-password" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" name="password" type="password" placeholder="Password (Required) *Length >= 8" required >
+													<span class="gt-icon"> </span>
 											</div>
 									</div>
 									<!-- Check box Field -->
@@ -49,7 +49,7 @@
 									<!-- Login Button Field -->
 									<div class="form-group">
 										 <div class="col-xs-offset-3 col-xs-8">
-											 <button type="button" class="btn btn-primary btn-md btn-block submit" onclick="signInFromForm()" disabled>Sign In</button>
+											 <button type="button" class="btn btn-primary btn-md btn-block gt-submit" form="signin-form" onclick="signInFromForm()" disabled>Sign In</button>
 											</div>
 									</div>
 						</form>

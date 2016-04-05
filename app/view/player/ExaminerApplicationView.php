@@ -14,13 +14,13 @@
 						</div>
 						<div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="20">
 								<textarea class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 20 characters" <?php if(exists("response-code")) { if(get("response-code") >= 0) echo "maxlength='0'"; } else { echo "maxlength='255'"; }  ?> name="application_text" placeholder="Why you should be an examiner on our server ?" required></textarea>
-								<span></span>
+								<span class="gt-icon"></span>
 						</div>
 				</div>
 				<!-- Submit Button Field -->
 				<div class="form-group has-feedback">
 						<div class="col-xs-offset-3 col-xs-6 col-md-offset-3 col-md-6 gt-input-group">
-								<button id="submit" type="submit" class="btn btn-primary btn-lg submit" disabled>Send Message</button>
+								<button id="submit" type="submit" class="btn btn-primary btn-lg gt-submit" disabled>Send Message</button>
 						</div>
 				</div>
 				<!-- Response Label Field -->

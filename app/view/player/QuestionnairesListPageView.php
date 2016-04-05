@@ -60,7 +60,7 @@
 									<div id='collapse" . $questionnaires["questionnaire"]->getId() . "' class='panel-collapse collapse'>
 										<div class='panel-body'>
 											<div class='questionnaire-time' style='margin-left:98%;'>
-												<span> <i " . $icon . "></i> </span>
+												<span class='gt-icon'> <i " . $icon . "></i> </span>
 											</div>
 											<div class='questionnaire-description col-xs-12'>
 										"
