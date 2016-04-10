@@ -42,11 +42,11 @@
       <!-- Longitude - Latitude -->
       <div class="form-group has-feedback" >
         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="length" data-length="1">
-          <input class="form-control" id="longitude" type="text" style="text-align:center" placeholder="Longitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20" required/>
+          <input class="form-control" id="longitude" type="text" style="text-align:center" placeholder="Longitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20"/>
           <span class="gt-icon"></span>
         </div>
         <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="length" data-length="1">
-          <input class="form-control" id="latitude" type="text" style="text-align:center" placeholder="Latitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20" required/>
+          <input class="form-control" id="latitude" type="text" style="text-align:center" placeholder="Latitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20"/>
           <span class="gt-icon"></span>
         </div>
         <!-- Radius -->

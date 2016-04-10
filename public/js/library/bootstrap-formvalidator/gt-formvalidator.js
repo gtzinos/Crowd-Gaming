@@ -12,7 +12,6 @@ $(document).ready(function() {
       If a key pressed (Keyup event)
       in a gt-input-group class then
     */
-
     $('.gt-input-group input, .gt-input-group textarea, .gt-input-group checkbox, .gt-input-group select').on('keyup change focus', function() {
       /*
         Initialize variables (Form, div(gt-input-group), button(submit form), span(icon error,success))
