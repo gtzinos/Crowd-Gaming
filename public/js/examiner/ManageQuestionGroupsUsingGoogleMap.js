@@ -6,7 +6,8 @@ var my_position=new google.maps.LatLng(51.508742,-0.120850); //starting position
 var map; // map variable
 var marker; // marker variable
 var zoom = 5; // zoom counter
-
+var circle; // circle variable
+var radius = 0; // circle radius
 /*
   Initialize function.
   We call initialize() on load
@@ -60,6 +61,10 @@ function placeMarker(location) {
    if(marker != null) marker.setMap(null);
    marker = new google.maps.Marker({position: location,map: map});
    /*
+     Override new position
+   */
+   my_position = new google.maps.LatLng(marker.getPosition().lat(),marker.getPosition().lng());
+   /*
       Set Zoom
    */
    if(map.getZoom() < 8)
@@ -73,6 +78,35 @@ function placeMarker(location) {
    */
    $("#longitude").val(marker.getPosition().lng());
    $("#latitude").val(marker.getPosition().lat());
+
+   /*
+      If new radius is number
+   */
+   if($.isNumeric($("#radius").val()))
+   {
+     radius = $("#radius").val();
+     if(circle != null)
+     {
+       circle.setMap(null);
+     }
+   }
+   /*
+      Set radius if radius > 0
+   */
+   if(radius > 0)
+   {
+     circle = new google.maps.Circle({
+       center:my_position,
+       radius:parseInt(radius,10), //parse to integer
+       strokeColor:"#0000FF",
+       strokeOpacity:0.8,
+       strokeWeight:2,
+       fillColor:"#0000FF",
+       fillOpacity:0.4
+      });
+
+     circle.setMap(map);
+   }
    /*
       On click event listener for marker
    */
@@ -170,6 +204,7 @@ function searchPosition()
         Create a new position
       */
       my_position = new google.maps.LatLng($("#latitude").val(),$("#longitude").val());
+
       /*
         Place the marker
       */

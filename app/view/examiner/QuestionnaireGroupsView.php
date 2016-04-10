@@ -49,33 +49,25 @@
           <input class="form-control" id="latitude" type="text" style="text-align:center" placeholder="Latitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20" required/>
           <span class="gt-icon"></span>
         </div>
-      </div>
-      <!-- Google maps buttons -->
-      <div class="form-group has-feedback" style="margin-top:3%">
+        <!-- Radius -->
+        <div style="margin-top:1%" class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number">
+          <input class="form-control" id="radius" type="text" style="text-align:center" maxlength="10" placeholder="Radius"/>
+          <span class="gt-icon"> </span>
+        </div>
+        <!-- Search button -->
+        <div style="margin-top:1%;" class="col-xs-offset-0 col-xs-3 col-sm-1 gt-input-group">
+          <input type="button" class="btn btn-primary" value="Find" onclick="searchPosition()"/>
+        </div>
         <!-- Find Current Location -->
-        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group">
+        <div style="margin-top:1%;" class="col-xs-offset-0 col-xs-9 col-sm-3 gt-input-group">
           <input type="button" class="form-control btn btn-info" value="Current Location" onclick="findCurrentLocation()"/>
         </div>
-        <!-- Find Location on Map -->
-        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4 gt-input-group ">
-          <input type="button" class="form-control btn btn-primary" value="Search Now" onclick="searchPosition()" />
-        </div>
       </div>
-
-      <!-- DeviationLongitude - DeviationLatitude -->
-      <div class="form-group has-feedback" style="margin-top:3%" >
-        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group">
-          <input class="form-control" id="dlatitude" type="text" style="text-align:center" placeholder="Deviation Latitude"/>
-        </div>
-        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4 gt-input-group">
-          <input class="form-control" id="dlongitude" type="text" style="text-align:center" placeholder="Deviation Longitude"/>
-        </div>
-      </div>
-
       <!-- Submit Button -->
       <div class="form-group has-feedback" style="margin-top:3%">
         <div class="gt-input-group col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-3">
           <input type="submit" class="form-control btn btn-primary gt-submit round" style="text-align:center" value="Create Group" disabled/>
+
         </div>
       </div>
   </form>

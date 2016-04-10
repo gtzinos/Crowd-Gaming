@@ -32,13 +32,13 @@
 									</div>
 									<!-- Check box Field -->
 									<div class="form-group">
-										<div class="col-xs-offset-3 col-xs-4 col-sm-offset-3 col-sm-4">
+										<div class="col-xs-offset-1 col-xs-5 col-sm-offset-3 col-sm-4">
 												<span style="font-size:12px">
 													<input id="signin-remember" type="checkbox" />
 													Remember Me
 												</span>
 										</div>
-										<div class="col-xs-offset-0 col-xs-4 col-sm-offset-1 col-sm-4">
+										<div class="col-xs-offset-0 col-xs-6 col-sm-offset-1 col-sm-4">
 												<span style="font-size:12px">
 													<!-- This input help (Remember Me , Forgot password) to be on the same line -->
 													<input id="signin-forgot" type="checkbox" style="visibility:hidden"/>
@@ -48,7 +48,7 @@
 									</div>
 									<!-- Login Button Field -->
 									<div class="form-group">
-										 <div class="col-xs-offset-3 col-xs-8">
+										 <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8">
 											 <button type="button" class="btn btn-primary btn-md btn-block gt-submit" form="signin-form" onclick="signInFromForm()" disabled>Sign In</button>
 											</div>
 									</div>
