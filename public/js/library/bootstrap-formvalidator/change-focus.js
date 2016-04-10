@@ -33,6 +33,7 @@ $('.modal').on('shown.bs.modal', function() {
       to check the fields
     */
     $('.modal').find("form:not(.filter) :input:visible:enabled:first").focus();
+    $('.modal').find(".form-control").each(function() {
       validate($(this));
     });
 });
