@@ -13,10 +13,10 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-12 col-sm-offset-1 col-sm-2">
-				<label> Posted : </label> <?php echo $questionnaire->getCreationDate() ?>
+			<div class="col-xs-12 col-sm-offset-1 col-sm-3">
+				<label>Posted :</label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
-			<div class="questionnaire-public col-xs-12 col-sm-offset-6 col-sm-3">
+			<div class="questionnaire-public col-xs-12 col-sm-offset-5 col-sm-3">
 					<?php
 							/*
 								First of all we need

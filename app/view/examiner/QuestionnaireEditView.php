@@ -41,13 +41,12 @@
                <span class="gt-icon"></span>
             </div>
         </div>
-        <br>
         <!-- Create questionnaire submit button -->
-        <div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-5">
-          <div class="col-xs-3 col-md-2">
-            <button type="button" class="btn btn-primary gt-submit" form="edit-questionnaire-form" onclick="createQuestionnaire()">Save</button>
+        <div class="form-group has-feedback">
+          <div class="col-xs-offset-0 col-xs-3 col-md-offset-3 col-md-1">
+            <button type="button" class="btn btn-primary gt-submit" form="edit-questionnaire-form" onclick="createQuestionnaire()" disabled="disabled">Save</button>
           </div>
-          <div class="col-xs-3 col-md-3">
+          <div class="col-xs-offset-0 col-xs-3 col-md-3">
             <button type="button" class="btn btn-primary" onclick="location.href='<?php echo LinkUtils::generatePageLink('questionnaire-groups') ?>';" >Edit Groups</button>
           </div>
         </div>
