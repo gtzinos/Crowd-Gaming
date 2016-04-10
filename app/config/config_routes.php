@@ -1,5 +1,5 @@
 <?php
-	
+
 	/*
 		Public pages
 	 */
@@ -26,16 +26,18 @@
 	Routes::add( 'become-examiner' , 'player/ExaminerApplicationController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'questionnaire' , 'player/QuestionnaireController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'user' , 'player/UserController.php' , $_USER_LEVEL["PLAYER"] );
-	
+
 	/*
 		Examiner level pages
 	 */
 	Routes::add( 'questionnaire-create' , 'examiner/CreateQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-edit' , 'examiner/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'questionnaire-groups' , 'examiner/QuestionnaireGroupsController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'create-questionnaire-groups' , 'examiner/CreateQuestionnaireGroupsController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'questionnaire-workbench' , 'examiner/QuestionnaireWorkbenchController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-schedule' , 'examiner/QuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
-	
+
 	/*
 		The Page to load when the page parameter is not defined
 	*/

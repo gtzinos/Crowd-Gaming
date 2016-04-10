@@ -59,7 +59,6 @@ $(document).ready(function() {
       {
           input.attr("data-placement","top");
       }
-
       /*
         If is a list
         and selected index was the default one

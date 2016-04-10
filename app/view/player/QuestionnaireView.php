@@ -35,7 +35,7 @@
 					 <?php
 					 		if($_SESSION["USER_LEVEL"] >= 2)
 							{
-								echo "<a class='mediumicon' href='" . LinkUtils::generatePageLink("questionnaire-edit") . "'><i class='fa fa-wrench'> </i></a>";
+								echo "<a class='mediumicon' href='" . LinkUtils::generatePageLink("questionnaire-edit") . "'><i class='glyphicon glyphicon-edit'> </i></a>";
 							}
 					 ?>
 			</div>

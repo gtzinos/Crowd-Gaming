@@ -13,7 +13,7 @@
 								<label for="email">Name</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
-								 <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="questionnaire-name" type="text" maxlength="255" placeholder="Questionnaire name (Required)" >
+								 <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="questionnaire-name" type="text" maxlength="255" placeholder="Questionnaire name (Required)" required>
 								 <span class="gt-icon"></span>
 							</div>
 					</div>
@@ -23,7 +23,7 @@
 								<label for="email">Description</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="30">
-								 <textarea class="form-control mce-editor" style="height:150px" id="editor" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" ></textarea>
+								 <textarea class="form-control mce-editor" style="height:150px" id="editor" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" required ></textarea>
 								 	<span class="gt-icon"></span>
 							</div>
 					</div>
