@@ -45,6 +45,7 @@
 			$controller->setArg("primary-menu" , "PlayerMenu");
 		}else if( $_SESSION["USER_LEVEL"] == 2){
 			$controller->setArg("primary-menu" , "ExaminerMenu");
+			$controller->defSection("CREATE_QUESTION", "examiner/CreateQuestion.php");
 		}else if( $_SESSION["USER_LEVEL"] == 3){
 			$controller->setArg("primary-menu" , "ModeratorMenu");
 		}

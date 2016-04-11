@@ -20,6 +20,13 @@
     */
 
   ?>
+  <script>
+    function openQuestionDialog()
+    {
+      $("#create-question").modal("show");
+    }
+
+  </script>
   <div class="list-group">
     <a href="#" class="list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10">
       <div class="col-xs-12">
@@ -27,7 +34,7 @@
       </div>
       <div class="col-xs-12" style="margin-top:3%;padding:0px">
         <div class="col-xs-12 col-sm-4 col-md-3" style="padding:0px">
-          <button class="btn" type="button">New Question</button>
+          <button class="btn" type="button" onclick="openQuestionDialog()">New Question</button>
         </div>
         <div class="col-xs-12 col-sm-2 col-md-1" style="padding:0px">
           <button class="btn" type="button">Edit</button>
@@ -47,7 +54,7 @@
       </div>
       <div class="col-xs-12" style="margin-top:3%;padding:0px">
         <div class="col-xs-12 col-sm-4 col-md-3" style="padding:0px">
-          <button class="btn" type="button">New Question</button>
+          <button class="btn" type="button" onclick="openQuestionDialog()">New Question</button>
         </div>
         <div class="col-xs-12 col-sm-2 col-md-1" style="padding:0px">
           <button class="btn" type="button">Edit</button>
@@ -66,7 +73,7 @@
       </div>
       <div class="col-xs-12" style="margin-top:3%;padding:0px">
         <div class="col-xs-12 col-sm-4 col-md-3" style="padding:0px">
-          <button class="btn" type="button">New Question</button>
+          <button class="btn" type="button" onclick="openQuestionDialog()">New Question</button>
         </div>
         <div class="col-xs-12 col-sm-2 col-md-1" style="padding:0px">
           <button class="btn" type="button">Edit</button>
@@ -79,4 +86,8 @@
         </div>
       </div>
     </a>
+
+    <?php
+        load("CREATE_QUESTION");
+     ?>
 <?php endif; ?>
