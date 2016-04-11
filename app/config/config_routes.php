@@ -36,6 +36,7 @@
 	Routes::add( 'questionnaire-workbench' , 'examiner/QuestionnaireWorkbenchController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-schedule' , 'examiner/QuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'get-question-groups' , 'examiner/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );
 
 	/*
 		The Page to load when the page parameter is not defined

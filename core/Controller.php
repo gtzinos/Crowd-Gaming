@@ -2,6 +2,12 @@
 
     require_once '../libs/Parsedown.php';
 
+    abstract class OutputType{
+        const NormalView = 0;
+        const XmlView = 1;
+        const JsonView = 2;
+        const ResponseStatus = 3;
+    }
 
     $controller = null;
     /*
@@ -11,10 +17,12 @@
     */
     abstract class Controller{
 
+        private $output;
         private $args;
         private $sections;
         private $headless;
         private $template;
+        private $outputType;
 
         protected $params;
 
@@ -23,7 +31,9 @@
 
             global $controller;
 
-            $this->headless = false;
+            $this->setHeadless( false );
+            $this->setOutputType( OutputType::NormalView );
+
             $controller = $this;
         }
 
@@ -38,8 +48,23 @@
 
 
             if( !$this->isHeadless() ){
-                global $_CONFIG;
-                include '../app/templates/'.$this->template;
+
+                switch ( $this->getOutputType() ) {
+                    case OutputType::XmlView :
+                        // Not implemented.
+                        break;
+                    case OutputType::NormalView :
+                        global $_CONFIG;
+                        include '../app/templates/'.$this->template;
+                        break;
+                    case OutputType::JsonView :
+                        header('Content-Type: application/json');
+                        print json_encode($this->output);
+                        break;
+                    case OutputType::ResponseStatus :
+                        print $this->getOutput("response-code");
+                        break;
+                }   
             }
 
         }
@@ -53,6 +78,14 @@
                 return $this->args[$key];
             else
                 return "";
+        }
+
+        public function setOutput($key , $value ){
+            $this->output[$key] = $value;
+        }
+
+        public function getOutput($key){
+            return $this->output[$key];
         }
 
         public function getTemplate(){
@@ -86,9 +119,24 @@
             $this->headless = $headless;
         }
 
+        public function setOutputType($outputType){
+            $this->outputType = $outputType;
+        }
+
+        public function getOutputType(){
+            return $this->outputType;
+        }
+
         public function redirect($uri){
             header("Location: ".LinkUtils::generatePageLink($uri));
             die();
+        }
+
+        public function getViewOutput( $viewFile , $section){
+            ob_start();
+            include '../app/view/'.$viewFile;
+
+            return ob_get_clean();;
         }
 
     }

@@ -5,18 +5,10 @@
 	class QuestionnaireEditController extends Controller{
 		
 		public function init(){
-			global $_CONFIG;
-
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
-
-			$this->defSection('CSS','examiner/QuestionnaireEditView.php');
-			$this->defSection('JAVASCRIPT','examiner/QuestionnaireEditView.php');
-			$this->defSection('MAIN_CONTENT','examiner/QuestionnaireEditView.php');
-			
+			$this->setOutputType( OutputType::ResponseStatus );
 		}
 
 		public function run(){
-
 
 			if( !isset( $this->params[1] ) ){
 				$this->redirect("questionnaireslist");
@@ -50,15 +42,15 @@
 
 				if( strlen($name) < 3 ){
 					
-					$this->setArg("response-code" , 1); // Name Validation error
+					$this->setOutput("response-code" , 1); // Name Validation error
 
 				}else if( strlen($description) < 30 ){
 					
-					$this->setArg("response-code" , 2); // Descriptin validation error
+					$this->setOutput("response-code" , 2); // Descriptin validation error
 
 				}else if( $messageRequired != "no" && $messageRequired != "yes"){
 
-					$this->setArg("response-code" , 3); // Message required error
+					$this->setOutput("response-code" , 3); // Message required error
 
 				}else{
 
@@ -74,18 +66,17 @@
 						$questionnaireMapper->persist($questionnaire);
 
 						DatabaseConnection::getInstance()->commit();
-						$this->setArg("response-code" , 0); // All ok
+						$this->setOutput("response-code" , 0); // All ok
 
 					}catch(DatabaseException $ex){
 						
 						DatabaseConnection::getInstance()->rollback();
-						$this->setArg("response-code" , 4); // Database Error
+						$this->setOutput("response-code" , 4); // Database Error
 					}
 				}
+			}else{
+				$this->setOutput("response-code", -1);
 			}
-
-
-			$this->setArg("questionnaire" , $questionnaire);
 		}
 
 	}

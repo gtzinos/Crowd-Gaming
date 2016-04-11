@@ -57,6 +57,35 @@
 			return $questionGroups;
 		}
 
+		public function findByQuestionnaireLimited($questionnaireId , $offset , $count){
+			$query =   "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?
+						ORDER BY id
+						LIMIT ?,?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('iii' , $questionnaireId , $offset , $count);
+
+			$set = $statement->execute();
+
+			$questionGroups = array();
+
+			while($set->next()){
+				$questionGroup = new QuestionGroup;
+
+				$questionGroup->setId( $set->get("id") );
+				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
+				$questionGroup->setName( $set->get("name") );
+				$questionGroup->setLatitude( $set->get("latitude") );
+				$questionGroup->setLongitude( $set->get("longitude") );
+				$questionGroup->setRadius( $set->get("radius") );
+				$questionGroup->setCreationDate( $set->get("creation_date") );
+
+				$questionGroups[] = $questionGroup;
+			}
+
+			return $questionGroups;
+		}
+
 		public function findByQuestionnaireAndId($questionGroupId , $questionnaireId){
 			$query = "SELECT * FROM `QuestionGroup` WHERE `id`=? AND `questionnaire_id`=?";
 			
