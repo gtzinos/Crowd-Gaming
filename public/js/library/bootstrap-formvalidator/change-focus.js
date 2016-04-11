@@ -7,9 +7,9 @@ $("gt-input-group").on("focusout",function() {
 });
 
 /*
-  When window loaded
+  When document loaded
 */
-$(window).on('load', function() {
+$(document).ready( function() {
   /*
     Focus the first input element
     from the document form
@@ -33,7 +33,7 @@ $('.modal').on('shown.bs.modal', function() {
       to check the fields
     */
     $('.modal').find("form:not(.filter) :input:visible:enabled:first").focus();
-    $('.modal').find(".form-control").each(function() {
+    $(".form-control").each(function() {
       validate($(this));
     });
 });
