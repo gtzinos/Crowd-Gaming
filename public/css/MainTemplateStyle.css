@@ -35,7 +35,7 @@ body,html{
 /*
 	Modal forms (Login,Register) styles
 */
-.modal-header, h4, .close {
+.modal-header, h4.gt-modal-header, .close {
 		background-color: #808080;
 		color:white !important;
 		text-align: center;
