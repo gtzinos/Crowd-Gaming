@@ -34,7 +34,7 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4><span class="glyphicon glyphicon-lock"></span> Confirm your current password </h4>
+					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Confirm your current password </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form id="confirm-modal-form" onsubmit="return false" class="form-horizontal">

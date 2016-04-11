@@ -8,6 +8,7 @@
       global $_CONFIG;
 
       $this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$this->defSection('CSS','examiner/QuestionnaireGroupsView.php');
 			$this->defSection('JAVASCRIPT','examiner/QuestionnaireGroupsView.php');
       $this->defSection('MAIN_CONTENT','examiner/QuestionnaireGroupsView.php');
 
