@@ -1,42 +1,98 @@
-<? if($section == "CONFIRM_PASSWORD") : ?>
-	<div class="modal fade" id="createQuestion" role="dialog">
-		<div class="modal-dialog modal-md">
-			<div class="modal-content">
-				 <div class="modal-header">
-					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span>Create Question</h4>
-				 </div>
-				 <div class="modal-body container-fluid">
-						<form id="create-question-form" onsubmit="return false" class="form-horizontal">
-							<!-- Password Field -->
-							<div class="form-group has-feedback">
-									<div class="col-xs-offset-1 col-xs-2 col-sm-offset-1 col-sm-2">
-										<span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
-									</div>
-									<div class="col-xs-offset-0 col-xs-7 gt-input-group" data-validate="length" data-length="8">
-											<input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="confirm-password" type="password" placeholder="Password (Required) *Length >= 8" required >
-											<span class="gt-icon"></span>
-									</div>
-							</div>
-						</form>
-				 </div>
-				<!-- Footer fields -->
-				<div class="modal-footer container-fluid">
-						<!-- Create Question button / Cancel Button Field -->
-						<div class="form-group">
-							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-3 col-sm-4">
-								 <!-- A Script will add on click method -->
-								 <button form="create-question-form" type="button" class="btn btn-primary btn-md round gt-submit" disabled>Create</button>
-							 </div>
-							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
-								 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
-									 Cancel
-								 </button>
-							 </div>
-						</div>
-				 </div>
-			 </div>
-		 </div>
-	 </div>
-
+<? if($section == "CREATE_QUESTION") : ?>
+<div class="modal fade" id="create-question" role="dialog">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+       <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal">&times;</button>
+         <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span>Create Question</h4>
+       </div>
+       <div class="modal-body container-fluid">
+          <form id="create-question-form" onsubmit="return false" class="form-horizontal">
+            <!-- Question Name Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1 col-sm-2">
+                  <span class="text-center"><i class="material-icons mediumicon">question_answer</i></i></span>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="qname" type="text" placeholder="Question Name" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Time to answer Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1 col-sm-2">
+                  <span class="text-center"><i class="fa fa-hourglass-half mediumicon"></i></span>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="number">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 number" id="qtime" type="text" placeholder="Time to answer (sec)" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Multiplier Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
+                  <span class="text-center"><i class="glyphicon glyphicon-equalizer mediumicon"></i></i></span>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 number" id="qmultiplier" type="text" placeholder="Multiplier (Default 1)" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Answer 1 Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
+                  <input type="checkbox" name="canswer1" checked="checked" disabled="disabled" />
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer1" type="text" placeholder="Answer 1" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Answer 2 Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
+                  <input type="checkbox" name="canswer2" checked="checked" disabled="disabled"/>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer2" type="text" placeholder="Answer 2" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Answer 3 Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
+                  <input type="checkbox" name="canswer3" />
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer3" type="text" placeholder="Answer 3" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Answer 4 Field -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
+                  <input type="checkbox" name="canswer4" />
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer4" type="text" placeholder="Answer 4" required >
+                    <span class="gt-icon"></span>
+                </div>
+            </div>
+            <!-- Create Question button / Cancel Button Field -->
+            <div class="form-group">
+               <div class="col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
+                 <!-- A Script will add on click method -->
+                 <button form="create-question-form" type="button" class="btn btn-primary round gt-submit" disabled>Create</button>
+               </div>
+               <div class="col-xs-4 col-sm-2">
+                 <button type="button" class="btn btn-primary" data-dismiss="modal" >
+                   Cancel
+                 </button>
+               </div>
+            </div>
+          </form>
+       </div>
+     </div>
+   </div>
+ </div>
 <? endif; ?>
