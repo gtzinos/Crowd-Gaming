@@ -46,11 +46,9 @@
 				foreach ($questionGroups as $questionGroup) {
 
 					$arrayItem["name"] = $questionGroup->getName();
-					$arrayItem["description"] = $questionGroup->getDescription();
 					$arrayItem["latitude"] = $questionGroup->getLatitude();
 					$arrayItem["longitude"] = $questionGroup->getLongitude();
-					$arrayItem["latitude-deviation"] = $questionGroup->getLatitudeDeviation();
-					$arrayItem["longitude-deviation"] = $questionGroup->getLongitudeDeviation();
+					$arrayItem["radius"] = $questionGroup->getRadius();
 					$arrayItem["creation_date"] = $questionGroup->getCreationDate();
 					$arrayItem["id"] = $questionGroup->getId();
 
@@ -70,11 +68,9 @@
 					$response["message"] = "Success";
 
 					$response["question-group"]["name"] = $questionGroup->getName();
-					$response["question-group"]["description"] = $questionGroup->getDescription();
 					$response["question-group"]["latitude"] = $questionGroup->getLatitude();
 					$response["question-group"]["longitude"] = $questionGroup->getLongitude();
-					$response["question-group"]["latitude-deviation"] = $questionGroup->getLatitudeDeviation();
-					$response["question-group"]["longitude-deviation"] = $questionGroup->getLongitudeDeviation();
+					$response["question-group"]["radius"] = $questionGroup->getRadius();
 					$response["question-group"]["creation_date"] = $questionGroup->getCreationDate();
 					$response["question-group"]["id"] = $questionGroup->getId();
 				

@@ -3,7 +3,6 @@
 	/*
 		Public pages
 	 */
-
 	Routes::add( 'home' , 'public/HomePageController.php' , $_USER_LEVEL["GUEST"] );
 	Routes::add( 'info' , 'public/InfoPageController.php' , $_USER_LEVEL["GUEST"] );
 	Routes::add( 'contact' , 'public/ContactPageController.php' , $_USER_LEVEL["GUEST"] );

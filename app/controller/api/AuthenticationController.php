@@ -12,7 +12,7 @@
 			$parameters = json_decode($httpBody,true);
 
 			$response = array();
-
+			
 			if( !isset( $parameters["email"]  ,$parameters["password"])  ){
 				$response["code"] = "404";
 				$response["message"] = "Username or password or both were not given.";

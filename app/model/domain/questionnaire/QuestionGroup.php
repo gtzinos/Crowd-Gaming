@@ -6,11 +6,9 @@
 		private $id; // number
 		private $questionnaireId; // number
 		private $name; // string
-		private $description; // string
 		private $latitude; // number
 		private $longitude; // number
-		private $latitudeDeviation; // number
-		private $longitudeDeviation; // number
+		private $radius; // number
 		private $creationDate; // string , timestamp in database
 
 		/*
@@ -58,14 +56,6 @@
 			$this->name = $name;
 		}
 
-		public function getDescription(){
-			return $this->description;
-		}
-
-		public function setDescription($description){
-			$this->description = $description;
-		}
-
 		public function getLatitude(){
 			return $this->latitude;
 		}
@@ -82,20 +72,12 @@
 			$this->longitude= $longitude;
 		}
 
-		public function getLatitudeDeviation(){
-			return $this->latitudeDeviation;
+		public function getRadius(){
+			return $this->radius;
 		}
-
-		public function setLatitudeDeviation($latitudeDeviation){
-			$this->latitudeDeviation = $latitudeDeviation;
-		}
-
-		public function getLongitudeDeviation(){
-			return $this->longitudeDeviation;
-		}
-
-		public function setLongitudeDeviation($longitudeDeviation){
-			$this->longitudeDeviation= $longitudeDeviation;
+		
+		public function setRadius($radius){
+			$this->radius = $radius;
 		}
 
 		public function getCreationDate(){

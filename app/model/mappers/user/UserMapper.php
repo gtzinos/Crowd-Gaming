@@ -490,7 +490,6 @@
 				$user->setVerified($verified);
 				$user->setBanned($banned);
 				$user->setId( $set->get("id") );
-				$user->setEmail( $email);
 				$user->setAccessLevel( $set->get("access"));
 
 				return $user;

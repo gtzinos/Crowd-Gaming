@@ -24,11 +24,9 @@
 				3			: Message Required Error
 				4			: Database Error
 			 */
-
 			if( isset($_POST["name"] ,  $_POST["description"] , $_POST["message_required"] ) ){
 
 				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
-
 				$config = HTMLPurifier_Config::createDefault();
 				$purifier = new HTMLPurifier($config);
 				$description = $purifier->purify($_POST["description"]);

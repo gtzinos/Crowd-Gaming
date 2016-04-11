@@ -19,11 +19,9 @@
 				$questionGroup->setId( $set->get("id") );
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
-				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
+				$questionGroup->setRadius( $set->get("radius") );	
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -48,11 +46,9 @@
 				$questionGroup->setId( $set->get("id") );
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
-				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
+				$questionGroup->setRadius( $set->get("radius") );
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -75,11 +71,9 @@
 				$questionGroup->setId( $set->get("id") );
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
-				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
+				$questionGroup->setRadius( $set->get("radius") );			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
@@ -101,11 +95,9 @@
 				$questionGroup->setId( $set->get("id") );
 				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
 				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setDescription( $set->get("description") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setLatitudeDeviation( $set->get("latitude_deviation") );
-				$questionGroup->setLongitudeDeviation( $set->get("longitude_deviation") );			
+				$questionGroup->setRadius( $set->get("radius") );		
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
@@ -114,13 +106,41 @@
 		}
 
 		public function verifyLocation($groupId , $latitude , $longitude){
-			$query = "SELECT * FROM `QuestionGroup` ".
-					 "WHERE `id`=? ".
-					 "AND `latitude`-`latitude_deviation` < ? AND `latitude`+`latitude_deviation` > ? " . // Latitude check
-					 "AND `longitude`-`longitude_deviation` < ? AND `longitude`+`longitude_deviation` > ? "; // Longitude Check
 
+			$query = "SELECT * FROM `QuestionGroup`
+					  WHERE `id`=?
+					  AND
+						`radius` >= 6371000 * 2 * ATAN2( 
+								
+									SQRT(
+										SIN( RADIANS( ? - `latitude` ) / 2  ) * SIN( RADIANS( ? - `latitude` ) / 2  ) +
+										SIN( RADIANS( ? - `longitude` ) / 2  ) * SIN( RADIANS( ? - `longitude` ) / 2  ) *
+										COS( RADIANS(`latitude`) ) * COS( RADIANS(?) )
+										)
+								,
+									SQRT(
+											1 - 
+											(
+												SIN( RADIANS( ? - `latitude` ) / 2  ) * SIN( RADIANS( ? - `latitude` ) / 2  ) +
+												SIN( RADIANS( ? - `longitude` ) / 2  ) * SIN( RADIANS( ? - `longitude` ) / 2  ) *
+												COS( RADIANS(`latitude`) ) * COS( RADIANS(?) )
+											)
+										)
+								)"; 
 			$statement = $this->getStatement($query);
-			$statement->setParameters("idddd", $groupId , $latitude,$latitude,$longitude,$longitude);
+			$statement->setParameters("issssssssss", 
+				$groupId , 
+				$latitude ,
+				$latitude ,
+				$longitude,
+				$longitude,
+				$latitude,	
+				$latitude,
+				$latitude,
+				$longitude,
+				$longitude,
+				$latitude
+			);
 
 			$set = $statement->execute();
 
@@ -160,35 +180,31 @@
 		}
 
 		private function _create($questionGroup){
-			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`, `description`, `latitude`, `longitude`, `latitude_deviation`, `longitude_deviation`, `creation_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
+			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`,`latitude`, `longitude`, `radius`, `creation_date`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('issdddd' , 
+			$statement->setParameters('isddd' , 
 				$questionGroup->getQuestionnaireId(),
 				$questionGroup->getName(),
-				$questionGroup->getDescription(),
 				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
-				$questionGroup->getLatitudeDeviation(),
-				$questionGroup->getLongitudeDeviation() );
+				$questionGroup->getRadius() );
 
 			$statement->executeUpdate();
 		}
 
 		private function _update($questionGroup){
-			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`description`=?,`latitude`=?,`longitude`=?,`latitude_deviation`=?,`longitude_deviation`=? WHERE `id`=?";
+			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('issddddi' , 
+			$statement->setParameters('isdddi' , 
 				$questionGroup->getQuestionnaireId(),
 				$questionGroup->getName(),
-				$questionGroup->getDescription(),
 				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
-				$questionGroup->getLatitudeDeviation(),
-				$questionGroup->getLongitudeDeviation(),
+				$questionGroup->getRadius(),
 				$questionGroup->getId() );
 
 			$statement->executeUpdate();
