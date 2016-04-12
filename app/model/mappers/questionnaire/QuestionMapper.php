@@ -154,11 +154,11 @@
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('isi' , 
+			$statement->setParameters('isid' , 
 				$question->getQuestionGroupId(),
 				$question->getQuestionText(),
 				$question->getTimeToAnswer(),
-				$qustionn->getMultiplier() );
+				$question->getMultiplier() );
 
 			$statement->executeUpdate();
 		}

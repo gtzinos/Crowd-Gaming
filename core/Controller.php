@@ -28,7 +28,9 @@
 
         public function __construct($params){
             $this->params = $params;
-
+            $this->args = array();
+            $this->output = array();
+            
             global $controller;
 
             $this->setHeadless( false );
@@ -55,6 +57,7 @@
                         break;
                     case OutputType::NormalView :
                         global $_CONFIG;
+                        $this->args = array_merge( $this->args , $this->output );
                         include '../app/templates/'.$this->template;
                         break;
                     case OutputType::JsonView :

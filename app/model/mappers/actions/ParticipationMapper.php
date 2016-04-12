@@ -40,6 +40,25 @@
 			}
 		}
 
+		public function participatesInGroup($playerId , $groupId , $type){
+			$query = "SELECT `QuestionnaireParticipation`.`user_id` FROM `QuestionnaireParticipation`
+					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`questionnaire_id`=`QuestionnaireParticipation`.`questionnaire_id` 
+					  WHERE `QuestionnaireParticipation`.`user_id`=? 
+					  AND `QuestionGroup`.`id`=? 
+					  AND `QuestionnaireParticipation`.`participation_type`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('iii',$playerId,$groupId,$type);
+
+			$set = $statement->execute();
+
+			if($set->getRowCount()>0){
+				return true;
+			}else{
+				return false;
+			}
+		}
+
 		public function delete($participation){
 			$query = "DELETE FROM `QuestionnaireParticipation` WHERE `user_id`=? AND `questionnaire_id`=? AND `participation_type`=?";
 
