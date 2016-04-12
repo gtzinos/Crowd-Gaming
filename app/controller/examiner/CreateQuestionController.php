@@ -15,7 +15,8 @@
 				1 Invalid Access
 				2 question-text validation error
 				3 time-to-answer validation error
-				4 response-code validation error
+				4 Multiplier validation error
+				5 Database Error
 			   -1 No data
 			 */
 

@@ -32,11 +32,10 @@
 	Routes::add( 'questionnaire-create' , 'examiner/CreateQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-edit' , 'examiner/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'questionnaire-groups' , 'examiner/QuestionnaireGroupsController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'create-questionnaire-groups' , 'examiner/CreateQuestionnaireGroupsController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'questionnaire-workbench' , 'examiner/QuestionnaireWorkbenchController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-schedule' , 'examiner/QuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
-
+	Routes::add( 'create-question-group' , 'examiner/CreateQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-question-groups' , 'examiner/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'create-question'  , 'examiner/CreateQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
 	/*
