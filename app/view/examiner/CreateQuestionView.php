@@ -1,4 +1,5 @@
 <? if($section == "CREATE_QUESTION") : ?>
+<script src="<?php print LinkUtils::generatePublicLink("js/examiner/CreateQuestion.js"); ?>"> </script>
 <div class="modal fade" id="create-question" role="dialog">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -38,10 +39,25 @@
                     <span class="gt-icon"></span>
                 </div>
             </div>
+            <!-- Correct answer -->
+            <div class="form-group has-feedback">
+                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
+                    <span><i class="fa fa-check mediumicon"></i></span>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="select" data-length="8">
+                    <select class="form-control" id="correct">
+                      <option value="-" disabled selected="selected">Select the correct answer</option>
+                      <option value="1">Answer 1</option>
+                      <option value="2">Answer 2</option>
+                      <option value="3">Answer 3</option>
+                      <option value="4">Answer 4</option>
+                    </select>
+                </div>
+              </div>
             <!-- Answer 1 Field -->
             <div class="form-group has-feedback">
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
-                  <input type="checkbox" name="canswer1" checked="checked" disabled="disabled" />
+                  <input type="checkbox" id="checkbox1" checked="checked" disabled="disabled" />
                 </div>
                 <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer1" type="text" placeholder="Answer 1" required >
@@ -51,7 +67,7 @@
             <!-- Answer 2 Field -->
             <div class="form-group has-feedback">
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
-                  <input type="checkbox" name="canswer2" checked="checked" disabled="disabled"/>
+                  <input type="checkbox" id="checkbox2" checked="checked" disabled="disabled"/>
                 </div>
                 <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer2" type="text" placeholder="Answer 2" required >
@@ -61,7 +77,7 @@
             <!-- Answer 3 Field -->
             <div class="form-group has-feedback">
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
-                  <input type="checkbox" name="canswer3" />
+                  <input type="checkbox" id="checkbox3" checked="checked"/>
                 </div>
                 <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer3" type="text" placeholder="Answer 3" required >
@@ -71,7 +87,7 @@
             <!-- Answer 4 Field -->
             <div class="form-group has-feedback">
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
-                  <input type="checkbox" name="canswer4" />
+                  <input type="checkbox" id="checkbox4" checked="checked"/>
                 </div>
                 <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer4" type="text" placeholder="Answer 4" required >
@@ -95,4 +111,5 @@
      </div>
    </div>
  </div>
+
 <? endif; ?>
