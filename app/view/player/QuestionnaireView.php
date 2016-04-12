@@ -14,26 +14,14 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-3">
-				<label>Posted :</label> <?php echo $questionnaire->getCreationDate() ?>
+				<label>On : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
 			<div class="questionnaire-public col-xs-12 col-sm-offset-5 col-sm-3">
-					<?php
-							/*
-								First of all we need
-								to find the correct image.
-								public / private icon
-							*/
-							$icon = "class='glyphicon glyphicon-unchecked' title='Not Joined'";
-							if(get("questionnaire")["player-participation"] == 1)
-							{
-								$icon = "class='fa fa-check-square-o' title='Joined'";
-							}
-						?>
-					 <span class="mediumicon"> <i <?php echo $icon ?> ></i> </span>
 
+					 <a class="mediumicon" onclick="showModal('edit-questionnaire'); return false;"><i class='fa fa-check-square-o' ></i></a>
 
 					 <?php
-					 		if($_SESSION["USER_LEVEL"] >= 2)
+					 		if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
 							{
 								echo "<a class='mediumicon' href='" . LinkUtils::generatePageLink("questionnaire-edit") . "'><i class='glyphicon glyphicon-edit'> </i></a>";
 							}
@@ -64,7 +52,7 @@
 			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
 				<a onclick="showModal('questionnaire-modal')">Members :
 					<?php
-						if(get("questionnaire")["player-participation"])
+						if(get("questionnaire")["player-participation"] || get("questionnaire")["examiner-participation"])
 						{
 							echo "You and ";
 						}
@@ -454,6 +442,13 @@
 	load("QUESTIONNAIRE_OPTIONS");
 	load("QUESTIONNAIRE_MEMBERS");
 	load("CONTACT_WITH_ONE_EMAIL");
+	/*
+		Illegal actions
+	*/
+	if(get("questionnaire")["examiner-participation"])
+	{
+		load("EDIT_QUESTIONNAIRE");
+	}
 ?>
 
 <?php endif; ?>
