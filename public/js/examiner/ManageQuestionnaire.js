@@ -142,6 +142,7 @@ function responseCreateQuestionnaire()
 
 
        $("#questionnaire-create-response").show();
+       $("#questionnaire-create-response").html(response_message);
       }
     }
   }
