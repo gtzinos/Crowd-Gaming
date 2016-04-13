@@ -173,10 +173,33 @@ $(document).ready(function() {
   		}
       /*
         Else If group div have attribute validate-date="number"
-        then we need a correct number (1,2,3.5) float type
+        then we need a correct number (1,2,3.5) float,integer type
       */
       else if (group.data('validate') == "number" && !first_time) {
   			state = !isNaN(parseFloat($(this).val())) && isFinite($(this).val());
+        /*
+           If group div have attribute validate-date="integer"
+          then we need a correct number (1,2,3.5) integer type
+        */
+        if((group.data('type') == "integer" || group.data('type') == "int") && !first_time) {
+            state = !Number.isInteger($(this).val()) && isFinite($(this).val());
+            /*
+              If data-min-number is setted then we must check if
+              the number is greater that minimum value
+            */
+            if(group.data('min-number'))
+            {
+              state = $(this).val() >= group.data('min-number') ? true : false;
+            }
+            /*
+              If data-max-number is setted then we must check if
+              the number is greater that minimum value
+            */
+            if(group.data('max-number'))
+            {
+              state = $(this).val() <= group.data('max-number') ? true : false;
+            }
+        }
   		}
       /*
         If group div have attribute data-equal="#field-id"
