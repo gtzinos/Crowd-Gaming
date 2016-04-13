@@ -2,7 +2,7 @@
 
 <?php elseif($section == "JAVASCRIPT") : ?>
 		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/examiner/manageQuestionnaires.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionnaire.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
 			<legend class="text-center header">Create a new questionnaire</legend>
