@@ -3,7 +3,7 @@
 	include_once '../libs/htmlpurifier-4.7.0/HTMLPurifier.auto.php';
 
 	class QuestionnaireEditController extends Controller{
-		
+
 		public function init(){
 			$this->setOutputType( OutputType::ResponseStatus );
 		}
@@ -41,11 +41,11 @@
 				$messageRequired = $_POST["message_required"];
 
 				if( strlen($name) < 3 ){
-					
+
 					$this->setOutput("response-code" , 1); // Name Validation error
 
 				}else if( strlen($description) < 30 ){
-					
+
 					$this->setOutput("response-code" , 2); // Descriptin validation error
 
 				}else if( $messageRequired != "no" && $messageRequired != "yes"){
@@ -69,7 +69,7 @@
 						$this->setOutput("response-code" , 0); // All ok
 
 					}catch(DatabaseException $ex){
-						
+
 						DatabaseConnection::getInstance()->rollback();
 						$this->setOutput("response-code" , 4); // Database Error
 					}
