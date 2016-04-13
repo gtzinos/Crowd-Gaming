@@ -183,22 +183,30 @@ $(document).ready(function() {
         */
         if((group.data('type') == "integer" || group.data('type') == "int") && !first_time) {
             state = !Number.isInteger($(this).val()) && isFinite($(this).val());
-            /*
-              If data-min-number is setted then we must check if
-              the number is greater that minimum value
-            */
-            if(group.data('min-number'))
-            {
-              state = $(this).val() >= group.data('min-number') ? true : false;
-            }
-            /*
-              If data-max-number is setted then we must check if
-              the number is greater that minimum value
-            */
-            if(group.data('max-number'))
-            {
-              state = $(this).val() <= group.data('max-number') ? true : false;
-            }
+        }
+        /*
+          If data-min-number is setted then we must check if
+          the number is greater that minimum value
+        */
+        if(group.data('min-number'))
+        {
+          state = $(this).val() >= group.data('min-number') ? true : false;
+        }
+        /*
+          If data-max-number is setted then we must check if
+          the number is greater that minimum value
+        */
+        if(group.data('max-number'))
+        {
+          state = $(this).val() <= group.data('max-number') ? true : false;
+        }
+        if(group.data('number-greater-than'))
+        {
+          state = $(this).val() > group.data('number-greater-than') ? true : false;
+        }
+        if(group.data('number-less-than'))
+        {
+          state = $(this).val() < group.data('number-less-than') ? true : false;
         }
   		}
       /*
