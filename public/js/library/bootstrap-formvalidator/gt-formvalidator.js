@@ -176,19 +176,20 @@ $(document).ready(function() {
         then we need a correct number (1,2,3.5) float,integer type
       */
       else if (group.data('validate') == "number" && !first_time) {
-  			state = !isNaN(parseFloat($(this).val())) && isFinite($(this).val());
+  			state = !isNaN(parseFloat($(this).val())) && isFinite($(this).val()); //(cant be 02 01 04.4 ..) && !/^0[0-9.,]+$/.test($(this).val());
         /*
            If group div have attribute validate-date="integer"
           then we need a correct number (1,2,3.5) integer type
         */
-        if((group.data('type') == "integer" || group.data('type') == "int") && !first_time) {
-            state = !Number.isInteger($(this).val()) && isFinite($(this).val());
+
+        if((group.data('type') == "integer" || group.data('type') == "int") && !first_time && state) {
+          state = /^0$|^[1-9]+[0-9]*$/.test($(this).val());
         }
         /*
           If data-min-number is setted then we must check if
           the number is greater that minimum value
         */
-        if(group.data('min-number'))
+        if(group.data('min-number') != undefined && state)
         {
           state = $(this).val() >= group.data('min-number') ? true : false;
         }
@@ -196,15 +197,16 @@ $(document).ready(function() {
           If data-max-number is setted then we must check if
           the number is greater that minimum value
         */
-        if(group.data('max-number'))
+        //alert(group.data('number-greater-than'));
+        if(group.data('max-number') != undefined && state)
         {
           state = $(this).val() <= group.data('max-number') ? true : false;
         }
-        if(group.data('number-greater-than'))
+        if(group.data('number-greater-than') != undefined && state)
         {
           state = $(this).val() > group.data('number-greater-than') ? true : false;
         }
-        if(group.data('number-less-than'))
+        if(group.data('number-less-than') != undefined && state)
         {
           state = $(this).val() < group.data('number-less-than') ? true : false;
         }
