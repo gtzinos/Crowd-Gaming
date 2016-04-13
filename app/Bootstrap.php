@@ -46,7 +46,7 @@
 		}else if( $_SESSION["USER_LEVEL"] == 2){
 			$controller->setArg("primary-menu" , "ExaminerMenu");
 			$controller->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
-			$controller->defSection("CREATE_QUESTION", "examiner/CreateQuestion.php");
+			$controller->defSection("CREATE_QUESTION", "examiner/CreateQuestionView.php");
 		}else if( $_SESSION["USER_LEVEL"] == 3){
 			$controller->setArg("primary-menu" , "ModeratorMenu");
 		}

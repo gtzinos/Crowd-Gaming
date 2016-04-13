@@ -132,8 +132,6 @@ function responseUpdateQuestionnaire()
  						response_message += "<div class='alert alert-danger'>Unknown error message. Contact with one administrator!</div>";
  					}
 
-
-
  			 	 $("#questionnaire-edit-response").show();
  				 $("#questionnaire-edit-response").html(response_message);
  			}

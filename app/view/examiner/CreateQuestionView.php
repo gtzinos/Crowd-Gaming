@@ -14,8 +14,8 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1 col-sm-2">
                   <span class="text-center"><i class="material-icons mediumicon">question_answer</i></i></span>
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
-                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="qname" type="text" placeholder="Question Name" required >
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="2">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="qname" type="text" placeholder="Question Name" required >
                     <span class="gt-icon"></span>
                 </div>
             </div>
@@ -24,8 +24,8 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1 col-sm-2">
                   <span class="text-center"><i class="fa fa-hourglass-half mediumicon"></i></span>
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="number">
-                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 number" id="qtime" type="text" placeholder="Time to answer (sec)" required >
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="number" data-type="integer" data-min-number="5" data-max-number="180">
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Only numbers ( 5 - \infty )" id="qtime" type="text" placeholder="Time to answer (sec)" required >
                     <span class="gt-icon"></span>
                 </div>
             </div>
@@ -34,7 +34,7 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                   <span class="text-center"><i class="glyphicon glyphicon-equalizer mediumicon"></i></i></span>
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="number" data-number-greater-than="0">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 number" id="qmultiplier" type="text" placeholder="Multiplier (Default 1)" required >
                     <span class="gt-icon"></span>
                 </div>
@@ -59,7 +59,7 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                   <input type="checkbox" id="checkbox1" checked="checked" disabled="disabled" />
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer1" type="text" placeholder="Answer 1" required >
                     <span class="gt-icon"></span>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                   <input type="checkbox" id="checkbox2" checked="checked" disabled="disabled"/>
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer2" type="text" placeholder="Answer 2" required >
                     <span class="gt-icon"></span>
                 </div>
@@ -79,7 +79,7 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                   <input type="checkbox" id="checkbox3" checked="checked"/>
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer3" type="text" placeholder="Answer 3" required >
                     <span class="gt-icon"></span>
                 </div>
@@ -89,7 +89,7 @@
                 <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                   <input type="checkbox" id="checkbox4" checked="checked"/>
                 </div>
-                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="8">
+                <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
                     <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer4" type="text" placeholder="Answer 4" required >
                     <span class="gt-icon"></span>
                 </div>
@@ -101,7 +101,7 @@
                  <button form="create-question-form" type="button" class="btn btn-primary round gt-submit" disabled>Create</button>
                </div>
                <div class="col-xs-4 col-sm-2">
-                 <button type="button" class="btn btn-primary" data-dismiss="modal" >
+                 <button type="button" class="btn btn-primary round" data-dismiss="modal" >
                    Cancel
                  </button>
                </div>
