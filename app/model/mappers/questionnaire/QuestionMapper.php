@@ -132,11 +132,15 @@
 				return null;
 		}
 
-		public function delete($questionGroup){
+		public function delete($question){
+			$this->deleteById($question->getId());
+		}
+
+		public function deleteById($questionId){
 			$query = "DELETE FROM `Question` WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('i' , $questionGroup->getId() );
+			$statement->setParameters('i' , $questionId );
 
 			$statement->executeUpdate();
 		}

@@ -94,10 +94,23 @@
 		}
 
 		public function delete($answer){
+			$this->deleteById($answer->getId());
+		}
+
+		public function deleteById($answerId){
 			$query = "DELETE FROM `Answer` WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('i' , $answer->getId() );
+			$statement->setParameters('i' , $answerId);
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteByQuestion($questionId){
+			$query = "DELETE FROM `Answer` WHERE `question_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionId);
 
 			$statement->executeUpdate();
 		}
