@@ -313,6 +313,19 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return null;
 		}
 
+		public function nameExists($name){
+			$query  = "SELECT * FROM `Questionnaire` WHERE `name`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("s" , $name);
+
+			$set = $statement->execute();
+
+			if($set->getRowCount() > 0)
+				return true;
+			return false;
+		}
+
 		/*
 			Deletes a questionnaire from the database
 		 */

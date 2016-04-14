@@ -30,8 +30,11 @@
 				2			: Description Validation error
 				3			: Message Required Error
 				4			: Database Error
+				5			: Name already in use
 			 */
 			if( isset( $_POST["name"] , $_POST["description"] , $_POST["message_required"] ) ){
+				$questionnaireMapper = new QuestionnaireMapper;
+
 				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 
 				$config = HTMLPurifier_Config::createDefault();
@@ -43,6 +46,10 @@
 				if( strlen($name) < 3 ){
 
 					$this->setOutput("response-code" , 1); // Name Validation error
+
+				}else if( $questionnaireMapper->nameExists( $name ) ){
+
+					$this->setOutput("response-code" , 5);
 
 				}else if( strlen($description) < 30 ){
 
@@ -58,7 +65,7 @@
 					$questionnaire->setDescription( $description );
 					$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
 
-					$questionnaireMapper = new QuestionnaireMapper;
+					
 					try{
 						DatabaseConnection::getInstance()->startTransaction();
 
