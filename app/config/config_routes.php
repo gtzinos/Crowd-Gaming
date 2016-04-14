@@ -39,6 +39,8 @@
 	Routes::add( 'get-question-groups' , 'examiner/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'create-question'  , 'examiner/CreateQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'edit-question' , 'examiner/EditQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'edit-answer' , 'examiner/EditAnswerController.php' , $_USER_LEVEL["EXAMINER"] );
+	
 	/*
 		The Page to load when the page parameter is not defined
 	*/

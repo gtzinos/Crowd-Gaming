@@ -119,21 +119,21 @@
 				$answer->getQuestionId(),
 				$answer->getAnswerText(),
 				$answer->getDescription(),
-				$answer->is_correct() );
+				$answer->isCorrect() );
 
 			$statement->executeUpdate();
 		}
 
 		private function _update($answer){
-			$query = "UUPDATE `Answer` SET `question_id`=?,`answer`=?,`description`=?,`is_correct`=? WHERE `id`=?";
+			$query = "UPDATE `Answer` SET `question_id`=?,`answer`=?,`description`=?,`is_correct`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('isi' , 
+			$statement->setParameters('issii' , 
 				$answer->getQuestionId(),
 				$answer->getAnswerText(),
 				$answer->getDescription(),
-				$answer->is_correct() ,
+				$answer->isCorrect() ,
 				$answer->getId() );
 
 			$statement->executeUpdate();
