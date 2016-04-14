@@ -12,7 +12,7 @@
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback">
     <div class="col-xs-offset-0 col-xs-2">
-      <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-questionnaire-groups') ?>">Add</a>
+      <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/1"; ?>">Add</a>
     </div>
   </div>
   <?php
