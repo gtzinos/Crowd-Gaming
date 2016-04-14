@@ -134,6 +134,19 @@
 				return null;
 		}
 
+		public function nameExists($name){
+			$query  = "SELECT * FROM `QuestionGroup` WHERE `name`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("s" , $name);
+
+			$set = $statement->execute();
+
+			if($set->getRowCount() > 0)
+				return true;
+			return false;
+		}
+
 		public function verifyLocation($groupId , $latitude , $longitude){
 
 			$query = "SELECT * FROM `QuestionGroup`

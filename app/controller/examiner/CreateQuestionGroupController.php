@@ -1,20 +1,28 @@
 <?php
 	include_once "../app/model/mappers/questionnaire/QuestionGroupMapper.php";
 	include_once "../app/model/mappers/actions/ParticipationMapper.php";
+	include_once "../app/model/mappers/questionnaire/QuestionnaireMapper.php";
 
 
 	class CreateQuestionGroupController extends Controller{
 
 		public function init(){
-			$this->setOutputType( OutputType::ResponseStatus );
+			//$this->setOutputType( OutputType::ResponseStatus );
+			global $_CONFIG;
 
+			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$this->defSection('CSS','examiner/CreateQuestionnaireGroupsView.php');
+			$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireGroupsView.php');
+			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireGroupsView.php');
 		}
 
 		public function run(){
+
 			/*
 				Response Code
 				0 All ok
-				1 Invalid Access
+				1 Group name already exists
 				2 Group name validation error
 				3 latitude validation error
 				4 longitude validation error
@@ -22,16 +30,29 @@
 				6 Database error
 			   -1 No data
 			 */
+			$questionnaireId = null;
 
-			if( isset( $_POST["questionnaire-id"] , $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] ) ){
+			$questionnaireMapper = new QuestionnaireMapper;
+			$participationMapper = new ParticipationMapper;
+			$questionGroupMapper = new QuestionGroupMapper;
 
-				$participationMapper = new ParticipationMapper;
+			if( !isset( $this->params[1] ) || 
+				$questionnaireMapper->findById($this->params[1]) === null || 
+				!$participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2 ) ){
 
-				if( !$participationMapper->participates( $_SESSION["USER_ID"] , $_POST["questionnaire-id"] , 2 ) ){
-					// Invalid Access
+				$this->redirect("questionnaireslist");
+			}
+
+			$questionnaireId = $this->params[1];
+
+
+			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] ) ){
+
+				if( $questionGroupMapper->nameExists( $_POST["name"] ) ) {
 					$this->setOutput('response-code' , 1);
 					return;
 				}
+
 
 				if( strlen( $_POST["name"] ) < 2 || strlen($_POST["name"] ) >255 ){
 					$this->setOutput('response-code' , 2);
@@ -57,14 +78,14 @@
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setName( htmlspecialchars($_POST["name"] ,ENT_QUOTES) );
-				$questionGroup->setQuestionnaireId( $_POST["questionnaire-id"] );
+				$questionGroup->setQuestionnaireId( $questionnaireId );
 				$questionGroup->setLatitude( $_POST["latitude"] );
 				$questionGroup->setLongitude( $_POST["longitude"] );
 				$questionGroup->setRadius( $_POST["radius"] );
 
 				try{
 
-					$questionGroupMapper = new QuestionGroupMapper;
+					
 
 					$questionGroupMapper->persist($questionGroup);
 
