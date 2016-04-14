@@ -28,7 +28,6 @@
 				4 longitude validation error
 				5 radius validation error
 				6 Database error
-			   -1 No data
 			 */
 			$questionnaireId = null;
 

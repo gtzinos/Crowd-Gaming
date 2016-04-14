@@ -168,7 +168,7 @@
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('isi' , 
+			$statement->setParameters('isidi' , 
 				$question->getQuestionGroupId(),
 				$question->getQuestionText(),
 				$question->getTimeToAnswer(),
