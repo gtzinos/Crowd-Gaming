@@ -132,6 +132,7 @@ function create_question(id)
 				Send ajax request
 			*/
 			sendAjaxRequest(Required,Optional);
+
     }
 
   else {
@@ -150,6 +151,7 @@ function create_question(id)
 */
 function response_create_question()
 {
+
   /*
 		if Server responsed back successfully
 	*/
@@ -244,8 +246,8 @@ function response_create_question()
 
 
 
-       $("#questionnaire-create-response").show();
-       $("#questionnaire-create-response").html(response_message);
+       $("#create-question-response").show();
+       $("#create-question-response").html(response_message);
       }
     }
   }
