@@ -344,9 +344,13 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			Deletes a questionnaire from the database
 		 */
 		public function delete($questionnaire){
+			$this->deleteById($questionnaire->getId());
+		}
+
+		public function deleteById($questionnaireId){
 			$statement = $this->getStatement("DELETE FROM `Questionnaire` WHERE `id`=?");
 
-			$statement->setParameters('i' , $questionnaire->getId() );
+			$statement->setParameters('i' , $questionnaireId );
 
 			$statement->executeUpdate();
 		}

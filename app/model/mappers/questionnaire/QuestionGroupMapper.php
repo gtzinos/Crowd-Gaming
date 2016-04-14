@@ -205,10 +205,23 @@
 		}
 
 		public function delete($questionGroup){
+			$this->deleteById($questionGroup->getId());
+		}
+
+		public function deleteById($questionGroupId){
 			$query = "DELETE FROM `QuestionGroup` WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('i' , $questionGroup->getId() );
+			$statement->setParameters('i' , $questionGroupId );
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteByQuestionnaire($questionnaireId){
+			$query = "DELETE FROM `QuestionGroup` WHERE `questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId );
 
 			$statement->executeUpdate();
 		}

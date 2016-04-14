@@ -145,6 +145,26 @@
 			$statement->executeUpdate();
 		}
 
+		public function deleteByGroup($groupId){
+			$query = "DELETE FROM `Question` WHERE `question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $groupId );
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteByQuestionnaire($questionnaireId){
+			$query = "DELETE `Question`.* FROM `Question` 
+					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
+					  WHERE `QuestionGroup`.`questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId );
+
+			$statement->executeUpdate();
+		}
+
 		public function persist($question){
 			if( $question->getId() === null ){
 				$this->_create($question);
