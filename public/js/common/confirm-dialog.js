@@ -6,7 +6,7 @@
 
 $('button.gt-confirm-message').confirm({
 		icon: 'fa fa-warning', // Title icon
-    title: 'Confirm!',
+    title: 'Please confirm',
 		closeIcon: true,
 	 	closeIconClass: 'fa fa-close', // or 'glyphicon glyphicon-remove'
 		columnClass: 'col-xs-6 col-xs-offset-3',

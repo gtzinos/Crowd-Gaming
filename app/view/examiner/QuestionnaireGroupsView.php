@@ -1,10 +1,13 @@
 <?php if($section == "CSS") : ?>
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/examiner/QuestionnaireGroupsList.css"); ?>">
+  <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
+
 <?php elseif($section == "JAVASCRIPT") : ?>
   <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1P_ouQbGN0ehtuSm58zqrYxS-YPk4XwM" type="text/javascript"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroupsUsingGoogleMap.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroups.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
   <!-- Title -->
@@ -61,7 +64,7 @@
           <button class="btn" type="button">Edit</button>
         </div>
         <div class="col-xs-12 col-sm-2 col-md-2" style="padding:0px">
-          <button class="btn" type="button">Delete</button>
+          <button class="btn gt-confirm-message" type="button">Delete</button>
         </div>
         <div class="col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3">
           <button class="btn btn-link" type="button">Questions <span class="badge">2</span></button>
@@ -80,13 +83,14 @@
           <button class="btn" type="button">Edit</button>
         </div>
         <div class="col-xs-12 col-sm-2 col-md-2" style="padding:0px">
-          <button class="btn" type="button" onclick="delete_question_group()">Delete</button>
+          <button class="btn gt-confirm-message" type="button" >Delete</button>
         </div>
         <div class="col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3">
           <button class="btn btn-link" type="button">Questions <span class="badge">2</span></button>
         </div>
       </div>
     </a>
+  <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
 
     <?php
         load("CREATE_QUESTION");
