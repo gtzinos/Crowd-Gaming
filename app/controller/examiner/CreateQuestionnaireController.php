@@ -1,5 +1,6 @@
 <?php
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
+	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../libs/htmlpurifier-4.7.0/HTMLPurifier.auto.php';
 
 	class CreateQuestionnaireController extends Controller{
@@ -63,13 +64,34 @@
 					$questionnaire->setCoordinatorId( $_SESSION["USER_ID"] );
 
 
+					$examinerParticipation = new Participation;
+					$examinerParticipation->setUserId( $_SESSION["USER_ID"]);
+					$examinerParticipation->setParticipationType( 2 );
+
+					$playerParticipation = new Participation;
+					$playerParticipation->setUserId( $_SESSION["USER_ID"]);
+					$playerParticipation->setParticipationType( 1 );
+
 					$questionnaireMapper = new QuestionnaireMapper;
+					$participationMapper = new ParticipationMapper;
 
 					try{
 						DatabaseConnection::getInstance()->startTransaction();
 
 
-						$questionnaireMapper->persist($questionnaire);
+						$questionnaireMapper->persist($questionnaire);	
+
+						$questionnaireId = $questionnaireMapper->findLastCreateId($_SESSION["USER_ID"]);
+
+						if( $questionnaireId  == -1 )
+							throw new DatabaseException();
+
+						$examinerParticipation->setQuestionnaireId( $questionnaireId );
+						$playerParticipation->setQuestionnaireId( $questionnaireId );
+
+
+						$participationMapper->persist($examinerParticipation);
+						$participationMapper->persist($playerParticipation);
 
 						DatabaseConnection::getInstance()->commit();
 						print 0; // All ok

@@ -313,6 +313,20 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 			return null;
 		}
 
+		public function findLastCreateId($userId){
+			$query = "SELECT `id` FROM `Questionnaire` WHERE `coordinator_id`=? ORDER BY `id` DESC LIMIT 1";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $userId);
+
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return $set->get('id');
+			return -1;
+
+		}
+
 		public function nameExists($name){
 			$query  = "SELECT * FROM `Questionnaire` WHERE `name`=?";
 
