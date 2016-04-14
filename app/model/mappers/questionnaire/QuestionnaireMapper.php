@@ -386,7 +386,7 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 		private function _update($questionnaire){
 			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=? WHERE `id`=?");
 
-			$statement->setParameters( 'isssiii' ,
+			$statement->setParameters( 'issiii' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),

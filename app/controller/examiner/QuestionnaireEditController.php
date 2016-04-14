@@ -9,20 +9,7 @@
 		}
 
 		public function run(){
-
-			if( !isset( $this->params[1] ) ){
-				$this->redirect("questionnaireslist");
-			}
-
-
-			$questionnaireMapper = new QuestionnaireMapper;
-			$questionnaire = $questionnaireMapper->findById( $this->params[1] );
-
-			if( $questionnaire === null || $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] ){
-				$this->redirect("questionnaire/".$this->params[1]);
-			}
-
-
+			
 			/*
 				Response code values
 				0			: Edited successfully
@@ -31,12 +18,19 @@
 				3			: Message Required Error
 				4			: Database Error
 				5			: Name already in use
+				6			: User must be coordinator
 			 */
-			if( isset( $_POST["name"] , $_POST["description"] , $_POST["message_required"] ) ){
+			if( isset( $_POST["questionnaire-id"] ,$_POST["name"] , $_POST["description"] , $_POST["message_required"] ) ){
 				$questionnaireMapper = new QuestionnaireMapper;
 
-				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
+				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
 
+				if( $questionnaire === null || $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] ){
+					$this->setOutput("response-code" , 6);
+				}
+
+
+				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 				$config = HTMLPurifier_Config::createDefault();
 				$purifier = new HTMLPurifier($config);
 				$description = $purifier->purify($_POST["description"]);
@@ -46,44 +40,53 @@
 				if( strlen($name) < 3 ){
 
 					$this->setOutput("response-code" , 1); // Name Validation error
+					return;
+				}
 
-				}else if( $questionnaireMapper->nameExists( $name ) ){
+				if( $questionnaire->getName()!=$name && $questionnaireMapper->nameExists( $name ) ){
 
 					$this->setOutput("response-code" , 5);
+					return;
+				}
 
-				}else if( strlen($description) < 30 ){
+				if( strlen($description) < 30 ){
 
 					$this->setOutput("response-code" , 2); // Descriptin validation error
+					return;
+				}
 
-				}else if( $messageRequired != "no" && $messageRequired != "yes"){
+				if( $messageRequired != "no" && $messageRequired != "yes"){
 
 					$this->setOutput("response-code" , 3); // Message required error
+					return;
+				}
 
-				}else{
 
-					$questionnaire->setName( $name );
-					$questionnaire->setDescription( $description );
-					$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
+
+				$questionnaire->setName( $name );
+				$questionnaire->setDescription( $description );
+				$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
 
 					
-					try{
-						DatabaseConnection::getInstance()->startTransaction();
+				try{
+					DatabaseConnection::getInstance()->startTransaction();
 
 
-						$questionnaireMapper->persist($questionnaire);
+					$questionnaireMapper->persist($questionnaire);
+					DatabaseConnection::getInstance()->commit();
+					$this->setOutput("response-code" , 0); // All ok
 
-						DatabaseConnection::getInstance()->commit();
-						$this->setOutput("response-code" , 0); // All ok
+				}catch(DatabaseException $ex){
 
-					}catch(DatabaseException $ex){
-
-						DatabaseConnection::getInstance()->rollback();
-						$this->setOutput("response-code" , 4); // Database Error
-					}
+					DatabaseConnection::getInstance()->rollback();
+					$this->setOutput("response-code" , 4); // Database Error
 				}
-			}else{
-				$this->setOutput("response-code", -1);
+
+				return;
 			}
+
+			$this->setOutput("response-code", -1);
+
 		}
 
 	}
