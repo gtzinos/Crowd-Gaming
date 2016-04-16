@@ -38,6 +38,7 @@
 	Routes::add( 'create-question-group' , 'examiner/CreateQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-question-groups' , 'examiner/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'get-questions' , 'examiner/GetQuestionsController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'get-answers' , 'examiner/GetAnswersController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'create-question'  , 'examiner/CreateQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'edit-question' , 'examiner/EditQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'edit-answer' , 'examiner/EditAnswerController.php' , $_USER_LEVEL["EXAMINER"] );
