@@ -31,7 +31,9 @@
     }
 
   </script>
+
   <div class="list-group">
+
     <a href="#" class="list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10">
       <div class="col-xs-12">
         <h4 class="list-group-item-heading">First List Group Item Heading</h4>
@@ -91,8 +93,11 @@
       </div>
     </a>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
-
     <?php
         load("CREATE_QUESTION");
+        load("QUESTION_LIST");
      ?>
+     <script>
+     showModal("question-list");
+     </script>
 <?php endif; ?>
