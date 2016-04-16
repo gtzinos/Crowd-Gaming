@@ -81,7 +81,6 @@ $(document).ready(function(e) {
   Question group list Variables
 */
 var question_group_offset = 0, //offset
-    questionnaire_id = 1, //questionnaire id
     question_group_count = 10; // number of question groups
 /*
   Question group list

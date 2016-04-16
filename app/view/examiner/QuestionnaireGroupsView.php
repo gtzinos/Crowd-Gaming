@@ -3,6 +3,12 @@
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
 
 <?php elseif($section == "JAVASCRIPT") : ?>
+  <script type="text/javascript">
+  /*
+    Initialize javascript variables
+  */
+    var questionnaire_id = '<?php print get("questionnaire-id"); ?>'
+  </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroups.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
@@ -39,11 +45,6 @@
         load("QUESTION_LIST");
      ?>
 
-     <script>
-     showModal("question-list");
-     </script>
-
-
 <?php elseif($section == "QUESTION_GROUP_LIST" ) : ?>
 
   <?php
@@ -67,7 +68,7 @@
                                 <button class='btn' type='button'>Delete</button>
                             </div>
                             <div class='col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3'>
-                                <button class='btn btn-link' type='button'>Questions <span class='badge'>0</span></button>
+                                <button class='btn btn-link' type='button' onclick=\"showModal('question-list')\" >Questions <span class='badge'>" . $questionGroup->getQuestionCount() . "</span></button>
                             </div>
                         </div>
                     </a>";

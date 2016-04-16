@@ -1,4 +1,4 @@
-<? if($section == "CONFIRM_PASSWORD") : ?>
+<? if($section == "QUESTION_LIST") : ?>
 <div class="modal fade" id="question-list" role="dialog">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
