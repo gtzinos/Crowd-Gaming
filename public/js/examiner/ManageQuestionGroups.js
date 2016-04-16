@@ -76,6 +76,107 @@ $(document).ready(function(e) {
     });
 });
 
+
+/*
+  Question group list Variables
+*/
+var question_group_offset = 0, //offset
+    questionnaire_id = 1, //questionnaire id
+    question_group_count = 10; // number of question groups
+/*
+  Question group list
+*/
+function show_question_groups()
+{
+  var Required = {
+      Url() { return webRoot + "get-question-groups/" + questionnaire_id + "/" + question_group_offset + "/" + question_group_count; },
+      SendType() { return "POST"; },
+      variables : "",
+      Parameters() {
+        return this.variables;
+      }
+    }
+
+    var Optional = {
+      ResponseMethod() { return "show_question_groups_response"; }
+    };
+
+    /*
+      Send ajax request
+    */
+    sendAjaxRequest(Required,Optional);
+
+    /*
+      Increment the offset
+    */
+    question_group_offset += 10;
+}
+
+/*
+  Function question group list response
+*/
+function show_question_groups_response()
+{
+  /*
+		if Server responsed successfully
+	*/
+	if (xmlHttp.readyState == 4) {
+		if (xmlHttp.status == 200) {
+
+  			/*
+  				Display data
+        */
+         $("#question-group-list").append(xmlHttp.responseText);
+		}
+  }
+}
+/*
+  Initialize first 10 question groups
+*/
+show_question_groups();
+
+/*
+  Show questions
+*/
+function show_questions(question_group_id)
+{
+  var Required = {
+      Url() { return webRoot + "get-questions/" + question_group_id; },
+      SendType() { return "POST"; },
+      variables : "",
+      Parameters() {
+        return this.variables;
+      }
+    }
+
+    var Optional = {
+      ResponseMethod() { return "show_questions_response"; }
+    };
+
+    /*
+      Send ajax request
+    */
+    sendAjaxRequest(Required,Optional);
+}
+
+/*
+  Show questions response
+*/
+function show_questions_response()
+{
+  /*
+		if Server responsed successfully
+	*/
+	if (xmlHttp.readyState == 4) {
+		if (xmlHttp.status == 200) {
+
+  			/*
+  				Display data
+        */
+         $("#question-list").append(xmlHttp.responseText);
+		}
+  }
+}
 /*
   Create a new question
 */
