@@ -6,15 +6,14 @@
 		
 		public function init(){
 
-			$this->setOutputType( OutputType::JsonView ); 
-			setContent
+			$this->setHeadless(true); 
+			
 		}
 
 		public function run(){
 
 			if( !isset($this->params[1] ) ){
 				// Invalid Request
-				$this->setOutput("response-status" , 1);
 				return;
 			}
 
@@ -32,17 +31,18 @@
 			}else if( isset( $this->params[2] ) ){
 
 				$offset = $this->params[2];
+			}else if( isset( $this->params[3] ) ){
+
+				$count = $this->params[3];
 			}
 
 			$participationMapper = new ParticipationMapper;
 
 			if( ! $participationMapper->participates($_SESSION["USER_LEVEL"] , $questionnaireId , 2) ){
 				// Invalid Access
-				$this->setOutput("response-status" , 2);
 				return;
 			}
 
-			$this->setOutput(" response-status" , 0 );
 
 			$questionGroupMapper = new QuestionGroupMapper;
 
@@ -50,10 +50,9 @@
 
 			$this->setArg("groups" , $questionGroups);
 
-			// Will be linked with appropriate view when done
-			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionnaireGroupsView.php" , "MAIN_CONTENT");
+			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionnaireGroupsView.php" , "QUESTION_GROUP_LIST");
 
-			$this->setOutput("html" , $groupHtmlOutput);
+			print $groupHtmlOutput;
 		}
 
 	}
