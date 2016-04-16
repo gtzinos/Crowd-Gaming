@@ -28,6 +28,13 @@
 			unset($this->questions[$questionId]);
 		}
 
+		public function getQuestions(){
+			return $this->questions;
+		}
+
+		public function setQuestions($questions){
+			$this->questions = $questions;
+		}
 
 		/*
 			Get and Set methods bellow
