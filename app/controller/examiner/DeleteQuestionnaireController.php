@@ -1,11 +1,11 @@
 <?php
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
-	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
 
-	class DeleteQuestionGroupController extends Controller{
+	class DeleteQuestionnaireController extends Controller{
 		
 		public function init(){
 			$this->setOutputType( OutputType::ResponseStatus );
@@ -21,7 +21,7 @@
 				 3 Database error
 				-1 No Data
 			 */
-			if( isset( $_POST["question-group-id"] , $_POST["password"] ) ){
+			if( isset( $_POST["questionnaire-id"] , $_POST["password"] ) ){
 
 				$userMapper = new UserMapper;
 
@@ -31,24 +31,28 @@
 					return;
 				}
 
-				$participationMapper = new ParticipationMapper;
+				$questionMapper = new QuestionMapper;
+				$answerMapper = new AnswerMapper;
+				$questionGroupMapper = new QuestionGroupMapper;
+				$questionnaireMapper = new QuestionnaireMapper;
 
-				if( !$participationMapper->participatesInGroup( $_SESSION["USER_ID"] , $_POST["question-group-id"] , 2 ) ){
+				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
+
+				if( $questionnaire === null || $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] ){
 
 					$this->setOutput("response-code" , 2);
 					return;
 				}
 
-				$questionMapper = new QuestionMapper;
-				$answerMapper = new AnswerMapper;
-				$questionGroupMapper = new QuestionGroupMapper;
+				
 
 				try{
 					DatabaseConnection::getInstance()->startTransaction();
 
-					$answerMapper->deleteByGroup( $_POST["question-group-id"] );
-					$questionMapper->deleteByGroup( $_POST["question-group-id"]);
-					$questionGroupMapper->deleteById( $_POST["question-group-id"]);
+					$answerMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
+					$questionMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
+					$questionGroupMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
+					$questionnaireMapper->deleteById( $_POST["questionnaire-id"]);
 
 					DatabaseConnection::getInstance()->commit();
 					$this->setOutput("response-code" , 0); 

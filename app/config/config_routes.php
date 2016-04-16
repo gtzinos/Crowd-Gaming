@@ -42,7 +42,7 @@
 	Routes::add( 'edit-answer' , 'examiner/EditAnswerController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'delete-question' , 'examiner/DeleteQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'delete-question-group' , 'examiner/DeleteQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"] );
-
+	Routes::add( 'delete-questionnaire' , 'examiner/DeleteQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	/*
 		The Page to load when the page parameter is not defined
 	*/
