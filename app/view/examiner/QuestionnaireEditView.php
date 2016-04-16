@@ -68,7 +68,7 @@
                      <span class="gt-icon"></span>
                   </div>
               </div>
-              <!-- Create questionnaire submit button -->
+              <!-- Update questionnaire submit button -->
               <div class="form-group has-feedback">
                 <div class="col-xs-3 col-sm-offset-3 col-sm-2">
                   <button type="button" id="edit-questionnaire" class="btn btn-primary gt-submit" form="edit-questionnaire-form" onclick="updateQuestionnaire(<?php echo $questionnaire->getId(); ?>)" disabled="disabled">Save</button>

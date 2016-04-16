@@ -166,10 +166,10 @@ function updateQuestionnaire(id)
   if(name && description && required)
   {
     var Required = {
-        Url() { return webRoot + "questionnaire-edit/" + id; },
+        Url() { return webRoot + "questionnaire-edit/"; },
         SendType() { return "POST"; },
         Parameters() {
-          return "name=" + name + "&description=" + description + "&message_required=" + required;
+          return "questionnaire-id=1" + "&name=" + name + "&description=" + description + "&message_required=" + required;
         }
     };
     var Optional = {
@@ -243,17 +243,25 @@ function responseUpdateQuestionnaire()
  					*/
 
  					var response_message = "";
+          /*
+ 						 If response message == -1
+ 						 Cant found questionnaire
+ 					*/
+ 					if(xmlHttp.responseText.localeCompare("-1") == 0)
+ 					{
+ 					 response_message += "<div class='alert alert-danger'>We can't found this questionnaire.</div>";
+ 					}
  					/*
  						 If response message == 1
- 						 Wrong username or password
+ 						 Not a valid Questionnaire Name.
  					*/
- 					if(xmlHttp.responseText.localeCompare("1") == 0)
+ 					else if(xmlHttp.responseText.localeCompare("1") == 0)
  					{
  					 response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Name.</div>";
  					}
  					/*
  						 If response message == 2
- 						 Not verified (Email verification)
+ 						 Not a valid Questionnaire Description
  					*/
  					else if(xmlHttp.responseText.localeCompare("2") == 0)
  					{
@@ -261,7 +269,7 @@ function responseUpdateQuestionnaire()
  					}
  					/*
  						 If response message == 3
- 						 User is deleted
+ 						 Not a valid Message Required value
  					*/
  					else if(xmlHttp.responseText.localeCompare("3") == 0)
  					{
@@ -269,7 +277,7 @@ function responseUpdateQuestionnaire()
  					}
  					/*
  						 If response message == 4
- 						 Banned account
+ 						 General Database Error.
  					*/
  					else if(xmlHttp.responseText.localeCompare("4") == 0)
  					{
@@ -283,7 +291,7 @@ function responseUpdateQuestionnaire()
  					}
 
  			 	 $("#questionnaire-edit-response").show();
- 				 $("#questionnaire-edit-response").html(response_message);
+ 				 $("#questionnaire-edit-response").html(xmlHttp.responseText);
  			}
  		}
 

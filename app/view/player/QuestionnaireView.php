@@ -16,14 +16,11 @@
 			<div class="col-xs-12 col-sm-offset-1 col-sm-3">
 				<label>On : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
-			<div class="questionnaire-public col-xs-12 col-sm-offset-5 col-sm-3">
-
-					 <a class="mediumicon" onclick="showModal('edit-questionnaire'); return false;"><i class='fa fa-check-square-o' ></i></a>
-
+			<div class="questionnaire-public col-xs-12 col-sm-offset-6 col-sm-2">
 					 <?php
 					 		if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
 							{
-								echo "<a class='mediumicon' href='" . LinkUtils::generatePageLink("questionnaire-edit") . "'><i class='glyphicon glyphicon-edit'> </i></a>";
+								echo "<a class='mediumicon' onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'> </i></a>";
 							}
 					 ?>
 			</div>
