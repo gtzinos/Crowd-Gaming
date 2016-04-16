@@ -11,6 +11,7 @@
 		private $radius; // number
 		private $creationDate; // string , timestamp in database
 
+		private $questionCount;
 		/*
 			Array with objects of the type Question
 		 */
@@ -93,5 +94,13 @@
 		
 		public function setCreationDate($creationDate){
 			$this->creationDate = $creationDate;
+		}
+
+		public function getQuestionCount(){
+			return $this->questionCount;
+		}
+		
+		public function setQuestionCount($questionCount){
+			$this->questionCount = $questionCount;
 		}
 	}

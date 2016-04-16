@@ -132,6 +132,19 @@
 				return null;
 		}
 
+		public function findCountByGroup( $questionGroupId ){
+			$query = "SELECT count(*) as counter FROM `Question` WHERE `question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionGroupId);
+
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return $set->get("counter");
+			return 0;
+		}
+
 		public function delete($question){
 			$this->deleteById($question->getId());
 		}

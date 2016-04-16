@@ -1,4 +1,5 @@
 <?php
+	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
@@ -43,10 +44,14 @@
 				return;
 			}
 
-
+			$questionMapper = new QuestionMapper;
 			$questionGroupMapper = new QuestionGroupMapper;
 
 			$questionGroups = $questionGroupMapper->findByQuestionnaireLimited($questionnaireId , $offset , $count);
+
+			foreach ($questionGroups as $questionGroup) {
+				$questionGroup->setQuestionCount( $questionMapper->findCountByGroup($questionGroup->getId())  );
+			}
 
 			$this->setArg("groups" , $questionGroups);
 
