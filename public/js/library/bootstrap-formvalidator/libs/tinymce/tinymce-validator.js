@@ -1,3 +1,6 @@
+$(document).ready(function(e) {
+
+
 tinymce.init({
       selector: "textarea.mce-editor",
       theme: 'modern',
@@ -306,3 +309,4 @@ tinymce.init({
         });
       }
 });
+})

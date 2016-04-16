@@ -32,8 +32,11 @@
 
   </script>
 
+
   <!-- OTI EXEI EDW MPOREIS NA TO VGALEIS
+
   <div class="list-group">
+
     <a href="#" class="list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10">
       <div class="col-xs-12">
         <h4 class="list-group-item-heading">First List Group Item Heading</h4>
@@ -94,17 +97,24 @@
     </a>
     -->
   <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
-
     <?php
         load("CREATE_QUESTION");
+        load("QUESTION_LIST");
      ?>
-     
-<?php elseif($section == "QUESTION_GROUP_LIST" ) : ?><?php
+
+     <script>
+     showModal("question-list");
+     </script>
+
+
+<?php elseif($section == "QUESTION_GROUP_LIST" ) : ?>
+
+  <?php
 
         $questionGroups = get("groups");
 
         foreach ($questionGroups as $questionGroup) {
-            
+
             print   '<a href="#" class="list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10">
                         <div class="col-xs-12">
                             <h4 class="list-group-item-heading">First List Group Item Heading</h4>
