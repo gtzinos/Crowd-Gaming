@@ -99,8 +99,7 @@
         load("CREATE_QUESTION");
      ?>
      
-<?php elseif($section == "QUESTION_GROUP_LIST" ) : ?>
-    <?php
+<?php elseif($section == "QUESTION_GROUP_LIST" ) : ?><?php
 
         $questionGroups = get("groups");
 
@@ -126,5 +125,4 @@
                         </div>
                     </a>';
         }
-    ?>
-<?php endif; ?>
+?><?php endif; ?>
