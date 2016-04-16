@@ -283,6 +283,14 @@ function responseUpdateQuestionnaire()
  					{
  					 response_message += "<div class='alert alert-danger'>General Database Error.</div>";
  					}
+          /*
+ 						 If response message == 4
+ 						 Questionnaire name already exists
+ 					*/
+ 					else if(xmlHttp.responseText.localeCompare("5") == 0)
+ 					{
+ 					 response_message += "<div class='alert alert-danger'>Questionnaire name already exists.</div>";
+ 					}
  					/*
  							Something going wrong
  					*/
@@ -291,7 +299,7 @@ function responseUpdateQuestionnaire()
  					}
 
  			 	 $("#questionnaire-edit-response").show();
- 				 $("#questionnaire-edit-response").html(xmlHttp.responseText);
+ 				 $("#questionnaire-edit-response").html(response_message);
  			}
  		}
 
