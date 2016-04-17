@@ -1,3 +1,4 @@
+
 /*
   On focus change
   hide other tooltips
@@ -7,9 +8,10 @@ $("gt-input-group").on("focusout",function() {
 });
 
 /*
-  When document loaded
+  When window loaded
 */
-$(document).ready( function() {
+$(window).on("load",function(){
+
   /*
     Focus the first input element
     from the document form
@@ -17,11 +19,11 @@ $(document).ready( function() {
     to check the fields
   */
   $(document).find("form:not(.filter) :input:visible:enabled:first").focus();
-
   $(".form-control").each(function() {
     validate($(this));
   });
 });
+
 /*
   When a modal box will open
 */
@@ -33,7 +35,7 @@ $('.modal').on('shown.bs.modal', function() {
       to check the fields
     */
     $('.modal').find("form:not(.filter) :input:visible:enabled:first").focus();
-    $(".form-control").each(function() {
+    $('.modal').find(".form-control").each(function() {
       validate($(this));
     });
 });
