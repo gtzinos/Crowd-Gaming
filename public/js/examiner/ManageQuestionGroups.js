@@ -179,7 +179,15 @@ function show_questions_response()
           out="";
 
       for(i = 0; i < questions.questions.length; i++) {
-        out += "<a onclick='return false' class='list-group-item'>" + questions.questions[i].question_text + "</a>";
+        out += "<div class='col-xs-10'>" +
+                "<a onclick='return false' class='list-group-item'>" + questions.questions[i].question_text +
+                "</a></div>" +
+                "<div class='col-xs-1'>" +
+                    "<a onclick='return false' class='list-group-item'><i class='fa fa-pencil'></i></a>" +
+                "</div>" +
+                "<div class='col-xs-1'>" +
+                    "<a onclick='return false' class='list-group-item'><i class='fa fa-pencil'></i></a>" +
+                "</div>";
       }
 
       /*
@@ -192,7 +200,7 @@ function show_questions_response()
   			/*
   				Display data
         */
-         $("#question-list-group").append(out);
+         $("#question-list-group").html(out);
 		}
   }
 }
