@@ -3,16 +3,16 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
 	class GetQuestionsController extends Controller{
-		
+
 		public function init(){
 			$this->setOutputType( OutputType::JsonView );
-			
+
 		}
 
 		public function run(){
 
 			if( ! isset( $this->params[1]) ){
-				$this->setOutput("response-code" , 1);
+				$this->setOutput("response_code" , 1);
 				return;
 			}
 
@@ -20,7 +20,7 @@
 			$participationMapper = new ParticipationMapper;
 
 			if( ! $participationMapper->participatesInGroup( $_SESSION["USER_ID"] , $questionGroupId, 2)  ){
-				$this->setOutput("response-code" , 2);
+				$this->setOutput("response_code" , 2);
 				return;
 			}
 
@@ -33,20 +33,20 @@
 
 			foreach ($questions as $question) {
 				$questionsDataArrayItem["id"] = $question->getId();
-				$questionsDataArrayItem["group-id"] = $question->getQuestionGroupId();
-				$questionsDataArrayItem["question-text"] = $question->getQuestionText();
-				$questionsDataArrayItem["time-to-answer"] = $question->getTimeToAnswer();
-				$questionsDataArrayItem["creation-date"] = $question->getCreationDate();
+				$questionsDataArrayItem["group_id"] = $question->getQuestionGroupId();
+				$questionsDataArrayItem["question_text"] = $question->getQuestionText();
+				$questionsDataArrayItem["time_to_answer"] = $question->getTimeToAnswer();
+				$questionsDataArrayItem["creation_date"] = $question->getCreationDate();
 				$questionsDataArrayItem["multiplier"] = $question->getMultiplier();
 
 				$questionsDataArray[] = $questionsDataArrayItem;
 			}
 
 
-			$this->setOutput("response-code" , 0);
+			$this->setOutput("response_code" , 0);
 			$this->setOutput("questions" , $questionsDataArray);
 
 		}
-			
+
 
 	}

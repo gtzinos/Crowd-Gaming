@@ -168,14 +168,36 @@ function show_questions_response()
 	*/
 	if (xmlHttp.readyState == 4) {
 		if (xmlHttp.status == 200) {
+      /*
+        Parse json object
+      */
+      var questions = JSON.parse(xmlHttp.responseText);
+      /*
+        Initialize
+      */
+      var i=0,
+          out="";
 
+      for(i = 0; i < questions.questions.length; i++) {
+        out += "<a onclick='return false' class='list-group-item'>" + questions.questions[i].question_text + "</a>";
+      }
+
+      /*
+        No members
+      */
+      if(i == 0)
+      {
+        out += "<label class='alert alert-danger text-center'>There are no questions on this questionnaire group</label>";
+      }
   			/*
   				Display data
         */
-         $("#question-list").append(xmlHttp.responseText);
+         $("#question-list-group").append(out);
 		}
   }
 }
+
+
 /*
   Create a new question
 */

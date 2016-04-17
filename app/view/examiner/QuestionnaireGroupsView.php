@@ -68,7 +68,7 @@
                                 <button class='btn' type='button'>Delete</button>
                             </div>
                             <div class='col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3'>
-                                <button class='btn btn-link' type='button' onclick=\"showModal('question-list')\" >Questions <span class='badge'>" . $questionGroup->getQuestionCount() . "</span></button>
+                                <button class='btn btn-link' type='button' onclick=\"showModal('question-list'); show_questions(" . $questionGroup->getId() . ");\" >Questions <span class='badge'>" . $questionGroup->getQuestionCount() . "</span></button>
                             </div>
                         </div>
                     </a>";
