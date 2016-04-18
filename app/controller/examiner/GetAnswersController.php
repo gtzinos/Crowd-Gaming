@@ -3,10 +3,10 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
 	class GetAnswersController extends Controller{
-		
+
 		public function init(){
 			$this->setOutputType( OutputType::JsonView );
-			
+
 		}
 
 		public function run(){
@@ -33,10 +33,10 @@
 
 			foreach ($answers as $answer) {
 				$answersDataArrayItem["id"] = $answer->getId();
-				$answersDataArrayItem["question-id"] = $answer->getQuestionId();
-				$answersDataArrayItem["answer-text"] = $answer->getAnswerText();
-				$answersDataArrayItem["is-correct"] = $answer->isCorrect();
-				$answersDataArrayItem["creation-date"] = $answer->getCreationDate();
+				$answersDataArrayItem["question_id"] = $answer->getQuestionId();
+				$answersDataArrayItem["answer_text"] = $answer->getAnswerText();
+				$answersDataArrayItem["is_correct"] = $answer->isCorrect();
+				$answersDataArrayItem["creation_date"] = $answer->getCreationDate();
 
 				$answersDataArray[] = $answersDataArrayItem;
 			}
