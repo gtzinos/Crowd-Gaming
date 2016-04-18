@@ -117,9 +117,10 @@ var xmlHttp;
 							 /*
 							 	Call response function
 							 */
-							 if(Optional.ResponseMethod().indexOf("()" >= 0)
+							 var method = Optional.ResponseMethod();
+							 if(method.indexOf("(") >= 0)
 							 {
-								 window[Optional.ResponseMethod()];
+								 eval(Optional.ResponseMethod());
 							 }
 							 else
 							 {
