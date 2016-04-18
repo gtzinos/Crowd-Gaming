@@ -106,9 +106,7 @@
               </div>
            </div>
            <div class="form-group">
-             <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-8 col-md-7">
-               <label id="create-question-response" class="responseLabel"></label>
-             </div>
+               <label id="edit-question-response" class="responseLabel col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-8 col-md-7"></label>
            </div>
          </form>
        </div>

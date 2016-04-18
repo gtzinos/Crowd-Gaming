@@ -182,7 +182,7 @@ function show_questions_response()
       for(i = 0; i < questions.questions.length; i++) {
         out += "<div class='col-xs-12 col-sm-12 list-group'>" +
                   "<div class='list-group-item col-xs-12'>" +
-                      "<span class='col-xs-9 col-sm-10'>"
+                      "<span class='col-xs-9 col-sm-10' id='question" + questions.questions[i].id + "'>"
                           + questions.questions[i].question_text +
                       "</span>" +
                       "<span onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
@@ -227,6 +227,10 @@ $('#edit-question').on('edit.bs.modal', function () {
 function show_edit_question_data(question_id,question_text,time_to_answer,creation_date,multiplier)
 {
   document.getElementById("edit-question-form").reset();
+  $("#save-question-confirm-button").unbind("click");
+  $("#save-question-confirm-button").on("click",function() {
+    update_question(question_id);
+  });
   /*
     Set question array values
   */
@@ -280,7 +284,6 @@ function show_edit_question_data(question_id,question_text,time_to_answer,creati
             $("#edit-checkbox" + (i+1)).prop("checked",true);
             $("#edit-answer" + (i+1)).val(answers_array.answers[i].answer_text);
           }
-
           /*
             No answers
           */
@@ -293,6 +296,188 @@ function show_edit_question_data(question_id,question_text,time_to_answer,creati
         }
     }
 }
+
+function update_question(question_id)
+{
+  /*
+    Initialize variables
+  */
+  var name = $("#edit-qname").val();
+  var time = $("#edit-qtime").val();
+  var multiplier = $("#edit-qmultiplier").val();
+  var correct = $("#edit-correct").val();
+  var answers;
+
+  if($("#edit-answer1").val().length > 0 && $("#edit-answer2").val().length > 0)
+  {
+    answers = [ $("#edit-answer1").val() , $("#edit-answer2").val() ];
+  }
+
+  if(name && time && multiplier && correct && answers.length == 2)
+  {
+    var Required = {
+        Url() { return webRoot + "edit-question"; },
+        SendType() { return "POST"; },
+        variables : "",
+        Parameters() {
+          /*
+            Variables we will send
+          */
+          this.variables = "question-id=" + question_id + "&question-text=" +  name
+          + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
+          "&answer2=" + answers[1];
+
+          if($("#answer3").val().length > 0 && $("#checkbox3").is(':checked'))
+          {
+            this.variables += "&answer3=" + $("#answer3").val();
+          }
+          if($("#answer4").val().length > 0 && $("#checkbox4").is(':checked'))
+          {
+            this.variables += "&answer4=" + $("#answer4").val();
+          }
+
+          return this.variables;
+        }
+      }
+
+      var Optional = {
+        ResponseMethod() { return "update_question_response('" + question_id + "','" + name + "')"; },
+        SubmitButton() { return "#save-question-confirm-button"; }
+      };
+
+      /*
+        Send ajax request
+      */
+      sendAjaxRequest(Required,Optional);
+    }
+
+  else {
+    /*
+      Cannot be empty
+    */
+    $("#edit-question-response").show();
+    $("#edit-question-response").html("<div class='alert alert-danger'>Fill all fields before save. </div>");
+
+  }
+
+  }
+
+  /*
+  Update question response
+  */
+  function update_question_response(id,text)
+  {
+  /*
+    if Server responsed back successfully
+  */
+  if (xmlHttp.readyState == 4) {
+    if (xmlHttp.status == 200) {
+      /*
+        0 All ok
+        1 Question does not exists
+        2 You dont have permission
+        3 question-text validation error
+        4 time-to-answer validation error
+        5 Multiplier validation error
+        6 Database Error
+        -1 No data
+      */
+
+      /*
+        Debug
+      */
+      //console.log(xmlHttp.responseText);
+
+      if(xmlHttp.responseText.localeCompare("0") == 0)
+      {
+          /*
+            Success message
+          */
+          $("#edit-question-response").show();
+          $("#edit-question-response").html("<div class='alert alert-success'>Question updated successfully.</div>");
+          $("#question"+id).html(text);
+      }
+
+      /*
+        If server responsed with an error code
+      */
+      else {
+
+        /*
+          Display an response message
+        */
+        var response_message = "";
+        /*
+           If response message == 1
+            Question does not exists
+        */
+        if(xmlHttp.responseText.localeCompare("1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'> Question does not exists.</div>";
+        }
+        /*
+           If response message == 2
+           You dont have permission
+        */
+        else if(xmlHttp.responseText.localeCompare("2") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You dont have permission to update this question.</div>";
+        }
+        /*
+           If response message == 3
+           question-text validation error
+        */
+        else if(xmlHttp.responseText.localeCompare("3") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This is not a valid time to question text.</div>";
+        }
+        /*
+           If response message == 4
+           time-to-answer validation error
+        */
+        else if(xmlHttp.responseText.localeCompare("4") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This not a valid time to answer. Must be >= 5 seconds.</div>";
+        }
+        /*
+           If response message == 5
+           Multiplier validation error
+        */
+        else if(xmlHttp.responseText.localeCompare("5") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This not a valid multiplier.</div>";
+        }
+        /*
+           If response message == 6
+           Database Error
+        */
+        else if(xmlHttp.responseText.localeCompare("6") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>General Database Error.</div>";
+        }
+        /*
+           If response message == -1
+           No data error
+        */
+        else if(xmlHttp.responseText.localeCompare("-1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You didnt send something.</div>";
+        }
+        /*
+            Something going wrong
+        */
+        else {
+          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
+        }
+
+
+
+       $("#edit-question-response").show();
+       $("#edit-question-response").html(response_message);
+      }
+    }
+  }
+ }
 
 
 /*
@@ -325,7 +510,7 @@ function create_question(id)
             Variables we will send
           */
           this.variables = "question-group-id=" + id + "&question-text=" +  name
-          + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&answer1=" + answers[0] +
+          + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
           "&answer2=" + answers[1];
 
           if($("#answer3").val().length > 0)
