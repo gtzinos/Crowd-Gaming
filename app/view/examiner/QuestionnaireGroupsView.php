@@ -43,6 +43,7 @@
     <?php
         load("CREATE_QUESTION");
         load("QUESTION_LIST");
+        load("EDIT_QUESTION");
      ?>
 
 <?php elseif($section == "QUESTION_GROUP_LIST" ) : ?>

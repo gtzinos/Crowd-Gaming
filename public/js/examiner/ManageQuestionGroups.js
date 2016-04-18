@@ -158,6 +158,7 @@ function show_questions(question_group_id)
     sendAjaxRequest(Required,Optional);
 }
 
+
 /*
   Show questions response
 */
@@ -184,8 +185,8 @@ function show_questions_response()
                       "<span class='col-xs-9 col-sm-10'>"
                           + questions.questions[i].question_text +
                       "</span>" +
-                      "<span onclick=\"$('#edit-question').modal('show');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
-                      "<span onclick=\"return false\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
+                      "<span onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
+                      "<span onclick=\"delete_question('" + questions.questions[i].id + "')\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
                   "</div>" +
                 "</div>";
       }
@@ -214,6 +215,85 @@ $(document)
   .on("mouseleave","span.edit-question,span.remove-question",function(e) {
     $(e.target).css("color","#000000");
   });
+
+
+
+$('#edit-question').on('edit.bs.modal', function () {
+    document.getElementById("edit-question-form").reset();
+})
+/*
+  Edit question modal box
+*/
+function show_edit_question_data(question_id,question_text,time_to_answer,creation_date,multiplier)
+{
+  document.getElementById("edit-question-form").reset();
+  /*
+    Set question array values
+  */
+  $("#edit-qname").val(question_text);
+  $("#edit-qtime").val(time_to_answer);
+  $("#edit-qmultiplier").val(multiplier);
+
+  var Required = {
+      Url() { return webRoot + "get-answers/" + question_id; },
+      SendType() { return "POST"; },
+      variables : "",
+      Parameters() {
+        return this.variables;
+      }
+    }
+
+    var Optional = {
+      ResponseMethod() { return "show_edit_question_data_response"; }
+    };
+
+    /*
+      Send ajax request
+    */
+    sendAjaxRequest(Required,Optional);
+  }
+
+  /*
+  Show questions response
+  */
+  function show_edit_question_data_response()
+  {
+    /*
+      if Server responsed successfully
+    */
+    if (xmlHttp.readyState == 4) {
+
+        if (xmlHttp.status == 200) {
+          /*
+            Parse json object
+          */
+          var answers_array = JSON.parse(xmlHttp.responseText);
+
+          //id, answer-text , is-correct , creation-date,
+          var i=0;
+          for(i=0; i < answers_array.answers.length; i++)
+          {
+            if(answers_array.answers[i].is_correct)
+            {
+              $("#edit-correct").val(i + 1);
+            }
+            $("#edit-checkbox" + (i+1)).prop("checked",true);
+            $("#edit-answer" + (i+1)).val(answers_array.answers[i].answer_text);
+          }
+
+          /*
+            No answers
+          */
+          if(i == 0)
+          {
+            $("#question-edit-response").show();
+            $("#question-edit-response").html("<div class='alert alert-danger'>There are no answers in this question. </div>");
+          }
+
+        }
+    }
+}
+
 
 /*
   Create a new question

@@ -48,6 +48,7 @@
 			$controller->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
 			$controller->defSection("CREATE_QUESTION", "examiner/CreateQuestionView.php");
 			$controller->defSection("QUESTION_LIST" , "examiner/QuestionListView.php");
+			$controller->defSection("EDIT_QUESTION" , "examiner/EditQuestionView.php");
 		}else if( $_SESSION["USER_LEVEL"] == 3){
 			$controller->setArg("primary-menu" , "ModeratorMenu");
 		}

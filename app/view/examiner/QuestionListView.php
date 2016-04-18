@@ -9,11 +9,10 @@
        <div class="modal-body container-fluid text-center">
          <?php
           echo "<div class='list-group' id='question-list-group'>";
-          
+
           echo "</div>";
          ?>
        </div>
-
      </div>
    </div>
  </div>
