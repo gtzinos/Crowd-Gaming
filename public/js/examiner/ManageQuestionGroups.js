@@ -179,14 +179,14 @@ function show_questions_response()
           out="";
 
       for(i = 0; i < questions.questions.length; i++) {
-        out += "<div class='col-xs-10'>" +
-                "<a onclick='return false' class='list-group-item'>" + questions.questions[i].question_text +
-                "</a></div>" +
-                "<div class='col-xs-1'>" +
-                    "<a onclick='return false' class='list-group-item'><i class='fa fa-pencil'></i></a>" +
-                "</div>" +
-                "<div class='col-xs-1'>" +
-                    "<a onclick='return false' class='list-group-item'><i class='fa fa-pencil'></i></a>" +
+        out += "<div class='col-xs-12 col-sm-12 list-group'>" +
+                  "<div class='list-group-item col-xs-12'>" +
+                      "<span class='col-xs-9 col-sm-10'>"
+                          + questions.questions[i].question_text +
+                      "</span>" +
+                      "<span onclick=\"$('#edit-question').modal('show');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
+                      "<span onclick=\"return false\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
+                  "</div>" +
                 "</div>";
       }
 
@@ -204,7 +204,16 @@ function show_questions_response()
 		}
   }
 }
-
+/*
+  On mouse over the edit or delete buttons
+*/
+$(document)
+  .on("mouseover","span.edit-question,span.remove-question",function(e) {
+    $(e.target).css("color","#36A0FF");
+  })
+  .on("mouseleave","span.edit-question,span.remove-question",function(e) {
+    $(e.target).css("color","#000000");
+  });
 
 /*
   Create a new question
@@ -304,12 +313,36 @@ function response_create_question()
 
       if(xmlHttp.responseText.localeCompare("0") == 0)
 			{
-  			/*
-  				Success message
-        */
-         $("#create-question-response").show();
-         $("#create-question-response").html("<div class='alert alert-success'>Your question created successfully.</div>");
-			}
+    			/*
+    				Success message
+          */
+          $("#create-question-response").show();
+          $("#create-question-response").html("<div class='alert alert-success'>Your question created successfully.</div>");
+
+          $("#qname").val("");
+          $("#qname").focus();
+
+          $("#qtime").val("");
+          $("#qtime").focus();
+
+          $("#qmultiplier").val("");
+          $("#qmultiplier").focus();
+
+          $("#correct").val("-");
+          $("#correct").focus();
+
+          $("#answer1").val("");
+          $("#answer1").focus();
+
+          $("#answer2").val("");
+          $("#answer2").focus();
+
+          $("#answer3").val("");
+          $("#answer3").focus();
+
+          $("#answer4").val("");
+          $("#answer4").focus();
+      }
 
       /*
         If server responsed with an error code
