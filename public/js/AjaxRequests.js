@@ -117,7 +117,15 @@ var xmlHttp;
 							 /*
 							 	Call response function
 							 */
-							 window[Optional.ResponseMethod()]();
+							 if(Optional.ResponseMethod().indexOf("()" >= 0)
+							 {
+								 window[Optional.ResponseMethod()];
+							 }
+							 else
+							 {
+								 window[Optional.ResponseMethod()]();
+							 }
+
 						}, millisecondsToWait);
 					}
 
