@@ -14,7 +14,8 @@
 	/*
 		Check if user was banned in the meanwhile
 	 */
-	if( isset($_SESSION["USER_ID"]) ){
+	if( isset($_SESSION["USER_ID"]) )
+	{
 
 		include_once '../app/model/mappers/user/UserMapper.php';
 
@@ -23,10 +24,13 @@
 		/*
 			force logout the user if he was banned
 		 */
-		if($userMapper->isBanned($_SESSION["USER_ID"])){
+		if($userMapper->isBanned($_SESSION["USER_ID"]))
+		{
 			$user = new User();
 			$user->logout();
-		}else{
+		}
+		else
+		{
 			// Check if the user level has changed
 			$_SESSION["USER_LEVEL"] = $userMapper->findUserLevel($_SESSION["USER_ID"]);
 		}
@@ -36,25 +40,27 @@
 	/*
 		Select the correct menus and define View sections that must be loaded for all controllers.
 	 */
-	if( isset($_SESSION["USER_ID"])){
+	if( isset($_SESSION["USER_ID"]))
+	{
 
 		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordView.php");
 
 
-		if( $_SESSION["USER_LEVEL"] == 1){
+		if( $_SESSION["USER_LEVEL"] == 1)
+		{
 			$controller->setArg("primary-menu" , "PlayerMenu");
-		}else if( $_SESSION["USER_LEVEL"] == 2){
+		}else if( $_SESSION["USER_LEVEL"] == 2)
+		{
 			$controller->setArg("primary-menu" , "ExaminerMenu");
-			$controller->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
-			$controller->defSection("CREATE_QUESTION", "examiner/CreateQuestionView.php");
-			$controller->defSection("QUESTION_LIST" , "examiner/QuestionListView.php");
-			$controller->defSection("EDIT_QUESTION" , "examiner/EditQuestionView.php");
-		}else if( $_SESSION["USER_LEVEL"] == 3){
+		}else if( $_SESSION["USER_LEVEL"] == 3)
+		{
 			$controller->setArg("primary-menu" , "ModeratorMenu");
 		}
 
 		$controller->setArg("secondary-menu" , "authorizedRightMenu");
-	}else{
+	}
+	else
+	{
 
 		$controller->defSection("SIGN_IN" , "public/SignInView.php");
 		$controller->defSection("SIGN_UP" , "public/SignUpView.php");

@@ -12,7 +12,8 @@
 			$this->defSection('CSS','player/QuestionnairesListPageView.php');
 			$this->defSection('JAVASCRIPT','player/QuestionnairesListPageView.php');
 			$this->defSection('MAIN_CONTENT','player/QuestionnairesListPageView.php');
-
+			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
+			
 			$page = null;
 
 			if( isset($_GET["sort"]) ){
