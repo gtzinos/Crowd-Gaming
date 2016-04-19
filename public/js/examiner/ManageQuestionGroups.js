@@ -149,7 +149,7 @@ function show_questions(question_group_id)
     }
 
     var Optional = {
-      ResponseMethod() { return "show_questions_response"; }
+      ResponseMethod() { return "show_questions_response(" + question_group_id + ")"; }
     };
 
     /*
@@ -162,7 +162,7 @@ function show_questions(question_group_id)
 /*
   Show questions response
 */
-function show_questions_response()
+function show_questions_response(question_group_id)
 {
   /*
 		if Server responsed successfully
@@ -180,15 +180,13 @@ function show_questions_response()
           out="";
 
       for(i = 0; i < questions.questions.length; i++) {
-        out += "<div class='col-xs-12 col-sm-12 list-group'>" +
-                  "<div class='list-group-item col-xs-12'>" +
+        out += "<div class='list-group-item col-xs-12' id='qitem" + questions.questions[i].id + "'>" +
                       "<span class='col-xs-9 col-sm-10' id='question" + questions.questions[i].id + "'>"
                           + questions.questions[i].question_text +
                       "</span>" +
                       "<span onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
-                      "<span onclick=\"delete_question('" + questions.questions[i].id + "')\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
-                  "</div>" +
-                "</div>";
+                      "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "')\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
+                  "</div>";
       }
 
       /*
@@ -486,7 +484,7 @@ function update_question(question_id)
 /*
   Create a new question
 */
-function create_question(id)
+function create_question(question_group_id)
 {
   /*
     Initialize variables
@@ -512,7 +510,7 @@ function create_question(id)
           /*
             Variables we will send
           */
-          this.variables = "question-group-id=" + id + "&question-text=" +  name
+          this.variables = "question-group-id=" + question_group_id + "&question-text=" +  name
           + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
           "&answer2=" + answers[1];
 
@@ -530,7 +528,7 @@ function create_question(id)
       }
 
       var Optional = {
-        ResponseMethod() { return "response_create_question"; },
+        ResponseMethod() { return "response_create_question(" + question_group_id + ")"; },
         ResponseLabel() { return "create-question-response"; },
         SubmitButton() { return "#create-question-confirm-button"; }
       };
@@ -556,7 +554,7 @@ function create_question(id)
 /*
   create question response
 */
-function response_create_question()
+function response_create_question(question_group_id)
 {
 
   /*
@@ -586,6 +584,8 @@ function response_create_question()
           */
           $("#create-question-response").show();
           $("#create-question-response").html("<div class='alert alert-success'>Your question created successfully.</div>");
+
+          $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) + 1);
 
           $("#qname").val("");
           $("#qname").focus();
@@ -675,10 +675,128 @@ function response_create_question()
           response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
         }
 
-
-
        $("#create-question-response").show();
        $("#create-question-response").html(response_message);
+      }
+    }
+  }
+}
+
+/*
+  Delete specific question
+*/
+function delete_question(question_group_id,question_id)
+{
+  var Required = {
+      Url() { return webRoot + "delete-question"; },
+      SendType() { return "POST"; },
+      variables : "",
+      Parameters() {
+        /*
+          Variables we will send
+        */
+        this.variables = "question-id=" + question_id;
+        return this.variables;
+      }
+    }
+
+    var Optional = {
+      ResponseMethod() { return "delete_question_response(" + question_group_id + "," + question_id + ")"; }
+    };
+
+    /*
+      Send ajax request
+    */
+    sendAjaxRequest(Required,Optional);
+}
+
+/*
+  Delete question (Server response)
+*/
+function delete_question_response(question_group_id,question_id)
+{
+  /*
+    if Server responsed back successfully
+  */
+  if (xmlHttp.readyState == 4) {
+    if (xmlHttp.status == 200) {
+      /*
+        0 All ok
+        1 Authentication failed
+        2 Access error
+        3 Database error
+        -1 No Data
+      */
+
+      /*
+        Debug
+      */
+      //console.log(xmlHttp.responseText);
+
+      if(xmlHttp.responseText.localeCompare("0") == 0)
+      {
+          /*
+            Success message
+          */
+          $("#edit-question-response").show();
+          $("#edit-question-response").html("<div class='alert alert-success'>Question deleted successfully.</div>");
+          if (parseInt($("#qcounter"+question_group_id).text()) == 1) {
+            $("#question-list-group").html("<label class='alert alert-danger text-center'>There are no questions on this questionnaire group</label>");
+          }
+          $("#qitem"+question_id).remove();
+          $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) - 1);
+      }
+
+      /*
+        If server responsed with an error code
+      */
+      else {
+
+        /*
+          Display an response message
+        */
+        var response_message = "";
+        /*
+           If response message == 1
+            Authentication failed
+        */
+        if(xmlHttp.responseText.localeCompare("1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Authentication failed.</div>";
+        }
+        /*
+           If response message == 2
+           Access error
+        */
+        else if(xmlHttp.responseText.localeCompare("2") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You dont have permission to delete this question.</div>";
+        }
+        /*
+           If response message == 3
+           Database error
+        */
+        else if(xmlHttp.responseText.localeCompare("3") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>General database error.</div>";
+        }
+        /*
+           If response message == -1
+           No data error
+        */
+        else if(xmlHttp.responseText.localeCompare("-1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You didnt send something.</div>";
+        }
+        /*
+            Something going wrong
+        */
+        else {
+          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
+        }
+
+      // $("#edit-question-response").show();
+      // $("#edit-question-response").html(response_message);
       }
     }
   }
