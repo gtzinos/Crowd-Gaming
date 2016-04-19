@@ -3,23 +3,23 @@ $(document).ready(function(e) {
     /*
       When he will write an anwser
     */
-    $("input[id=answer3],input[id=answer4]").on("keyup change",function(e) {
+    $("input[id=edit-answer3],input[id=edit-answer4]").on("keyup change",function(e) {
       if(e.target.value.length > 0)
       {
         /*
           Calculate id
         */
-        var id = e.target.id.replace("answer","");
+        var id = e.target.id.replace("edit-answer","");
         /*
           if id == 3
         */
         /*
           Enable checkbox
         */
-        $("#checkbox"+id).prop("checked",true);
+        $("#edit-checkbox"+id).prop("checked",true);
         if(id == 4)
         {
-          $("#checkbox3").prop("checked",true);
+          $("#edit-checkbox3").prop("checked",true);
         }
       }
 
@@ -33,32 +33,32 @@ $(document).ready(function(e) {
         /*
           Calculate the id
         */
-        var id = e.target.id.replace('checkbox','');
+        var id = e.target.id.replace('edit-checkbox','');
         /*
           If he choosed to uncheck
         */
         if(!e.target.checked)
         {
-          if(($("#answer3").val().length > 0 || $("#answer4").val().length > 0) && id == 3)
+          if(($("#edit-answer3").val().length > 0 || $("#edit-answer4").val().length > 0) && id == 3)
           {
-            $("#checkbox3").prop("checked",true);
+            $("#edit-checkbox3").prop("checked",true);
             alert("Delete answer 3 and 4 text first !!!");
             return false;
           }
-          else if($("#answer4").val().length > 0 && id == 4)
+          else if($("#edit-answer4").val().length > 0 && id == 4)
           {
-            $("#checkbox4").prop("checked",true);
+            $("#edit-checkbox4").prop("checked",true);
             alert("Delete answer 4 text first !!!");
             return false;
           }
           else
           {
-            $("#correct").val("-");
-            $("#correct option[value=" + id + "]").attr("disabled",true);
+            $("#edit-correct").val("-");
+            $("#edit-correct option[value=" + id + "]").attr("disabled",true);
             if(id == 3)
             {
-              $("#checkbox4").prop('checked',false);
-              $("#correct option[value=4]").attr("disabled",true);
+              $("#edit-checkbox4").prop('checked',false);
+              $("#edit-correct option[value=4]").attr("disabled",true);
             }
           }
         }
@@ -66,11 +66,11 @@ $(document).ready(function(e) {
           If he choosed to check
         */
         else {
-            $("#correct option[value=" + id + "]").attr("disabled",false);
+            $("#edit-correct option[value=" + id + "]").attr("disabled",false);
             if(id == 4)
             {
-              $("#checkbox3").prop("checked",true);
-              $("#correct option[value=3]").attr("disabled",false);
+              $("#edit-checkbox3").prop("checked",true);
+              $("#edit-correct option[value=3]").attr("disabled",false);
             }
         }
     });
@@ -227,6 +227,8 @@ $('#edit-question').on('edit.bs.modal', function () {
 function show_edit_question_data(question_id,question_text,time_to_answer,creation_date,multiplier)
 {
   document.getElementById("edit-question-form").reset();
+  $("#edit-question-response").html("");
+  $("#edit-question-response").hide();
   $("#save-question-confirm-button").unbind("click");
   $("#save-question-confirm-button").on("click",function() {
     update_question(question_id);
@@ -302,6 +304,7 @@ function update_question(question_id)
   /*
     Initialize variables
   */
+
   var name = $("#edit-qname").val();
   var time = $("#edit-qtime").val();
   var multiplier = $("#edit-qmultiplier").val();
