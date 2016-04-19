@@ -5,12 +5,15 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 
-	class GetQuestionController extends AuthenticatedController{
+	class GetQuestionController extends AuthenticatedController
+	{
 		
-		public function init(){
+		public function init()
+		{
 		}
 
-		public function run(){
+		public function run()
+		{
 			$userId = $this->authenticateToken();
 			$coordinates = $this->getCoordinates();	
 
@@ -27,14 +30,17 @@
 			/*
 				Check if coordinates were given
 			 */
-			if( $coordinates == null){
+			if( $coordinates == null)
+			{
 				$response["code"] = "403";
 				$response["message"] = "Forbidden, Coordinates not provided.";
 
 				http_response_code(403);
 
 
-			}else if( !$participationMapper->participates($userId , $questionnaireId , 1)  ){
+			}
+			else if( !$participationMapper->participates($userId , $questionnaireId , 1)  )
+			{
 				/*
 					User doesnt participate to this questionnaire.
 				 */
@@ -43,7 +49,9 @@
 
 				http_response_code(403);
 
-			}else if( !$questionGroupMapper->groupBelongsTo($groupId , $questionnaireId) ){
+			}
+			else if( !$questionGroupMapper->groupBelongsTo($groupId , $questionnaireId) )
+			{
 				/*
 					Question Group does not belong to questionnaire
 				 */
@@ -52,21 +60,26 @@
 
 				http_response_code(404);
 
-			}else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) ){
+			}
+			else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) )
+			{
 
 				$response["code"] = "403";
 				$response["message"] = "Forbidden, Invalid location.";
 
 				http_response_code(403);
 
-			}else{
+			}
+			else
+			{
 				/*
 					Get the next question
 				 */
 				
 				$question = $questionMapper->findNextQuestion($userId , $groupId);
 				
-				if($question !== null){
+				if($question !== null)
+				{
 					$answerMapper = new AnswerMapper;
 
 					$answers = $answerMapper->findByQuestion($question->getId());
@@ -82,17 +95,19 @@
 					
 					$response["answer"] = array();
 
-					foreach ($answers as $answer) {
+					foreach ($answers as $answer) 
+					{
 
 						$arrayItem["id"] = $answer->getId();
 						$arrayItem["answer-text"] = $answer->getAnswerText();
-						$arrayItem["description"] = $answer->getDescription();
 						$arrayItem["creation_date"] = $answer->getCreationDate();
 						
 						$response["answer"][] = $arrayItem;
 					}
 
-				}else{
+				}
+				else
+				{
 
 					http_response_code(404);
 					$response["code"] = "404";

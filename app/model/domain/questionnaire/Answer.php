@@ -2,7 +2,6 @@
 	class Answer{
 		private $id;
 		private $questionId;
-		private $description;
 		private $correct;
 		private $answerText;
 		private $creationDate;

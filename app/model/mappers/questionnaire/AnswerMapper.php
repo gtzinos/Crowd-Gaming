@@ -20,7 +20,6 @@
 				$answer->setId( $set->get("id") );
 				$answer->setQuestionId( $set->get("question_id") );
 				$answer->setAnswerText( $set->get("answer") );
-				$answer->setDescription( $set->get("description") );
 				$answer->setCorrect( $set->get("is_correct") );
 				$answer->setCreationDate( $set->get("creation_date") );
 
@@ -47,7 +46,6 @@
 				$answer->setId( $set->get("id") );
 				$answer->setQuestionId( $set->get("question_id") );
 				$answer->setAnswerText( $set->get("answer") );
-				$answer->setDescription( $set->get("description") );
 				$answer->setCorrect( $set->get("is_correct") );
 				$answer->setCreationDate( $set->get("creation_date") );
 
@@ -71,7 +69,6 @@
 				$answer->setId( $set->get("id") );
 				$answer->setQuestionId( $set->get("question_id") );
 				$answer->setAnswerText( $set->get("answer") );
-				$answer->setDescription( $set->get("description") );
 				$answer->setCorrect( $set->get("is_correct") );
 				$answer->setCreationDate( $set->get("creation_date") );
 
@@ -149,28 +146,26 @@
 		}
 
 		private function _create($answer){
-			$query = "INSERT INTO `Answer`(`question_id`, `answer`, `description`, `is_correct`, `creation_date`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+			$query = "INSERT INTO `Answer`(`question_id`, `answer`, `is_correct`, `creation_date`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('issi' , 
+			$statement->setParameters('isi' , 
 				$answer->getQuestionId(),
 				$answer->getAnswerText(),
-				$answer->getDescription(),
 				$answer->isCorrect() );
 
 			$statement->executeUpdate();
 		}
 
 		private function _update($answer){
-			$query = "UPDATE `Answer` SET `question_id`=?,`answer`=?,`description`=?,`is_correct`=? WHERE `id`=?";
+			$query = "UPDATE `Answer` SET `question_id`=?,`answer`=?,`is_correct`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('issii' , 
+			$statement->setParameters('isii' , 
 				$answer->getQuestionId(),
 				$answer->getAnswerText(),
-				$answer->getDescription(),
 				$answer->isCorrect() ,
 				$answer->getId() );
 
