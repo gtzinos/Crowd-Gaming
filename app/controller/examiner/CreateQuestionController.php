@@ -119,7 +119,6 @@
 				catch(DatabaseException $e)
 				{
 
-					print $e->getMessage().'<br>';
 					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 5);
 				}
