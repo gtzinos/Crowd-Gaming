@@ -19,7 +19,7 @@
 			$this->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
 			$this->defSection("QUESTIONNAIRE_MEMBERS" , "player/QuestionnaireMembersView.php");
 			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
-
+			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
 		}
 
 		public function run(){
