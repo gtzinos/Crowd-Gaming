@@ -58,7 +58,7 @@
                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                  <input type="checkbox" id="edit-checkbox1" checked="checked" disabled="disabled" />
                </div>
-               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
+               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-required-checkbox="#edit-checkbox1" data-validate="length" data-length="1">
                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="edit-answer1" type="text" placeholder="Answer 1" required >
                    <span class="gt-icon"></span>
                </div>
@@ -68,7 +68,7 @@
                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                  <input type="checkbox" id="edit-checkbox2" checked="checked" disabled="disabled"/>
                </div>
-               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
+               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-required-checkbox="#edit-checkbox2" data-validate="length" data-length="1">
                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="edit-answer2" type="text" placeholder="Answer 2" required >
                    <span class="gt-icon"></span>
                </div>
@@ -78,7 +78,7 @@
                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                  <input type="checkbox" id="edit-checkbox3"/>
                </div>
-               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
+               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-required-checkbox="#edit-checkbox3" data-validate="length" data-length="1">
                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="edit-answer3" type="text" placeholder="Answer 3" >
                    <span class="gt-icon"></span>
                </div>
@@ -88,7 +88,7 @@
                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1">
                  <input type="checkbox" id="edit-checkbox4"/>
                </div>
-               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
+               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-required-checkbox="#edit-checkbox4" data-validate="length" data-length="1">
                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="edit-answer4" type="text" placeholder="Answer 4" >
                    <span class="gt-icon"></span>
                </div>
