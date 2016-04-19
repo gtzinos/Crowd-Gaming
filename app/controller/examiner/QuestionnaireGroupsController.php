@@ -1,9 +1,12 @@
 <?php
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 
-	class QuestionnaireGroupsController extends Controller{
+	class QuestionnaireGroupsController extends Controller
+	{
 
-	    public function init(){
+	    public function init()
+	    {
 	      	global $_CONFIG;
 
 	      	$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
@@ -15,19 +18,31 @@
 	      	$this->defSection("CREATE_QUESTION", "examiner/CreateQuestionView.php");
 	    }
 
-		public function run(){
+		public function run()
+		{
 
-			if( !isset( $this->params[1]) ){
+			if( !isset( $this->params[1]) )
+			{
 				$this->redirect("questionnaireslist");
 			}
 
 			$participationMapper = new ParticipationMapper;
 
-			if( ! $participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2) ){
+			if( ! $participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2) )
+			{
 				$this->redirect("questionnaireslist");
 			}
 
-			$this->setArg( "questionnaire-id" , $this->params[1] );
+			$questionnaireMapper = new QuestionnaireMapper;
+
+			$questionnaire = $questionnaireMapper->findById( $this->params[1] );
+
+			if( $questionnaire === null )
+			{
+				$this->redirect("questionnaireslist");
+			} 
+
+			$this->setArg( "questionnaire" , $questionnaire );
 
 		}
 
