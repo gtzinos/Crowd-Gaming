@@ -149,6 +149,21 @@
 			$this->deleteById($question->getId());
 		}
 
+		
+		public function findLastCreatedId($question_group_id){
+			$query = "SELECT `id` FROM `Question` WHERE `question_group_id`=? ORDER BY `id` DESC LIMIT 1";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $question_group_id);
+
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return $set->get('id');
+			return -1;
+
+		}
+
 		public function deleteById($questionId){
 			$query = "DELETE FROM `Question` WHERE `id`=?";
 

@@ -77,6 +77,7 @@
 				return null;
 		}
 
+
 		public function answerBelongsToQuestion($answerId , $questionId){
 			$query = "SELECT * FROM `Answer` WHERE `id`=? AND `question_id`=?";
 
@@ -146,7 +147,7 @@
 		}
 
 		private function _create($answer){
-			$query = "INSERT INTO `Answer`(`question_id`, `answer`, `is_correct`, `creation_date`) VALUES (?,?,?,?,CURRENT_TIMESTAMP)";
+			$query = "INSERT INTO `Answer`(`question_id`, `answer`, `is_correct`, `creation_date`) VALUES (?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
 

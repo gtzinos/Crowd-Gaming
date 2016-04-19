@@ -42,6 +42,7 @@
 				$this->redirect("questionnaireslist");
 			} 
 
+			$this->setArg( "questionnaire-id" , $questionnaire->getId() );
 			$this->setArg( "questionnaire" , $questionnaire );
 
 		}
