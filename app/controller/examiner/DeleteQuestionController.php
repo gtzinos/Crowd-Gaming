@@ -2,16 +2,18 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
-	include_once '../app/model/mappers/user/UserMapper.php';
 
-	class DeleteQuestionController extends Controller{
+	class DeleteQuestionController extends Controller
+	{
 		
-		public function init(){
+		public function init()
+		{
 			$this->setOutputType( OutputType::ResponseStatus );
 			
 		}
 
-		public function run(){
+		public function run()
+		{
 
 			/*
 				ResponseCode
@@ -21,19 +23,13 @@
 				 3 Database error
 				-1 No Data
 			 */
-			if( isset( $_POST["question-id"] , $_POST["password"] ) ){
-
-				$userMapper = new UserMapper;
-
-				if( $userMapper->authenticate( $_SESSION["USER_EMAIL"] , $_POST["password"] ) === null ){
-					
-					$this->setOutput("response-code" , 1);
-					return;
-				}
+			if( isset( $_POST["question-id"] ) )
+			{
 
 				$participationMapper = new ParticipationMapper;
 
-				if( !$participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) ){
+				if( !$participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) )
+				{
 
 					$this->setOutput("response-code" , 2);
 					return;
@@ -43,7 +39,8 @@
 				$answerMapper = new AnswerMapper;
 
 
-				try{
+				try
+				{
 					DatabaseConnection::getInstance()->startTransaction();
 
 					$answerMapper->deleteByQuestion( $_POST["question-id"] );
@@ -52,7 +49,9 @@
 					DatabaseConnection::getInstance()->commit();
 					$this->setOutput("response-code" , 0); 
 
-				}catch(DatabaseException $ex){
+				}
+				catch(DatabaseException $ex)
+				{
 
 					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 3);
