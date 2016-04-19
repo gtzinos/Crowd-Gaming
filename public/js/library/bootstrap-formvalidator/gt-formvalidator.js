@@ -229,6 +229,17 @@ $(document).ready(function() {
       }
 
       /*
+        If have a required checkbox
+      */
+      if(group.data('required-checkbox') && !first_time)
+      {
+        if(!$(group.data('required-checkbox')).prop("checked"))
+        {
+          first_time = true;
+        }
+      }
+
+      /*
         If it was the first time
         or no value to check
       */
