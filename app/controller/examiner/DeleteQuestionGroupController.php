@@ -3,7 +3,6 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
-	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class DeleteQuestionGroupController extends Controller{
 		
@@ -21,15 +20,7 @@
 				 3 Database error
 				-1 No Data
 			 */
-			if( isset( $_POST["question-group-id"] , $_POST["password"] ) ){
-
-				$userMapper = new UserMapper;
-
-				if( $userMapper->authenticate( $_SESSION["USER_EMAIL"] , $_POST["password"] ) === null ){
-					
-					$this->setOutput("response-code" , 1);
-					return;
-				}
+			if( isset( $_POST["question-group-id"] ) ){
 
 				$participationMapper = new ParticipationMapper;
 
