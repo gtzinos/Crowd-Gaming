@@ -1,15 +1,19 @@
 <?php
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 
-	class EditQuestionController extends Controller{
+	class EditQuestionController extends Controller
+	{
 		
-		public function init(){
+		public function init()
+		{
 			$this->setOutputType( OutputType::ResponseStatus );
 			
 		}
 
-		public function run(){
+		public function run()
+		{
 
 			/*
 				Response Code
@@ -23,35 +27,50 @@
 			   -1 No data
 			 */
 
-			if( isset( $_POST["question-id"] , $_POST["question-text"] , $_POST["time-to-answer"] , $_POST["multiplier"] ) ){
+			if( isset( $_POST["question-id"] , 
+					   $_POST["question-text"] , 
+					   $_POST["time-to-answer"] , 
+					   $_POST["multiplier"],
+					   $_POST["correct"],
+					   $_POST["answer1"],
+					   $_POST["answer2"],
+					   $_POST["answer3"],
+					   $_POST["answer4"] ) )
+			{
 
 				$participationMapper = new ParticipationMapper;
+				$answerMapper = new AnswerMapper;
 				$questionMapper = new QuestionMapper;
 
 				$question = $questionMapper->findById($_POST["question-id"] );
 
-				if( $question === null ){
+				if( $question === null )
+				{
 					$this->setOutput('response-code' , 1);
 					return;
 				}
 
-				if( !$participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) ){
+				if( !$participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) )
+				{
 					// Invalid Access
 					$this->setOutput('response-code' , 2);
 					return;
 				}
 
-				if( strlen( $_POST["question-text"] ) < 2 || strlen($_POST["question-text"] ) >255 ){
+				if( strlen( $_POST["question-text"] ) < 2 || strlen($_POST["question-text"] ) >255 )
+				{
 					$this->setOutput('response-code' , 3);
 					return;
 				}
 
-				if( !is_numeric($_POST["time-to-answer"]) || $_POST["time-to-answer"]<5 || $_POST["time-to-answer"] > 180 ){
+				if( !is_numeric($_POST["time-to-answer"]) || $_POST["time-to-answer"]<5 || $_POST["time-to-answer"] > 180 )
+				{
 					$this->setOutput('response-code' , 4);
 					return;
 				} 
 
-				if( !is_numeric($_POST["multiplier"]) || $_POST["multiplier"] <= 0 ){
+				if( !is_numeric($_POST["multiplier"]) || $_POST["multiplier"] <= 0 )
+				{
 					$this->setOutput('response-code' , 5);
 					return;
 				}
@@ -61,14 +80,40 @@
 				$question->setMultiplier( $_POST["multiplier"] );
 				$question->setTimeToAnswer( $_POST["time-to-answer"] );
 
-				try{
+				$answers = $answerMapper->findByQuestion( $question->getId() );
 
+				for( $i= 1 ; $i < 5 ; $i++ )
+				{
+					if( strlen($_POST["answer".$i]) < 2 && strlen($_POST["answer".$i]) > 255 )
+					{
+						$this->setOutput('response-code' , 6);
+						return;
+					}
+
+					$answer->setAnswerText( $_POST["answer".$i] );
+					$answer->setCorrect( $_POST["correct"] == $i ? true : false );
+
+					$answers[] = $answer;	
+				}
+
+				try
+				{
+					DatabaseConnection::getInstance()->startTransaction();
 					
 					$questionMapper->persist($question);
 
-					$this->setOutput("response-code" , 0);
-				}catch(DatabaseException $e){
+					foreach ($answers as $answer) 
+					{
+						$answer->setQuestionId( $question->getId() );
+						$answerMapper->persist($answer);
+					}
 
+					DatabaseConnection::getInstance()->commit();
+					$this->setOutput("response-code" , 0);
+				}
+				catch(DatabaseException $e)
+				{
+					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 6);
 				}
 
