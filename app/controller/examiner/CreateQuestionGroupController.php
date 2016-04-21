@@ -47,6 +47,7 @@
 			}
 
 			$questionnaireId = $this->params[1];
+			$this->setArg("questionnaire-id" , $this->params[1]);
 
 
 			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] ) )
