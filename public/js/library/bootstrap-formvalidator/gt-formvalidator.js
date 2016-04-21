@@ -2,7 +2,6 @@
 var path = document.currentScript.src;
 var dir = path.substring(0, path.lastIndexOf('/'));
 $(document).ready(function() {
-
     /*
       Include change focus events
     */

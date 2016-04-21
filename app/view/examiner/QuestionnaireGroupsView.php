@@ -9,8 +9,9 @@
   */
     var questionnaire_id = '<?php print get("questionnaire")->getId(); ?>'
   </script>
-<script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroups.js"); ?>"> </script>
-<script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroups.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
   <!-- Title -->
@@ -39,7 +40,6 @@
 
   </div>
 
-  <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
     <?php
         load("CREATE_QUESTION");
         load("QUESTION_LIST");
@@ -54,7 +54,7 @@
         $counter = 0;
         foreach ($questionGroups as $questionGroup) {
             $counter +=1;
-            print   "<a href='#' class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>
+            print   "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qgitem" . $questionGroup->getId() . "'>
                         <div class='col-xs-12'>
                             <h4 class='list-group-item-heading'>" . $questionGroup->getName() . "</h4>
                         </div>
@@ -66,7 +66,7 @@
                                 <button class='btn' type='button'>Edit</button>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>
-                                <button class='btn' type='button'>Delete</button>
+                                <button class='btn' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>
                             </div>
                             <div class='col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3'>
                                 <button class='btn btn-link' type='button' onclick=\"showModal('question-list'); show_questions(" . $questionGroup->getId() . ");\" >Questions <span class='badge' id='qcounter" . $questionGroup->getId() . "'>" . $questionGroup->getQuestionCount() . "</span></button>
@@ -76,7 +76,7 @@
         }
         if($counter == 0)
         {
-          print "<a href='#' class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>
+          print "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>
                       <div class='col-xs-12'>
                           <div class='alert alert-danger'>We don't have any question group in our database. </div>
                       </div>

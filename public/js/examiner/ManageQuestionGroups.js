@@ -263,7 +263,7 @@ function show_questions_response(question_group_id)
                           + questions.questions[i].question_text +
                       "</span>" +
                       "<span onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
-                      "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "')\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
+                      "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "',false)\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
                   "</div>";
       }
 
@@ -408,11 +408,11 @@ function update_question(question_id)
 
           if($("#edit-answer3").val().length > 0 && $("#edit-checkbox3").is(':checked'))
           {
-            this.variables += "&answer3=" + $("#answer3").val();
+            this.variables += "&answer3=" + $("#edit-answer3").val();
           }
           if($("#edit-answer4").val().length > 0 && $("#edit-checkbox4").is(':checked'))
           {
-            this.variables += "&answer4=" + $("#answer4").val();
+            this.variables += "&answer4=" + $("#edit-answer4").val();
           }
 
           return this.variables;
@@ -647,6 +647,8 @@ function response_create_question(question_group_id)
         3 time-to-answer validation error
         4 Multiplier validation error
         5 Database Error
+        6 Answer Text validation error
+        7 Correct answer error
         -1 No data
       */
 
@@ -739,6 +741,22 @@ function response_create_question(question_group_id)
          response_message += "<div class='alert alert-danger'>General database error.</div>";
         }
         /*
+           If response message == 6
+           6 Answer Text validation error
+        */
+        else if(xmlHttp.responseText.localeCompare("6") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Answers didnt valid.</div>";
+        }
+        /*
+           If response message == 7
+           7 Correct answer error
+        */
+        else if(xmlHttp.responseText.localeCompare("7") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This is not a valid correct answer.</div>";
+        }
+        /*
            If response message == -1
            No data error
         */
@@ -761,31 +779,37 @@ function response_create_question(question_group_id)
 }
 
 /*
-  Delete specific question
+  Ask to delete a specific question
 */
-function delete_question(question_group_id,question_id)
+function delete_question(question_group_id,question_id,ask_required)
 {
-  var Required = {
-      Url() { return webRoot + "delete-question"; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        /*
-          Variables we will send
-        */
-        this.variables = "question-id=" + question_id;
-        return this.variables;
+  if(ask_required == false)
+  {
+    display_confirm_dialog("Confirm","Are you sure to delete it ?","btn-default","btn-default","black","delete_question(" + question_group_id + "," + question_id + ",true)","");
+  }
+  else {
+    var Required = {
+        Url() { return webRoot + "delete-question"; },
+        SendType() { return "POST"; },
+        variables : "",
+        Parameters() {
+          /*
+            Variables we will send
+          */
+          this.variables = "question-id=" + question_id;
+          return this.variables;
+        }
       }
-    }
 
-    var Optional = {
-      ResponseMethod() { return "delete_question_response(" + question_group_id + "," + question_id + ")"; }
-    };
+      var Optional = {
+        ResponseMethod() { return "delete_question_response(" + question_group_id + "," + question_id + ")"; }
+      };
 
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
+      /*
+        Send ajax request
+      */
+      sendAjaxRequest(Required,Optional);
+  }
 }
 
 /*
@@ -896,32 +920,37 @@ function response_edit_question_group()
 }
 
 /*
-  delete question group
+  Ask to delete question group
 */
-function delete_question_group(question_group_id)
+function delete_question_group(question_group_id,ask_required)
 {
-  //confirm("Are you sure, you want to delete this question group ? All data will delete from our system.");
-  var Required = {
-      Url() { return webRoot + "delete-question-group"; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        /*
-          Variables we will send
-        */
-        this.variables = "question-group-id=" + question_group_id;
-        return this.variables;
+  if(ask_required == false)
+  {
+    display_confirm_dialog("Confirm","Are you sure to delete it ?","btn-default","btn-default","black","delete_question_group(" + question_group_id + ",true)","");
+  }
+  else {
+    var Required = {
+        Url() { return webRoot + "delete-question-group"; },
+        SendType() { return "POST"; },
+        variables : "",
+        Parameters() {
+          /*
+            Variables we will send
+          */
+          this.variables = "question-group-id=" + question_group_id;
+          return this.variables;
+        }
       }
-    }
 
-    var Optional = {
-      ResponseMethod() { return "delete_question_group_response(" + question_group_id + ")"; }
-    };
+      var Optional = {
+        ResponseMethod() { return "delete_question_group_response(" + question_group_id + ")"; }
+      };
 
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
+      /*
+        Send ajax request
+      */
+      sendAjaxRequest(Required,Optional);
+  }
 }
 
 /*
@@ -941,7 +970,6 @@ function delete_question_group_response(question_group_id)
         3 Database error
         -1 No Data
       */
-      alert(xmlHttp.responseText);
       /*
         Debug
       */
