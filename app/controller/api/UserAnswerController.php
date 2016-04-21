@@ -2,30 +2,24 @@
 	include_once 'AuthenticatedController.php';
 	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
+	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 
-	class UserAnswerController extends AuthenticatedController{
+	class UserAnswerController extends AuthenticatedController
+	{
 		
-		public function init(){
+		public function init()
+		{
 		}
 
-		public function run(){
+		public function run()
+		{
 			
 			$userId = $this->authenticateToken();
-			$coordinates = $this->getCoordinates();		
-
 			$response = array();
 
-			/*
-				Check if coordinates were given
-			 */
-			if( $coordinates == null){
-				$response["code"] = "403";
-				$response["message"] = "Forbidden, Coordinates not provided.";
 
-				http_response_code(403);
-				print json_encode($response);
-				return;
-			}
 
 			$httpBody = file_get_contents('php://input');
 			$parameters = json_decode($httpBody,true);
@@ -33,7 +27,8 @@
 			/*
 				Check if parameters are set
 			 */
-			if( !isset($parameters[ "question-id"] , $parameters["answer-id"] , $parameters["time-answered"]) ){
+			if( !isset($parameters[ "question-id"] , $parameters["answer-id"] , $parameters["time-answered"]) )
+			{
 				$response["code"] = "400";
 				$response["message"] = "Invalid Request, question-id and/or answer-id were not given";
 
@@ -41,14 +36,88 @@
 				print json_encode($response);
 				return;
 			}
-			
+
 			$userAnswerMapper = new UserAnswerMapper;
 			$answerMapper = new AnswerMapper;
+			$questionMapper = new QuestionMapper;
+			$questionGroupMapper = new QuestionGroupMapper;
+			$questionGroupParticipationMapper = new QuestionGroupParticipationMapper;
+
+			$question = $questionMapper->findById( $parameters["question-id"] );
+			$groupId = $question->getQuestionGroupId();
+			
+			$coordinates = null;
+			/*
+				Check question group constraints
+			 */
+			if( $questionGroupMapper->requiresLocation($groupId) && $questionGroupParticipationMapper->findCount($groupId)>0 )
+			{
+				$coordinates = $this->getCoordinates();	
+				if( $coordinates == null)
+				{
+					$response["code"] = "403";
+					$response["message"] = "Forbidden, Coordinates not provided.";
+
+					http_response_code(403);
+					print json_encode($response);
+					return;
+				}
+				else if( ! ( $questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"]) &&
+						     $questionGroupParticipationMapper->participates($userId , $groupId) ) )
+				{
+
+					$response["code"] = "403";
+					$response["message"] = "Forbidden, Invalid location or user not in participation group.";
+
+					http_response_code(403);
+					print json_encode($response);
+					return;
+				}
+			}
+			else if( $questionGroupMapper->requiresLocation($groupId) && $questionGroupParticipationMapper->findCount($groupId)==0 )
+			{
+				$coordinates = $this->getCoordinates();	
+				if( $coordinates == null)
+				{
+					$response["code"] = "403";
+					$response["message"] = "Forbidden, Coordinates not provided.";
+
+					http_response_code(403);
+					print json_encode($response);
+					return;
+				}
+				else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) )
+				{
+
+					$response["code"] = "403";
+					$response["message"] = "Forbidden, Invalid location.";
+
+					http_response_code(403);
+					print json_encode($response);
+					return;
+				}
+			}
+			else if( $questionGroupParticipationMapper->findCount($groupId)>0 )
+			{
+				if( !$questionGroupParticipationMapper->participates($userId , $groupId) )
+				{
+
+					$response["code"] = "403";
+					$response["message"] = "Forbidden, User not in participation group.";
+
+					http_response_code(403);
+					print json_encode($response);
+					return;
+				}
+			}
+
 
 			/*
-				Check if the user can answer this question and if the answer he choose belong to that question
+				Check if the user can answer this question and if the answer he choose belongs to that question
 			 */
-			if( $userAnswerMapper->canAnswer($parameters[ "question-id"] , $userId , $coordinates["latitude"] , $coordinates["longitude"]) && $answerMapper->answerBelongsToQuestion($parameters["answer-id"] , $parameters["question-id"])){
+			if( $userAnswerMapper->canAnswer($parameters[ "question-id"] , $userId ,$groupId) && 
+				$answerMapper->answerBelongsToQuestion($parameters["answer-id"] , $parameters["question-id"]))
+			{
 
 				/*
 					Create the object
@@ -58,27 +127,33 @@
 				$userAnswer->setUserId($userId);
 				$userAnswer->setQuestionId($parameters[ "question-id"]);
 				$userAnswer->setAnswerId($parameters["answer-id"]);
-				$userAnswer->getAnsweredTime($parameters["time-answered"]);
-				$userAnswer->setLatitude($coordinates["latitude"]);
-				$userAnswer->setLongitude($coordinates["longitude"]);
-
+				$userAnswer->setAnsweredTime($parameters["time-answered"]);
+				$userAnswer->setLatitude( $coordinates !== null ? $coordinates["latitude"] : null );
+				$userAnswer->setLongitude( $coordinates !== null ? $coordinates["longitude"] : null);
+				$userAnswer->setCorrect( $answerMapper->isCorrect( $parameters["answer-id"] ) );
 				/*
 					Try to insert it in the database
 				 */
-				try{
+				try
+				{
 					
 					$userAnswerMapper->persist($userAnswer);
 
 					$response["code"] = "200";
 					$response["message"] = "All ok , Answer was registered.";
 
-				}catch(DatabaseException $e){
+				}
+				catch(DatabaseException $e)
+				{
+					print $e->getMessage();
 					$response["code"] = "500";
 					$response["message"] = "Internal server error.";
 					http_response_code(500);
 				}
 
-			}else{
+			}
+			else
+			{
 				$response["code"] = "403";
 				$response["message"] = "Forbidden, You cant answer this question";
 

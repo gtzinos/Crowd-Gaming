@@ -1,21 +1,25 @@
 <?php
 	include_once '../app/model/mappers/user/UserMapper.php';
 
-	abstract class AuthenticatedController extends Controller{
+	abstract class AuthenticatedController extends Controller
+	{
 		
-		protected function authenticateToken(){
+		protected function authenticateToken()
+		{
 			$headers = getallheaders();
 
 			/*
 				Check if the Autherization is set and compare it with the values in the db
 			 */
-			if( isset( $headers["Authorization"]) ){
+			if( isset( $headers["Authorization"]) )
+			{
 
 				$userMapper = new UserMapper;
 
 				$user = $userMapper->authenticateByToken($headers["Authorization"]);
 
-				if(is_object($user)){
+				if(is_object($user))
+				{
 					return $user->getId();
 				}
 			}
@@ -31,10 +35,12 @@
 			die();
 		}
 
-		protected function getCoordinates(){
+		protected function getCoordinates()
+		{
 			$headers = getallheaders();
 
-			if( isset( $headers["X-Coordinates"] ) ){
+			if( isset( $headers["X-Coordinates"] ) )
+			{
 				$args = explode( ";" ,$headers["X-Coordinates"]  );
 
 				$coordinates["latitude"] = $args[0];

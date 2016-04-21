@@ -27,14 +27,13 @@
 		/*
 			Checks if the user can answer that question 
 		 */
-		public function canAnswer($questionId , $userId , $latitude , $longitude){
+		public function canAnswer($questionId , $userId , $groupId){
 			/*
 				Check if question belongs to questionnaire.
 			 */
 			$questionMapper = new QuestionMapper;
 
 			
-			$groupId = $questionMapper->findGroupIdIfParticipates($questionId , $userId, 1 , $latitude , $longitude);
 
 			if( $groupId !==  null ){
 				$question = $questionMapper->findNextQuestion($userId,$groupId);
@@ -176,16 +175,17 @@
 		}
 
 		private function _create($userAnswer){
-			$query = "INSERT INTO `UserAnswer`(`user_id`, `answer_id`, `question_id`, `latitude`, `longitude`, `answered_time`) VALUES (?,?,?,?,?,?)";
+			$query = "INSERT INTO `UserAnswer`(`user_id`, `answer_id`, `question_id`, `latitude`, `longitude`, `answered_time`,`is_correct` ,`answered_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('iiiddi' ,
+			$statement->setParameters('iiiddii' ,
 				$userAnswer->getUserId(),
 				$userAnswer->getAnswerId(),
 				$userAnswer->getQuestionId(),
 				$userAnswer->getLatitude(),
 				$userAnswer->getLongitude(),
-				$userAnswer->getAnsweredTime() );
+				$userAnswer->getAnsweredTime(),
+				$userAnswer->getCorrect() );
 
 			$statement->executeUpdate();
 		}

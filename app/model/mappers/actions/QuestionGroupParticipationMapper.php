@@ -1,7 +1,8 @@
 <?php
+	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/actions/QuestionGroupParticipation.php';
 
-	class QuestionGroupParticipationMapper
+	class QuestionGroupParticipationMapper extends DataMapper
 	{
 
 
@@ -43,6 +44,20 @@
 				return false;
 			}
 		}
+
+		public function findCount( $groupId )
+		{
+			$query = "SELECT count(*) as counter FROM `QuestionGroupParticipation` WHERE `question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$groupId);
+
+			$set = $statement->execute();
+
+			if($set->next())
+				return $set->get("counter");
+			return 0;
+		} 
 
 
 		public function delete($participation)

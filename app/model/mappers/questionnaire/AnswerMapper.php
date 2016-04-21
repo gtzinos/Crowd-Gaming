@@ -77,6 +77,18 @@
 				return null;
 		}
 
+		public function isCorrect($answerId){
+			$query = "SELECT * FROM `Answer` WHERE `id`=? and `is_correct`=1";
+			
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $answerId);
+
+			$set = $statement->execute();
+
+			if( $set->getRowCount() > 0 )
+				return true;
+			return false;
+		}
 
 		public function answerBelongsToQuestion($answerId , $questionId){
 			$query = "SELECT * FROM `Answer` WHERE `id`=? AND `question_id`=?";

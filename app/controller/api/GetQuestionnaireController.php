@@ -2,24 +2,29 @@
 	include_once 'AuthenticatedController.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 
-	class GetQuestionnaireController extends AuthenticatedController{
+	class GetQuestionnaireController extends AuthenticatedController
+	{
 		
-		public function init(){
+		public function init()
+		{
 		
 		}
 
-		public function run(){
+		public function run()
+		{
 			$userId = $this->authenticateToken();
 
 			$questionnaireId = null;
-			if( isset( $this->params[1] ) ){
+			if( isset( $this->params[1] ) )
+			{
 				$questionnaireId = $this->params[1];
 			}	
 
 			$questionnaireMapper = new QuestionnaireMapper;
 			$response = array();
 
-			if( $questionnaireId === null ){
+			if( $questionnaireId === null )
+			{
 				/*
 					Get all the questionnaires that the user participates as player
 				 */
@@ -29,7 +34,8 @@
 				$response["message"] = "Completed";
 
 				$questionnaireArray = array();
-				foreach ($questionnaires as $questionnaire) {
+				foreach ($questionnaires as $questionnaire) 
+				{
 
 					$questionnaireArrayItem["id"] = $questionnaire->getId();
 					$questionnaireArrayItem["name"] = $questionnaire->getName();
@@ -41,13 +47,16 @@
 
 				$response["questionnaire"] = $questionnaireArray;
 
-			}else{
+			}
+			else
+			{
 				/*
 					Get the questionnaire by id. The user must participate to this questionnaire
 				 */
 				$questionnaire = $questionnaireMapper->findQuestionnaireByParticipation($userId,$questionnaireId ,1);
 
-				if($questionnaire !=null ){
+				if($questionnaire !=null )
+				{
 					$response["code"] = "200";
 					$response["message"] = "Completed";
 
@@ -55,7 +64,9 @@
 					$response["questionnaire"]["name"] = $questionnaire->getName();
 					$response["questionnaire"]["description"] = $questionnaire->getDescription();
 					$response["questionnaire"]["creation-date"] = $questionnaire->getCreationDate();
-				}else{
+				}
+				else
+				{
 					http_response_code(404);
 					$response["code"] = "404";
 					$response["message"] = "Not Found";

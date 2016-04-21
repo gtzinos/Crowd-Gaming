@@ -3,9 +3,11 @@
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/questionnaire/QuestionGroup.php';
 
-	class QuestionGroupMapper extends DataMapper{
+	class QuestionGroupMapper extends DataMapper
+	{
 
-		public function findAll(){
+		public function findAll()
+		{
 			$query = "SELECT * FROM `QuestionGroup`";
 			$statement = $this->getStatement($query);
 
@@ -13,7 +15,8 @@
 
 			$questionGroups = array();
 
-			while($set->next()){
+			while($set->next())
+			{
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
@@ -30,7 +33,8 @@
 			return $questionGroups;
 		}
 
-		public function findByQuestionnaire($questionnaireId){
+		public function findByQuestionnaire($questionnaireId)
+		{
 			$query = "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -40,7 +44,8 @@
 
 			$questionGroups = array();
 
-			while($set->next()){
+			while($set->next())
+			{
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
@@ -57,7 +62,8 @@
 			return $questionGroups;
 		}
 
-		public function findByQuestionnaireLimited($questionnaireId , $offset , $count){
+		public function findByQuestionnaireLimited($questionnaireId , $offset , $count)
+		{
 			$query =   "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?
 						ORDER BY id
 						LIMIT ?,?";
@@ -69,7 +75,8 @@
 
 			$questionGroups = array();
 
-			while($set->next()){
+			while($set->next())
+			{
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
@@ -86,7 +93,8 @@
 			return $questionGroups;
 		}
 
-		public function findByQuestionnaireAndId($questionGroupId , $questionnaireId){
+		public function findByQuestionnaireAndId($questionGroupId , $questionnaireId)
+		{
 			$query = "SELECT * FROM `QuestionGroup` WHERE `id`=? AND `questionnaire_id`=?";
 			
 			$statement = $this->getStatement($query);
@@ -94,7 +102,8 @@
 
 			$set = $statement->execute();
 
-			if($set->next()){
+			if($set->next())
+			{
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
@@ -110,7 +119,8 @@
 				return null;
 		}
 
-		public function findById($questionGroupId){
+		public function findById($questionGroupId)
+		{
 			$query = "SELECT * FROM `QuestionGroup` WHERE `id`=?";
 			
 			$statement = $this->getStatement($query);
@@ -118,7 +128,8 @@
 
 			$set = $statement->execute();
 
-			if($set->next()){
+			if($set->next())
+			{
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setId( $set->get("id") );
@@ -134,7 +145,22 @@
 				return null;
 		}
 
-		public function nameExists($name){
+
+		public function requiresLocation( $groupId )
+		{
+			$query = "SELECT `id` FROM `QuestionGroup` WHERE `id`=? AND ( `latitude` is null OR `longitude` is null OR `radius` is null )";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $groupId);
+			$set = $statement->execute();
+
+			if( $set->getRowCount() > 0)
+				return false;
+			return true;
+		} 
+
+		public function nameExists($name)
+		{
 			$query  = "SELECT * FROM `QuestionGroup` WHERE `name`=?";
 
 			$statement = $this->getStatement($query);
@@ -147,7 +173,8 @@
 			return false;
 		}
 
-		public function verifyLocation($groupId , $latitude , $longitude){
+		public function verifyLocation($groupId , $latitude , $longitude)
+		{
 
 			$query = "SELECT * FROM `QuestionGroup`
 					  WHERE `id`=?
@@ -191,7 +218,8 @@
 			return false;
 		}
 
-		public function groupBelongsTo($groupId , $questionnaireId){
+		public function groupBelongsTo($groupId , $questionnaireId)
+		{
 			$query  = "SELECT `Questionnaire`.`id` FROM `QuestionGroup` INNER JOIN `Questionnaire` ON `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` WHERE `QuestionGroup`.`id`=? AND `QuestionGroup`.`questionnaire_id`=? ";
 
 			$statement = $this->getStatement($query);
@@ -204,11 +232,13 @@
 			return false;
 		}
 
-		public function delete($questionGroup){
+		public function delete($questionGroup)
+		{
 			$this->deleteById($questionGroup->getId());
 		}
 
-		public function deleteById($questionGroupId){
+		public function deleteById($questionGroupId)
+		{
 			$query = "DELETE FROM `QuestionGroup` WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
@@ -217,7 +247,8 @@
 			$statement->executeUpdate();
 		}
 
-		public function deleteByQuestionnaire($questionnaireId){
+		public function deleteByQuestionnaire($questionnaireId)
+		{
 			$query = "DELETE FROM `QuestionGroup` WHERE `questionnaire_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -226,15 +257,20 @@
 			$statement->executeUpdate();
 		}
 
-		public function persist($questionGroup){
-			if( $questionGroup->getId() === null ){
+		public function persist($questionGroup)
+		{
+			if( $questionGroup->getId() === null )
+			{
 				$this->_create($questionGroup);
-			}else{
+			}
+			else
+			{
 				$this->_update($questionGroup);
 			}
 		}
 
-		private function _create($questionGroup){
+		private function _create($questionGroup)
+		{
 			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`,`latitude`, `longitude`, `radius`, `creation_date`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
@@ -249,7 +285,8 @@
 			$statement->executeUpdate();
 		}
 
-		private function _update($questionGroup){
+		private function _update($questionGroup)
+		{
 			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);

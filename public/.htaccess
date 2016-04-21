@@ -2,7 +2,8 @@ RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/([^?]*)$ api.php?path=$1 [NC,L,QSA]
+
+RewriteRule ^rest_api/([^?]*)$ api.php?path=$1 [NC,L,QSA]
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -3,18 +3,22 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 
-	class GetQuestionGroupController extends AuthenticatedController{
+	class GetQuestionGroupController extends AuthenticatedController
+	{
 		
-		public function init(){
+		public function init()
+		{
 		}
 
-		public function run(){
+		public function run()
+		{
 			$userId = $this->authenticateToken();
 
 			$groupId = null;
 			$questionnaireId = $this->params[1];
 
-			if( isset( $this->params[3]) ){
+			if( isset( $this->params[3]) )
+			{
 				$groupId = $this->params[3];
 			}
 
@@ -23,7 +27,8 @@
 
 			$response = array();
 
-			if( !$participationMapper->participates($userId , $questionnaireId , 1)  ){
+			if( !$participationMapper->participates($userId , $questionnaireId , 1)  )
+			{
 				/*
 					User doesnt participate to this questionnaire.
 				 */
@@ -32,7 +37,9 @@
 
 				http_response_code(403);
 
-			}else if( $groupId === null ){
+			}
+			else if( $groupId === null )
+			{
 				/*
 					Return all question group that belong to this questionnaire
 				 */
@@ -43,7 +50,8 @@
 
 				$response["question-group"] = array();
 
-				foreach ($questionGroups as $questionGroup) {
+				foreach ($questionGroups as $questionGroup) 
+				{
 
 					$arrayItem["name"] = $questionGroup->getName();
 					$arrayItem["latitude"] = $questionGroup->getLatitude();
@@ -56,13 +64,16 @@
 				}
 
 
-			}else{
+			}
+			else
+			{
 				/*
 					Return a specific question group
 				 */
 				$questionGroup = $questionGroupMapper->findByQuestionnaireAndId($groupId , $questionnaireId);
 
-				if($questionGroup !== null){
+				if($questionGroup !== null)
+				{
 
 					$response["code"] = "200";
 					$response["message"] = "Success";
@@ -74,7 +85,9 @@
 					$response["question-group"]["creation_date"] = $questionGroup->getCreationDate();
 					$response["question-group"]["id"] = $questionGroup->getId();
 				
-				}else{
+				}
+				else
+				{
 
 					http_response_code(404);
 					$response["code"] = "404";
