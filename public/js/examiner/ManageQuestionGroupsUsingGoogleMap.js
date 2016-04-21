@@ -31,9 +31,9 @@ function initialize()
   map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
   /*
-    Place a marker on current position
+    Place a marker on current position (After the window loading)
   */
-  findCurrentLocation();
+  //findCurrentLocation();
 
   /*
     On click event
@@ -45,7 +45,13 @@ function initialize()
       */
       placeMarker(event.latLng);
   });
-
+  /*
+    If Latitude && longitude didnt empty
+  */
+  if($("#latitude").val() != "" && $("#longitude").val() != "")
+  {
+    searchPosition();
+  }
 }
 /*
   On map load call initialize()
