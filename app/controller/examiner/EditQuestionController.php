@@ -90,10 +90,9 @@
 						return;
 					}
 
-					$answer->setAnswerText( $_POST["answer".$i] );
-					$answer->setCorrect( $_POST["correct"] == $i ? true : false );
+					$answers[$i-1]->setAnswerText( $_POST["answer".$i] );
+					$answers[$i-1]->setCorrect( $_POST["correct"] == $i ? true : false );
 
-					$answers[] = $answer;	
 				}
 
 				try
