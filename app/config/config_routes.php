@@ -32,6 +32,7 @@
 	Routes::add( 'questionnaire-create' , 'examiner/CreateQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-edit' , 'examiner/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'questionnaire-groups' , 'examiner/QuestionnaireGroupsController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'edit-question-group' , 'examiner/EditQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'questionnaire-workbench' , 'examiner/QuestionnaireWorkbenchController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-schedule' , 'examiner/QuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
