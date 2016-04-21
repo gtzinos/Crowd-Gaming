@@ -236,6 +236,14 @@ function show_questions(question_group_id)
     sendAjaxRequest(Required,Optional);
 }
 
+/*
+  Open question dialog
+*/
+function openQuestionDialog(question_group_id)
+{
+  $("#create-question").modal("show");
+  $("#create-question-confirm-butto").attr("onclick","create_question(" + question_group_id + ")");
+}
 
 /*
   Show questions response
