@@ -263,7 +263,7 @@ function show_questions_response(question_group_id)
                           + questions.questions[i].question_text +
                       "</span>" +
                       "<span onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
-                      "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "')\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
+                      "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "','false')\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
                   "</div>";
       }
 
@@ -761,31 +761,37 @@ function response_create_question(question_group_id)
 }
 
 /*
-  Delete specific question
+  Ask to delete a specific question
 */
-function delete_question(question_group_id,question_id)
+function delete_question(question_group_id,question_id,ask_required)
 {
-  var Required = {
-      Url() { return webRoot + "delete-question"; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        /*
-          Variables we will send
-        */
-        this.variables = "question-id=" + question_id;
-        return this.variables;
+  if(ask_required == "false")
+  {
+    display_confirm_dialog("Confirm","Are you sure to delete it ?","btn-default","btn-default","black","delete_question(" + question_group_id + "," + question_id + ",'true')","");
+  }
+  else {
+    var Required = {
+        Url() { return webRoot + "delete-question"; },
+        SendType() { return "POST"; },
+        variables : "",
+        Parameters() {
+          /*
+            Variables we will send
+          */
+          this.variables = "question-id=" + question_id;
+          return this.variables;
+        }
       }
-    }
 
-    var Optional = {
-      ResponseMethod() { return "delete_question_response(" + question_group_id + "," + question_id + ")"; }
-    };
+      var Optional = {
+        ResponseMethod() { return "delete_question_response(" + question_group_id + "," + question_id + ")"; }
+      };
 
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
+      /*
+        Send ajax request
+      */
+      sendAjaxRequest(Required,Optional);
+  }
 }
 
 /*
