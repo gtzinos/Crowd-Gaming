@@ -408,11 +408,11 @@ function update_question(question_id)
 
           if($("#edit-answer3").val().length > 0 && $("#edit-checkbox3").is(':checked'))
           {
-            this.variables += "&answer3=" + $("#answer3").val();
+            this.variables += "&answer3=" + $("#edit-answer3").val();
           }
           if($("#edit-answer4").val().length > 0 && $("#edit-checkbox4").is(':checked'))
           {
-            this.variables += "&answer4=" + $("#answer4").val();
+            this.variables += "&answer4=" + $("#edit-answer4").val();
           }
 
           return this.variables;
