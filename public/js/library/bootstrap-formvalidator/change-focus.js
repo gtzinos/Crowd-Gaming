@@ -8,23 +8,6 @@ $("gt-input-group").on("focusout",function() {
 });
 
 /*
-  When window loaded
-*/
-$(window).on("load",function(){
-
-  /*
-    Focus the first input element
-    from the document form
-    *We need this to call focus event
-    to check the fields
-  */
-  $(document).find("form:not(.filter) :input:visible:enabled:first").focus();
-  $(".form-control").each(function() {
-    validate($(this));
-  });
-});
-
-/*
   When a modal box will open
 */
 $('.modal').on('shown.bs.modal', function() {
@@ -342,3 +325,15 @@ function validate(item)
       button.prop('disabled', true);
   }
 }
+
+
+/*
+  Focus the first input element
+  from the document form
+  *We need this to call focus event
+  to check the fields
+*/
+$(document).find("form:not(.filter) :input:visible:enabled:first").focus();
+$(".form-control").each(function() {
+  validate($(this));
+});

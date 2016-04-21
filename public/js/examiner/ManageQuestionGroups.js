@@ -647,6 +647,8 @@ function response_create_question(question_group_id)
         3 time-to-answer validation error
         4 Multiplier validation error
         5 Database Error
+        6 Answer Text validation error
+        7 Correct answer error
         -1 No data
       */
 
@@ -737,6 +739,22 @@ function response_create_question(question_group_id)
         else if(xmlHttp.responseText.localeCompare("5") == 0)
         {
          response_message += "<div class='alert alert-danger'>General database error.</div>";
+        }
+        /*
+           If response message == 6
+           6 Answer Text validation error
+        */
+        else if(xmlHttp.responseText.localeCompare("6") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Answers didnt valid.</div>";
+        }
+        /*
+           If response message == 7
+           7 Correct answer error
+        */
+        else if(xmlHttp.responseText.localeCompare("7") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This is not a valid correct answer.</div>";
         }
         /*
            If response message == -1
