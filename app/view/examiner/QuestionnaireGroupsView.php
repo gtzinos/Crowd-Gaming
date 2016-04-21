@@ -19,7 +19,7 @@
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback">
     <div class="col-xs-offset-0 col-xs-2">
-      <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/1"; ?>">Add</a>
+      <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/" . get("questionnaire")->getId(); ?>">Add</a>
     </div>
   </div>
   <?php
@@ -57,7 +57,7 @@
                                 <button class='btn' type='button' onclick='openQuestionDialog(" . $questionGroup->getId() . ")'>New Question</button>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-1' style='padding:0px'>
-                                <button class='btn' type='button'>Edit</button>
+                                <a class='btn' type='button'>Edit</a>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>
                                 <button class='btn' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>

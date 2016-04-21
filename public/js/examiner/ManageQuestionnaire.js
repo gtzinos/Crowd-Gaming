@@ -90,7 +90,14 @@ function responseCreateQuestionnaire()
         */
          $("#questionnaire-create-response").show();
          $("#questionnaire-create-response").html("<div class='alert alert-success'>Your questionnaire created successfully.</div>");
-			}
+         $("#questionnaire-name").val("");
+         tinymce.activeEditor.setContent('<p></p>');
+         $("#editor").focus();
+         $("#message-required").val("-");
+         $("#message-required").focus();
+         $("#questionnaire-name").focus();
+         $("#message-required").focus();
+      }
 
       /*
         If server responsed with an error code
@@ -131,6 +138,14 @@ function responseCreateQuestionnaire()
         else if(xmlHttp.responseText.localeCompare("4") == 0)
         {
          response_message += "<div class='alert alert-danger'>General database error. Please try later!</div>";
+        }
+        /*
+           If response message == 5
+           Name already exists
+        */
+        else if(xmlHttp.responseText.localeCompare("5") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>This questionnaire name already exists.</div>";
         }
         /*
             Something going wrong
