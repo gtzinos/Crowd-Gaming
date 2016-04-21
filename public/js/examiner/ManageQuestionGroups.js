@@ -1,6 +1,32 @@
 
 $(document).ready(function(e) {
     /*
+      When he will add an anwser
+    */
+    $("input[id=answer3],input[id=answer4]").on("keyup change",function(e) {
+      if(e.target.value.length > 0)
+      {
+        /*
+          Calculate id
+        */
+        var id = e.target.id.replace("answer","");
+        /*
+          if id == 3
+        */
+        /*
+          Enable checkbox
+        */
+        $("#checkbox"+id).prop("checked",true);
+        if(id == 4)
+        {
+          $("#checkbox3").prop("checked",true);
+        }
+      }
+
+
+    });
+
+    /*
       When he will write an anwser
     */
     $("input[id=edit-answer3],input[id=edit-answer4]").on("keyup change",function(e) {
@@ -25,6 +51,56 @@ $(document).ready(function(e) {
 
 
     });
+
+    /*
+      On change check state
+    */
+    $("input[type=checkbox]").change(function(e) {
+        /*
+          Calculate the id
+        */
+        var id = e.target.id.replace('checkbox','');
+        /*
+          If he choosed to uncheck
+        */
+        if(!e.target.checked)
+        {
+          if(($("#answer3").val().length > 0 || $("#answer4").val().length > 0) && id == 3)
+          {
+            $("#checkbox3").prop("checked",true);
+            alert("Delete answer 3 and 4 text first !!!");
+            return false;
+          }
+          else if($("#answer4").val().length > 0 && id == 4)
+          {
+            $("#checkbox4").prop("checked",true);
+            alert("Delete answer 4 text first !!!");
+            return false;
+          }
+          else
+          {
+            $("#correct").val("-");
+            $("#correct option[value=" + id + "]").attr("disabled",true);
+            if(id == 3)
+            {
+              $("#checkbox4").prop('checked',false);
+              $("#correct option[value=4]").attr("disabled",true);
+            }
+          }
+        }
+        /*
+          If he choosed to check
+        */
+        else {
+            $("#correct option[value=" + id + "]").attr("disabled",false);
+            if(id == 4)
+            {
+              $("#checkbox3").prop("checked",true);
+              $("#correct option[value=3]").attr("disabled",false);
+            }
+        }
+    });
+
 
     /*
       On change check state
@@ -74,6 +150,8 @@ $(document).ready(function(e) {
             }
         }
     });
+
+
 });
 
 
@@ -328,11 +406,11 @@ function update_question(question_id)
           + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
           "&answer2=" + answers[1];
 
-          if($("#answer3").val().length > 0 && $("#checkbox3").is(':checked'))
+          if($("#edit-answer3").val().length > 0 && $("#edit-checkbox3").is(':checked'))
           {
             this.variables += "&answer3=" + $("#answer3").val();
           }
-          if($("#answer4").val().length > 0 && $("#checkbox4").is(':checked'))
+          if($("#edit-answer4").val().length > 0 && $("#edit-checkbox4").is(':checked'))
           {
             this.variables += "&answer4=" + $("#answer4").val();
           }
@@ -820,15 +898,114 @@ function response_edit_question_group()
 /*
   delete question group
 */
-function delete_question_group()
+function delete_question_group(question_group_id)
 {
-  confirm("Are you sure, you want to delete this question group ? All data will delete from our system.")
+  //confirm("Are you sure, you want to delete this question group ? All data will delete from our system.");
+  var Required = {
+      Url() { return webRoot + "delete-question-group"; },
+      SendType() { return "POST"; },
+      variables : "",
+      Parameters() {
+        /*
+          Variables we will send
+        */
+        this.variables = "question-group-id=" + question_group_id;
+        return this.variables;
+      }
+    }
+
+    var Optional = {
+      ResponseMethod() { return "delete_question_group_response(" + question_group_id + ")"; }
+    };
+
+    /*
+      Send ajax request
+    */
+    sendAjaxRequest(Required,Optional);
 }
 
 /*
-  response delete question group
+  Delete question group (Server response)
 */
-function response_delete_question_group()
+function delete_question_group_response(question_group_id)
 {
+  /*
+    if Server responsed back successfully
+  */
+  if (xmlHttp.readyState == 4) {
+    if (xmlHttp.status == 200) {
+      /*
+        0 All ok
+        1 Authentication failed
+        2 Access error
+        3 Database error
+        -1 No Data
+      */
+      alert(xmlHttp.responseText);
+      /*
+        Debug
+      */
+      //console.log(xmlHttp.responseText);
 
+      if(xmlHttp.responseText.localeCompare("0") == 0)
+      {
+          /*
+            Success message
+          */
+          $("#qgitem"+question_group_id).remove();
+      }
+
+      /*
+        If server responsed with an error code
+      */
+      else {
+
+        /*
+          Display an response message
+        */
+        var response_message = "";
+        /*
+           If response message == 1
+            Authentication failed
+        */
+        if(xmlHttp.responseText.localeCompare("1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Authentication failed.</div>";
+        }
+        /*
+           If response message == 2
+           Access error
+        */
+        else if(xmlHttp.responseText.localeCompare("2") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You dont have permission to delete this question group.</div>";
+        }
+        /*
+           If response message == 3
+           Database error
+        */
+        else if(xmlHttp.responseText.localeCompare("3") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>General database error.</div>";
+        }
+        /*
+           If response message == -1
+           No data error
+        */
+        else if(xmlHttp.responseText.localeCompare("-1") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You didn't send the required data.</div>";
+        }
+        /*
+            Something going wrong
+        */
+        else {
+          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
+        }
+
+      // $("#edit-question-response").show();
+      // $("#edit-question-response").html(response_message);
+      }
+    }
+  }
 }
