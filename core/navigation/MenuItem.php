@@ -1,6 +1,7 @@
 <?php
 	
-	class MenuItem{
+	class MenuItem
+	{
 
 		private $label;
 
@@ -10,40 +11,49 @@
 
 		private $action;
 
-		public function setType($type){
+		public function setType($type)
+		{
 			$this->type= $type;
 		}
 
-		public function getType(){
+		public function getType()
+		{
 			return $this->type;
 		}
 
-		public function setLabel($label){
+		public function setLabel($label)
+		{
 			$this->label = $label;
 		}
 
-		public function getLabel(){
+		public function getLabel()
+		{
 			return $this->label;
 		}
 
-		public function addItem($subItems){
+		public function addItem($subItems)
+		{
 			$this->subItemss[] = $subItems;
 		}
 
-		public function getItems(){
+		public function getItems()
+		{
 			return $this->subItemss;
 		}
 
-		public function setAction($action){
+		public function setAction($action)
+		{
 			$this->action = $action;
 		}
 
-		public function getAction(){
+		public function getAction()
+		{
 			return $this->action;
 		}
 
 
-		public static function create($label , $type , $action){
+		public static function create($label , $type , $action)
+		{
 			$menuItem = new MenuItem();
 			$menuItem->setLabel($label);
 			$menuItem->setType($type);

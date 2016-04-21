@@ -1,28 +1,34 @@
 <?php
 
-	class Menu{
+	class Menu
+	{
 
 		private $name;
 		private $menuItems;
 
-		public function setName($name){
+		public function setName($name)
+		{
 			$this->name = $name;
 		}
 
-		public function getName(){
+		public function getName()
+		{
 			return $this->name;
 		}
 
-		public function addItem($menuItem){
+		public function addItem($menuItem)
+		{
 			$this->menuItems[] = $menuItem;
 		}
 
-		public function getItems(){
+		public function getItems()
+		{
 			return $this->menuItems;
 		}
 
 
-		public static function create($name){
+		public static function create($name)
+		{
 			$menu = new Menu();
 			$menu->setName($name);
 

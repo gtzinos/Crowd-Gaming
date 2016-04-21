@@ -41,7 +41,15 @@
 		Moderator Menu
 	 */
 	$moderatorMenu = Menu::create("ModeratorMenu");
-	//Add menu items here
+
+	$menuItem = MenuItem::create("Menu" , "DROPDOWN" , "");
+	$menuItem->addItem( MenuItem::create("Sub Item 1" , "LINK" , "home") );
+	$menuItem->addItem( MenuItem::create("Sub Item 2" , "LINK" , "info") );
+	$menuItem->addItem( MenuItem::create("Sub Item 3" , "LINK" , "asdads") );
+
+	$moderatorMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
+	$moderatorMenu->addItem( $menuItem );
+	$moderatorMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 
 	/*
 		Right menu that will show when a user has not logged in.

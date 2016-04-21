@@ -3,15 +3,18 @@
 	include_once 'MenuItem.php';
 	include_once 'MenuRenderer.php';
 
-	class Menus{
+	class Menus
+	{
 
 		private static $menus;
 
-		public static function add($menu){
+		public static function add($menu)
+		{
 			self::$menus[$menu->getName()] = $menu;
 		}
 
-		public static function get($menu){
+		public static function get($menu)
+		{
 			return self::$menus[$menu];
 		}
 
