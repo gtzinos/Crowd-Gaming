@@ -66,7 +66,7 @@
                                 <button class='btn' type='button'>Edit</button>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>
-                                <button class='btn' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ")\">Delete</button>
+                                <button class='btn' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>
                             </div>
                             <div class='col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3'>
                                 <button class='btn btn-link' type='button' onclick=\"showModal('question-list'); show_questions(" . $questionGroup->getId() . ");\" >Questions <span class='badge' id='qcounter" . $questionGroup->getId() . "'>" . $questionGroup->getQuestionCount() . "</span></button>
