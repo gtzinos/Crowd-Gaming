@@ -7,7 +7,13 @@
 <div class="container-fluid">
   <!-- Title -->
   <legend class="text-center header">Create Questionnaire Group</legend>
-
+  <!-- ShortCut Buttons -->
+  <div class="form-group has-feedback">
+    <div class="col-xs-offset-0 col-xs-2">
+      <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('questionnaire-groups') . "/" . $questionnaireId; ?>">Back</a>
+    </div>
+  </div>
+</br>
   <form method="POST" class="form-horizontal">
     <!-- Question Group Name -->
     <div class="form-group has-feedback">
