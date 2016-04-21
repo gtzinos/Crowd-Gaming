@@ -95,11 +95,11 @@
            </div>
            <!-- Save Question button / Cancel Button Field -->
            <div class="form-group">
-              <div class="col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
+              <div class="col-xs-offset-2 col-xs-3 col-sm-offset-3 col-sm-2">
                 <!-- A Script will add on click method -->
                 <button id="save-question-confirm-button" form="create-question-form" type="button" class="btn btn-primary round gt-submit" disabled>Update</button>
               </div>
-              <div class="col-xs-4 col-sm-2">
+              <div class="col-xs-2 col-sm-2">
                 <button type="button" class="btn btn-primary round" data-dismiss="modal" >
                   Cancel
                 </button>
