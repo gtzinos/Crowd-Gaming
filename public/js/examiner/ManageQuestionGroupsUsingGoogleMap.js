@@ -83,7 +83,9 @@ function placeMarker(location) {
       Set values on form
    */
    $("#longitude").val(marker.getPosition().lng());
+   $("#longitude").focus();
    $("#latitude").val(marker.getPosition().lat());
+   $("#latitude").focus();
 
    /*
       If new radius is number

@@ -2,7 +2,6 @@
 <?php elseif($section == "JAVASCRIPT") : ?>
   <!-- Google Maps -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1P_ouQbGN0ehtuSm58zqrYxS-YPk4XwM" type="text/javascript"></script>
-<script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroupsUsingGoogleMap.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
   <!-- Title -->
@@ -146,4 +145,6 @@
   </form>
 
 </div>
+<script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroupsUsingGoogleMap.js"); ?>"> </script>
+
 <?php endif; ?>

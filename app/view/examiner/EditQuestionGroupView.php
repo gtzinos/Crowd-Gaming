@@ -2,7 +2,6 @@
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/HomePage.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1P_ouQbGN0ehtuSm58zqrYxS-YPk4XwM" type="text/javascript"></script>
-  <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroupsUsingGoogleMap.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
   <div class="container-fluid">
@@ -85,7 +84,7 @@
 								else if(get("question-group")->getRadius() != "") {
 									$value .= get("question-group")->getRadius();
 								}
-								echo "<input class='form-control' value='" . $value . "'  id='radius' name='radius' type='text' style='text-align:center' maxlength='10' placeholder='Radius' value='0'/>";
+								echo "<input class='form-control' value='" . $value . "' id='radius' name='radius' type='text' style='text-align:center' maxlength='10' placeholder='Radius' value='0'/>";
 						?>
 						<span class="gt-icon"> </span>
           </div>
@@ -192,7 +191,6 @@
           </div>
         </div>
     </form>
-
   </div>
-
+	<script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroupsUsingGoogleMap.js"); ?>"> </script>
 <?php endif; ?>
