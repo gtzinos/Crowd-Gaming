@@ -12,6 +12,8 @@
   <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroups.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
   <!-- Title -->
@@ -57,7 +59,7 @@
                                 <button class='btn btn-info' type='button' onclick='openQuestionDialog(" . $questionGroup->getId() . ")'>New Question</button>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-1' style='padding:0px'>
-                                <a class='btn btn-default' href='" . LinkUtils::generatePageLink('edit-question-groups') . "/" . get("questionnaire-id") . "'>Edit</a>
+                                <a class='btn btn-default' href='" . LinkUtils::generatePageLink('edit-question-group') . "/" . get("questionnaire-id") . "'>Edit</a>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>
                                 <button class='btn btn-danger' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>
