@@ -53,6 +53,7 @@
 				$questionGroup->setQuestionCount( $questionMapper->findCountByGroup($questionGroup->getId())  );
 			}
 
+			$this->setArg("questionnaire-id" , $questionnaireId);
 			$this->setArg("groups" , $questionGroups);
 
 			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionnaireGroupsView.php" , "QUESTION_GROUP_LIST");
