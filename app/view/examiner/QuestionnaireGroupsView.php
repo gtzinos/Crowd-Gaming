@@ -59,7 +59,7 @@
                                 <button class='btn btn-info' type='button' onclick='openQuestionDialog(" . $questionGroup->getId() . ")'>New Question</button>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-1' style='padding:0px'>
-                                <a class='btn btn-default' href='" . LinkUtils::generatePageLink('edit-question-group') . "/" . get("questionnaire-id") . "'>Edit</a>
+                                <a class='btn btn-default' href='" . LinkUtils::generatePageLink('edit-question-group') . "/" . $questionGroup->getId() . "'>Edit</a>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>
                                 <button class='btn btn-danger' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>

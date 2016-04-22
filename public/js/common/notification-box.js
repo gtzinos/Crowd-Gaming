@@ -1,5 +1,5 @@
 /*
-  Official website : http://ned.im/noty/
+  Official website : http://ned.im/noty/#/about
 
   Github : https://github.com/needim/noty/releases/tag/v2.3.8
 */
