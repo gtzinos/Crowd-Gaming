@@ -1045,3 +1045,21 @@ function delete_question_group_response(question_group_id)
     }
   }
 }
+
+
+var iScrollPos = 0,
+    processing = false;
+$(window).scroll(function () {
+    var iCurScrollPos = $(this).scrollTop();
+    if (iCurScrollPos > iScrollPos) {
+      if (processing)
+      {
+        return false;
+      }
+      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
+          processing = true; //sets a processing AJAX request flag
+          show_question_groups();
+      }
+    }
+    iScrollPos = iCurScrollPos;
+  });
