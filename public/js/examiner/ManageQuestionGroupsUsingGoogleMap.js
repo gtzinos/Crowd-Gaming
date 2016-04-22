@@ -238,3 +238,34 @@ function searchPosition()
       }
   }
 }
+function checkOptionals()
+{
+  if($("#longitude").val().length > 0 || $("#latitude").val().length > 0 || $("#radius").val().length > 0)
+  {
+    if($("#longitude").val().length == 0 || $("#latitude").val().length == 0 || $("#radius").val().length == 0)
+    {
+      show_notification("error","Fill longitude,latitude,radius or let them empty.",6000);
+      return false;
+    }
+    else if($("#radius").val() < 5)
+    {
+      show_notification("error","Radius needs value >= 5.",6000);
+      return false;
+    }
+    else if($("#longitude").val() > 180 || $("#longitude").val() < -180)
+    {
+      show_notification("error","Longitude needs value -180 - 180",6000);
+      return false;
+    }
+    else if($("#latitude").val() > 90 || $("#latitude").val() < -90)
+    {
+      show_notification("error","Radius needs value -90 - 90",6000);
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+  return true;
+
+}

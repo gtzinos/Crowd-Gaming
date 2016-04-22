@@ -2,6 +2,9 @@
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/HomePage.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1P_ouQbGN0ehtuSm58zqrYxS-YPk4XwM" type="text/javascript"></script>
+	<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
+
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 
   <div class="container-fluid">
@@ -14,7 +17,7 @@
       </div>
     </div>
   </br>
-    <form method="POST" class="form-horizontal">
+    <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
       <!-- Question Group Name -->
       <div class="form-group has-feedback">
         <!-- Question Group Name Label -->
