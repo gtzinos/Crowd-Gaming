@@ -12,6 +12,8 @@
   <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroups.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
   <!-- Title -->
@@ -48,25 +50,25 @@
         $counter = 0;
         foreach ($questionGroups as $questionGroup) {
             $counter +=1;
-            print   "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qgitem" . $questionGroup->getId() . "'>
+            print   "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qgitem" . $questionGroup->getId() . "'>
                         <div class='col-xs-12'>
                             <h4 class='list-group-item-heading'>" . $questionGroup->getName() . "</h4>
                         </div>
                         <div class='col-xs-12' style='margin-top:3%;padding:0px'>
                             <div class='col-xs-12 col-sm-4 col-md-3' style='padding:0px'>
-                                <button class='btn' type='button' onclick='openQuestionDialog(" . $questionGroup->getId() . ")'>New Question</button>
+                                <button class='btn btn-info' type='button' onclick='openQuestionDialog(" . $questionGroup->getId() . ")'>New Question</button>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-1' style='padding:0px'>
-                                <a class='btn' type='button'>Edit</a>
+                                <a class='btn btn-default' href='" . LinkUtils::generatePageLink('edit-question-group') . "/" . get("questionnaire-id") . "'>Edit</a>
                             </div>
                             <div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>
-                                <button class='btn' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>
+                                <button class='btn btn-danger' type='button' onclick=\"delete_question_group(" . $questionGroup->getId() . ",false)\">Delete</button>
                             </div>
                             <div class='col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3'>
                                 <button class='btn btn-link' type='button' onclick=\"showModal('question-list'); show_questions(" . $questionGroup->getId() . ");\" >Questions <span class='badge' id='qcounter" . $questionGroup->getId() . "'>" . $questionGroup->getQuestionCount() . "</span></button>
                             </div>
                         </div>
-                    </a>";
+                    </div>";
         }
         if($counter == 0)
         {

@@ -855,6 +855,7 @@ function delete_question_response(question_group_id,question_id)
           }
           $("#qitem"+question_id).remove();
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) - 1);
+          show_notification("success","Question " + question_id + " deleted successfully.",4000);
       }
 
       /*
@@ -905,8 +906,7 @@ function delete_question_response(question_group_id,question_id)
           response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
         }
 
-      // $("#edit-question-response").show();
-      // $("#edit-question-response").html(response_message);
+        show_notification("error",response_message,5000);
       }
     }
   }
@@ -989,6 +989,7 @@ function delete_question_group_response(question_group_id)
             Success message
           */
           $("#qgitem"+question_group_id).remove();
+          show_notification("success","Question group " + question_group_id + " deleted successfully.",5000);
       }
 
       /*
@@ -1039,8 +1040,7 @@ function delete_question_group_response(question_group_id)
           response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
         }
 
-      // $("#edit-question-response").show();
-      // $("#edit-question-response").html(response_message);
+        show_notification("error",response_message,6000);
       }
     }
   }
