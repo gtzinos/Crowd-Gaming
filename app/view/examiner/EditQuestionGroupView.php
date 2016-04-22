@@ -23,11 +23,20 @@
             <label>Name</label>
         </div>
         <div class="col-xs-offset-0 col-xs-12 col-sm-8 col-sm-offset-2 gt-input-group" data-validate="length" data-length="10">
-          <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["name"]; } ?>" id="name" name="name" type="text" placeholder="Group Name" data-toggle="tooltip" gt-error-message="Not a valid question group name" maxlength="50" required>
-          <span class="gt-icon"></span>
+          <?php
+						$value = "";
+						if(exists("response-code") && get("response-code") != 0)
+						{
+							$value .= $_POST["name"];
+						}
+						else if(get("question-group")->getName() != "") {
+							$value .= get("question-group")->getName();
+						}
+						echo "<input class='form-control' value='" . $value . "' id='name' name='name' type='text' placeholder='Group Name' data-toggle='tooltip' gt-error-message='Not a valid question group name' maxlength='50' required>";
+					 ?>
+					<span class="gt-icon"></span>
         </div>
       </div>
-
         <!-- Google Map -->
         <div class="form-group has-feedback" >
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
@@ -37,18 +46,48 @@
         <!-- Longitude - Latitude -->
         <div class="form-group has-feedback" >
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="length" data-length="1">
-            <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["longitude"]; } ?>" id="longitude" name="longitude" type="text" style="text-align:center" placeholder="Longitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20"/>
-            <span class="gt-icon"></span>
+						<?php
+								$value = "";
+								if(exists("response-code") && get("response-code") != 0)
+								{
+									$value .= $_POST["longitude"];
+								}
+								else if(get("question-group")->getLongitude() != "") {
+									$value .= get("question-group")->getLongitude();
+								}
+								echo "<input class='form-control' value='" . $value . "' id='longitude' name='longitude' type='text' style='text-align:center' placeholder='Longitude' data-toggle='tooltip' gt-error-message='Not a valid question group description' maxlength='20'/>";
+						?>
+						<span class="gt-icon"></span>
           </div>
           <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="length" data-length="1">
-            <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["latitude"]; } ?>" id="latitude" name="latitude" type="text" style="text-align:center" placeholder="Latitude" data-toggle="tooltip" gt-error-message="Not a valid question group description" maxlength="20"/>
-            <span class="gt-icon"></span>
+							<?php
+									$value = "";
+									if(exists("response-code") && get("response-code") != 0)
+									{
+										$value .= $_POST["latitude"];
+									}
+									else if(get("question-group")->getLatitude() != "") {
+										$value .= get("question-group")->getLatitude();
+									}
+									echo "<input class='form-control' value='" . $value . "' id='latitude' name='latitude' type='text' style='text-align:center' placeholder='Latitude' data-toggle='tooltip' gt-error-message='Not a valid question group description' maxlength='20'/>";
+							?>
+						<span class="gt-icon"></span>
           </div>
 
           <!-- Radius -->
           <div style="margin-top:1%" class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number">
-            <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["radius"]; } ?>" id="radius" name="radius" type="text" style="text-align:center" maxlength="10" placeholder="Radius" value="0"/>
-            <span class="gt-icon"> </span>
+						<?php
+								$value = "";
+								if(exists("response-code") && get("response-code") != 0)
+								{
+									$value .= $_POST["radius"];
+								}
+								else if(get("question-group")->getRadius() != "") {
+									$value .= get("question-group")->getRadius();
+								}
+								echo "<input class='form-control' value='" . $value . "'  id='radius' name='radius' type='text' style='text-align:center' maxlength='10' placeholder='Radius' value='0'/>";
+						?>
+						<span class="gt-icon"> </span>
           </div>
           <!-- Search button -->
           <div style="margin-top:1%;" class="col-xs-offset-0 col-xs-3 col-sm-1 gt-input-group">
@@ -61,8 +100,8 @@
         </div>
         <!-- Submit Button -->
         <div class="form-group has-feedback" style="margin-top:3%">
-          <div class="gt-input-group col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-3">
-            <input type="submit" class="form-control btn btn-primary gt-submit round" style="text-align:center" value="Create Group" disabled/>
+          <div class="gt-input-group col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-2">
+            <input type="submit" class="form-control btn btn-primary gt-submit " style="text-align:center" value="Update Group" disabled/>
 
           </div>
         </div>
@@ -73,7 +112,15 @@
             <label>
 
               <?php
-
+								/*
+									0 All ok
+									1 Group name already exists
+									2 Group name validation error
+									3 latitude validation error
+									4 longitude validation error
+									5 radius validation error
+									6 Database error
+								*/
                 if(exists("response-code"))
                 {
                   /*
@@ -82,7 +129,7 @@
                   */
                   if(get("response-code") == 0)
                   {
-                    echo "<div class='alert alert-success'>Question group create successfully.</div>";
+                    echo "<div class='alert alert-success'>Question group updated successfully.</div>";
                   }
                   /*
                     Else If response-code == 1
@@ -90,7 +137,7 @@
                   */
                   else if(get("response-code") == 1)
                   {
-                    echo "<div class='alert alert-success'>Group name already exists.</div>";
+                    echo "<div class='alert alert-danger'>Group name already exists.</div>";
                   }
                   /*
                     Else If response-code == 1

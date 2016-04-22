@@ -60,8 +60,8 @@
       </div>
       <!-- Submit Button -->
       <div class="form-group has-feedback" style="margin-top:3%">
-        <div class="gt-input-group col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-3">
-          <input type="submit" class="form-control btn btn-primary gt-submit round" style="text-align:center" value="Create Group" disabled/>
+        <div class="gt-input-group col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-2">
+          <input type="submit" class="form-control btn btn-primary gt-submit" style="text-align:center" value="Create Group" disabled/>
 
         </div>
       </div>
@@ -89,7 +89,7 @@
                 */
                 else if(get("response-code") == 1)
                 {
-                  echo "<div class='alert alert-success'>Group name already exists.</div>";
+                  echo "<div class='alert alert-danger'>Group name already exists.</div>";
                 }
                 /*
                   Else If response-code == 1
