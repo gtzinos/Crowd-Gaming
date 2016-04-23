@@ -1074,3 +1074,35 @@ $(window).scroll(function () {
     }
     iScrollPos = iCurScrollPos;
   });
+
+
+
+  function link_users()
+  {
+    var tab = [
+      { id: "1", label: "Forever.", isChecked: true }
+    ];
+    $(".myDropdownCheckbox").dropdownCheckbox({
+      data: tab,
+      autosearch: true,
+      hideHeader: false,
+      showNbSelected: true,
+      title: "Dropdown Checkbox",
+      templateButton: '<a class="dropdown-checkbox-toggle" data-toggle="dropdown" href="#">Example Dropdown <span class="dropdown-checkbox-nbselected"></span><b class="caret"></b>'
+    });
+    setTimeout(function(e){
+      $(".myDropdownCheckbox").html('');
+      var tab2 = [
+        { id: "1", label: "Forever.2", isChecked: true }
+      ];
+      $(".myDropdownCheckbox").dropdownCheckbox({
+        data: tab2,
+        autosearch: true,
+        hideHeader: false,
+        showNbSelected: true,
+        title: "Dropdown Checkbox",
+        templateButton: '<a class="dropdown-checkbox-toggle" data-toggle="dropdown" href="#">Example Dropdown <span class="dropdown-checkbox-nbselected"></span><b class="caret"></b>'
+      });
+    },4000);
+
+  }
