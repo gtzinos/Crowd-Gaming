@@ -1076,33 +1076,46 @@ $(window).scroll(function () {
   });
 
 
-
-  function link_users()
+get_question_group_users(36);
+  function get_question_group_users(question_group_id)
   {
-    var tab = [
-      { id: "1", label: "Forever.", isChecked: true }
-    ];
-    $(".myDropdownCheckbox").dropdownCheckbox({
-      data: tab,
-      autosearch: true,
-      hideHeader: false,
-      showNbSelected: true,
-      title: "Dropdown Checkbox",
-      templateButton: '<a class="dropdown-checkbox-toggle" data-toggle="dropdown" href="#">Example Dropdown <span class="dropdown-checkbox-nbselected"></span><b class="caret"></b>'
-    });
-    setTimeout(function(e){
-      $(".myDropdownCheckbox").html('');
-      var tab2 = [
-        { id: "1", label: "Forever.2", isChecked: true }
-      ];
-      $(".myDropdownCheckbox").dropdownCheckbox({
-        data: tab2,
-        autosearch: true,
-        hideHeader: false,
-        showNbSelected: true,
-        title: "Dropdown Checkbox",
-        templateButton: '<a class="dropdown-checkbox-toggle" data-toggle="dropdown" href="#">Example Dropdown <span class="dropdown-checkbox-nbselected"></span><b class="caret"></b>'
-      });
-    },4000);
+      var Required = {
+        Url() { return webRoot + "get-users-from-question-group"; },
+        SendType() { return "POST"; },
+        variables : "",
+        Parameters() {
+          this.variables = "question-group-id=" + question_group_id;
+          return this.variables;
+        }
+      }
+      var Optional = {
+        ResponseMethod() { return "get_question_group_users_response()"; }
+      };
+      sendAjaxRequest(Required,Optional);
+  }
+  function get_question_group_users_response()
+  {
+    /*
+      if Server responsed back successfully
+    */
+    if (xmlHttp.readyState == 4) {
+      if (xmlHttp.status == 200) {
+        /*
+          0 All ok
+          1 Invalid Access
+          -1 No Post Data
+        */
+        /*
+          Debug
+        */
+        var users = JSON.parse(xmlHttp.responseText);
 
+        console.log(users.response_code);
+
+        if(xmlHttp.responseText.localeCompare("0") == 0)
+        {
+
+        }
+      }
+    }
   }
