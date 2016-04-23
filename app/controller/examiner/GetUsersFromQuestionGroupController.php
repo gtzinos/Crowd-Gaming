@@ -3,7 +3,7 @@
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
 
 
-	class GetUsersFromQuestionGroup extends Controller
+	class GetUsersFromQuestionGroupController extends Controller
 	{
 
 		public function init()
