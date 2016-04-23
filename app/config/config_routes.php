@@ -48,7 +48,20 @@
 	Routes::add( 'delete-questionnaire' , 'examiner/DeleteQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'add-user-to-question-group' , 'examiner/AddUserToQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'remove-user-from-question-group' , 'examiner/RemoveUserFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'get-users-from-question-group' , 'examiner/GetUsersFromQuestionGroup.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'get-users-from-question-group' , 'examiner/GetUsersFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'publish-questionnaire-request' , 'examiner/PublishQuestionnaireApplicationController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'delete-questionnaire-participation' , 'examiner/DeleteQuestionnaireParticipationController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'handle-questionnaire-request' , "examiner/HandleQuestionnaireRequestController.php" , $_USER_LEVEL["EXAMINER"] );
+
+
+	/*
+		Moderator level pages
+	 */
+	Routes::add( 'handle-questionnaire-public-request' , 'moderator/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'handle-examiner-application' , 'moderator/HandleExaminerApplicationController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'ban-user' , 'moderator/BanUserController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'ban-examiners-from-questionnaire' , 'moderator/BanExaminersController.php' , $_USER_LEVEL["MODERATOR"]);
+
 	/*
 		The Page to load when the page parameter is not defined
 	*/
