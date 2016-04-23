@@ -43,11 +43,13 @@
 	$moderatorMenu = Menu::create("ModeratorMenu");
 
 	$menuItem = MenuItem::create("Menu" , "DROPDOWN" , "");
+
 	$menuItem->addItem( MenuItem::create("Sub Item 1" , "LINK" , "home") );
 	$menuItem->addItem( MenuItem::create("Sub Item 2" , "LINK" , "info") );
 	$menuItem->addItem( MenuItem::create("Sub Item 3" , "LINK" , "asdads") );
 
 	$moderatorMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
+	$moderatorMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
 	$moderatorMenu->addItem( $menuItem );
 	$moderatorMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 

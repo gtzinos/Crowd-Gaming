@@ -53,6 +53,11 @@
 	Routes::add( 'delete-questionnaire-participation' , 'examiner/DeleteQuestionnaireParticipationController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'handle-questionnaire-request' , "examiner/HandleQuestionnaireRequestController.php" , $_USER_LEVEL["EXAMINER"] );
 
+
+	/*
+		Moderator level pages
+	 */
+	Routes::add( 'handle-questionnaire-public-request' , 'moderator/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
 	/*
 		The Page to load when the page parameter is not defined
 	*/
