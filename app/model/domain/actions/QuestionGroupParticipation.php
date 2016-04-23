@@ -18,11 +18,11 @@
 
 		public function getUserId()
 		{
-			return $this->userID;
+			return $this->userId;
 		}
 		
-		public function setUserId($userID)
+		public function setUserId($userId)
 		{
-			$this->userID = userID;
+			$this->userId = $userId;
 		}
 	}

@@ -3,7 +3,7 @@
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/questionnaire/QuestionnaireSchedule.php';
 
-	class QuestionnaireSchedule extends DataMapper{
+	class QuestionnaireScheduleMapper extends DataMapper{
 
 		
 		public function findAll(){

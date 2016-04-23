@@ -80,12 +80,12 @@
 
 		private function _create($participation)
 		{
-			$query = "INSERT INTO `QuestionnaireParticipation`(`user_id`, `question_group_id`) VALUES (?,?)";
+			$query = "INSERT INTO `QuestionGroupParticipation`(`question_group_id`, `user_id`) VALUES (?,?)";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('iii',
-				$participation->getUserId(),
-				$participation->getQuestionGroupId() );
+			$statement->setParameters('ii',
+				$participation->getQuestionGroupId(),
+				$participation->getUserId() );
 
 			$statement->executeUpdate();
 		}
