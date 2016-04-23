@@ -48,7 +48,7 @@
 	Routes::add( 'delete-questionnaire' , 'examiner/DeleteQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'add-user-to-question-group' , 'examiner/AddUserToQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'remove-user-from-question-group' , 'examiner/RemoveUserFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'get-users-from-question-group' , 'examiner/GetUsersFromQuestionGroup' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'get-users-from-question-group' , 'examiner/GetUsersFromQuestionGroup.php' , $_USER_LEVEL["EXAMINER"]);
 	/*
 		The Page to load when the page parameter is not defined
 	*/

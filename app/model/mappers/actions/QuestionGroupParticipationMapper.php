@@ -26,6 +26,28 @@
 			return null;
 		}
 
+		public function findByGroup($groupId)
+		{
+			$query = "SELECT * FROM `QuestionGroupParticipation` WHERE `question_group_id`=? ";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$groupId);
+
+			$set = $statement->execute();
+
+			$participations = array();
+
+			while($set->next())
+			{
+				$participation = new QuestionGroupParticipation;
+				$participation->setUserId( $set->get("user_id") );
+				$participation->setQuestionGroupId( $set->get("question_group_id") );
+
+				$participations[] = $participation;
+			}
+			return $participations;
+		}
+
 		public function participates($playerId , $groupId )
 		{
 			$query = "SELECT `user_id` FROM `QuestionGroupParticipation` WHERE `user_id`=? AND `question_group_id`=?";

@@ -31,7 +31,6 @@
 					return;
 				}
 
-
 				$groupParticipationMapper = new QuestionGroupParticipationMapper;
 
 
