@@ -79,7 +79,7 @@
                   <input type="checkbox" id="checkbox3" checked="checked"/>
                 </div>
                 <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
-                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer3" type="text" placeholder="Answer 3" >
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer3" type="text" placeholder="Answer 3">
                     <span class="gt-icon"></span>
                 </div>
             </div>
@@ -89,7 +89,7 @@
                   <input type="checkbox" id="checkbox4" checked="checked"/>
                 </div>
                 <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="length" data-length="1">
-                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer4" type="text" placeholder="Answer 4" >
+                    <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 character" id="answer4" type="text" placeholder="Answer 4">
                     <span class="gt-icon"></span>
                 </div>
             </div>

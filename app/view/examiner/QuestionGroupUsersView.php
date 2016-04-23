@@ -8,26 +8,35 @@
        </div>
        <div class="modal-body container-fluid">
 
-         <div class="form-group">
-           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-4">
-             	<select id="question-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group" multiple data-actions-box="true">
+         <div class="form-group row">
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4">
+             	<select id="question-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group">
 
              	</select>
            </div>
-         </div>
-       </br>
-     </br>
-         <div class="form-group">
-           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-4">
-             	<select id="question-group-users-dropdown" class="selectpicker" data-live-search="true" title="Select some users" multiple data-actions-box="true">
-
-             	</select>
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-4">
+             	<button class="btn">Find participants</button>
            </div>
          </div>
+         <br>
+         <br>
+         <div class="form-group row">
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4">
+             <select id="question-group-users-dropdown" class="selectpicker" data-live-search="true" title="Select some users" multiple data-actions-box="true" multiple data-selected-text-format="count > 2">
 
-         <script>
-         $('.selectpicker').selectpicker({ });
-         </script>
+             </select>
+           </div>
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-4">
+             <select id="question-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group" multiple data-actions-box="true" multiple data-selected-text-format="count > 2">
+
+             </select>
+           </div>
+         </div>
+         <div class="form-group row">
+           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4">
+               <input type="button" class="btn btn-primary " value="Save Users" >
+           </div>
+         </div>
        </div>
      </div>
    </div>
