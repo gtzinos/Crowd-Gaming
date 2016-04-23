@@ -19,19 +19,19 @@
   <!-- Title -->
   <legend class="text-center header">Questionnaire Groups</legend>
   <!-- ShortCut Buttons -->
-  <div class="form-group has-feedback">
-    <div class="col-xs-offset-0 col-xs-2">
+  <div class="form-group has-feedback row">
+    <div class="col-xs-offset-0 col-xs-1">
       <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/" . get("questionnaire")->getId(); ?>">Add</a>
+    </div>
+    <div class="col-xs-1">
+      <a class="btn btn-default gt-submit" href="<?php echo LinkUtils::generatePageLink('questionnaire') . "/" . get("questionnaire")->getId(); ?>">Back</a>
     </div>
   </div>
   <?php
     /*
         For each Questionnaire Group
     */
-
   ?>
-
-
   <div class="list-group" id="question-group-list">
 
   </div>
@@ -43,9 +43,7 @@
      ?>
 
 <?php elseif($section == "QUESTION_GROUP_LIST" ) : ?>
-
   <?php
-
         $questionGroups = get("groups");
         $counter = 0;
         foreach ($questionGroups as $questionGroup) {
@@ -72,10 +70,13 @@
         }
         if($counter == 0)
         {
-          print "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>
-                      <div class='col-xs-12'>
-                          <div class='alert alert-danger'>We don't have any question group in our database. </div>
-                      </div>
-                  </a>";
+          if(exists("offset") && get("offset") < 10) {
+            print "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>
+                        <div class='col-xs-12'>
+                            <div class='alert alert-danger'>We don't have any question group in our database. </div>
+                        </div>
+                    </a>";
+          }
+          //else dont print something (no more question groups)
         }
 ?><?php endif; ?>

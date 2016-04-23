@@ -4,11 +4,11 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
 	class GetGroupsController extends Controller{
-		
+
 		public function init(){
 
-			$this->setHeadless(true); 
-			
+			$this->setHeadless(true);
+
 		}
 
 		public function run(){
@@ -55,6 +55,9 @@
 
 			$this->setArg("questionnaire-id" , $questionnaireId);
 			$this->setArg("groups" , $questionGroups);
+			if(isset($this->params[2])){
+				$this->setArg("offset",$this->params[2]);
+			}
 
 			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionnaireGroupsView.php" , "QUESTION_GROUP_LIST");
 

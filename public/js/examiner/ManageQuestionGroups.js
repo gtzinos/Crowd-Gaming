@@ -202,8 +202,15 @@ function show_question_groups_response()
 
   			/*
   				Display data
+          (
+            an empty set of question groups
+            returns me 4 characters..
+          )
         */
-         $("#question-group-list").append(xmlHttp.responseText);
+        if(xmlHttp.responseText.length > 4)
+        {
+          $("#question-group-list").append(xmlHttp.responseText);
+        }
 		}
   }
 }
@@ -1050,8 +1057,11 @@ function delete_question_group_response(question_group_id)
 var iScrollPos = 0,
     processing = false;
 $(window).scroll(function () {
+
     var iCurScrollPos = $(this).scrollTop();
+
     if (iCurScrollPos > iScrollPos) {
+
       if (processing)
       {
         return false;
@@ -1060,6 +1070,7 @@ $(window).scroll(function () {
           processing = true; //sets a processing AJAX request flag
           show_question_groups();
       }
+      processing = false;
     }
     iScrollPos = iCurScrollPos;
   });
