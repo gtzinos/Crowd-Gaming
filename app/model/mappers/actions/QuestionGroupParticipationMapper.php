@@ -19,7 +19,7 @@
 			{
 				$participation = new QuestionGroupParticipation;
 				$participation->setUserId( $set->get("user_id") );
-				$participation->setQuestionnaireId( $set->get("question_group_id") );
+				$participation->setQuestionGroupId( $set->get("question_group_id") );
 
 				return $participation;
 			}
