@@ -1076,7 +1076,7 @@ $(window).scroll(function () {
   });
 
 
-get_question_group_users(36);
+  //get_question_group_users(36);
   function get_question_group_users(question_group_id)
   {
       var Required = {
@@ -1108,9 +1108,9 @@ get_question_group_users(36);
         /*
           Debug
         */
-        var users = JSON.parse(xmlHttp.responseText);
+        //var users = JSON.parse(xmlHttp.responseText);
 
-        console.log(users.response_code);
+        //console.log(users.response_code);
 
         if(xmlHttp.responseText.localeCompare("0") == 0)
         {

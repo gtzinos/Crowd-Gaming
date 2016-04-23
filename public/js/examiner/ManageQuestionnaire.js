@@ -184,7 +184,7 @@ function updateQuestionnaire(id)
         Url() { return webRoot + "questionnaire-edit/"; },
         SendType() { return "POST"; },
         Parameters() {
-          return "questionnaire-id=1" + "&name=" + name + "&description=" + description + "&message_required=" + required;
+          return "questionnaire-id=" + id + "&name=" + name + "&description=" + description + "&message_required=" + required;
         }
     };
     var Optional = {
