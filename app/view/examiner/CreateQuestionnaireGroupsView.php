@@ -6,15 +6,15 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
-  <!-- Title -->
-  <legend class="text-center header">Create Questionnaire Group</legend>
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback row">
-    <div class="col-xs-offset-0 col-xs-2">
-      <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('questionnaire-groups') . "/" . get("questionnaire-id"); ?>">Back</a>
+    <div class="col-xs-1">
+      <a class="gt-submit fa fa-hand-o-left" style="font-size:24px" title="Go Back"  href="<?php echo LinkUtils::generatePageLink('questionnaire-groups') . "/" . get("questionnaire-id"); ?>"></a>
     </div>
   </div>
-</br>
+  <!-- Title -->
+  <legend class="text-center header">Create Questionnaire Group</legend>
+
   <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
     <!-- Question Group Name -->
     <div class="form-group has-feedback">

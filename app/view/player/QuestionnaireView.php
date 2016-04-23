@@ -52,13 +52,18 @@
 						if(get("questionnaire")["player-participation"] || get("questionnaire")["examiner-participation"])
 						{
 							echo "You and ";
+							$users = get("questionnaire")["participations"];
+
+							if(get("questionnaire")["player-participation"])
+							{
+								$users -= 1;
+							}
+							if(get("questionnaire")["examiner-participation"])
+							{
+								$users -= 1;
+							}
+							echo $users . " users";
 						}
-						$users=0;
-						if(get("questionnaire")["participations"] > 0)
-						{
-							$users = get("questionnaire")["participations"]-1;
-						}
-						echo  	$users . " users";
 					?>
 				</a>
 			</div>
