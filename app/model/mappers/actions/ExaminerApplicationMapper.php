@@ -52,7 +52,7 @@
 
 				return $examinerApplication;
 			}else{
-				return false;
+				return null;
 			}
 		}
 
