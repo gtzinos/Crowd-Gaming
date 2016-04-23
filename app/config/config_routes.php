@@ -51,6 +51,7 @@
 	Routes::add( 'get-users-from-question-group' , 'examiner/GetUsersFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'publish-questionnaire-request' , 'examiner/PublishQuestionnaireApplicationController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'delete-questionnaire-participation' , 'examiner/DeleteQuestionnaireParticipationController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'handle-questionnaire-request' , "examiner/HandleQuestionnaireRequestController.php" , $_USER_LEVEL["EXAMINER"] );
 
 	/*
 		The Page to load when the page parameter is not defined

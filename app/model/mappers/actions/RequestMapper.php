@@ -9,7 +9,28 @@
 
 		public function findById($id)
 		{
-			//todo
+			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$id);
+
+			$res = $statement->execute();
+
+			if( $res->next() )
+			{
+				$questionnaireRequest = new QuestionnaireRequest;
+				$questionnaireRequest->setId( $res->get("id") );
+				$questionnaireRequest->setUserId( $res->get("user_id") );
+				$questionnaireRequest->setQuestionnaireId( $res->get("questionnaire_id") );
+				$questionnaireRequest->setRequestType( $res->get("request_type") );
+				$questionnaireRequest->setRequestText( $res->get("request_text") );
+				$questionnaireRequest->setRequestDate( $res->get("request_date") );
+				$questionnaireRequest->setResponseText( $res->get("response_text") );
+				$questionnaireRequest->setResponse( $res->get("accepted") );
+
+				return $questionnaireRequest;
+			}
+			return null;
 		}
 
 		public function getActivePlayerRequest($userId , $questionnaireId)
