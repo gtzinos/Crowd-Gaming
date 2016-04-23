@@ -16,15 +16,19 @@
   <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
+  <!-- ShortCut Buttons -->
+  <div class="form-group has-feedback row">
+    <div class="col-xs-1">
+      <a class="gt-submit fa fa-hand-o-left" style="font-size:24px" title="Go Back" href="<?php echo LinkUtils::generatePageLink('questionnaire') . "/" . get("questionnaire")->getId(); ?>"></a>
+    </div>
+  </div>
+
   <!-- Title -->
   <legend class="text-center header">Questionnaire Groups</legend>
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback row">
     <div class="col-xs-offset-0 col-xs-1">
       <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/" . get("questionnaire")->getId(); ?>">Add</a>
-    </div>
-    <div class="col-xs-1">
-      <a class="btn btn-default gt-submit" href="<?php echo LinkUtils::generatePageLink('questionnaire') . "/" . get("questionnaire")->getId(); ?>">Back</a>
     </div>
   </div>
   <?php
@@ -70,7 +74,7 @@
         }
         if($counter == 0)
         {
-          if(exists("offset") && get("offset") < 10) {
+          if(get("offset") == 0) {
             print "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>
                         <div class='col-xs-12'>
                             <div class='alert alert-danger'>We don't have any question group in our database. </div>
