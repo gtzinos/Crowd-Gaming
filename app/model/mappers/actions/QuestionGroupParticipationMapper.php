@@ -19,11 +19,33 @@
 			{
 				$participation = new QuestionGroupParticipation;
 				$participation->setUserId( $set->get("user_id") );
-				$participation->setQuestionnaireId( $set->get("question_group_id") );
+				$participation->setQuestionGroupId( $set->get("question_group_id") );
 
 				return $participation;
 			}
 			return null;
+		}
+
+		public function findByGroup($groupId)
+		{
+			$query = "SELECT * FROM `QuestionGroupParticipation` WHERE `question_group_id`=? ";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$groupId);
+
+			$set = $statement->execute();
+
+			$participations = array();
+
+			while($set->next())
+			{
+				$participation = new QuestionGroupParticipation;
+				$participation->setUserId( $set->get("user_id") );
+				$participation->setQuestionGroupId( $set->get("question_group_id") );
+
+				$participations[] = $participation;
+			}
+			return $participations;
 		}
 
 		public function participates($playerId , $groupId )
@@ -80,12 +102,12 @@
 
 		private function _create($participation)
 		{
-			$query = "INSERT INTO `QuestionnaireParticipation`(`user_id`, `question_group_id`) VALUES (?,?)";
+			$query = "INSERT INTO `QuestionGroupParticipation`(`question_group_id`, `user_id`) VALUES (?,?)";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('iii',
-				$participation->getUserId(),
-				$participation->getQuestionGroupId() );
+			$statement->setParameters('ii',
+				$participation->getQuestionGroupId(),
+				$participation->getUserId() );
 
 			$statement->executeUpdate();
 		}

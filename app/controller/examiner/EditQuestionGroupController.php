@@ -63,6 +63,7 @@
 
 				$name = htmlspecialchars($_POST["name"] ,ENT_QUOTES);
 
+
 				if( $questionGroup->getName()!=$name && $questionGroupMapper->nameExists( $name ) ) 
 				{
 					$this->setOutput('response-code' , 1);
