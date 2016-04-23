@@ -370,6 +370,21 @@
 			}
 		}
 
+		public function banExaminersOfQuestionnaire($questionnaireId)
+		{
+			$query =   "UPDATE `User`
+						INNER JOIN `QuestionnaireParticipation`
+						ON `QuestionnaireParticipation` .`user_id`=`User`.`id`
+						SET `User`.`banned`=1
+						WHERE `QuestionnaireParticipation`.`participation_type`=2 AND `QuestionnaireParticipation`.`questionnaire_id`=?";
+			
+			$statement = $this->getStatement($query);
+
+			$statement->setParameters("i" , $questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
 		public function findUserLevel($userId){
 			$statement = $this->getStatement("SELECT `access` FROM `User` WHERE `id`=?");
 

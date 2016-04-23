@@ -60,6 +60,8 @@
 	Routes::add( 'handle-questionnaire-public-request' , 'moderator/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'handle-examiner-application' , 'moderator/HandleExaminerApplicationController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'ban-user' , 'moderator/BanUserController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'ban-examiners-from-questionnaire' , 'moderator/BanExaminersController.php' , $_USER_LEVEL["MODERATOR"]);
+
 	/*
 		The Page to load when the page parameter is not defined
 	*/
