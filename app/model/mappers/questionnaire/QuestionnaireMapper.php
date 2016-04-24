@@ -166,7 +166,7 @@ WHERE `Questionnaire`.`id`=? AND `QuestionnaireParticipation`.`participation_typ
 		 */
 		public function findAll(){
 
-			$statement = $this->getStatement("SELECT `id ,`coordinator_id`, `name`, `description`, `public`, `message_required`, `creation_date` FROM `Questionnaire`");
+			$statement = $this->getStatement("SELECT * FROM `Questionnaire`");
 
 			$resultSet = $statement->execute();
 
@@ -242,6 +242,31 @@ WHERE `Questionnaire`.`id`=? AND `QuestionnaireParticipation`.`participation_typ
 			}
 
 			return null;
+		}
+
+		public function findByCoordinator($coordinatorId){
+			$statement = $this->getStatement("SELECT * FROM `Questionnaire` WHERE `coordinator_id`=?");
+			$statement->setParameters('i' , $coordinatorId);
+
+			$resultSet = $statement->execute();
+
+			$questionnaires = array();
+
+			while( $resultSet->next() ){
+				$questionnaire  = new Questionnaire();
+
+				$questionnaire->setId( $resultSet->get("id") );
+				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
+				$questionnaire->setDescription( $resultSet->get("description") );
+				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setPublic( $resultSet->get("public") );
+				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
+				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+
+				$questionnaires[] =  $questionnaire;
+			}
+
+			return $questionnaires;
 		}
 
 
