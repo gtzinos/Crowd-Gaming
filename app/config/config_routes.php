@@ -36,7 +36,6 @@
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'create-question-group' , 'examiner/CreateQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
 	
-
 	// Ajax
 	Routes::add( 'questionnaire-edit' , 'examiner/ajax/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]); 
 	Routes::add( 'get-question-groups' , 'examiner/ajax/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );

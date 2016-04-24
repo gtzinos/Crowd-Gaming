@@ -1,6 +1,6 @@
 <?php
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
-	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/user/UserMapper.php';
 
 
 	class GetUsersFromQuestionGroupController extends Controller
@@ -30,19 +30,29 @@
 					return;
 				}
 
-				$groupParticipationMapper = new QuestionGroupParticipationMapper;
+				$userMapper = new UserMapper;
 
 
-				$groupParticipations = $groupParticipationMapper->findByGroup( $_POST["question-group-id"]);
+				$users = $userMapper->findUsersByQuestionGroup( $_POST["question-group-id"]);
 
 
 				$usersJson = array();
+				foreach ($users as $user) 
+				{
+					$arrayItem["id"] = $user->getId();
+					$arrayItem["name"] = $user->getName();
+					$arrayItem["surname"] = $user->getSurname();
+					$arrayItem["email"] = $user->getEmail();
+					$arrayItem["gender"] = $user->getGender() == 0 ? "male" : "female";
+					$arrayItem["country"] = $user->getCountry();
+					$arrayItem["city"] = $user->getCity();
+					$arrayItem["address"] = $user->getAddress();
+					$arrayItem["phone"] = $user->getPhone(); 
 
-				foreach ($groupParticipations as $groupParticipation) {
-					$usersJson[] = $groupParticipation->getUserId();
+					$usersJson[] = $arrayItem;
 				}
 
-				$this->setOutput("response_code" , 0);
+				$this->setOutput("response_code",0);
 				$this->setOutput("users" , $usersJson);
 
 				return;
