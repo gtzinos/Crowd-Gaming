@@ -1,3 +1,21 @@
+$(document)
+  .on("mouseover",".settingsitem",function(e) {
+    if(e.target.nodeName == "A")
+    {
+      $(e.target).css("background-color","lightgrey")
+                 .children().css("background-color","lightgrey");
+    }
+    $(e.target).css('cursor', 'hand');
+  })
+  .on("mouseleave",".settingsitem",function(e) {
+    if(e.target.nodeName == "A")
+    {
+      $(e.target).css("background-color","white")
+                 .children().css("background-color","white");
+    }
+    $(e.target).css('cursor', 'pointer');
+  });
+
 /*
   Create questionnaire
 */
