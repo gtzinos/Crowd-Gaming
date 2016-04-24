@@ -237,6 +237,7 @@ function responseUpdateQuestionnaire()
  			*/
 
  			$(document).find('#edit-questionnaire').prop('disabled',false);
+      $('#edit-questionnaire').unbind("hidden.bs.modal");
  			/*
  				User can login
  			*/
@@ -245,8 +246,11 @@ function responseUpdateQuestionnaire()
  				/*
  					Redirect to home page
  				*/
-
- 				location.reload();
+        $("#questionnaire-edit-response").show();
+        $("#questionnaire-edit-response").html("<div class='alert alert-success'>Questionnaire updated successfully.</div>");
+        $('#edit-questionnaire').on('hidden.bs.modal', function () {
+   				location.reload();
+        });
  			}
  			/*
  				Wrong username or password

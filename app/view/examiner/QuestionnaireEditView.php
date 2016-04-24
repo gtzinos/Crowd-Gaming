@@ -17,7 +17,7 @@
          <h4 class="gt-modal-header">Edit Questionnaire <span class="fa fa-pencil"></span> </h4>
        </div>
        <div class="modal-body container-fluid">
-          <form method="POST" id="edit-questionnaire-form" class="form-horizontal" action="return false">
+          <form method="POST" id="edit-questionnaire-form" class="form-horizontal" onsubmit="return false">
               <!-- Questionnaire Name -->
               <div class="form-group has-feedback">
                   <div class="col-xs-12 col-sm-offset-1 col-sm-2">
