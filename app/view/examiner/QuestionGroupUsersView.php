@@ -10,12 +10,12 @@
 
          <div class="form-group row">
            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4">
-             	<select id="question-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group">
+             	<select id="single-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group">
 
              	</select>
            </div>
            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-4">
-             	<button class="btn">Find participants</button>
+             	<button class="btn" onclick="find_participants()">Find participants</button>
            </div>
          </div>
          <br>
@@ -27,14 +27,14 @@
              </select>
            </div>
            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-4">
-             <select id="question-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group" multiple data-actions-box="true" multiple data-selected-text-format="count > 2">
+             <select id="multiple-group-dropdown" class="selectpicker" data-live-search="true" title="Select a question group" multiple data-actions-box="true" multiple data-selected-text-format="count > 2">
 
              </select>
            </div>
          </div>
          <div class="form-group row">
            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-4">
-               <input type="button" class="btn btn-primary " value="Save Users" >
+               <input type="button" class="btn btn-primary" value="Save Users" onclick="save_users()">
            </div>
          </div>
        </div>
