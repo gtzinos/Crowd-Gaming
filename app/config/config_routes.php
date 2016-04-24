@@ -53,7 +53,7 @@
 	Routes::add( 'delete-questionnaire-participation' , 'examiner/DeleteQuestionnaireParticipationController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'handle-questionnaire-request' , "examiner/HandleQuestionnaireRequestController.php" , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'get-users-from-questionnaire' , 'examiner/GetUsersFromQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] ); 
-
+	Routes::add( 'get-all-question-groups' , 'examiner/GetAllQuestionGroupsController.php' ,$_USER_LEVEL["EXAMINER"]);
 	/*
 		Moderator level pages
 	 */
