@@ -17,9 +17,10 @@
 			$this->defSection('JAVASCRIPT','player/QuestionnaireView.php');
 			$this->defSection('MAIN_CONTENT','player/QuestionnaireView.php');
 			$this->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
-			$this->defSection("QUESTIONNAIRE_MEMBERS" , "player/QuestionnaireMembersView.php");
+			$this->defSection("QUESTIONNAIRE_PLAYERS" , "player/QuestionnairePlayersView.php");
 			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
 			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
+			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersView.php");
 		}
 
 		public function run(){
@@ -283,7 +284,7 @@
 			$mail->SMTPSecure = $_CONFIG["SMTP_SECURE"];
 			$mail->Port = $_CONFIG["SMTP_PORT"];
 			$mail->CharSet = 'UTF-8';
-			
+
 			$mail->setFrom($_CONFIG["SMTP_USERNAME"], 'Crowd Gaming Contact Support');
 			$mail->addAddress( $questionnaireInfo["coordinator"]->getEmail() , "Contact Support");     // Add a recipient
 
