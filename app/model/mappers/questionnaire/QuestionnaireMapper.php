@@ -19,10 +19,11 @@
 		public function findWithInfo($sorting , $limit , $offset , $public){
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
-LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` ";
+LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
+WHERE `QuestionnaireParticipation`.`participation_type`=1 ";
 
 			if($public)
-				$query .= "WHERE `Questionnaire`.`public`=1 ";
+				$query .= "AND `Questionnaire`.`public`=1 ";
 
 			$query .= "GROUP BY `Questionnaire`.`id` ";
 
@@ -76,10 +77,11 @@ LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`question
 		public function findWithInfoById($questionnaireId , $public){
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
-LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` WHERE `Questionnaire`.`id`=? ";
-
+LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
+WHERE `Questionnaire`.`id`=? AND `QuestionnaireParticipation`.`participation_type`=1 ";
 			if($public)
 				$query .= "AND `Questionnaire`.`public`=1 ";
+
 			$query .= "GROUP BY `Questionnaire`.`id` ";
 
 			$statement = $this->getStatement($query);
