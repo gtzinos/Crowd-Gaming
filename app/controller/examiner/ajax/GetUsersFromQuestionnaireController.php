@@ -44,6 +44,7 @@
 				$usersJson = array();
 				foreach ($users as $user) 
 				{
+					$arrayItem["access_level"] = $user->getAccessLevel();
 					$arrayItem["id"] = $user->getId();
 					$arrayItem["name"] = $user->getName();
 					$arrayItem["surname"] = $user->getSurname();
