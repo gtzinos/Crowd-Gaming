@@ -27,13 +27,13 @@
 
 				if( $questionnaire === null )
 				{
-					$this->setOutput("response-code" , 1);
+					$this->setOutput("response_code" , 1);
 					return;
 				}
 
 				if( !( $questionnaire->getCoordinatorId() == $_SESSION["USER_ID"]  || $_SESSION["USER_LEVEL"] == $_USER_LEVEL["EXAMINER"] ) )
 				{
-					$this->setOutput("response-code" , 2);
+					$this->setOutput("response_code" , 2);
 					return;
 				}
 
@@ -55,7 +55,7 @@
 					$groupsJson[] = $arrayItem;
 				}
 
-				$this->setOutput("response-code",0);
+				$this->setOutput("response_code",0);
 				$this->setOutput("groups" , $groupsJson);
 
 			}
