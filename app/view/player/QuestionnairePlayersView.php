@@ -1,6 +1,6 @@
-<? if($section == "QUESTIONNAIRE_MEMBERS") : ?>
+<? if($section == "QUESTIONNAIRE_PLAYERS") : ?>
 
-	<div class="modal fade" id="questionnaire-modal" role="dialog">
+	<div class="modal fade" id="questionnaire-players" role="dialog">
 		<div class="modal-dialog modal-md">
 			<div class="modal-content">
 				 <div class="modal-header">

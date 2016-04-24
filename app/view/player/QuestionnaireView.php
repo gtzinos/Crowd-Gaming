@@ -1,11 +1,14 @@
 <?php if($section == "CSS") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/css/bootstrap-select.min.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireRequests.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
+
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<?php
 		/*
@@ -14,20 +17,43 @@
 		$questionnaire = get("questionnaire")["questionnaire"];
 		echo "<script> var questionnaire_id = " . $questionnaire->getId() . "; </script>";
 	?>
-	<legend class="text-center header"> <?php echo $questionnaire->getName() ?> </legend>
-
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-12 col-sm-offset-1 col-sm-3">
+			<div class="col-xs-offset-7 col-xs-5 col-sm-offset-10 col-sm-2">
+				<div class="progress">
+					<!-- active title gives background animation -->
+					<div class="glyphicon glyphicon-globe progress-bar progress-bar-striped progress-bar-danger" role="progressbar" style="width:100%">
+						Stopped
+					</div>
+				</div>
+			</div>
+		</div>
+	<legend class="text-center header" style="margin:0px;padding:0px"> <?php echo $questionnaire->getName() ?> </legend>
+		<div class="row">
+			<div class="col-xs-7 col-sm-offset-1 col-sm-3">
 				<label>On : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
-			<div class="questionnaire-public col-xs-12 col-sm-offset-6 col-sm-2">
-					 <?php
-					 		if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
-							{
-								echo "<a class='mediumicon' onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'> </i></a>";
-							}
-					 ?>
+			<div class="questionnaire-public col-xs-offset-2 col-xs-2 col-sm-offset-6 col-sm-2">
+					<div class="dropdown">
+				    <span class="fi-widget dropdown-toggle mediumicon" type="button" data-toggle="dropdown">
+				    <span style="display:none" class="caret"></span></span>
+				    <ul class="dropdown-menu" >
+				      <!-- <li class="dropdown-header">Dropdown header 1</li> -->
+							<!-- <li class="divider"></li>
+						-->
+							<?php
+	 					 		if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
+	 							{
+	 								echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
+								}
+								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId())
+	 							{
+	 								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
+									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
+								}
+	 					 ?>
+				    </ul>
+					</div>
 			</div>
 		</div>
 		<div class="row">
@@ -52,12 +78,12 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
-				<a onclick="showModal('questionnaire-modal')">Players :
+				<a onclick="showModal('questionnaire-players')">Players :
 					<?php
 						if(get("questionnaire")["player-participation"])
 						{
 							echo "You and ";
-							$users = get("questionnaire")["participations"];
+							$users = get("questionnaire")["participations"] - 1;
 
 							echo $users . " users";
 						}
@@ -442,7 +468,7 @@
 
 <?php
 	load("QUESTIONNAIRE_OPTIONS");
-	load("QUESTIONNAIRE_MEMBERS");
+	load("QUESTIONNAIRE_PLAYERS");
 	load("CONTACT_WITH_ONE_EMAIL");
 	/*
 		Illegal actions
@@ -451,6 +477,12 @@
 	{
 		load("EDIT_QUESTIONNAIRE");
 	}
+	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"])
+	{
+			load("QUESTIONNAIRE_MEMBERS");
+			load("QUESTIONNAIRE_SETTINGS");
+	}
+
 ?>
 
 <?php endif; ?>

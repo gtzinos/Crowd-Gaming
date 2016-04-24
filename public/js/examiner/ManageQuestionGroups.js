@@ -80,6 +80,7 @@ $(document).ready(function(e) {
           else
           {
             $("#correct").val("-");
+            $("#correct").focus();
             $("#correct option[value=" + id + "]").attr("disabled",true);
             if(id == 3)
             {
@@ -130,6 +131,7 @@ $(document).ready(function(e) {
           else
           {
             $("#edit-correct").val("-");
+            $("#edit-correct").focus();
             $("#edit-correct option[value=" + id + "]").attr("disabled",true);
             if(id == 3)
             {
@@ -301,10 +303,12 @@ function show_questions_response(question_group_id)
 */
 $(document)
   .on("mouseover","span.edit-question,span.remove-question",function(e) {
-    $(e.target).css("color","#36A0FF");
+    $(e.target).css("color","#36A0FF")
+               .css('cursor', 'hand');
   })
   .on("mouseleave","span.edit-question,span.remove-question",function(e) {
-    $(e.target).css("color","#000000");
+    $(e.target).css("color","#000000")
+               .css('cursor', 'pointer');
   });
 
 
@@ -638,7 +642,7 @@ function create_question(question_group_id)
       Cannot be empty
     */
     $("#create-question-response").show();
-    $("#create-question-response").html("<div class='alert alert-danger'>Questionnaire name and description cannot be empty. </div>");
+    $("#create-question-response").html("<div class='alert alert-danger'>Please fill all fields. </div>");
 
   }
 
@@ -855,8 +859,6 @@ function delete_question_response(question_group_id,question_id)
           /*
             Success message
           */
-          $("#edit-question-response").show();
-          $("#edit-question-response").html("<div class='alert alert-success'>Question deleted successfully.</div>");
           if (parseInt($("#qcounter"+question_group_id).text()) == 1) {
             $("#question-list-group").html("<label class='alert alert-danger text-center'>There are no questions on this questionnaire group</label>");
           }
@@ -1108,14 +1110,21 @@ $(window).scroll(function () {
         /*
           Debug
         */
-        //var users = JSON.parse(xmlHttp.responseText);
-
+        var array = JSON.parse(xmlHttp.responseText),
+            users = array.users;
         //console.log(users.response_code);
 
-        if(xmlHttp.responseText.localeCompare("0") == 0)
-        {
+        var i=0,
+        out = "";
 
+        for(i = 0;i<users.length;i++)
+        {
+          out += "<option value='" + users[i].id + "' data-tokens='" + users[i].email + " " + users[i].gender
+          + " " + users[i].country + " " + users[i].city + " " + users[i].address
+         + " " + users[i].phone + "'>" + " " + users[i].name
+         + " " + users[i].surname + "</option>";
         }
+        $("#question-group-dropdown").html(out);
       }
     }
   }
