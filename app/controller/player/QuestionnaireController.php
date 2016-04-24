@@ -21,6 +21,7 @@
 			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
 			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
 			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersView.php");
+			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsView.php");
 		}
 
 		public function run(){

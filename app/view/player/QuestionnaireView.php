@@ -17,9 +17,18 @@
 		$questionnaire = get("questionnaire")["questionnaire"];
 		echo "<script> var questionnaire_id = " . $questionnaire->getId() . "; </script>";
 	?>
-	<legend class="text-center header"> <?php echo $questionnaire->getName() ?> </legend>
-
 	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-offset-7 col-xs-5 col-sm-offset-10 col-sm-2">
+				<div class="progress">
+					<!-- active title gives background animation -->
+					<div class="glyphicon glyphicon-globe progress-bar progress-bar-striped progress-bar-danger" role="progressbar" style="width:100%">
+						Stopped
+					</div>
+				</div>
+			</div>
+		</div>
+	<legend class="text-center header" style="margin:0px;padding:0px"> <?php echo $questionnaire->getName() ?> </legend>
 		<div class="row">
 			<div class="col-xs-7 col-sm-offset-1 col-sm-3">
 				<label>On : </label> <?php echo $questionnaire->getCreationDate() ?>
@@ -40,7 +49,7 @@
 								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId())
 	 							{
 	 								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
-									echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i  class='fa fa-cogs'></i> Settings</a></li>";
+									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
 								}
 	 					 ?>
 				    </ul>
@@ -74,7 +83,7 @@
 						if(get("questionnaire")["player-participation"])
 						{
 							echo "You and ";
-							$users = get("questionnaire")["participations"];
+							$users = get("questionnaire")["participations"] - 1;
 
 							echo $users . " users";
 						}
@@ -471,6 +480,7 @@
 	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"])
 	{
 			load("QUESTIONNAIRE_MEMBERS");
+			load("QUESTIONNAIRE_SETTINGS");
 	}
 
 ?>
