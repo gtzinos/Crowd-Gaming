@@ -32,8 +32,6 @@
 						$_POST["multiplier"],
 						$_POST["answer1"],
 						$_POST["answer2"],
-						$_POST["answer3"],
-						$_POST["answer4"],
 						$_POST["correct"] ) )
 			{
 
@@ -64,25 +62,27 @@
 					return;
 				}
 
-				if( !is_numeric( $_POST["correct"] ) ||  $_POST["correct"] < 1 || $_POST["correct"] > 4 )
-				{
-					$this->setOutput('response-code' , 7);
-					return;
-				}
+				
 
 				$question = new Question;
 
-				$question->setQuestionText( htmlspecialchars($_POST["question-text"] , ENT_QUOTES) );
+				$question->setQuestionText( htmlentities($_POST["question-text"] ) );
 				$question->setMultiplier( $_POST["multiplier"] );
 				$question->setQuestionGroupId( $_POST["question-group-id"] );
 				$question->setTimeToAnswer( $_POST["time-to-answer"] );
 
 
 				$answers = array();
+				
 
-				for( $i= 1 ; $i < 5 ; $i++ )
+				// 4 questions max.
+				$i = 1;
+				for(; $i < 5 ; $i++ )
 				{
-					if( strlen($_POST["answer".$i]) < 2 && strlen($_POST["answer".$i]) > 255 )
+					if( !isset( $_POST["answer".$i]) )
+						break;
+
+					if( strlen($_POST["answer".$i]) < 1 && strlen($_POST["answer".$i]) > 255 )
 					{
 						$this->setOutput('response-code' , 6);
 						return;
@@ -95,6 +95,11 @@
 					$answers[] = $answer;	
 				}
 
+				if( !is_numeric( $_POST["correct"] ) ||  $_POST["correct"] < 1 || $_POST["correct"] >= $i )
+				{
+					$this->setOutput('response-code' , 7);
+					return;
+				}
 
 				try
 				{

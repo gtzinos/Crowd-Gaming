@@ -21,6 +21,7 @@
 				 2 : You must be coordinator
 				 3 : participation-type must be 1 or 2
 				 4 : The participation doesnt exist
+				 5 : You cant remove the coordinator
 				 6 : Database Error
 				-1 : No post data.
 			 */
@@ -40,6 +41,12 @@
 				if( $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] )
 				{
 					$this->setOutput("response-code" , 2);
+					return;
+				}
+
+				if( $questionnaire->getCoordinatorId() == $_POST["user-id"] )
+				{
+					$this->setOutput("response-code" , 5);
 					return;
 				}
 
@@ -71,6 +78,7 @@
 				}
 				return;
 			}
+
 
 			$this->setOutput("response-code" , -1);
 		}

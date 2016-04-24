@@ -24,6 +24,7 @@
 				4 time-to-answer validation error
 				5 Multiplier validation error
 				6 Database Error
+				7 Invalid Correct Answer
 			   -1 No data
 			 */
 
@@ -33,9 +34,7 @@
 					   $_POST["multiplier"],
 					   $_POST["correct"],
 					   $_POST["answer1"],
-					   $_POST["answer2"],
-					   $_POST["answer3"],
-					   $_POST["answer4"] ) )
+					   $_POST["answer2"]) )
 			{
 
 				$participationMapper = new ParticipationMapper;
@@ -76,23 +75,58 @@
 				}
 
 
-				$question->setQuestionText( htmlspecialchars($_POST["question-text"] , ENT_QUOTES) );
+				$question->setQuestionText( htmlentities($_POST["question-text"] ) );
 				$question->setMultiplier( $_POST["multiplier"] );
 				$question->setTimeToAnswer( $_POST["time-to-answer"] );
 
 				$answers = $answerMapper->findByQuestion( $question->getId() );
-
-				for( $i= 1 ; $i < 5 ; $i++ )
+				$answersToDelete = array();
+				$i = 1;
+				// 4 Questinos Max
+				for( ; $i < 5 ; $i++ )
 				{
-					if( strlen($_POST["answer".$i]) < 2 && strlen($_POST["answer".$i]) > 255 )
+					// Answer already exists and post data exist
+					if( isset( $answers[$i-1] , $_POST["answer".$i]) )
 					{
-						$this->setOutput('response-code' , 6);
-						return;
+						if( strlen($_POST["answer".$i]) < 1 && strlen($_POST["answer".$i]) > 255 )
+						{
+							$this->setOutput('response-code' , 6);
+							return;
+						}
+
+						$answers[$i-1]->setAnswerText( $_POST["answer".$i] );
+						$answers[$i-1]->setCorrect( $_POST["correct"] == $i ? true : false );
 					}
+					// Answer doesnt exist but post data exist
+					else if( !isset( $answers[$i-1]) &&  isset( $_POST["answer".$i]) )
+					{
+						if( strlen($_POST["answer".$i]) < 1 && strlen($_POST["answer".$i]) > 255 )
+						{
+							$this->setOutput('response-code' , 6);
+							return;
+						}
 
-					$answers[$i-1]->setAnswerText( $_POST["answer".$i] );
-					$answers[$i-1]->setCorrect( $_POST["correct"] == $i ? true : false );
+						$answer = new Answer;
+						$answer->setAnswerText( $_POST["answer".$i] );
+						$answer->setCorrect( $_POST["correct"] == $i ? true : false );
+						$answer->setQuestionId( $question->getId() );
+						$answers[$i-1] = $answer;
+					}
+					// Answers exists , post data doesnt , Remove answer from db
+					else if( isset( $answers[$i-1]) &&  !isset( $_POST["answer".$i]) )
+					{
+						$answersToDelete[] = $answers[$i-1];
+						unset( $answers[$i - 1]);
+					}
+					else
+						break;
+					
+				}
 
+				if( !is_numeric( $_POST["correct"] ) ||  $_POST["correct"] < 1 || $_POST["correct"] >= $i )
+				{
+					$this->setOutput('response-code' , 7);
+					return;
 				}
 
 				try
@@ -103,8 +137,12 @@
 
 					foreach ($answers as $answer) 
 					{
-						$answer->setQuestionId( $question->getId() );
 						$answerMapper->persist($answer);
+					}
+
+					foreach ($answersToDelete as $answer) 
+					{
+						$answerMapper->delete($answer);
 					}
 
 					DatabaseConnection::getInstance()->commit();
