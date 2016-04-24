@@ -19,7 +19,6 @@
 				 0 : All ok
 				 1 : Invalid Access
 				-1 : Not Post Data
-
 			 */
 			if( isset( $_POST["question-group-id"]) )
 			{

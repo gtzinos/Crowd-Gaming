@@ -44,7 +44,8 @@
 
 			if( isset( $this->params[1] , $this->params[2]) ){
 
-				if($this->params[1] == 'name' || $this->params[1] == 'pop'){
+				if($this->params[1] == 'name' || $this->params[1] == 'pop')
+				{
 					$sorting = $this->params[1];
 				}
 
