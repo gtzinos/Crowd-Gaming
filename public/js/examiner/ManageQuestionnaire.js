@@ -334,3 +334,167 @@ function responseUpdateQuestionnaire()
  			$("#questionnaire-edit-response").html("<div class='alert alert-danger'>Server is offline</div>");
  	}
 }
+
+
+/*
+  On mouse over on delete user buttons
+*/
+$(document)
+  .on("mouseover","span.remove-user",function(e) {
+    $(e.target).css("color","#36A0FF")
+               .css('cursor', 'hand');
+  })
+  .on("mouseleave","span.remove-user",function(e) {
+    $(e.target).css("color","#000000")
+               .css('cursor', 'pointer');
+  });
+
+  /*
+    Ask to remove a specific participant
+  */
+  function remove_participant(user_id,ask_required)
+  {
+    if(ask_required)
+    {
+      display_confirm_dialog("Confirm","Are you sure to remove player access of this user ?","btn-default","btn-default","black","remove_participant("+ user_id + ",false)","");
+    }
+    else {
+      var Required = {
+          Url() { return webRoot + "delete-questionnaire-participation"; },
+          SendType() { return "POST"; },
+          variables : "",
+          Parameters() {
+            /*
+              Variables we will send
+            */
+            this.variables = "questionnaire-id=" + questionnaire_id + "&user-id=" + user_id + "&participation-type=1";
+            return this.variables;
+          }
+        }
+
+        var Optional = {
+          ResponseMethod() { return "remove_participant_response(" + user_id + ")"; }
+        };
+
+        /*
+          Send ajax request
+        */
+        sendAjaxRequest(Required,Optional);
+    }
+  }
+
+  /*
+    Ask to remove a specific participant
+  */
+  function remove_participant_response(user_id)
+  {
+    /*
+      if Server responsed back successfully
+    */
+    if (xmlHttp.readyState == 4) {
+      if (xmlHttp.status == 200) {
+        /*
+          0 : All ok
+          1 : Questionnaire doesnt exists
+          2 : You must be coordinator
+          3 : participation-type must be 1 or 2
+          4 : The participation doesnt exist
+          5 : You cant remove the coordinator
+          6 : Database Error
+         -1 : No post data.
+        */
+        $('#questionnaire-modal').unbind("hidden.bs.modal");
+
+        if(xmlHttp.responseText.localeCompare("0") == 0)
+        {
+            /*
+              Success message
+            */
+            $("#mitem"+user_id).remove();
+            //if was the last user
+            if($("[id*=mitem]").length == 0)
+            {
+              $("#mgroup").html("<label class='alert alert-danger text-center'>There are no members on this questionnaire</label>");
+            }
+            show_notification("success","User removed successfully.",4000);
+            //after modal closed
+            $('#questionnaire-modal').on('hidden.bs.modal', function () {
+              location.reload();
+            });
+        }
+        /*
+          If server responsed with an error code
+        */
+        else {
+          /*
+            Display an response message
+          */
+          var response_message = "";
+          /*
+             If response message == 1
+              Questionnaire doesnt exists
+          */
+          if(xmlHttp.responseText.localeCompare("1") == 0)
+          {
+           response_message += "Questionnaire doesnt exists.";
+          }
+          /*
+             If response message == 2
+             Access error
+          */
+          else if(xmlHttp.responseText.localeCompare("2") == 0)
+          {
+           response_message += "You must be coordinator.";
+          }
+          /*
+             If response message == 3
+             participation-type must be 1 or 2
+          */
+          else if(xmlHttp.responseText.localeCompare("3") == 0)
+          {
+           response_message += "Participation type must be 1 or 2.";
+          }
+          /*
+             If response message == 4
+             The participation doesnt exist
+          */
+          else if(xmlHttp.responseText.localeCompare("4") == 0)
+          {
+           response_message += "This user doesn't have a player access.";
+          }
+          /*
+             If response message == 5
+             You cant remove the coordinator
+          */
+          else if(xmlHttp.responseText.localeCompare("5") == 0)
+          {
+           response_message += "You cant remove the coordinator.";
+          }
+          /*
+             If response message == 6
+             Database Error
+          */
+          else if(xmlHttp.responseText.localeCompare("6") == 0)
+          {
+           response_message += "General Database Error.";
+          }
+          /*
+             If response message == -1
+             No post data.
+          */
+          else if(xmlHttp.responseText.localeCompare("-1") == 0)
+          {
+           response_message += "You didn't send data.";
+          }
+          /*
+              Something going wrong
+          */
+          else {
+            response_message += "Unknown error. Contact with one administrator!";
+          }
+
+          show_notification("error",response_message,5000);
+        }
+      }
+    }
+  }

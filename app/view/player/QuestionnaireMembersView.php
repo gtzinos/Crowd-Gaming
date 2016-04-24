@@ -8,37 +8,61 @@
 					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Questionnaire Members </h4>
 				 </div>
 				 <div class="modal-body container-fluid text-center">
+					 <div class="list-group" id="mgroup">
            <?php
-            echo "<div class='list-group'>";
-						$count=0;
-							foreach(get("questionnaire")["members-participating"] as $member)
-	            {
+					 $count=0;
+					 $item_class = "col-xs-12";
+
+					 //only for coordinators
+					 if(get("questionnaire")["questionnaire"]->getCoordinatorId() == $_SESSION["USER_ID"])
+					 {
+						 $item_class = "col-xs-9 col-sm-9";
+					 }
+
+						foreach(get("questionnaire")["members-participating"] as $member)
+						{
+							if($member["player-participation"])
+							{
 								$count++;
-	              echo "<a href='" . LinkUtils::generatePageLink('user') . "/" .
-								  $member["user"]->getId() . "' target='_blank' class='list-group-item'>" .
-									$member["user"]->getName() . " " . $member["user"]->getSurname() . " (";
-									$bool = 0;
-									if(get("questionnaire")["questionnaire"]->getCoordinatorId() ==  $member["user"]->getId())
-									{
-										$bool = 1;
-										echo "Coordinator";
-									}
-									if($bool) echo ",";
-									$bool = 0;
-									if($member["examiner-participation"])
-									{
-										echo "Examiner";
-										$bool = 1;
-									}
-									if($bool) echo ",";
-									if($member["player-participation"])
-									{
-										echo "Player";
-									}
+								echo "<div id='mitem" . $member["user"]->getId() . "' class='list-group-item col-xs-12'>";
 
-									echo ")</a>";
+								echo "<a href='" . LinkUtils::generatePageLink('user') . "/" .
+								$member["user"]->getId() . "' target='_blank' class='" . $item_class . "'>" .
+								$member["user"]->getName() . " " . $member["user"]->getSurname() . " (";
+								$bool = 0;
+								if(get("questionnaire")["questionnaire"]->getCoordinatorId() ==  $member["user"]->getId())
+								{
+									$bool = 1;
+									echo "Coordinator";
+								}
 
+								if($member["examiner-participation"])
+								{
+									if($bool) {
+										echo ",";
+										$bool = 0;
+									}
+									echo "Examiner";
+									$bool = 1;
+								}
+
+								//player participation checked before
+								if($bool) echo ",";
+								echo "Player";
+
+								echo ")</a>";
+
+								//only for coordinators
+								if(get("questionnaire")["questionnaire"]->getCoordinatorId() == $_SESSION["USER_ID"])
+								{
+									echo "<span onclick='remove_participant(" . $member["user"]->getId() . ",true)' class='col-xs-offset-1 col-xs-1 remove-question glyphicon glyphicon-trash remove-user'>
+												</span>";
+								}
+
+								echo "</div>";
 							}
+						}
+
 						/*
 							No members
 						*/

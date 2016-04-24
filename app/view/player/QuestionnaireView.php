@@ -1,13 +1,18 @@
 <?php if($section == "CSS") : ?>
-
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireRequests.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<?php
 		/*
 			Questionnaire Object
 		*/
 		$questionnaire = get("questionnaire")["questionnaire"];
+		echo "<script> var questionnaire_id = " . $questionnaire->getId() . "; </script>";
 	?>
 	<legend class="text-center header"> <?php echo $questionnaire->getName() ?> </legend>
 
@@ -47,22 +52,17 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-sm-offset-1 col-sm-5">
-				<a onclick="showModal('questionnaire-modal')">Members :
+				<a onclick="showModal('questionnaire-modal')">Players :
 					<?php
-						if(get("questionnaire")["player-participation"] || get("questionnaire")["examiner-participation"])
+						if(get("questionnaire")["player-participation"])
 						{
 							echo "You and ";
 							$users = get("questionnaire")["participations"];
 
-							if(get("questionnaire")["player-participation"])
-							{
-								$users -= 1;
-							}
-							if(get("questionnaire")["examiner-participation"])
-							{
-								$users -= 1;
-							}
 							echo $users . " users";
+						}
+						else {
+							echo "0 users";
 						}
 					?>
 				</a>
