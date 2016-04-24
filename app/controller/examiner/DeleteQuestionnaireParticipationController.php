@@ -79,6 +79,7 @@
 				return;
 			}
 
+
 			$this->setOutput("response-code" , -1);
 		}
 	}
