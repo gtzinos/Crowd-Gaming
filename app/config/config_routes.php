@@ -30,37 +30,43 @@
 		Examiner level pages
 	 */
 	Routes::add( 'questionnaire-create' , 'examiner/CreateQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'questionnaire-edit' , 'examiner/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'questionnaire-groups' , 'examiner/QuestionnaireGroupsController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'edit-question-group' , 'examiner/EditQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'questionnaire-workbench' , 'examiner/QuestionnaireWorkbenchController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-schedule' , 'examiner/QuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'create-question-group' , 'examiner/CreateQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'get-question-groups' , 'examiner/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'get-questions' , 'examiner/GetQuestionsController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'get-answers' , 'examiner/GetAnswersController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'create-question'  , 'examiner/CreateQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'edit-question' , 'examiner/EditQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'edit-answer' , 'examiner/EditAnswerController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'delete-question' , 'examiner/DeleteQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'delete-question-group' , 'examiner/DeleteQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'delete-questionnaire' , 'examiner/DeleteQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'add-user-to-question-group' , 'examiner/AddUserToQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'remove-user-from-question-group' , 'examiner/RemoveUserFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'get-users-from-question-group' , 'examiner/GetUsersFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'publish-questionnaire-request' , 'examiner/PublishQuestionnaireApplicationController.php' , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'delete-questionnaire-participation' , 'examiner/DeleteQuestionnaireParticipationController.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'handle-questionnaire-request' , "examiner/HandleQuestionnaireRequestController.php" , $_USER_LEVEL["EXAMINER"] );
-	Routes::add( 'get-users-from-questionnaire' , 'examiner/GetUsersFromQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] ); 
-	Routes::add( 'get-all-question-groups' , 'examiner/GetAllQuestionGroupsController.php' ,$_USER_LEVEL["EXAMINER"]);
+	
+
+	// Ajax
+	Routes::add( 'questionnaire-edit' , 'examiner/ajax/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]); 
+	Routes::add( 'get-question-groups' , 'examiner/ajax/GetGroupsController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'get-questions' , 'examiner/ajax/GetQuestionsController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'get-answers' , 'examiner/ajax/GetAnswersController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'create-question'  , 'examiner/ajax/CreateQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'edit-question' , 'examiner/ajax/EditQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'edit-answer' , 'examiner/ajax/EditAnswerController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'delete-question' , 'examiner/ajax/DeleteQuestionController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'delete-question-group' , 'examiner/ajax/DeleteQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'delete-questionnaire' , 'examiner/ajax/DeleteQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'add-user-to-question-group' , 'examiner/ajax/AddUserToQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'remove-user-from-question-group' , 'examiner/ajax/RemoveUserFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'get-users-from-question-group' , 'examiner/ajax/GetUsersFromQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'publish-questionnaire-request' , 'examiner/ajax/PublishQuestionnaireApplicationController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'delete-questionnaire-participation' , 'examiner/ajax/DeleteQuestionnaireParticipationController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'handle-questionnaire-request' , "examiner/ajax/HandleQuestionnaireRequestController.php" , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'get-users-from-questionnaire' , 'examiner/ajax/GetUsersFromQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] ); 
+	Routes::add( 'get-all-question-groups' , 'examiner/ajax/GetAllQuestionGroupsController.php' ,$_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'get-my-questionnaires' , 'examiner/ajax/GetMyQuestionnairesController.php' , $_USER_LEVEL["EXAMINER"] );
+
 	/*
 		Moderator level pages
 	 */
-	Routes::add( 'handle-questionnaire-public-request' , 'moderator/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
-	Routes::add( 'handle-examiner-application' , 'moderator/HandleExaminerApplicationController.php' , $_USER_LEVEL["MODERATOR"] );
-	Routes::add( 'ban-user' , 'moderator/BanUserController.php' , $_USER_LEVEL["MODERATOR"] );
-	Routes::add( 'ban-examiners-from-questionnaire' , 'moderator/BanExaminersController.php' , $_USER_LEVEL["MODERATOR"]);
+	
+	//Ajax
+	Routes::add( 'handle-questionnaire-public-request' , 'moderator/ajax/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'handle-examiner-application' , 'moderator/ajax/HandleExaminerApplicationController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'ban-user' , 'moderator/ajax/BanUserController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'ban-examiners-from-questionnaire' , 'moderator/ajax/BanExaminersController.php' , $_USER_LEVEL["MODERATOR"]);
 
 	/*
 		The Page to load when the page parameter is not defined
