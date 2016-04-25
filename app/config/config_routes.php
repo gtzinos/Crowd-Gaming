@@ -57,6 +57,7 @@
 	Routes::add( 'get-users-from-questionnaire' , 'examiner/ajax/GetUsersFromQuestionnaireController.php' , $_USER_LEVEL["EXAMINER"] ); 
 	Routes::add( 'get-all-question-groups' , 'examiner/ajax/GetAllQuestionGroupsController.php' ,$_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-my-questionnaires' , 'examiner/ajax/GetMyQuestionnairesController.php' , $_USER_LEVEL["EXAMINER"] );
+	Routes::add( 'get-users-by-pattern' , 'examiner/ajax/GetUsersByPatternController.php' , $_USER_LEVEL["EXAMINER"]);
 
 	/*
 		Moderator level pages
