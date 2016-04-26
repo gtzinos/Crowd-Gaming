@@ -93,7 +93,7 @@
 						return;
 					} 
 
-					if( !is_numeric($_POST["radius"]) || $_POST["longitude"]< 5 )
+					if( !is_numeric($_POST["radius"]) || $_POST["radius"]< 5 )
 					{
 						$this->setOutput('response-code' , 5);
 						return;
