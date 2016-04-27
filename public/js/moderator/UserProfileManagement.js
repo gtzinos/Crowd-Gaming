@@ -28,20 +28,19 @@ function update_user(user_id,confirmed)
   country = $("#edit-user-country").val();
   city = $("#edit-user-city").val();
 
-  if ($("#user-edit-view-form").find('> * > .gt-input-group.has-success [required], > .gt-input-group.has-success').length >= $("#user-edit-view-form").find(' > * > .gt-input-group [required], > .gt-input-group [required]').length && $("#user-edit-view-form").find('> * > .gt-input-group.has-error, > .gt-input-group.has-error').length == 0)
+  if ($("#user-edit-view-form").find('> * > .gt-input-group.has-success [required], > .gt-input-group.has-success').length <= $("#user-edit-view-form").find(' > * > .gt-input-group [required], > .gt-input-group [required]').length && $("#user-edit-view-form").find('> * > .gt-input-group.has-error, > .gt-input-group.has-error').length > 0)
   {
-    alert("Invalid form fields.");
+    show_notification("error","Invalid form fields.",5000);
     return;
   }
-  else if(access.length > 0 && email.length > 0 && password1 == password2 &&
-          password1.length > 0 && password2.length > 0 && name.length > 0 && surname.length > 0
-         && gender.length > 0 && country.length > 0 && city.length > 0)
+  else if(access.length > 0 && email.length > 0 && name.length > 0 && surname.length > 0
+         && gender.length > 0 && country.length > 0 && city.length > 0 && password1 == password2)
   {
+
       let data_to_send = {
         "user-id" : user_id,
         "access" : access,
         "email" : email,
-        "password" : password1,
         "name" : name,
         "surname" : surname,
         "gender" : gender,
@@ -49,6 +48,10 @@ function update_user(user_id,confirmed)
         "city" : city
       };
 
+    if(password1.length > 0 && password2.length > 0 && password1 == password2)
+    {
+      data_to_send["password"] = password1;
+    }
     if($("#edit-user-address").val().length > 0){
       data_to_send["address"] = $("#edit-user-address").val();
     }
@@ -112,7 +115,7 @@ function ban_user(user_id,confirmed)
   $.post(webRoot + "ban-user",
   {
     "user-id" : user_id,
-    "action-type" : "1"
+    "action-type" : "ban"
   },
   function(data,status){
     if(status == "success")
@@ -167,7 +170,7 @@ function unban_user(user_id,confirmed)
   $.post(webRoot + "ban-user",
   {
     "user-id" : user_id,
-    "action-type" : "2"
+    "action-type" : "unban"
   },
   function(data,status){
     if(status == "success")
@@ -177,7 +180,7 @@ function unban_user(user_id,confirmed)
         show_notification("success","User unbanned successfully.",3000);
         setTimeout(function() {
           location.reload();
-        },4000);
+        },3000);
       }
       else if(data == "1")
       {

@@ -66,7 +66,7 @@
 									<span class='text-center'><i class='glyphicon glyphicon-lock bigicon'> </i></span>
 								</div>
 								<div class='col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group' data-validate='length' data-length='8'>
-									<input type='text' id='edit-user-new-password' class='form-control' value='' data-toggle='tooltip' gt-error-message='Not a valid password' placeholder='New password (Required)' required>
+									<input type='password' id='edit-user-new-password' class='form-control' value='' data-toggle='tooltip' gt-error-message='Not a valid password' placeholder='New password (Optional)'>
 									<span class='gt-icon'></span>
 								</div>
 							</div>
@@ -75,7 +75,7 @@
 									<span class='text-center'><i class='glyphicon glyphicon-lock bigicon'> </i></span>
 								</div>
 								<div class='col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group' data-validate='length' data-length='8' data-equal='edit-user-new-password'>
-									<input id='edit-user-new-repeat-password' type='text' class='form-control' value='' data-toggle='tooltip' gt-error-message='Not a valid password' placeholder='Repeat new password (Required)' required>
+									<input id='edit-user-new-repeat-password' type='password' class='form-control' value='' data-toggle='tooltip' gt-error-message='Not a valid password' placeholder='Repeat new password (Optional)'>
 									<span class='gt-icon'></span>
 								</div>
 							</div>

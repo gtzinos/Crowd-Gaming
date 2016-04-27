@@ -127,7 +127,7 @@ function delete_user_from_question_group()
                 3 : General database error
                -1 : No post data;
               */
-              show_notification("success","User deleted successfully (" + user_name + ").",3000);
+              show_notification("success","User deleted successfully (" + user_name + ").",4000);
             }
             else if(data == "1")
             {
