@@ -64,7 +64,7 @@
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="select">
                <select class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" id="profile-gender" required>
-                 <option selected>Gender (Required)</option>
+                 <option value='-' selected>Gender (Required)</option>
                <?php
                /*
                    If user parameter exists
@@ -121,7 +121,7 @@
                <span class="text-center"><i class="glyphicon glyphicon-home bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="5">
-               <input value="<?php if(get("user")) if(get("user")->getAddress()) echo get("user")->getAddress(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 5 characters" type="text" id="profile-address" maxlength="25" placeholder="Address (Optional) *Length >= 5"/>
+               <input value="<?php if(get("user")) if(get("user")->getAddress()) echo get("user")->getAddress(); ?>" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 5 characters" type="text" id="profile-address" maxlength="50" placeholder="Address (Optional) *Length >= 5"/>
                <span class="gt-icon"></span>
              </div>
          </div>
