@@ -77,11 +77,55 @@ function update_user(user_id,confirmed)
         }
         else if(data == "2")
         {
-          show_notification("error","General database error.",5000);
+          show_notification("error","Not a valid email address.",5000);
         }
         else if(data == "3")
         {
-          show_notification("error","User had already a banned status.",5000);
+          show_notification("error","Not a valid name.",5000);
+        }
+        else if(data == "4")
+        {
+          show_notification("error","Not a valid surname.",5000);
+        }
+        else if(data == "5")
+        {
+          show_notification("error","Not a valid gender.",5000);
+        }
+        else if(data == "6")
+        {
+          show_notification("error","Not a valid country.",5000);
+        }
+        else if(data == "7")
+        {
+          show_notification("error","Not a valid city.",5000);
+        }
+        else if(data == "8")
+        {
+          show_notification("error","Not a valid access level.",5000);
+        }
+        else if(data == "9")
+        {
+          show_notification("error","Not a valid address.",5000);
+        }
+        else if(data == "10")
+        {
+          show_notification("error","Not a valid phone number.",5000);
+        }
+        else if(data == "11")
+        {
+          show_notification("error","Not a valid password.",5000);
+        }
+        else if(data == "12")
+        {
+          show_notification("error","Email already used by another user.",5000);
+        }
+        else if(data == "13")
+        {
+          show_notification("error","General database error.",5000);
+        }
+        else if(data == "14")
+        {
+          show_notification("error","Could not send email.",5000);
         }
         else if(data == "-1")
         {
