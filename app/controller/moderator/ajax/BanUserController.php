@@ -33,7 +33,7 @@
 
 				if( $_POST["action-type"] != "ban" && $_POST["action-type"] != "unban" )
 				{
-					$this->setOutput("response-code" , 3;
+					$this->setOutput("response-code" , 3);
 					return;
 				}
 
