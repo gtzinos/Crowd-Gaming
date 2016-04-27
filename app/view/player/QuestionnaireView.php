@@ -34,26 +34,26 @@
 				<label>On : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
 			<div class="questionnaire-public col-xs-offset-2 col-xs-2 col-sm-offset-6 col-sm-2">
-					<div class="dropdown">
-				    <span class="fi-widget dropdown-toggle mediumicon" type="button" data-toggle="dropdown">
-				    <span style="display:none" class="caret"></span></span>
-				    <ul class="dropdown-menu" >
-				      <!-- <li class="dropdown-header">Dropdown header 1</li> -->
-							<!-- <li class="divider"></li>
-						-->
-							<?php
-	 					 		if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
-	 							{
-	 								echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
-								}
-								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId())
-	 							{
-	 								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
-									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
-								}
-	 					 ?>
-				    </ul>
-					</div>
+				<?php
+					if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
+					{
+						echo "
+						<div class='dropdown'>
+					    <span class='fi-widget dropdown-toggle mediumicon' type='button' data-toggle='dropdown'>
+					    <span style='display:none' class='caret'></span></span>
+					    <ul class='dropdown-menu' >
+					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
+								<!-- <li class='divider'></li> --> ";
+		 						echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
+							if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId())
+							{
+								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
+								echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
+							}
+						echo "</ul>
+							</div>";
+					}
+	 			?>
 			</div>
 		</div>
 		<div class="row">
