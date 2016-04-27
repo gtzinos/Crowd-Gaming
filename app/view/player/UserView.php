@@ -1,6 +1,8 @@
 <?php if($section == "CSS") : ?>
 
 <?php elseif($section == "JAVASCRIPT") : ?>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/moderator/UserProfileManagement.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid text-center">
@@ -17,7 +19,7 @@
 		 	echo "
 		<form class='form-horizontal'>
 			<div class='form-group has-feedback'>
-				<div class='col-xs-2 col-md-offset-5 col-md-2'>
+				<div class='col-xs-offset-5 col-xs-2 col-md-offset-5 col-md-2'>
 					<span class='text-center'>";
 					if($user->getGender() == 0)
 					{
@@ -31,7 +33,7 @@
 			</div>
 			<div class='form-group has-feedback'>
 				<div class='col-xs-2 col-md-offset-1 col-md-2'>
-					<span class='text-center'><i class='glyphicon glyphicon-envelope bigicon'> </i></span>
+					<span class='text-center'><i class='material-icons bigicon'>mood</i></span>
 				</div>
 				<div class='col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group' data-validate='select'>
 					<select class='form-control' placeholder='Access Level (Required)' required>
@@ -152,15 +154,61 @@
 						<span class='gt-icon'></span>
 					</div>
 				</div>
+				<div class='form-group has-feedback'>
+					<div class='col-xs-2 col-md-offset-1 col-md-2'>
+						<span class='text-center'><i class='glyphicon glyphicon-ban-circle bigicon'> </i></span>
+					</div>
+					<div class='col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group'>";
+					if(!$user->getBanned())
+					{
+						echo "<input type='text' class='form-control' value='Not Banned' maxlength='10' placeholder='Banned ?' disabled>";
+					}
+					else {
+						echo "<input type='text' class='form-control' value='Banned' maxlength='6' placeholder='Banned ?' disabled>";
+					}
+					echo "<span class='gt-icon'></span>
+					</div>
+				</div>
+				<div class='form-group has-feedback'>
+					<div class='col-xs-2 col-md-offset-1 col-md-2'>
+						<span class='text-center'><i class='bigicon fa fa-trash-o' style='font-size: 35px'> </i></span>
+					</div>
+					<div class='col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group'>";
+					if(!$user->getDeleted())
+					{
+						echo "<input type='text' class='form-control' value='Not Deleted' maxlength='11' placeholder='Deleted ?' disabled>";
+					}
+					else {
+						echo "<input type='text' class='form-control' value='Deleted' maxlength='7' placeholder='Deleted ?' disabled>";
+					}
+					echo "<span class='gt-icon'></span>
+					</div>
+				</div>
+
 					<div class='col-xs-offset-3 col-xs-3 col-md-offset-3 col-md-1'>
 						<div class='dropdown'>
 							<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Actions
 							<span class='caret'></span></button>
 							<ul class='dropdown-menu'>
-								<li><input type='button' class='btn btn-link' onclick='update_user(" . $user->getId() . ",false)' value='Update profile'></li>
-								<li><input type='button' class='btn btn-link' onclick='ban_user(" . $user->getId() . ",false)' value='Ban account'></li>
-								<li><input type='button' class='btn btn-link' onclick='delete_user(" . $user->getId() . ",false)' value='Delete Account'></li>
-							</ul>
+								<li><input type='button' class='btn btn-link' onclick='update_user(" . $user->getId() . ",false)' value='Update profile'></li>";
+								if(!$user->getBanned())
+								{
+									echo "<li><input type='button' class='btn btn-link' onclick='ban_user(" . $user->getId() . ",false)' value='Ban account'></li>";
+								}
+								else {
+									echo "<li><input type='button' class='btn btn-link' onclick='unban_user(" . $user->getId() . ",false)' value='Unban account'></li>";
+								}
+
+								if(!$user->getDeleted())
+								{
+									echo "<li><input type='button' class='btn btn-link' onclick='delete_user(" . $user->getId() . ",false)' value='Delete Account'></li>";
+								}
+								else{
+									echo "<li><input type='button' class='btn btn-link' onclick='undelete_user(" . $user->getId() . ",false)' value='Undelete Account' style='color:red;text-decoration: line-through;'></li>";
+
+								}
+
+				echo "</ul>
 						</div>
 					</div>
 

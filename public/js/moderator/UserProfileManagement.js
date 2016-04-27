@@ -130,3 +130,8 @@ function delete_user(user_id,confirmed)
     }
   });
 }
+
+function undelete_user(user_id,confirmed)
+{
+  show_notification("error","Only administrators can undelete a user.",5000);
+}
