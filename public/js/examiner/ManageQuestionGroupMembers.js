@@ -88,7 +88,72 @@ var user_name_array = [];
 
 function delete_user_from_question_group()
 {
+  if($("#question-group-users-dropdown").val() == null)
+  {
+    show_notification("error","You must select some users.",5000);
+    return;
+  }
+  var users_array,
+      i = 0;
+  if(String($("#question-group-users-dropdown").val()).indexOf(',') > 0)
+  {
+    users_array = String($("#question-group-users-dropdown").val()).split(',');
+  }
+  else {
+    users_array = String($("#question-group-users-dropdown").val());
+  }
+  var counter = 0;
+  var user_name_array = [];
+  for(i = 0; i<users_array.length; i++)
+  {
+      user_name_array[i] = String($("#question-group-users-dropdown option[value=" + users_array[i] + "]").text());
 
+      $.post(webRoot + "remove-user-from-question-group",
+      {
+        "question-group-id" : selected_group_id,
+        "user-id" : users_array[i]
+      },
+      function(data,status){
+        if(status == "success")
+        {
+          var user_name = user_name_array[counter];
+          counter ++;
+            if(data == "0")
+            {
+              /*
+                0 : All ok
+                1 : Invalid access
+                2 : Participation Doesnt exist
+                3 : General database error
+               -1 : No post data;
+              */
+              show_notification("success","User deleted successfully (" + user_name + ").",3000);
+            }
+            else if(data == "1")
+            {
+              show_notification("error","You don't have the minimum access level (" + user_name + ").",5000);
+            }
+            else if(data == "2")
+            {
+              show_notification("error","User doesnt participate to this question group (" + user_name + ").",5000);
+            }
+            else if(data == "4")
+            {
+              show_notification("error","General database error (" + user_name + ").",5000);
+            }
+            else if(data == "-1")
+            {
+              show_notification("error","You didnt send data (" + user_name + ").",5000);
+            }
+            else
+            {
+              show_notification("error","Unknown error.Please contact with us (" + user_name + ").",5000);
+            }
+          }
+      });
+    }
+    getQuestionnaireMembers();
+    getQuestionGroupUsers();
 }
 
 function get_question_groups()
