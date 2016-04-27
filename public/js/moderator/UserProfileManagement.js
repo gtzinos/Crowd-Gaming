@@ -1,5 +1,11 @@
-function update_user(id,confirmed)
+function update_user(user_id,confirmed)
 {
+  if(!confirmed)
+  {
+    display_confirm_dialog("Confirm","Are you sure to update this profile with that data ?","btn-default","btn-default","black","update_user(" + user_id + ",true)","");
+    return;
+  }
+
   var access,
       email,
       password1,
@@ -32,6 +38,7 @@ function update_user(id,confirmed)
          && gender.length > 0 && country.length > 0 && city.length > 0)
   {
       let data_to_send = {
+        "user-id" : user_id,
         "access" : access,
         "email" : email,
         "password" : password1,
@@ -87,6 +94,13 @@ function update_user(id,confirmed)
 
 function ban_user(user_id,confirmed)
 {
+
+  if(!confirmed)
+  {
+    display_confirm_dialog("Confirm","Are you sure to ban this user ?","btn-default","btn-default","black","ban_user(" + user_id + ",true)","");
+    return;
+  }
+
   /*
     Response Codes
      0 : All ok
@@ -135,6 +149,13 @@ function ban_user(user_id,confirmed)
 
 function unban_user(user_id,confirmed)
 {
+
+  if(!confirmed)
+  {
+    display_confirm_dialog("Confirm","Are you sure to unban this user ?","btn-default","btn-default","black","unban_user(" + user_id + ",true)","");
+    return;
+  }
+
   /*
     Response Codes
      0 : All ok
@@ -183,6 +204,12 @@ function unban_user(user_id,confirmed)
 
 function delete_user(user_id,confirmed)
 {
+  if(!confirmed)
+  {
+    display_confirm_dialog("Confirm","Are you sure to delete this user ? Only database administrator can restore a deleted user.","btn-default","btn-default","black","delete_user(" + user_id + ",true)","");
+    return;
+  }
+
   /*
     Response Codes
      0 : All ok

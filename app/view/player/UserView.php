@@ -1,9 +1,11 @@
 <?php if($section == "CSS") : ?>
-
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/moderator/UserProfileManagement.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid text-center">
 	<?php
@@ -12,7 +14,7 @@
 		{
 			//var_dump( get("user") );
 			$user = get("user");
-			if($_SESSION["USER_ID"] == 3)
+			if($_SESSION["USER_LEVEL"] == 3)
 			{
 					 	echo "
 					<form id='user-edit-view-form' class='form-horizontal'>
@@ -211,7 +213,7 @@
 								</div>
 						</form>";
 			}
-			else if($_SESSION["USER_ID"] == 1 || $_SESSION["USER_ID"] == 2)
+			else if($_SESSION["USER_LEVEL"] == 1 || $_SESSION["USER_LEVEL"] == 2)
 			{
 				echo "
 				<form id='user-edit-view-form' class='form-horizontal'>
