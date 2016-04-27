@@ -88,7 +88,14 @@
 							echo $users . " users";
 						}
 						else {
-							echo "0 users";
+							if(get("questionnaire")["participations"] > 1)
+							{
+								echo get("questionnaire")["participations"] . " users";
+							}
+							else {
+								echo get("questionnaire")["participations"] . " user";
+							}
+
 						}
 					?>
 				</a>
