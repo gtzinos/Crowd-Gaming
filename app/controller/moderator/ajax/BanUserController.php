@@ -15,11 +15,11 @@
 				Response Codes
 				 0 : All ok
 				 1 : Users doesnt exist
-				 2 : 
-
+				 2 : Database Error
+				 3 : Invalid action-type
 				-1 : No post data
 			 */
-			if( isset( $_POST["user-id"]) )
+			if( isset( $_POST["user-id"] , $_POST["action-type"]) )
 			{
 				$userMapper = new UserMapper;
 
@@ -31,7 +31,13 @@
 					return;
 				}
 
-				$user->setBanned(true);
+				if( $_POST["action-type"] != "ban" && $_POST["action-type"] != "unban" )
+				{
+					$this->setOutput("response-code" , 3;
+					return;
+				}
+
+				$user->setBanned( $_POST["action-type"] == "ban");
 
 				try
 				{
