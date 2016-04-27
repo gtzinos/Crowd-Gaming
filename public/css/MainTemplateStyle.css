@@ -17,6 +17,28 @@ body,html{
 }
 
 /*
+ 	Small-Top-Space
+*/
+.small-top-space
+{
+	 margin-top:10px;
+}
+/*
+ 	Small-Top-Space
+*/
+.medium-top-space
+{
+	 margin-top:20px;
+}
+/*
+ 	Small-Top-Space
+*/
+.big-top-space
+{
+	 margin-top:30px;
+}
+
+/*
 	Full width { 100% of available width }
 */
 .full-width
