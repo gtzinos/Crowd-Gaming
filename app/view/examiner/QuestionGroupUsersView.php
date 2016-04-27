@@ -24,7 +24,7 @@
              </select>
            </div>
            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-3">
-             <button type="button" style="width:100%" class="btn btn-primary">Insert users</button>
+             <button type="button" style="width:100%" class="btn btn-primary" onclick='add_user_on_question_group()' >Insert users</button>
            </div>
          </div>
          <div class="form-group row">
@@ -34,7 +34,7 @@
              </select>
            </div>
            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-0 col-sm-3">
-             <button type="button" style="width:100%" class="btn btn-danger">Delete users</button>
+             <button type="button" style="width:100%" class="btn btn-danger" onclick='delete_user_from_question_group()'>Delete users</button>
            </div>
          </div>
        </div>
