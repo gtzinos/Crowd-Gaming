@@ -157,9 +157,9 @@
 							<button class='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown'>Actions
 							<span class='caret'></span></button>
 							<ul class='dropdown-menu'>
-								<li><input type='button' class='btn btn-link' onclick='updateUser(" . $user->getId() . ",false)' value='Update profile'></li>
-								<li><input type='button' class='btn btn-link' onclick='banUser(" . $user->getId() . ",false)' value='Ban account'></li>
-								<li><input type='button' class='btn btn-link' onclick='deleteUser(" . $user->getId() . ",false)' value='Delete Account'></li>
+								<li><input type='button' class='btn btn-link' onclick='update_user(" . $user->getId() . ",false)' value='Update profile'></li>
+								<li><input type='button' class='btn btn-link' onclick='ban_user(" . $user->getId() . ",false)' value='Ban account'></li>
+								<li><input type='button' class='btn btn-link' onclick='delete_user(" . $user->getId() . ",false)' value='Delete Account'></li>
 							</ul>
 						</div>
 					</div>
