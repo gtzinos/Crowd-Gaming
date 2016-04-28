@@ -13,7 +13,6 @@
 			if( isset( 	$_POST["user-id"], 
 						$_POST["access"],
 						$_POST["email"],
-						$_POST["password"],
 						$_POST["name"],
 						$_POST["surname"],
 						$_POST["gender"],
@@ -24,7 +23,6 @@
 					Sanitizing
 				 */
 				$email = htmlspecialchars($_POST["email"] , ENT_QUOTES);
-				$password = $_POST["password"];
 				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
 				$surname = htmlspecialchars($_POST["surname"] , ENT_QUOTES);
 				$gender = $_POST["gender"];
@@ -32,14 +30,20 @@
 				$city = htmlspecialchars($_POST["city"] , ENT_QUOTES);
 				$access = $_POST["access"];
 
-				if( isset($_POST["address"])){
+				if( isset($_POST["address"]) )
+				{
 					$address = htmlspecialchars($_POST["address"] , ENT_QUOTES);
 				}
 
-				if( isset($_POST["phone"]) ){
+				if( isset($_POST["phone"]) )
+				{
 					$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
 				}
 
+				if( isset($_POST["password"] ) )
+				{
+					$password = $_POST["password"];
+				}
 
 				$userMapper = new UserMapper;
 
@@ -108,20 +112,22 @@
 					return;
 				}
 
-				if( $password < 8)
+				if( isset($password) && strlen($password) < 8)
 				{
 					$this->setOutput('response-code' , 11);
 					return;
 				}
 
-				$user->setAccess($access);
+				$user->setAccessLevel($access);
 				$user->setEmail($email);
 				$user->setName($name);
 				$user->setSurname($surname);
 				$user->setGender($gender);
 				$user->setCountry($country);
 				$user->setCity($city);
-				$user->setPassword( password_hash( $newpassword , PASSWORD_DEFAULT ) );
+
+				if( isset($password) )
+					$user->setPassword( password_hash( $password , PASSWORD_DEFAULT ) );
 				
 				if( isset($address))
 					$user->setAddress($address);
