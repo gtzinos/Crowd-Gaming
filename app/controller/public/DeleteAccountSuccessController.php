@@ -11,6 +11,7 @@
 			//$this->defSection('JAVASCRIPT','public/DeleteAccountSuccessView.php');
 			$this->defSection('MAIN_CONTENT','public/DeleteAccountSuccessView.php');
 
+			$this->setArg("PAGE_TITLE","Your Account has been deleted");
 		}
 
 		public function run(){

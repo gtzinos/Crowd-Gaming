@@ -12,6 +12,7 @@
 			$this->defSection('JAVASCRIPT','public/ActivationView.php');
 			$this->defSection('MAIN_CONTENT','public/ActivationView.php');
 
+			$this->setArg("PAGE_TITLE","Verify your email.");
 		}
 
 		public function run(){

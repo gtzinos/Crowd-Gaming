@@ -30,6 +30,8 @@
 
 			$user = $userMapper->findById( $this->params[1] );
 
+			$this->setArg("PAGE_TITLE",$user->getName() . ' '.$user->getSurname());
+
 			if($user->getId() == $_SESSION['USER_ID'])
 			{
 				$this->redirect("profile");

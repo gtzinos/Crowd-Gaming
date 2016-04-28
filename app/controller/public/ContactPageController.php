@@ -12,6 +12,7 @@
 			$this->defSection('JAVASCRIPT','public/ContactPageView.php');
 			$this->defSection('MAIN_CONTENT','public/ContactPageView.php');
 
+			$this->setArg("PAGE_TITLE","Contact with a Moderator");
 		}
 
 		public function run(){

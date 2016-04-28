@@ -10,13 +10,13 @@
 	      	global $_CONFIG;
 
 	      	$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
-					$this->defSection('CSS','examiner/QuestionnaireGroupsView.php');
-					$this->defSection('JAVASCRIPT','examiner/QuestionnaireGroupsView.php');
+			$this->defSection('CSS','examiner/QuestionnaireGroupsView.php');
+			$this->defSection('JAVASCRIPT','examiner/QuestionnaireGroupsView.php');
 	      	$this->defSection('MAIN_CONTENT','examiner/QuestionnaireGroupsView.php');
 	      	$this->defSection("EDIT_QUESTION" , "examiner/EditQuestionView.php");
 	      	$this->defSection("QUESTION_LIST" , "examiner/QuestionListView.php");
 	      	$this->defSection("CREATE_QUESTION", "examiner/CreateQuestionView.php");
-					$this->defSection("QUESTION_GROUP_USERS", "examiner/QuestionGroupUsersView.php");
+			$this->defSection("QUESTION_GROUP_USERS", "examiner/QuestionGroupUsersView.php");
 
 	    }
 
@@ -39,6 +39,8 @@
 
 			$questionnaire = $questionnaireMapper->findById( $this->params[1] );
 
+			$this->setArg("PAGE_TITLE",$questionnaire->getName()." , Handle questionnaire content.");
+			
 			if( $questionnaire === null )
 			{
 				$this->redirect("questionnaireslist");

@@ -17,6 +17,8 @@
 			$this->defSection('CSS','examiner/CreateQuestionnaireGroupsView.php');
 			$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireGroupsView.php');
 			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireGroupsView.php');
+
+			$this->setArg("PAGE_TITLE","Create a new question group!");
 		}
 
 		public function run()

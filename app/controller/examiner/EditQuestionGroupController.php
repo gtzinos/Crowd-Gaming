@@ -15,6 +15,7 @@
 			$this->defSection('JAVASCRIPT','examiner/EditQuestionGroupView.php');
 			$this->defSection('MAIN_CONTENT','examiner/EditQuestionGroupView.php');
 
+			$this->setArg("PAGE_TITLE","Modify a question group!");
 		}
 
 		public function run()

@@ -12,6 +12,7 @@
 			$this->defSection('JAVASCRIPT','public/HomePageView.php');
 			$this->defSection('MAIN_CONTENT','public/HomePageView.php');
 			
+			$this->setArg("PAGE_TITLE","Crowd Gaming");
 		}
 
 		public function run(){

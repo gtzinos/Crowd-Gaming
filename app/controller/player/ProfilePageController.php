@@ -53,7 +53,7 @@
 			$mapper = new UserMapper();
 
 			$user = $mapper->findById( $_SESSION["USER_ID"] );
-
+			$this->setArg("PAGE_TITLE",'My Profile ,'.$user->getName() . ' '.$user->getSurname());
 			if( $user ){
 
 				if( isset($this->params[1]) && $this->params[1]=="ajax"){

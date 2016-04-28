@@ -27,6 +27,7 @@
 			$this->defSection('JAVASCRIPT','public/PasswordRecoveryView.php');
 			$this->defSection('MAIN_CONTENT','public/PasswordRecoveryView.php');
 
+			$this->setArg("PAGE_TITLE","Recover your Password");
 		}
 
 		public function run(){

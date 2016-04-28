@@ -40,6 +40,7 @@
 
 			$questionnaire = $questionnaireMapper->findById($this->params[1]);
 
+			$this->setArg("PAGE_TITLE",$questionnaire->getName());
 			/*
 				User actions regarding the questionnaire
 				eg , ParticipationRequest, remove Participation etc.

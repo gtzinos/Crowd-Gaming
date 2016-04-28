@@ -2,6 +2,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
+	include_once '../libs/htmlpurifier-4.7.0/HTMLPurifier.auto.php';
 
 	class EditQuestionController extends Controller
 	{
@@ -36,6 +37,8 @@
 					   $_POST["answer1"],
 					   $_POST["answer2"]) )
 			{
+				$config = HTMLPurifier_Config::createDefault();
+				$purifier = new HTMLPurifier($config);
 
 				$participationMapper = new ParticipationMapper;
 				$answerMapper = new AnswerMapper;
@@ -75,7 +78,7 @@
 				}
 
 
-				$question->setQuestionText( htmlentities($_POST["question-text"] ) );
+				$question->setQuestionText( $purifier->purify($_POST["question-text"] ) );
 				$question->setMultiplier( $_POST["multiplier"] );
 				$question->setTimeToAnswer( $_POST["time-to-answer"] );
 
@@ -107,7 +110,7 @@
 						}
 
 						$answer = new Answer;
-						$answer->setAnswerText( $_POST["answer".$i] );
+						$answer->setAnswerText( $purifier->purify($_POST["answer".$i]) );
 						$answer->setCorrect( $_POST["correct"] == $i ? true : false );
 						$answer->setQuestionId( $question->getId() );
 						$answers[$i-1] = $answer;

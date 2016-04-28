@@ -11,6 +11,7 @@
 			$this->defSection('JAVASCRIPT','public/SignUpSuccessView.php');
 			$this->defSection('MAIN_CONTENT','public/SignUpSuccessView.php');
 
+			$this->setArg("PAGE_TITLE","Account Successfuly Created!");
 		}
 
 		public function run(){
