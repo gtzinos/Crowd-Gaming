@@ -29,6 +29,13 @@
 				$this->redirect("home");
 			$token = $this->params[1];
 
+
+			if( isset($_SESSION["ACCOUNT_ACTIVATED"]) )
+			{
+				$this->setArg("response-code" , 0);
+				return;
+			}
+
 			$userMapper = new UserMapper();
 
 			$userId = $userMapper->verifyEmailToken($token);
@@ -56,7 +63,7 @@
 					$userMapper->persist($user);
 
 					$this->setArg("response-code" , 0);
-
+					$_SESSION["ACCOUNT_ACTIVATED"] = "yes";
 					DatabaseConnection::getInstance()->commit();
 
 				}catch(DatabaseException $ex){
