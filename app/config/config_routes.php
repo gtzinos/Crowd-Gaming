@@ -58,6 +58,7 @@
 	Routes::add( 'get-all-question-groups' , 'examiner/ajax/GetAllQuestionGroupsController.php' ,$_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-my-questionnaires' , 'examiner/ajax/GetMyQuestionnairesController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'get-users-by-pattern' , 'examiner/ajax/GetUsersByPatternController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'copy-participants' , 'examiner/ajax/CopyParticipantsController.php' , $_USER_LEVEL["EXAMINER"]);
 
 	/*
 		Moderator level pages
@@ -69,6 +70,7 @@
 	Routes::add( 'ban-user' , 'moderator/ajax/BanUserController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'ban-examiners-from-questionnaire' , 'moderator/ajax/BanExaminersController.php' , $_USER_LEVEL["MODERATOR"]);
 	Routes::add( 'update-user-profile' , 'moderator/ajax/UpdateUserProfileController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'change-coordinator' , 'moderator/ajax/ChangeQuestionnaireCoordinatorController.php' , $_USER_LEVEL["MODERATOR"] );
 	
 
 	/*
