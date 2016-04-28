@@ -25,6 +25,41 @@
 			return null;
 		}
 
+		public function findByQuestionnaire($questionnaireId , $participationType = null)
+		{
+			$statement = null;
+
+			if( $participationType === null)
+			{
+				$query = "SELECT * FROM `QuestionnaireParticipation` WHERE `questionnaire_id`=?";
+				$statement = $this->getStatement($query);
+				$statement->setParameters('i' , $questionnaireId);
+			}
+			else
+			{
+				$query = "SELECT * FROM `QuestionnaireParticipation` WHERE `questionnaire_id`=? AND `participation_type`=?";
+				$statement = $this->getStatement($query);
+				$statement->setParameters('ii' , $questionnaireId , $participationType);
+			}
+
+			$set = $statement->execute();
+
+			$participations = array();
+
+			while($set->next()){
+				$participation = new Participation;
+				$participation->setUserId( $set->get("user_id") );
+				$participation->setQuestionnaireId( $set->get("questionnaire_id") );
+				$participation->setParticipationType( $set->get("participation_type") );
+				$participation->setParticipationDate( $set->get("participation_date") );
+
+				$participations[] =  $participation;
+			}
+
+			return $participations;
+		}
+
+
 		public function participates($playerId , $questionnaireId , $type){
 			$query = "SELECT `user_id` FROM `QuestionnaireParticipation` WHERE `user_id`=? AND `questionnaire_id`=? AND `participation_type`=?";
 
@@ -92,11 +127,7 @@
 		}
 
 		public function persist($participation){
-			if( $participation->getParticipationDate() === null ){
-				$this->_create($participation);
-			}else{
-				$this->_update($participation);
-			}
+			$this->_create($participation);
 		}
 
 		private function _create($participation){
@@ -109,10 +140,6 @@
 				$participation->getParticipationType() );
 
 			$statement->executeUpdate();
-		}
-
-		private function _update($participation){
-			throw new Exception("You cant update a Participation object.");
 		}
 
 	}
