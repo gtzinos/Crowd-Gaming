@@ -87,6 +87,33 @@
 			return null;
 		}
 
+		public function getActivePublishRequest( $questionnaireId)
+		{
+			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `questionnaire_id`=? AND `request_type`=3 AND `accepted` IS NULL";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i', $questionnaireId);
+
+			$res = $statement->execute();
+
+			if( $res->next() )
+			{
+				
+				$questionnaireRequest = new QuestionnaireRequest;
+				$questionnaireRequest->setId( $res->get("id") );
+				$questionnaireRequest->setUserId( $res->get("user_id") );
+				$questionnaireRequest->setQuestionnaireId( $res->get("questionnaire_id") );
+				$questionnaireRequest->setRequestType( $res->get("request_type") );
+				$questionnaireRequest->setRequestText( $res->get("request_text") );
+				$questionnaireRequest->setRequestDate( $res->get("request_date") );
+				$questionnaireRequest->setResponseText( $res->get("response_text") );
+				$questionnaireRequest->setResponse( $res->get("accepted") );
+
+				return $questionnaireRequest;
+			}
+			return null;
+		}
+
 		public function hasActivePlayerRequest( $userId, $questionnaireId )
 		{
 			$query = "SELECT `id` FROM `QuestionnaireRequest` WHERE `user_id`=? AND `questionnaire_id`=? AND `request_type`=1 AND `accepted` IS NULL";
