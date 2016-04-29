@@ -1,11 +1,10 @@
 var selected_days_id = [];
 $(document).ready(function() {
+
   $('#multiple-day-dropdown').on('changed.bs.select', function (e,clickedIndex, newValue, oldValue) {
     //NEVER REMOVE THIS LINE
     clickedIndex++;
-
     //if($('#multiple-day-dropdown').val() == null) { return }
-
     if(String($('#multiple-day-dropdown').val()).indexOf(",") >= 0)
     {
       selected_days_id = String($('#multiple-day-dropdown').val()).split(",");
@@ -20,10 +19,14 @@ $(document).ready(function() {
     }
     else if(oldValue)
     {
-      removeSchedulePlan(clickedIndex);
+      removeSchedulePlan("#plan"+ clickedIndex);
     }
     else {
-      //select all deselect all
+        //select all deselect all
+        if(selected_days_id.length == 0)
+        {
+          removeSchedulePlan("[id^=plan]");
+        }
     }
   });
 });
@@ -66,10 +69,9 @@ function addSchedulePlan(index)
     $("#plan" + selected_days_id[1]).before(out);
   }
   initialize_clock_picker($(".timer"),default_options);
-
 }
 
-function removeSchedulePlan(index)
+function removeSchedulePlan(selector)
 {
-  $("#plan" + index).remove();
+  $(selector).remove();
 }

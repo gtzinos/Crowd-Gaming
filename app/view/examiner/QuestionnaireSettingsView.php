@@ -24,7 +24,7 @@
               <form role="form" class="form-horizontal" onsubmit="return false">
                 <div class="form-group">
                   <div class="col-xs-7 col-xs-offset-3 col-sm-6">
-                    	<select id="multiple-day-dropdown" class="selectpicker form-control" multiple data-live-search="true" data-actions-box="true" data-selected-text-format="count > 2" title="Select the days">
+                    	<select id="multiple-day-dropdown" class="selectpicker form-control" multiple data-live-search="true" data-selected-text-format="count > 2" title="Select the days">
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
                         <option value="3">Wednesday</option>
