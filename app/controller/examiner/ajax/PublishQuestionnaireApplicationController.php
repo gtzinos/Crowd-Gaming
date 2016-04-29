@@ -1,14 +1,14 @@
 <?php
-	
+
 	include_once "../app/model/mappers/questionnaire/QuestionnaireMapper.php";
 	include_once "../app/model/mappers/actions/RequestMapper.php";
 
 	class PublishQuestionnaireApplicationController extends Controller
 	{
-		
+
 		public function init()
 		{
-			$this->setOutputType( OutputType::ResponseStatus );	
+			$this->setOutputType( OutputType::ResponseStatus );
 		}
 
 		public function run()
@@ -16,7 +16,7 @@
 
 			/*
 				Response Code
-				
+
 				 1 : Questionnaire doesnt work.
 				 2 : You must be coordinator to make the request.
 				 3 : Message Validation Error
@@ -109,7 +109,7 @@
 
 				$requestMessage = htmlspecialchars($_POST["request-text"] , ENT_QUOTES);
 
-				if( strlen($requestMessage)<20 || strlen($requestMessage)>255)
+				if( strlen($requestMessage)<5 || strlen($requestMessage)>255)
 				{
 					$this->setOutput("response-code" , 3);
 					return;

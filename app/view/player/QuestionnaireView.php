@@ -496,6 +496,7 @@
 	{
 			load("QUESTIONNAIRE_MEMBERS");
 			load("QUESTIONNAIRE_SETTINGS");
+			load("REQUIRED_MESSAGE");
 	}
 
 ?>

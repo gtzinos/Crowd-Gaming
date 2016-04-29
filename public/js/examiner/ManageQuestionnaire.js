@@ -17,6 +17,69 @@ $(document)
   });
 
 /*
+  Send request to public his questionnaire
+*/
+function sendPublicRequest()
+{
+  var text = $("#required-message").val();
+  $.post(webRoot + "publish-questionnaire-request",
+  {
+    "questionnaire-id" : questionnaire_id,
+    "request-text" : text
+  },
+  function(data,status){
+    if(status == "success")
+    {
+      /*
+        1 : Questionnaire doesnt work.
+        2 : You must be coordinator to make the request.
+        3 : Message Validation Error
+        4 : Questionnaire is already public
+        5 : Active application already exists
+        6 : General Database Error
+        -1 : No post data.
+      */
+      if(data == "0")
+      {
+        show_notification("success","Request sended successfully.",4000);
+      }
+      else if (data == "1")
+      {
+        show_notification("error","Questionnaire doesnt work.",4000);
+      }
+      else if (data == "2")
+      {
+        show_notification("error","You must be coordinator to make the request.",4000);
+      }
+      else if (data == "3")
+      {
+        show_notification("error","This is not a valid message.",4000);
+      }
+      else if (data == "4")
+      {
+        show_notification("error","Questionnaire is already public.",4000);
+      }
+      else if (data == "5")
+      {
+        show_notification("error","Active application already exists.",4000);
+      }
+      else if (data == "6")
+      {
+        show_notification("error","General Database Error.",4000);
+      }
+      else if (data == "7")
+      {
+        show_notification("error","There is no active publish application.",4000);
+      }
+      else if (data == "-1")
+      {
+        show_notification("error","You didnt send data.",4000);
+      }
+    }
+  });
+}
+
+/*
   Create questionnaire
 */
 function createQuestionnaire()

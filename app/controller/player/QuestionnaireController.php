@@ -24,6 +24,8 @@
 			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
 			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersView.php");
 			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsView.php");
+			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredMessageModalView.php");
+
 		}
 
 		public function run()

@@ -15,10 +15,20 @@ let default_options = {
 }
 function initialize_clock_picker(element,options)
 {
-  var initialized_picker = $(element).clockpicker
-  (
-    options
-  );
+  if(options != null)
+  {
+    var initialized_picker = $(element).clockpicker
+    (
+      options
+    );
+  }
+  else
+  {
+    var initialized_picker = $(element).clockpicker
+    (
+      default_options
+    );
+  }
 
   return initialized_picker;
 }

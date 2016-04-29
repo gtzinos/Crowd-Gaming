@@ -15,7 +15,17 @@
          <div class="tab-content">
             <!-- Request menu started -->
             <div id="requests" class="tab-pane fade in active">
-
+              <br><br>
+              <div class="form-group">
+                <div class="col-xs-112 col-xs-offset-0 col-sm-offset-2 col-sm-8">
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Status" style="color:red" value="Private (Only examiners)" readonly>
+                      <span class="input-group-btn">
+                           <button class="btn btn-success" type="button" onclick="showModal('required-message-modal')">Request for public</button>
+                      </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <!-- Schedule menu started -->
