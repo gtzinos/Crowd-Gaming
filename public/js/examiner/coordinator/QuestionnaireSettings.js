@@ -1,5 +1,9 @@
 var selected_days_id = [];
 $(document).ready(function() {
+  /*
+    Create a datepicker
+  */
+  var daterangerpicker = create_daterangerpicker("#datepicker",{minDate : moment()});
 
   $('#multiple-day-dropdown').on('changed.bs.select', function (e,clickedIndex, newValue, oldValue) {
     //NEVER REMOVE THIS LINE
@@ -34,16 +38,16 @@ $(document).ready(function() {
 function addSchedulePlan(index)
 {
   var out = "<div class='form-group' id='plan" + index + "'>" +
-            "<div class='col-xs-2 col-sm-offset-1 col-sm-2'>" +
+            "<div class='col-xs-3 col-sm-offset-1 col-sm-2'>" +
               "<label class='control-label' for='start_time_timer" + index + "'>" + $("#multiple-day-dropdown option[value=" + index + "]").text() + "</label>" +
             "</div>" +
-            "<div class='col-xs-3 col-sm-3'>" +
+            "<div class='col-xs-4 col-sm-3'>" +
               "<div class='left-inner-addon '>" +
                 "<i class='fa fa-hourglass-start'></i>" +
                 "<input type='text' id='start_time_timer" + index + "' class='form-control timer' placeholder='Start time'/>" +
               "</div>" +
             "</div>" +
-            "<div class='col-xs-3 col-xs-offset-0 col-sm-3'>" +
+            "<div class='col-xs-4 col-sm-3'>" +
               "<div class='left-inner-addon'>" +
                   "<i class='fa fa-hourglass-end'></i>" +
                   "<input type='text' id='stop_time_timer" + index + "' class='form-control timer' placeholder='Stop time'/>" +

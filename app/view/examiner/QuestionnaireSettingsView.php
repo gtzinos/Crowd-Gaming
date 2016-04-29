@@ -23,8 +23,18 @@
               <br><br>
               <form role="form" class="form-horizontal" onsubmit="return false">
                 <div class="form-group">
-                  <div class="col-xs-7 col-xs-offset-3 col-sm-6">
-                    	<select id="multiple-day-dropdown" class="selectpicker form-control" multiple data-live-search="true" data-selected-text-format="count > 2" title="Select the days">
+                  <div class="col-xs-112 col-xs-offset-0 col-sm-offset-3 col-sm-6">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="datepicker" placeholder="Select a specific date">
+                        <span class="input-group-btn">
+                             <button class="btn btn-default" type="button" onclick="$('#datepicker').val('');">Clear</button>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-xs-10 col-xs-offset-0 col-sm-offset-3 col-sm-6">
+                    	<select id="multiple-day-dropdown" class="selectpicker form-control" multiple data-selected-text-format="count > 2" title="Select the days">
                         <option value="1">Monday</option>
                         <option value="2">Tuesday</option>
                         <option value="3">Wednesday</option>
@@ -35,10 +45,16 @@
                     	</select>
                   </div>
                 </div>
-                <br><br>
+                <br>
                 <!-- Schedule plan -->
                 <div id="schedule-plan">
 
+                </div>
+                <br>
+                <div class="form-group">
+                  <div class="col-xs-4 col-xs-offset-0 col-sm-offset-3 col-sm-4">
+                    	<input type="button" class="btn btn-primary" value="Save Changes">
+                  </div>
                 </div>
               </form>
 

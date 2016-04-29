@@ -2,6 +2,7 @@
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/css/bootstrap-select.min.css"); ?>">
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.css"); ?>">
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireRequests.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
@@ -13,7 +14,9 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/clockpicker-manager.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/agent-detector.js"); ?>"></script>
-
+<script src="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/moment.min.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/daterangepicker-manager.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<?php
 		/*
