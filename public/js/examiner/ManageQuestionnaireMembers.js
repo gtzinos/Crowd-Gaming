@@ -17,6 +17,59 @@ $(document).ready(function(e){
   });
 });
 
+function copy_questionnaire_members()
+{
+  if(any_no_completed_request()){
+    return;
+  }
+  no_completed_request = true;
+
+  if($("#single-questionnaire-dropdown").val().length > 0)
+  {
+    var to_questionnaire_id = $("#single-questionnaire-dropdown").val();
+
+    $.post(webRoot + "copy-participants")
+    {
+      'from-questionnaire-id' : questionnaire_id,
+      'to_questionnaire_id' : to_questionnaire_id
+    }
+    function(data,status)
+    {
+      /*
+        0 : All ok
+        1 : Participation Type validation error
+        2 : FromQuestionnaire Doesnt Exist
+        3 : ToQuestionnaire Doesnt Exist
+        4 : Invalid Access
+      */
+      if (status == "0") {
+        show_notification("success","Users copied successfully.",3000);
+      }
+      else if(status == "1")
+      {
+        show_notification("error","Not a valid participation type.",4000);
+      }
+      else if (status == "2") {
+        show_notification("error","From questionnaire doesnt exists.",4000);
+      }
+      else if (status == "3") {
+        show_notification("error","To questionnaire doesnt exists.",4000);
+      }
+      else if(status == "4") {
+        show_notification("error","You dont have the minimum access level.",4000);
+      }
+      else {
+        show_notification("error","Unknown error. Please contact with us.",4000);
+      }
+      no_completed_request = false;
+    }
+  }
+  else {
+    show_notification("error","You must select a questionnaire.",4000);
+    no_completed_request = false;
+  }
+}
+
 function getQuestionnaireMembers()
 {
   if(any_no_completed_request()){

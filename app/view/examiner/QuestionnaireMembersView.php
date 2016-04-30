@@ -16,8 +16,8 @@
                	</select>
              </div>
              <div class="col-xs-3 col-sm-4">
-               	<button class="btn" onclick="transfer_participants()">Transfer</button>
-             </div>
+               	<button class="btn" onclick="copy_questionnaire_members()">Copy From</button>
+             </div> 
            </div>
            <div class="form-group">
              <div class="col-xs-7 col-sm-5" >
