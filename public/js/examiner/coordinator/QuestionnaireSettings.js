@@ -3,8 +3,11 @@ $(document).ready(function() {
   /*
     Create a datepicker
   */
-  var daterangerpicker = create_daterangerpicker("#datepicker",{minDate : moment()});
-
+  var daterangerpicker = create_daterangerpicker("#datepicker",{minDate : moment(),"autoUpdateInput": false});
+  $('#datepicker').on('apply.daterangepicker', function(ev, picker) {
+    $('#datepicker').val(picker.startDate.format('DD/MM/YYYY'));
+    $('#datepicker').val($('#datepicker').val() + " - " + picker.endDate.format('DD/MM/YYYY'));
+  });
   $('#multiple-day-dropdown').on('changed.bs.select', function (e,clickedIndex, newValue, oldValue) {
     //NEVER REMOVE THIS LINE
     clickedIndex++;
