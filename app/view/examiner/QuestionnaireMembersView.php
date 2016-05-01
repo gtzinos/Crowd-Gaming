@@ -16,8 +16,15 @@
                	</select>
              </div>
              <div class="col-xs-3 col-sm-4">
-               	<button class="btn" onclick="copy_questionnaire_members()">Copy From</button>
-             </div> 
+               <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Copy
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><input type="button" class="btn btn-link" onclick="copy_questionnaire_members(1)" value="Players"></li>
+                    <li><input type="button" class="btn btn-link" onclick="copy_questionnaire_members(2)" value="Examiners"></li>
+                  </ul>
+               </div>
+             </div>
            </div>
            <div class="form-group">
              <div class="col-xs-7 col-sm-5" >
