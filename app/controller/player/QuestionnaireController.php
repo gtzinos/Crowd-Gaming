@@ -42,6 +42,11 @@
 
 			$questionnaire = $questionnaireMapper->findById($this->params[1]);
 
+			if( $questionnaire === null )
+			{
+				$this->redirect("questionnaireslist");
+			}
+
 			$this->setArg("PAGE_TITLE",$questionnaire->getName());
 			/*
 				User actions regarding the questionnaire
