@@ -53,7 +53,7 @@
 					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
 								<!-- <li class='divider'></li> --> ";
 		 						echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
-							if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId())
+							if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() || $_SESSION["USER_LEVEL"] == 3)
 							{
 								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
 								echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
