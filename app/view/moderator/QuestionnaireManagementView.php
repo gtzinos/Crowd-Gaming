@@ -1,13 +1,14 @@
 <?php if($section == "CSS") : ?>
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/moderator/QuestionnaireManagement.css"); ?>">
-
+  <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/onoff/dist/jquery.onoff.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
   <script src="<?php print LinkUtils::generatePublicLink("js/moderator/QuestionnaireManagement.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/onoff/dist/jquery.onoff.min.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
   <?php
     if(isset($_GET["sort"]))
