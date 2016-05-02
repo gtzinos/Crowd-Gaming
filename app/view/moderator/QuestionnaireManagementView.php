@@ -1,14 +1,16 @@
 <?php if($section == "CSS") : ?>
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/moderator/QuestionnaireManagement.css"); ?>">
-  <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/onoff/dist/jquery.onoff.css"); ?>">
+  <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css"); ?>">
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/css/bootstrap-select.min.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
   <script src="<?php print LinkUtils::generatePublicLink("js/moderator/QuestionnaireManagement.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
-  <script src="<?php print LinkUtils::generatePublicLink("js/library/onoff/dist/jquery.onoff.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-switch/dist/js/bootstrap-switch.min.js"); ?>"> </script>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
   <?php
     if(isset($_GET["sort"]))
@@ -43,6 +45,7 @@
 
       <?php
         load("CONFIRM_QUESTIONNAIRE_DELETION");
+        load("QUESTIONNAIRE_MANAGEMENT_SETTINGS");
       ?>
 
     </div>
