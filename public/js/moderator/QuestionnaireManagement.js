@@ -7,7 +7,12 @@ var questionnaire_id,
 
 //Initialization
 $(document).ready(function() {
-  get_questionnaire_i_manage();
+  $.fn.bootstrapSwitch.defaults.offText = "<span class='glyphicon glyphicon-lock'> </span>";
+  $.fn.bootstrapSwitch.defaults.onText = "<span class='glyphicon glyphicon-globe'> </span>";
+  $.fn.bootstrapSwitch.defaults.offColor = 'danger';
+  $.fn.bootstrapSwitch.defaults.size = 'small';
+
+  //get_questionnaire_i_manage();
   $(document)
   .on("mouseover",".settingsitem",function(e) {
     if(e.target.nodeName == "A")
@@ -31,6 +36,10 @@ $(document).ready(function() {
 
 });
 
+$(window).on('load',function(){
+  get_questionnaire_i_manage();
+});
+
 /*
   Scroll down
 */
@@ -48,23 +57,27 @@ $(window).scroll(function () {
       }
       if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
           processing = true; //sets a processing AJAX request flag
-        //  get_questionnaire_i_manage();
+          get_questionnaire_i_manage();
       }
       processing = false;
     }
     iScrollPos = iCurScrollPos;
   });
 
-
+var questionnaire_offset = 0,
+    questionnaire_limit = 10;
 function get_questionnaire_i_manage()
 {
-  $.fn.bootstrapSwitch.defaults.offText = "<span class='glyphicon glyphicon-lock'> </span>";
-  $.fn.bootstrapSwitch.defaults.onText = "<span class='glyphicon glyphicon-globe'> </span>";
-  $.fn.bootstrapSwitch.defaults.offColor = 'danger';
-  $.fn.bootstrapSwitch.defaults.size = 'small';
+  if(questionnaire_sort == "")
+  {
+    questionnaire_sort = "date";
+  }
+
   $.post(webRoot + "get-my-questionnaires",
   {
-
+    'offset' : questionnaire_offset, //default 0
+    'limit' : questionnaire_limit, //default 10
+    'sort' : questionnaire_sort //default date
   },
   function(data,status)
   {
@@ -104,7 +117,7 @@ function get_questionnaire_i_manage()
                             "</div>" +
                         "</div>" +
                     "</div>";
-                    $("#questionnaire-list").html($("#questionnaire-list").html() + out);
+                    $("#questionnaire-list").append(out);
           }
           for(i = 0; i < questionnaires.length; i++)
           {
@@ -121,16 +134,16 @@ function get_questionnaire_i_manage()
             });
           }
       }
-      else {
+      else if(questionnaire_offset == 0) {
         out = "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
                     "<div class='col-xs-12'>" +
                         "<div class='alert alert-danger'>We don't have any available questionnaire in our database. </div>" +
                     "</div>" +
                 "</a>";
-        $("#questionnaire-list").html($("#questionnaire-list").html() + out);
+        $("#questionnaire-list").append($(out);
       }
+      questionnaire_offset += 10;
     }
-
   });
 }
 
@@ -349,7 +362,11 @@ function delete_questionnaire()
     {
       if(data == "0")
       {
+        $("#confirm-questionnaire-deletion").modal("hide");
         show_notification("success","Questionnaire deleted successfully.",3000);
+        setTimeout(function() {
+          location.reload();
+        },3000);
       }
       else if(data == "1")
       {
