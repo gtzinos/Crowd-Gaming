@@ -38,6 +38,7 @@ $(document).ready(function() {
 });
 
 $(window).on('load',function(){
+  //***ONLY THERE***
   get_questionnaire_i_manage();
 });
 
@@ -58,7 +59,10 @@ $(window).scroll(function () {
       }
       if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
           processing = true; //sets a processing AJAX request flag
-          get_questionnaire_i_manage();
+          if(questionnaire_offset != 0)
+          {
+            get_questionnaire_i_manage();
+          }
       }
       processing = false;
     }
@@ -69,6 +73,7 @@ var questionnaire_offset = 0,
     questionnaire_limit = 10;
 function get_questionnaire_i_manage()
 {
+  //initialize questionnaire sort type
   if(typeof questionnaire_sort == 'undefined' || questionnaire_sort == "")
   {
     questionnaire_sort = "date";
@@ -82,6 +87,7 @@ function get_questionnaire_i_manage()
   },
   function(data,status)
   {
+
     if(status == "success")
     {
       var i = 0,
@@ -91,12 +97,6 @@ function get_questionnaire_i_manage()
       {
           for(i; i < questionnaires.length; i++)
           {
-            //var questionnaire_name_to_delete = questionnaires[i].name.replace("&#039;","\\'");
-
-
-
-            //questionnaire_name_to_delete = questionnaire_name_to_delete.replace("&#34;","\\'");
-
             out = "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + questionnaires[i].id + "'>" +
                         "<div class='col-xs-12'>" +
                             "<h4 class='list-group-item-heading'>" + questionnaires[i].name + "</h4>" +
