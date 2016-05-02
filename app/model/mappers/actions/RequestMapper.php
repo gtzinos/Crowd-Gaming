@@ -114,6 +114,61 @@
 			return null;
 		}
 
+		public function getActivePublishRequestsInfo()
+		{
+			$query = "SELECT `QuestionnaireRequest`.* , `User`.`email` , `Questionnaire`.`name`
+FROM `QuestionnaireRequest` 
+INNER JOIN `Questionnaire` on `Questionnaire`.`id`=`QuestionnaireRequest`.`questionnaire_id`
+INNER JOIN `User` on `User`.`id`=`QuestionnaireRequest`.`user_id`
+WHERE `request_type`=3 AND `accepted` IS NULL";
+
+			$statement = $this->getStatement($query);
+			$res = $statement->execute();
+
+			$requestInfo = array();
+			while( $res->next() )
+			{
+				
+				$arrayItem["user-email"] = $res->get("email");
+				$arrayItem["questionnaire-name"] = $res->get("name");
+				$arrayItem["request-id"] = $res->get("id");
+				$arrayItem["user-id"] =  $res->get("user_id");
+				$arrayItem["questionnaire-id"] =  $res->get("questionnaire_id");
+				$arrayItem["request-text"] =  $res->get("request_text");
+				$arrayItem["request-date"] =  $res->get("request_date");
+
+				$requestInfo[] =  $arrayItem;
+			}
+			return $requestInfo;
+		}
+
+		public function getActivePublishRequests()
+		{
+			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `request_type`=3 AND `accepted` IS NULL";
+
+			$statement = $this->getStatement($query);
+			$res = $statement->execute();
+
+			$requests = array();
+
+			while( $res->next() )
+			{
+				
+				$questionnaireRequest = new QuestionnaireRequest;
+				$questionnaireRequest->setId( $res->get("id") );
+				$questionnaireRequest->setUserId( $res->get("user_id") );
+				$questionnaireRequest->setQuestionnaireId( $res->get("questionnaire_id") );
+				$questionnaireRequest->setRequestType( $res->get("request_type") );
+				$questionnaireRequest->setRequestText( $res->get("request_text") );
+				$questionnaireRequest->setRequestDate( $res->get("request_date") );
+				$questionnaireRequest->setResponseText( $res->get("response_text") );
+				$questionnaireRequest->setResponse( $res->get("accepted") );
+
+				$requests[] = $questionnaireRequest;
+			}
+			return $requests;
+		}
+
 		public function hasActivePlayerRequest( $userId, $questionnaireId )
 		{
 			$query = "SELECT `id` FROM `QuestionnaireRequest` WHERE `user_id`=? AND `questionnaire_id`=? AND `request_type`=1 AND `accepted` IS NULL";
