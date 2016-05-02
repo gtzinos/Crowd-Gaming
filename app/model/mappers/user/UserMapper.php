@@ -4,7 +4,7 @@
 	include_once '../app/model/domain/user/Player.php';
 	include_once '../app/model/domain/user/Examiner.php';
 	include_once '../app/model/domain/user/Moderator.php';
-	
+
 	class UserMapper extends DataMapper
 	{
 
@@ -52,7 +52,7 @@
 					$user->setAddress( $resultSet->get("address") );
 
 				if( $resultSet->get("phone") !== null )
-					$user->setPhone( $resultSet->get("phone") ); 
+					$user->setPhone( $resultSet->get("phone") );
 
 				return $user;
 			}
@@ -104,7 +104,7 @@
 					$user->setAddress( $resultSet->get("address") );
 
 				if( $resultSet->get("phone") !== null )
-					$user->setPhone( $resultSet->get("phone") ); 
+					$user->setPhone( $resultSet->get("phone") );
 
 				return $user;
 			}
@@ -125,7 +125,7 @@
 
 			while($set->next())
 			{
-				
+
 				if( array_key_exists( $set->get("id") , $members) )
 				{
 					if( $set->get("participation_type") == 1)
@@ -157,7 +157,7 @@
 						$user->setAddress( $set->get("address") );
 
 					if( $set->get("phone") !== null )
-						$user->setPhone( $set->get("phone") ); 
+						$user->setPhone( $set->get("phone") );
 
 					$members[$user->getId()]["user"] = $user;
 
@@ -172,19 +172,19 @@
 					}
 				}
 
-			} 
+			}
 			return $members;
 		}
 
 		public function findByPattern( $pattern )
 		{
 			$query =   "SELECT * FROM `User`
-						WHERE `name` LIKE ? or 
-						`surname` LIKE ? or 
+						WHERE `name` LIKE ? or
+						`surname` LIKE ? or
 						`email` LIKE ? or
-						`country` LIKE ? or 
+						`country` LIKE ? or
 						`address` LIKE ? or
-						`phone` LIKE ? or 
+						`phone` LIKE ? or
 						`city` LIKE ? LIMIT ?";
 
 			$statement = $this->getStatement($query);
@@ -232,7 +232,7 @@
 					$user->setAddress( $resultSet->get("address") );
 
 				if( $resultSet->get("phone") !== null )
-					$user->setPhone( $resultSet->get("phone") ); 
+					$user->setPhone( $resultSet->get("phone") );
 
 				$users[] = $user;
 			}
@@ -288,7 +288,7 @@
 					$user->setAddress( $resultSet->get("address") );
 
 				if( $resultSet->get("phone") !== null )
-					$user->setPhone( $resultSet->get("phone") ); 
+					$user->setPhone( $resultSet->get("phone") );
 
 				$users[] = $user;
 			}
@@ -298,8 +298,8 @@
 
 		public function findUsersByQuestionGroup($questionGroupId)
 		{
-			$query =   "SELECT `User`.* FROM `User` 
-						INNER JOIN `QuestionGroupParticipation` on `QuestionGroupParticipation`.`user_id`=`User`.`id` 
+			$query =   "SELECT `User`.* FROM `User`
+						INNER JOIN `QuestionGroupParticipation` on `QuestionGroupParticipation`.`user_id`=`User`.`id`
 						WHERE `QuestionGroupParticipation`.`question_group_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -346,7 +346,7 @@
 					$user->setAddress( $resultSet->get("address") );
 
 				if( $resultSet->get("phone") !== null )
-					$user->setPhone( $resultSet->get("phone") ); 
+					$user->setPhone( $resultSet->get("phone") );
 
 				$users[] = $user;
 			}
@@ -382,7 +382,7 @@
 				"`new_email`=? ".
 				"WHERE `id`=?");
 
-			$statement->setParameters("sississsssiiissssi",	
+			$statement->setParameters("sississsssiiissssi",
 				$user->getEmail(),
 				$user->getAccessLevel(),
 				$user->getName(),
@@ -414,7 +414,7 @@
 
 			$statement = $this->getStatement("insert into User (email,password,access,name,surname,gender,country,city,address,phone,banned,deleted,verified,email_verification_token,api_token) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 
-			$statement->setParameters("ssississssiiiss",	
+			$statement->setParameters("ssississssiiiss",
 				$user->getEmail(),
 				$user->getPassword(),
 				$user->getAccessLevel(),
@@ -472,7 +472,7 @@
 
 			if($result->getRowCount() > 0)
 				return true;
-			else 
+			else
 				return false;
 		}
 
@@ -486,7 +486,7 @@
 
 			if($result->getRowCount() > 0)
 				return true;
-			else 
+			else
 				return false;
 		}
 
@@ -515,20 +515,20 @@
 					Not really banned , if this code executes it means the user
 					doesnt exists. We return true because its safer for the calling
 					code to assume the user is banned than he is not.
-				 */ 
+				 */
 				return true;
 			}
 		}
 
 		public function banExaminersOfQuestionnaire($questionnaireId)
-		
+
 		{
 			$query =   "UPDATE `User`
 						INNER JOIN `QuestionnaireParticipation`
 						ON `QuestionnaireParticipation` .`user_id`=`User`.`id`
 						SET `User`.`banned`=1
 						WHERE `QuestionnaireParticipation`.`participation_type`=2 AND `QuestionnaireParticipation`.`questionnaire_id`=?";
-			
+
 			$statement = $this->getStatement($query);
 
 			$statement->setParameters("i" , $questionnaireId);
@@ -664,7 +664,7 @@
 					$user = new Examiner();
 				else if( $userType == "Moderator");
 					$user = new Moderator();
-					
+
 				$user->setDeleted($deleted);
 				$user->setVerified($verified);
 				$user->setBanned($banned);

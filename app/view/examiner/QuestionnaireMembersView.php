@@ -1,5 +1,6 @@
 <? if($section == "QUESTIONNAIRE_MEMBERS") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionnaireMembers.js"); ?>"></script>
+
 <div class="modal fade" id="manage-questionnaire-members" role="dialog">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -8,7 +9,7 @@
          <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Manage Questionnaire Users </h4>
        </div>
        <div class="modal-body container-fluid">
-         <form role="form" class="form-horizontal" onsubmit="return false">
+         <form id="questionnaire-members-form" role="form" class="form-horizontal" onsubmit="return false">
            <div class="form-group">
              <div class="col-xs-7 col-sm-5">
                	<select id="single-questionnaire-dropdown" class="selectpicker form-control" data-live-search="true" title="Select a questionnaire">
@@ -21,7 +22,7 @@
            </div>
            <div class="form-group">
              <div class="col-xs-7 col-sm-5" >
-               	<input id="find-a-user" type="text" class="form-control">
+               	<input id="find-a-user" type="text" class="form-control" >
              </div>
              <div class="col-xs-3 col-sm-4">
                <div class="dropdown">
