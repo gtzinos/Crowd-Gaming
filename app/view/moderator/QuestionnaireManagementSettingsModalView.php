@@ -15,7 +15,7 @@
            <div class="tab-content">
 
                <!-- Schedule menu started -->
-               <div id="ban" class="tab-pane fade">
+               <div id="ban" class="tab-pane fade in active">
                  <br><br>
                  <form role="form" class="form-horizontal" onsubmit="return false">
 									 <div class="col-xs-7 col-sm-5">

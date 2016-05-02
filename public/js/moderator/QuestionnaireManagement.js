@@ -110,9 +110,15 @@ function get_questionnaire_i_manage()
           {
 
             $("#qcheck" + questionnaires[i].id).bootstrapSwitch('state',questionnaires[i].public);
-            $('#qcheck"]').on('switchChange.bootstrapSwitch', function(event, state) {
 
-            }
+            $("#qcheck" + questionnaires[i].id).on('switchChange.bootstrapSwitch', function(event, state) {
+              if(state)
+              {
+
+                questionnaire_id = $(this).attr('id').replace("qcheck","");
+                set_questionnaire_public();
+              }
+            });
           }
       }
       else {
@@ -125,6 +131,60 @@ function get_questionnaire_i_manage()
       }
     }
 
+  });
+}
+
+function set_questionnaire_public()
+{
+  $.post(webRoot + "set-questionnaire-public",
+  {
+    'questionnaire-id' : questionnaire_id
+  },
+  function(data,status)
+  {
+    if(status == "success")
+    {
+      var i = 0;
+      for(i=0;i<questionnaires.length;i++)
+      {
+        if(questionnaires[i].id == questionnaire_id)
+        {
+          questionnaire_index = i;
+          break;
+        }
+      }
+      /*
+        0 : All ok
+        1 : Questionnaire Doesnt Exist
+        2 : Questionnaire Already public
+        3 : Database Error
+        -1 : No data
+      */
+      if(data == "0")
+      {
+        show_notification("success","Questionnaire " + questionnaires[questionnaire_index].name + " is now public.",3000);
+      }
+      else if(data == "1")
+      {
+        show_notification("error","Questionnaire " + questionnaires[questionnaire_index].name + " doesn't exist.",4000);
+      }
+      else if(data == "2")
+      {
+        show_notification("error","Questionnaire " + questionnaires[questionnaire_index].name + " already public.",4000);
+      }
+      else if(data == "3")
+      {
+        show_notification("error","General database error. { " + questionnaires[questionnaire_index].name + " }",4000);
+      }
+      else if(data == "-1")
+      {
+          show_notification("error","You didn't send data. { " + questionnaires[questionnaire_index].name + " }",4000);
+      }
+      else
+      {
+        show_notification("error","Unknown error. Please contact with us { " + questionnaires[questionnaire_index].name + " }",4000);
+      }
+    }
   });
 }
 
