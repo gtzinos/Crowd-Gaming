@@ -492,7 +492,7 @@
 	{
 		load("EDIT_QUESTIONNAIRE");
 	}
-	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"])
+	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"] || $_SESSION['USER_LEVEL'] == 3)
 	{
 			load("QUESTIONNAIRE_MEMBERS");
 			load("QUESTIONNAIRE_SETTINGS");
