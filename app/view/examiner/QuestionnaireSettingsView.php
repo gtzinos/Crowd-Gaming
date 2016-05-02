@@ -1,4 +1,7 @@
 <? if($section == "QUESTIONNAIRE_SETTINGS") : ?>
+<?php
+    $questionnaire = get("questionnaire")["questionnaire"];
+?>
 <div class="modal fade" id="questionnaire-settings" role="dialog">
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -19,10 +22,26 @@
               <div class="form-group">
                 <div class="col-xs-112 col-xs-offset-0 col-sm-offset-2 col-sm-8">
                   <div class="input-group">
-                      <input type="text" class="form-control" placeholder="Status" style="color:red" value="Private (Only examiners)" readonly>
-                      <span class="input-group-btn">
-                           <button class="btn btn-success" type="button" onclick="showModal('required-message-modal')">Request for public</button>
-                      </span>
+                    <?php
+                      if($questionnaire->getPublic())
+                      {
+                        echo "
+                            <input type='text' class='form-control' placeholder='Status' style='color:green' value='Public (All users)' readonly>
+                            <span class='input-group-btn'>
+                                 <button class='btn btn-error' type='button' disabled>Published</button>
+                            </span>
+                        ";
+                      }
+                      else
+                      {
+                        echo "
+                            <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
+                            <span class='input-group-btn'>
+                                 <button class='btn btn-success' type='button' onclick=\"$('#required-message-modal').modal('show');\">Request for public</button>
+                            </span>
+                        ";
+                      }
+                    ?>
                   </div>
                 </div>
               </div>
@@ -76,4 +95,4 @@
      </div>
    </div>
  </div>
-<?php endif; ?>
+<? endif; ?>
