@@ -59,7 +59,7 @@
 	Routes::add( 'get-my-questionnaires' , 'examiner/ajax/GetMyQuestionnairesController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'get-users-by-pattern' , 'examiner/ajax/GetUsersByPatternController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'copy-participants' , 'examiner/ajax/CopyParticipantsController.php' , $_USER_LEVEL["EXAMINER"]);
-
+	Routes::add( 'get-questionnaire-requests' , 'examiner/ajax/GetQuestionnaireRequests.php' , $_USER_LEVEL["EXAMINER"]);
 	/*
 		Moderator level pages
 	 */
@@ -72,7 +72,8 @@
 	Routes::add( 'ban-examiners-from-questionnaire' , 'moderator/ajax/BanExaminersController.php' , $_USER_LEVEL["MODERATOR"]);
 	Routes::add( 'update-user-profile' , 'moderator/ajax/UpdateUserProfileController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'change-coordinator' , 'moderator/ajax/ChangeQuestionnaireCoordinatorController.php' , $_USER_LEVEL["MODERATOR"] );
-
+	Routes::add( 'get-publish-requests' , 'moderator/ajax/GetPublishRequestsController.php' , $_USER_LEVEL["MODERATOR"]);
+	Routes::add( 'set-questionnaire-public' , 'moderator/ajax/SetQuestionnairePublicController.php' , $_USER_LEVEL["MODERATOR"] );
 
 	/*
 		The Page to load when the page parameter is not defined

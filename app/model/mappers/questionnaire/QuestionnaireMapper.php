@@ -20,10 +20,10 @@
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
-WHERE `QuestionnaireParticipation`.`participation_type`=1 ";
+AND `QuestionnaireParticipation`.`participation_type`=1 ";
 
 			if($public)
-				$query .= "AND `Questionnaire`.`public`=1 ";
+				$query .= "WHERE `Questionnaire`.`public`=1 ";
 
 			$query .= "GROUP BY `Questionnaire`.`id` ";
 
@@ -77,8 +77,8 @@ WHERE `QuestionnaireParticipation`.`participation_type`=1 ";
 		public function findWithInfoById($questionnaireId , $public){
 			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
-LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
-WHERE `Questionnaire`.`id`=? AND `QuestionnaireParticipation`.`participation_type`=1 ";
+LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` AND `QuestionnaireParticipation`.`participation_type`=1
+WHERE `Questionnaire`.`id`=? ";
 			if($public)
 				$query .= "AND `Questionnaire`.`public`=1 ";
 
@@ -164,9 +164,22 @@ WHERE `Questionnaire`.`id`=? AND `QuestionnaireParticipation`.`participation_typ
 		/*
 			Returns a list of all questionnaires
 		 */
-		public function findAll(){
+		public function findAll($sort , $offset , $limit){
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+				FROM `Questionnaire`
+				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
+				AND `QuestionnaireParticipation`.`participation_type`=1
+				GROUP BY `Questionnaire`.`id`";
 
-			$statement = $this->getStatement("SELECT * FROM `Questionnaire`");
+			if( $sort == "date" )
+				$query .= "ORDER BY `Questionnaire`.`id` DESC LIMIT ?,?";
+			else if( $sort == "name")
+				$query .= "ORDER BY `Questionnaire`.`name` LIMIT ?,?";
+			else if( $sort == "pop")
+				$query .= "ORDER BY participations DESC LIMIT ?,?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $offset , $limit);
 
 			$resultSet = $statement->execute();
 
@@ -244,9 +257,23 @@ WHERE `Questionnaire`.`id`=? AND `QuestionnaireParticipation`.`participation_typ
 			return null;
 		}
 
-		public function findByCoordinator($coordinatorId){
-			$statement = $this->getStatement("SELECT * FROM `Questionnaire` WHERE `coordinator_id`=?");
-			$statement->setParameters('i' , $coordinatorId);
+		public function findByCoordinator($coordinatorId , $sort = "date" , $offset = 0 , $limit = 10){
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+				FROM `Questionnaire`
+				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
+				AND `QuestionnaireParticipation`.`participation_type`=1
+				WHERE `coordinator_id`=?
+				GROUP BY `Questionnaire`.`id`";
+
+			if( $sort == "date" )
+				$query .= "ORDER BY `Questionnaire`.`id` DESC LIMIT ?,?";
+			else if( $sort == "name")
+				$query .= "ORDER BY `Questionnaire`.`name` LIMIT ?,?";
+			else if( $sort == "pop")
+				$query .= "ORDER BY participations DESC LIMIT ?,?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('iii' , $coordinatorId , $offset , $limit);
 
 			$resultSet = $statement->execute();
 
