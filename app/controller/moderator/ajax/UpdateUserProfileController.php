@@ -55,6 +55,12 @@
 					return;
 				}
 
+				if( $user->getAccessLevel() == 3)
+				{
+					$this->setOutput("response-code" , 14);
+					return;
+				}
+
 				/*
 					Validation
 				 */
