@@ -19,133 +19,23 @@
 </style>
 <body>
   <script>
+  $(document).ready(function() {
 
-  function handle_questionnaire_request(request_id,response)
-  {
-      $.post(webRoot + "handle_questionnaire_request")
+    var users = [ '1' , '2' ];
+    var i = 0;
+    for(i;i<users.length;i++) {
+      $.post("http://localhost/Treasure-Thess-Website/public/ban-user",
       {
-        'request-id' : request_id,
-        'response' : response
-      }
+        'user-id': users[i],
+        'action-type' : 'ban'
+      },
       function(data,status)
       {
-        if(data == "0")
-        {
-          show_notification("success","Questionnaire request handled successfully.",3000);
-        }
-        else if(data == "1")
-        {
-          show_notification("error","Request does not exists.",4000);
-        }
-        else if(data == "2")
-        {
-          show_notification("error","You can only handle, player or examiner requests.",4000);
-        }
-        else if(data == "3")
-        {
-          show_notification("error","You dont have access to this questionnaire.",4000);
-        }
-        else if(data == "4")
-        {
-          show_notification("error","Questionnaire must be either accept or decline.",4000);
-        }
-        else if(data == "5")
-        {
-          show_notification("error","Response already handled.",4000);
-        }
-        else if(data == "6")
-        {
-          show_notification("error","General database error.",4000);
-        }
-        else if(data == "-1")
-        {
-          show_notification("error","You didn't send data.",4000);
-        }
-      }
+        alert(data);
+      });
     }
 
-    function handle_questionnaire_public_request(request_id,response)
-    {
-      $.post(webRoot + "handle-questionnaire-public-request")
-      {
-        'request-id' : request_id,
-        'response' : response
-      }
-      function(data,status)
-      {
-        if(data == "0")
-        {
-          show_notification("success","Questionnaire publish handled successfully.",3000);
-        }
-        else if(data == "1")
-        {
-          show_notification("error","Request does not exists.",4000);
-        }
-        else if(data == "2")
-        {
-          show_notification("error","You can only handle publish requests.",4000);
-        }
-        else if(data == "3")
-        {
-          show_notification("error","You dont have access to this questionnaire.",4000);
-        }
-        else if(data == "4")
-        {
-          show_notification("error","Questionnaire must be either accept or decline.",4000);
-        }
-        else if(data == "5")
-        {
-          show_notification("error","Response already handled.",4000);
-        }
-        else if(data == "6")
-        {
-          show_notification("error","General database error.",4000);
-        }
-        else if(data == "-1")
-        {
-          show_notification("error","You didn't send data.",4000);
-        }
-      }
-    }
-
-    function handle_examiner_application(application_id,response)
-    {
-      $.post(webRoot + "handle-examiner-application")
-      {
-        'application-id' : application_id,
-        'response' : response
-      }
-      function(data,status)
-      {
-        if(data == "0")
-        {
-          show_notification("success","Examiner application handled successfully.",3000);
-        }
-        else if(data == "1")
-        {
-          show_notification("error","Application does not exists.",4000);
-        }
-        else if(data == "2")
-        {
-          show_notification("error","Application already handled.",4000);
-        }
-        else if(data == "3")
-        {
-          show_notification("error","Response must be either accept or decline.",4000);
-        }
-        else if(data == "4")
-        {
-          show_notification("error","General database error.",4000);
-        }
-        else if(data == "-1")
-        {
-          show_notification("error","You didn't send data.",4000);
-        }
-      }
-    }
-
-    
-
+  });
   </script>
 </body>
 </html>
