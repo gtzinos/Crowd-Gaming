@@ -87,6 +87,34 @@
 			return null;
 		}
 
+		public function getActiveRequestsInfo($questionnaireId ,$requestType )
+		{
+			$query =   "SELECT `QuestionnaireRequest`.* , `User`.`email`
+						FROM `QuestionnaireRequest` 
+						INNER JOIN `User` on `User`.`id`=`QuestionnaireRequest`.`user_id`
+						WHERE `questionnaire_id`=? AND `request_type`=? AND `accepted` IS NULL";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii', $questionnaireId , $requestType);
+			$res = $statement->execute();
+
+			$requestInfo = array();
+			while( $res->next() )
+			{
+				
+				$arrayItem["user-email"] = $res->get("email");
+				$arrayItem["request-id"] = $res->get("id");
+				$arrayItem["user-id"] =  $res->get("user_id");
+				$arrayItem["questionnaire-id"] =  $res->get("questionnaire_id");
+				$arrayItem["request-text"] =  $res->get("request_text");
+				$arrayItem["request-date"] =  $res->get("request_date");
+				$arrayItem["request-type"] =  $res->get("request_type");
+
+				$requestInfo[] =  $arrayItem;
+			}
+			return $requestInfo;
+		}
+
 		public function getActivePublishRequest( $questionnaireId)
 		{
 			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `questionnaire_id`=? AND `request_type`=3 AND `accepted` IS NULL";
