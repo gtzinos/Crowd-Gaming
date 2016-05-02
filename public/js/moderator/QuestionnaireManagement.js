@@ -140,7 +140,7 @@ function get_questionnaire_i_manage()
                         "<div class='alert alert-danger'>We don't have any available questionnaire in our database. </div>" +
                     "</div>" +
                 "</a>";
-        $("#questionnaire-list").append($(out);
+        $("#questionnaire-list").append(out);
       }
       questionnaire_offset += 10;
     }
