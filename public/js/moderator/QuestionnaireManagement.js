@@ -32,6 +32,7 @@ $(document).ready(function() {
   });
   $('#questionnaire-management-settings').on('shown.bs.modal', function() {
           getQuestionnaireMembers();
+          getAvailableCoordinators();
   });
 
 });
@@ -68,7 +69,7 @@ var questionnaire_offset = 0,
     questionnaire_limit = 10;
 function get_questionnaire_i_manage()
 {
-  if(questionnaire_sort == "")
+  if(typeof questionnaire_sort == 'undefined' || questionnaire_sort == "")
   {
     questionnaire_sort = "date";
   }
@@ -254,6 +255,51 @@ function getQuestionnaireMembers()
   });
 }
 
+function getAvailableCoordinators()
+{
+  $("#questionnaire-available-coordinators-dropdown").find("option").remove();
+  $.post(webRoot + "get-available-coordinators",
+  {
+    "questionnaire-id" : questionnaire_id
+  },
+  function(data,status){
+    if(status == "success")
+    {
+
+      var users = data.users,
+          i = 0,
+          out = "";
+      for(i=0; i<users.length;i++)
+      {
+        out = "<option value='" + users[i].id + "' data-tokens='";
+
+        out += users[i].email + " ";
+
+        if(users[i].access == 1)
+        {
+            out += "player ";
+        }
+        else if(users[i].access == 2)
+        {
+          out += "moderator ";
+        }
+        else if(users[i].access == 3)
+        {
+          out += "examiner ";
+        }
+
+        out += users[i].gender + " " + users[i].country + " " +
+               users[i].city + " " + users[i].address + " " + users[i].phone;
+
+        out += "'>" + users[i].name + " " + users[i].surname + "</option>";
+        $("#questionnaire-available-coordinators-dropdown").append(out);
+      }
+        $("#questionnaire-available-coordinators-dropdown").selectpicker('refresh');
+    }
+  });
+}
+
+
 //type = ban , unban
 //confirmed = if modal box confirmed
 function ban_members_from_questionnaire(action_type,confirmed)
@@ -430,6 +476,7 @@ function ban_all_examiners_from_questionnaire()
 
 function change_coordinator()
 {
+  var user_id = $("#questionnaire-available-coordinators-dropdown").val();
   $.post(webRoot + "change-coordinator",
   {
     "questionnaire-id" : questionnaire_id,
@@ -450,6 +497,7 @@ function change_coordinator()
       if(data == "0")
       {
         show_notification("success","Coordinator changed successfully.",3000);
+        getAvailableCoordinators();
       }
       else if(data == "1") {
         show_notification("error","Questionnaire does not exist.",4000);

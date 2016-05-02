@@ -46,7 +46,7 @@
 				           </div>
 									<div class="form-group">
 										<div class="col-xs-3 col-sm-4">
-												<input type="button" class="btn btn-primary"  value="Change">
+												<input type="button" class="btn btn-primary"  value="Change" onclick='change_coordinator()'>
 										</div>
 									 </div>
 								 </form>
