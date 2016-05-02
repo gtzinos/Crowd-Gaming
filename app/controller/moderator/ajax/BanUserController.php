@@ -17,6 +17,7 @@
 				 1 : Users doesnt exist
 				 2 : Database Error
 				 3 : Invalid action-type
+				 4 : Cant ban a moderator
 				-1 : No post data
 			 */
 			if( isset( $_POST["user-id"] , $_POST["action-type"]) )
@@ -34,6 +35,12 @@
 				if( $_POST["action-type"] != "ban" && $_POST["action-type"] != "unban" )
 				{
 					$this->setOutput("response-code" , 3);
+					return;
+				}
+
+				if( $user->getAccessLevel() == 3)
+				{
+					$this->setOutput("response-code" , 4);
 					return;
 				}
 
