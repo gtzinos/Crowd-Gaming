@@ -12,6 +12,7 @@
 			//$this->defSection('JAVASCRIPT','public/InfoPageView.php');
 			$this->defSection('MAIN_CONTENT','public/InfoPageView.php');
 
+			$this->setArg("PAGE_TITLE","Crowd Gaming");
 		}
 
 		public function run(){

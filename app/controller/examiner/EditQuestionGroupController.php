@@ -15,6 +15,7 @@
 			$this->defSection('JAVASCRIPT','examiner/EditQuestionGroupView.php');
 			$this->defSection('MAIN_CONTENT','examiner/EditQuestionGroupView.php');
 
+			$this->setArg("PAGE_TITLE","Modify a question group!");
 		}
 
 		public function run()
@@ -93,7 +94,7 @@
 						return;
 					} 
 
-					if( !is_numeric($_POST["radius"]) || $_POST["longitude"]< 5 )
+					if( !is_numeric($_POST["radius"]) || $_POST["radius"]< 5 )
 					{
 						$this->setOutput('response-code' , 5);
 						return;

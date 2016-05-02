@@ -22,6 +22,8 @@
 				$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireView.php');
 				$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireView.php');
 			}			
+			
+			$this->setArg("PAGE_TITLE","Create a new Questionnaire!");
 		}
 
 		public function run()

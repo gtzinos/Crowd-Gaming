@@ -17,6 +17,72 @@ $(document).ready(function(e){
   });
 });
 
+/*
+  Which type to copy (Examiners or players ?)
+*/
+function copy_questionnaire_members(participation_type)
+{
+  if(any_no_completed_request()){
+    return;
+  }
+  no_completed_request = true;
+
+  if(questionnaire_id == to_questionnaire_id)
+  {
+    show_notification("Source and destination questionnaire cannot be the same.");
+    return;
+  }
+  if($("#single-questionnaire-dropdown").val().length > 0)
+  {
+    var to_questionnaire_id = $("#single-questionnaire-dropdown").val();
+    $.post(webRoot + "copy-participants",
+    {
+      'from-questionnaire-id' : questionnaire_id,
+      'to-questionnaire-id' : to_questionnaire_id,
+      'participation-type' : participation_type
+    },
+    function(data,status)
+    {
+      if(status == "success")
+      {
+        /*
+          0 : All ok
+          1 : Participation Type validation error
+          2 : FromQuestionnaire Doesnt Exist
+          3 : ToQuestionnaire Doesnt Exist
+          4 : Invalid Access
+        */
+        if (data == "0") {
+          show_notification("success","Users copied successfully.",3000);
+        }
+        else if(data == "1")
+        {
+          show_notification("error","Not a valid participation type.",4000);
+        }
+        else if (data == "2") {
+          show_notification("error","From questionnaire doesnt exists.",4000);
+        }
+        else if (data == "3") {
+          show_notification("error","To questionnaire doesnt exists.",4000);
+        }
+        else if(data == "4") {
+          show_notification("error","You dont have the minimum access level.",4000);
+        }
+        else if(data == "-1") {
+          show_notification("error","You didn't send data.",4000);
+        }
+        else {
+          show_notification("error","Unknown error. Please contact with us." ,4000);
+        }
+      }
+    });
+  }
+  else {
+    show_notification("error","You must select a questionnaire.",4000);
+  }
+  no_completed_request = false;
+}
+
 function getQuestionnaireMembers()
 {
   if(any_no_completed_request()){
@@ -111,9 +177,9 @@ function getQuestionnairesICanAccess()
         out += "'>" + questionnaire[i].name + "</option>";
         $("#single-questionnaire-dropdown").append(out);
       }
+        $("#single-questionnaire-dropdown").find("option[value=" + questionnaire_id + "]").remove();
         $("#single-questionnaire-dropdown").selectpicker('refresh');
     }
-
     no_completed_request = false;
   });
 }

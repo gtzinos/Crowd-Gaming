@@ -2,7 +2,6 @@
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/examiner/QuestionnaireGroupsList.css"); ?>">
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
   <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/css/bootstrap-select.min.css"); ?>">
-
 <?php elseif($section == "JAVASCRIPT") : ?>
   <script type="text/javascript">
   /*
@@ -16,7 +15,7 @@
   <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
-
+  <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionGroupMembers.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
   <!-- ShortCut Buttons -->
@@ -33,7 +32,7 @@
       <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/" . get("questionnaire")->getId(); ?>">Add</a>
     </div>
     <div class="col-xs-offset-0 col-xs-12 col-sm-1">
-      <button class="btn" onclick="$('#question-group-user').modal('show')"><i class="fa fa-users bigicon"></i></buton>
+      <button class="btn" onclick="$('#question-group-users').modal('show')"><i class="fa fa-users bigicon"></i></buton>
     </div>
   </div>
   <?php

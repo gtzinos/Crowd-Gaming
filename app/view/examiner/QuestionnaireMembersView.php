@@ -17,7 +17,14 @@
                	</select>
              </div>
              <div class="col-xs-3 col-sm-4">
-               	<button class="btn" onclick="transfer_participants()">Transfer</button>
+               <div class="dropdown">
+                  <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Copy
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><input type="button" class="btn btn-link" onclick="copy_questionnaire_members(1)" value="Players"></li>
+                    <li><input type="button" class="btn btn-link" onclick="copy_questionnaire_members(2)" value="Examiners"></li>
+                  </ul>
+               </div>
              </div>
            </div>
            <div class="form-group">
@@ -37,7 +44,7 @@
            </div>
          <div class="form-group">
            <div class="col-xs-7 col-sm-5">
-             <select id="questionnaire-members-dropdown" class="selectpicker form-control" data-live-search="true" title="Select some users" multiple data-actions-box="true" multiple data-selected-text-format="count > 2">
+             <select id="questionnaire-members-dropdown" class="selectpicker form-control" data-live-search="true" title="Select some users" multiple data-actions-box="true" data-selected-text-format="count > 2">
              </select>
            </div>
            <div class="col-xs-3 col-sm-4">

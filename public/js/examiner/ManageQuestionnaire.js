@@ -16,6 +16,140 @@ $(document)
     $(e.target).css('cursor', 'pointer');
   });
 
+function delete_public_request(confirmed)
+{
+  if(!confirmed)
+  {
+      display_confirm_dialog("Confirm","Are you sure to cancel this request ?","btn-default","btn-default","black","delete_public_request(true)","");
+      return;
+  }
+
+  $.post(webRoot + "publish-questionnaire-request",
+  {
+    "questionnaire-id" : questionnaire_id,
+    "cancel" : true
+  },
+  function(data,status){
+    if(status == "success")
+    {
+      /*
+        1 : Questionnaire doesnt work.
+        2 : You must be coordinator to make the request.
+        3 : Message Validation Error
+        4 : Questionnaire is already public
+        5 : Active application already exists
+        6 : General Database Error
+        -1 : No post data.
+      */
+      if(data == "0")
+      {
+        show_notification("success","Request canceled successfully.",3000);
+        setTimeout(function() {
+          location.reload();
+        },3000);
+      }
+      else if (data == "1")
+      {
+        show_notification("error","Questionnaire doesnt work.",4000);
+      }
+      else if (data == "2")
+      {
+        show_notification("error","You must be coordinator to make the request.",4000);
+      }
+      else if (data == "3")
+      {
+        show_notification("error","This is not a valid message.",4000);
+      }
+      else if (data == "4")
+      {
+        show_notification("error","Questionnaire is already public.",4000);
+      }
+      else if (data == "5")
+      {
+        show_notification("error","Active application already exists.",4000);
+      }
+      else if (data == "6")
+      {
+        show_notification("error","General Database Error.",4000);
+      }
+      else if (data == "7")
+      {
+        show_notification("error","There is no active publish application.",4000);
+      }
+      else if (data == "-1")
+      {
+        show_notification("error","You didnt send data.",4000);
+      }
+    }
+  });
+}
+
+/*
+  Send request to public his questionnaire
+*/
+function sendPublicRequest()
+{
+  var text = $("#required-message").val();
+  $.post(webRoot + "publish-questionnaire-request",
+  {
+    "questionnaire-id" : questionnaire_id,
+    "request-text" : text
+  },
+  function(data,status){
+    if(status == "success")
+    {
+      /*
+        1 : Questionnaire doesnt work.
+        2 : You must be coordinator to make the request.
+        3 : Message Validation Error
+        4 : Questionnaire is already public
+        5 : Active application already exists
+        6 : General Database Error
+        -1 : No post data.
+      */
+      if(data == "0")
+      {
+        show_notification("success","Request sended successfully.",3000);
+        setTimeout(function() {
+          location.reload();
+        },3000);
+      }
+      else if (data == "1")
+      {
+        show_notification("error","Questionnaire doesnt work.",4000);
+      }
+      else if (data == "2")
+      {
+        show_notification("error","You must be coordinator to make the request.",4000);
+      }
+      else if (data == "3")
+      {
+        show_notification("error","This is not a valid message.",4000);
+      }
+      else if (data == "4")
+      {
+        show_notification("error","Questionnaire is already public.",4000);
+      }
+      else if (data == "5")
+      {
+        show_notification("error","Active application already exists.",4000);
+      }
+      else if (data == "6")
+      {
+        show_notification("error","General Database Error.",4000);
+      }
+      else if (data == "7")
+      {
+        show_notification("error","There is no active publish application.",4000);
+      }
+      else if (data == "-1")
+      {
+        show_notification("error","You didnt send data.",4000);
+      }
+    }
+  });
+}
+
 /*
   Create questionnaire
 */

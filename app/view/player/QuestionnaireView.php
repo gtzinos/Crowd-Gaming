@@ -6,6 +6,9 @@
 
 </style>
 	<?php elseif($section == "JAVASCRIPT") : ?>
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.css"); ?>">
+	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.css"); ?>">
+<?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireRequests.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
@@ -13,6 +16,13 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/examiner/coordinator/QuestionnaireSettings.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/clockpicker-manager.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/agent-detector.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/moment.min.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/daterangepicker-manager.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<?php
 		/*
@@ -38,26 +48,26 @@
 				<label>On : </label> <?php echo $questionnaire->getCreationDate() ?>
 			</div>
 			<div class="questionnaire-public col-xs-offset-2 col-xs-2 col-sm-offset-6 col-sm-2">
-					<div class="dropdown">
-				    <span class="fi-widget dropdown-toggle mediumicon" type="button" data-toggle="dropdown">
-				    <span style="display:none" class="caret"></span></span>
-				    <ul class="dropdown-menu" >
-				      <!-- <li class="dropdown-header">Dropdown header 1</li> -->
-							<!-- <li class="divider"></li>
-						-->
-							<?php
-	 					 		if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
-	 							{
-	 								echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
-								}
-								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId())
-	 							{
-	 								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
-									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
-								}
-	 					 ?>
-				    </ul>
-					</div>
+				<?php
+					if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"])
+					{
+						echo "
+						<div class='dropdown'>
+					    <span class='fi-widget dropdown-toggle mediumicon' type='button' data-toggle='dropdown'>
+					    <span style='display:none' class='caret'></span></span>
+					    <ul class='dropdown-menu' >
+					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
+								<!-- <li class='divider'></li> --> ";
+		 						echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
+							if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() || $_SESSION["USER_LEVEL"] == 3)
+							{
+								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
+								echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
+							}
+						echo "</ul>
+							</div>";
+					}
+	 			?>
 			</div>
 		</div>
 		<div class="row">
@@ -92,7 +102,14 @@
 							echo $users . " users";
 						}
 						else {
-							echo "0 users";
+							if(get("questionnaire")["participations"] > 1)
+							{
+								echo get("questionnaire")["participations"] . " users";
+							}
+							else {
+								echo get("questionnaire")["participations"] . " user";
+							}
+
 						}
 					?>
 				</a>
@@ -481,10 +498,11 @@
 	{
 		load("EDIT_QUESTIONNAIRE");
 	}
-	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"])
+	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"] || $_SESSION['USER_LEVEL'] == 3)
 	{
 			load("QUESTIONNAIRE_MEMBERS");
 			load("QUESTIONNAIRE_SETTINGS");
+			load("REQUIRED_MESSAGE");
 	}
 
 ?>

@@ -36,6 +36,8 @@
 			if( $page !== null)
 				$this->redirect($page);
 
+			$this->setArg("PAGE_TITLE","Questionnaires");
+
 		}
 
 		public function run(){

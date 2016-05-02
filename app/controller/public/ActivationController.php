@@ -12,6 +12,7 @@
 			$this->defSection('JAVASCRIPT','public/ActivationView.php');
 			$this->defSection('MAIN_CONTENT','public/ActivationView.php');
 
+			$this->setArg("PAGE_TITLE","Verify your email.");
 		}
 
 		public function run(){
@@ -27,6 +28,13 @@
 			if(!isset($this->params[1]) )
 				$this->redirect("home");
 			$token = $this->params[1];
+
+
+			if( isset($_SESSION["ACCOUNT_ACTIVATED"]) )
+			{
+				$this->setArg("response-code" , 0);
+				return;
+			}
 
 			$userMapper = new UserMapper();
 
@@ -55,7 +63,7 @@
 					$userMapper->persist($user);
 
 					$this->setArg("response-code" , 0);
-
+					$_SESSION["ACCOUNT_ACTIVATED"] = "yes";
 					DatabaseConnection::getInstance()->commit();
 
 				}catch(DatabaseException $ex){

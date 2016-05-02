@@ -1,3 +1,21 @@
+.left-inner-addon {
+    position: relative;
+}
+.left-inner-addon input {
+    padding-left: 30px;
+}
+.left-inner-addon i {
+    position: absolute;
+    padding: 10px 12px;
+    pointer-events: none;
+}
+/*
+  Clock picker on modal fix
+*/
+.popover {
+  z-index: 215000000 !important;
+}
+
 /*
 	Body style
 */
@@ -14,6 +32,28 @@ body,html{
        color: #36A0FF;
        font-size: 27px;
        padding: 10px;
+}
+
+/*
+ 	Small-Top-Space
+*/
+.small-top-space
+{
+	 margin-top:10px;
+}
+/*
+ 	Small-Top-Space
+*/
+.medium-top-space
+{
+	 margin-top:20px;
+}
+/*
+ 	Small-Top-Space
+*/
+.big-top-space
+{
+	 margin-top:30px;
 }
 
 /*

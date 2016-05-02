@@ -12,6 +12,7 @@
 			$this->defSection('JAVASCRIPT','public/PageNotFoundView.php');
 			$this->defSection('MAIN_CONTENT','public/PageNotFoundView.php');
 
+			$this->setArg("PAGE_TITLE","This page does not exist");
 		}
 
 		public function run(){

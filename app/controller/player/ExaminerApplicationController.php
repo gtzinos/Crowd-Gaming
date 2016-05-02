@@ -14,6 +14,7 @@
 			$this->defSection('JAVASCRIPT','player/ExaminerApplicationView.php');
 			$this->defSection('MAIN_CONTENT','player/ExaminerApplicationView.php');
 			
+			$this->setArg("PAGE_TITLE","Become an Examiner!");
 		}
 
 		public function run(){

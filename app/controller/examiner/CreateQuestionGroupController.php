@@ -17,6 +17,8 @@
 			$this->defSection('CSS','examiner/CreateQuestionnaireGroupsView.php');
 			$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireGroupsView.php');
 			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireGroupsView.php');
+
+			$this->setArg("PAGE_TITLE","Create a new question group!");
 		}
 
 		public function run()
@@ -87,7 +89,7 @@
 						return;
 					} 
 
-					if( !is_numeric($_POST["radius"]) || $_POST["longitude"]< 5 )
+					if( !is_numeric($_POST["radius"]) || $_POST["radius"]< 5 )
 					{
 						$this->setOutput('response-code' , 5);
 						return;

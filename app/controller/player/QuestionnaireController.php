@@ -6,9 +6,11 @@
 	include_once '../app/model/domain/actions/QuestionnaireRequest.php';
 	include_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
-	class QuestionnaireController extends Controller{
+	class QuestionnaireController extends Controller
+	{
 
-		public function init(){
+		public function init()
+		{
 			global $_CONFIG;
 
 			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
@@ -22,20 +24,30 @@
 			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
 			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersView.php");
 			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsView.php");
+			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredMessageModalView.php");
+
 		}
 
-		public function run(){
+		public function run()
+		{
 			/*
 				The first parameter indicates the id of the questionnaire
 				if it doesnt exist we redirect to the questionnairelist
 			 */
-			if( !isset( $this->params[1] ) ){
+			if( !isset( $this->params[1] ) )
+			{
 				$this->redirect("questionnaireslist");
 			}
 			$questionnaireMapper = new QuestionnaireMapper;
 
+			$questionnaire = $questionnaireMapper->findById($this->params[1]);
 
+			if( $questionnaire === null )
+			{
+				$this->redirect("questionnaireslist");
+			}
 
+			$this->setArg("PAGE_TITLE",$questionnaire->getName());
 			/*
 				User actions regarding the questionnaire
 				eg , ParticipationRequest, remove Participation etc.
@@ -60,8 +72,14 @@
 				14 : Contact Message , Email Error
 				15 : Message is Required
 			 */
-			if( isset($_POST["player-join"]) || isset($_POST["player-unjoin"]) || isset($_POST["player-cancel-request"]) ||
-				isset($_POST["examiner-join"]) || isset($_POST["examiner-unjoin"]) || isset($_POST["examiner-cancel-request"]) ){
+			if( $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] && (
+				isset($_POST["player-join"]) || 
+				isset($_POST["player-unjoin"]) || 
+				isset($_POST["player-cancel-request"]) ||
+				isset($_POST["examiner-join"]) || 
+				isset($_POST["examiner-unjoin"]) || 
+				isset($_POST["examiner-cancel-request"]) ) )
+			{
 				$this->handleQuestionnaireRequest($this->params[1] , $questionnaireMapper->isMessageRequired($this->params[1]) );
 			}
 
@@ -82,7 +100,8 @@
 			if($questionnaireInfo === null)
 				$this->redirect("questionnaireslist");
 
-					if( isset( $_POST["contact-message"]) ){
+			if( $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] && isset( $_POST["contact-message"]) )
+			{
 				$this->sendMailToCoordinator($_POST["contact-message"] , $questionnaireInfo);
 			}
 
@@ -104,18 +123,23 @@
 		}
 
 
-		public function handleQuestionnaireRequest($questionnaireId , $messageRequired){
+		public function handleQuestionnaireRequest($questionnaireId , $messageRequired)
+		{
 
 			$message = null;
 
 			/*
 				Validate message if exists
 			 */
-			if( isset($_POST["message"]) ){
-				if( $_POST["message"]!="" && ( strlen($_POST["message"])<20 || strlen($_POST["message"])>255) ){
+			if( isset($_POST["message"]) )
+			{
+				if( $_POST["message"]!="" && ( strlen($_POST["message"])<20 || strlen($_POST["message"])>255) )
+				{
 					$this->setArg("response-code" , 1); // Message validation error
 					return;
-				}else if( $_POST["message"] != "" ){
+				}
+				else if( $_POST["message"] != "" )
+				{
 					$message = htmlspecialchars($_POST["message"] , ENT_QUOTES);
 				}
 			}
@@ -123,22 +147,29 @@
 
 			$requestMapper = new RequestMapper;
 			$participationMapper = new ParticipationMapper;
+			$questionnaireMapper = new QuestionnaireMapper;
 
 			$questionnaireRequest = null;
 			$participation = null;
 
 
-			if( isset( $_POST["player-join"]) ){
+			if( isset( $_POST["player-join"]) )
+			{
 				/*
 					Player participation request
 				 */
-				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 1 ) ){
+				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 1 ) )
+				{
 					$this->setArg("response-code" , 3); // Player already participates
 					return;
-				}else if( $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaireId) ){
+				}
+				else if( $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaireId) )
+				{
 					$this->setArg("response-code" , 4); // Player has already an active request
 					return;
-				}else if( $messageRequired && $message===null){
+				}
+				else if( $messageRequired && $message===null)
+				{
 					$this->setArg("response-code" , 15); // Message is required
 					return;
 				}
@@ -149,46 +180,58 @@
 				$questionnaireRequest->setRequestText($message);
 				$questionnaireRequest->setQuestionnaireId($questionnaireId);
 
-			}else if( isset($_POST["player-cancel-request"]) ){
+			}
+			else if( isset($_POST["player-cancel-request"]) )
+			{
 				/*
 					Delete active player participation request
 				 */
 				$questionnaireRequest = $requestMapper->getActivePlayerRequest($_SESSION["USER_ID"] , $questionnaireId);
 
-				if( $questionnaireRequest === null){
+				if( $questionnaireRequest === null)
+				{
 					$this->setArg("response-code" , 5); // User has no active request to delete
 					return;
 				}
 
 				$questionnaireRequest->setResponse(false);
 
-			}else if( isset($_POST["player-unjoin"]) ){
+			}
+			else if( isset($_POST["player-unjoin"]) )
+			{
 				/*
 					Remove Player Participation
 				 */
 				$participation = $participationMapper->findParticipation($_SESSION["USER_ID"] , $questionnaireId , 1 );
 
-				if($participation === null){
+				if($participation === null)
+				{
 					$this->setArg("response-code" , 6); // User didnt participate as player
 					return;
 				}
 
-			}else if( isset($_POST["examiner-join"]) ){
+			}
+			else if( isset($_POST["examiner-join"]) )
+			{
 				/*
 					Examiner participation request
 				 */
-				if($_SESSION["USER_LEVEL"] <= 1){
+				if($_SESSION["USER_LEVEL"] <= 1)
+				{
 					$this->setArg("response-code" , 7); // Unauthorised action, user level is too low
 					return;
 				}
 
-				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 2 ) ){
+				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 2 ) )
+				{
 					$this->setArg("response-code" , 8); // Examiner already participates
 					return;
-				}else if( $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaireId) ){
+				}else if( $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaireId) )
+				{
 					$this->setArg("response-code" , 9); // Examiner already has an active request
 					return;
-				}else if( $messageRequired && $message===null){
+				}else if( $messageRequired && $message===null)
+				{
 					$this->setArg("response-code" , 15); // Message is required
 					return;
 				}
@@ -199,53 +242,66 @@
 				$questionnaireRequest->setRequestText($message);
 				$questionnaireRequest->setQuestionnaireId( $questionnaireId );
 
-			}else if( isset($_POST["examiner-cancel-request"]) ){
+			}
+			else if( isset($_POST["examiner-cancel-request"]) )
+			{
 				/*
 					Delete active examiner participation request
 				 */
-				if($_SESSION["USER_LEVEL"] <= 1){
+				if($_SESSION["USER_LEVEL"] <= 1)
+				{
 					$this->setArg("response-code" , 7); // Unauthorised action, user level is too low
 					return;
 				}
 
 				$questionnaireRequest = $requestMapper->getActiveExaminerRequest($_SESSION["USER_ID"] , $questionnaireId);
 
-				if( $questionnaireRequest === null){
+				if( $questionnaireRequest === null)
+				{
 					$this->setArg("response-code" , 10); // User has no active examiner request to delete
 					return;
 				}
 
 				$questionnaireRequest->setResponse(false);
 
-			}else if( isset($_POST["examiner-unjoin"]) ){
+			}
+			else if( isset($_POST["examiner-unjoin"]) )
+			{
 				/*
 					Remove Examiner Participation
 				 */
-				if($_SESSION["USER_LEVEL"] <= 1){
+				if($_SESSION["USER_LEVEL"] <= 1)
+				{
 					$this->setArg("response-code" , 7); // Unauthorised action, user level is too low
 					return;
 				}
 
 				$participation = $participationMapper->findParticipation($_SESSION["USER_ID"] , $questionnaireId , 2 );
 
-				if($participation === null){
+				if($participation === null)
+				{
 					$this->setArg("response-code" , 11); // User is not participating as examiner
 					return;
 				}
 
-			}else{
+			}
+			else
+			{
 				$this->setArg("response-code" , 2); // Invalid option
 				return;
 			}
 
 
-			try{
+			try
+			{
 				DatabaseConnection::getInstance()->startTransaction();
 
-				if( $questionnaireRequest !== null ){
+				if( $questionnaireRequest !== null )
+				{
 
 					$requestMapper->persist($questionnaireRequest);
-				}else if( $participation !== null ){
+				}else if( $participation !== null )
+				{
 
 					$participationMapper->delete($participation);
 				}
@@ -253,17 +309,21 @@
 				DatabaseConnection::getInstance()->commit();
 				$this->setArg("response-code" , 0);
 
-			}catch(DatabaseException $ex){
+			}
+			catch(DatabaseException $ex)
+			{
 				DatabaseConnection::getInstance()->rollback();
 				$this->setArg("response-code" , 12); // General database error
 			}
 		}
 
-		public function sendMailToCoordinator($message , $questionnaireInfo){
+		public function sendMailToCoordinator($message , $questionnaireInfo)
+		{
 
 			$message = htmlspecialchars($message, ENT_QUOTES);
 
-			if( strlen($message) < 19 || strlen($message) > 255 ){
+			if( strlen($message) < 19 || strlen($message) > 255 )
+			{
 				$this->setArg("response-code" , 13); // Contact Message Validation Error
 				return;
 			}
@@ -310,9 +370,11 @@
 							 "Email : ".$user->getEmail().' \n'.
 							 "Message : \n \n".$message;
 
-			if(!$mail->send()) {
+			if(!$mail->send()) 
+			{
 				$this->setArg("response-code" , 14); // Email Error
-			}else{
+			}else
+			{
 				// All went good
 				$this->setArg("response-code" , 0);
 			}
