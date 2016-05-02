@@ -110,6 +110,9 @@ function get_questionnaire_i_manage()
           {
 
             $("#qcheck" + questionnaires[i].id).bootstrapSwitch('state',questionnaires[i].public);
+            $('#qcheck"]').on('switchChange.bootstrapSwitch', function(event, state) {
+
+            }
           }
       }
       else {
@@ -219,8 +222,7 @@ function ban_members_from_questionnaire(action_type,confirmed)
       function(data,status){
         if(status == "success")
         {
-          alert(data);
-          var user_name = user_results_array[counter][0];
+          var user_name = user_results_array[counter];
           counter++;
           /*
             0 : All ok
@@ -259,9 +261,9 @@ function ban_members_from_questionnaire(action_type,confirmed)
             show_notification("error","Unknow error.Please contact with us. { " + user_name + " }",6000);
           }
         }
-        getQuestionnaireMembers();
       });
   }
+  getQuestionnaireMembers();
 }
 
 function show_confirm_modal()

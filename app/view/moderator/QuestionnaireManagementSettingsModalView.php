@@ -28,7 +28,6 @@
 				                <span class="caret"></span></button>
 				                <ul class="dropdown-menu">
 				                  <li><input type="button" class="btn btn-link" onclick="ban_members_from_questionnaire('ban',false)" value="Selected members"></li>
-													<li><input type="button" class="btn btn-link" onclick="ban_all_players_from_questionnaire(false)" value="All players"></li>
 													<li><input type="button" class="btn btn-link" onclick="ban_all_examiners_from_questionnaire(false)" value="All examiners"></li>
 				                </ul>
 				             </div>
@@ -41,13 +40,13 @@
 							 <div id="coordinator" class="tab-pane fade">
 								 <br><br>
 								 <form role="form" class="form-horizontal" onsubmit="return false">
-									 <div class="col-xs-7 col-sm-5">
-				             <select id="questionnaire-available-coordinators-dropdown" class="selectpicker form-control" data-live-search="true" title="Select some users" multiple data-actions-box="true" data-selected-text-format="count > 2">
+									 <div class="col-xs-6 col-sm-5">
+				             <select id="questionnaire-available-coordinators-dropdown" class="selectpicker form-control" title="Select the new coordinator">
 				             </select>
 				           </div>
 									<div class="form-group">
-										<div class="col-xs-3 col-xs-offset-1 col-sm-offset-1 col-sm-3" style="width:100%">
-												<input type="button" class="btn btn-primary"  value="Ban examiners">
+										<div class="col-xs-3 col-sm-4">
+												<input type="button" class="btn btn-primary"  value="Change">
 										</div>
 									 </div>
 								 </form>
