@@ -1,9 +1,67 @@
+/*
+  Public Questionnaire selected id
+*/
+var questionnaire_id,
+    questionnaire_index,
+    questionnaires = [];
+
+//Initialization
 $(document).ready(function() {
   get_questionnaire_i_manage();
+  $(document)
+  .on("mouseover",".settingsitem",function(e) {
+    if(e.target.nodeName == "A")
+    {
+      $(e.target).css("background-color","lightgrey")
+                 .children().css("background-color","lightgrey");
+    }
+    $(e.target).css('cursor', 'hand');
+  })
+  .on("mouseleave",".settingsitem",function(e) {
+    if(e.target.nodeName == "A")
+    {
+      $(e.target).css("background-color","white")
+                 .children().css("background-color","white");
+    }
+    $(e.target).css('cursor', 'pointer');
+  });
+  $('#questionnaire-management-settings').on('shown.bs.modal', function() {
+          getQuestionnaireMembers();
+  });
+
 });
+
+/*
+  Scroll down
+*/
+var iScrollPos = 0,
+    processing = false;
+$(window).scroll(function () {
+
+    var iCurScrollPos = $(this).scrollTop();
+
+    if (iCurScrollPos > iScrollPos) {
+
+      if (processing)
+      {
+        return false;
+      }
+      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
+          processing = true; //sets a processing AJAX request flag
+        //  get_questionnaire_i_manage();
+      }
+      processing = false;
+    }
+    iScrollPos = iCurScrollPos;
+  });
+
 
 function get_questionnaire_i_manage()
 {
+  $.fn.bootstrapSwitch.defaults.offText = "<span class='glyphicon glyphicon-lock'> </span>";
+  $.fn.bootstrapSwitch.defaults.onText = "<span class='glyphicon glyphicon-globe'> </span>";
+  $.fn.bootstrapSwitch.defaults.offColor = 'danger';
+  $.fn.bootstrapSwitch.defaults.size = 'small';
   $.post(webRoot + "get-my-questionnaires",
   {
 
@@ -13,63 +71,214 @@ function get_questionnaire_i_manage()
     if(status == "success")
     {
       var i = 0,
-          out = "",
-          questionnaires = data.questionnaires;
+          out = "";
+      questionnaires = data.questionnaires;
       if(data.questionnaires.length > 0)
       {
           for(i; i < questionnaires.length; i++)
           {
-            var questionnaire_name_to_delete = questionnaires[i].name.replace("&#039;","\\'");
-            questionnaire_name_to_delete = questionnaire_name_to_delete.replace("&#34;","\\'");
+            //var questionnaire_name_to_delete = questionnaires[i].name.replace("&#039;","\\'");
 
-            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + questionnaires[i].id + "'>" +
+
+
+            //questionnaire_name_to_delete = questionnaire_name_to_delete.replace("&#34;","\\'");
+
+            out = "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + questionnaires[i].id + "'>" +
                         "<div class='col-xs-12'>" +
                             "<h4 class='list-group-item-heading'>" + questionnaires[i].name + "</h4>" +
                         "</div>" +
                         "<div class='col-xs-12' style='margin-top:3%;padding:0px'>" +
-                            "<div class='col-xs-12 col-sm-4 col-md-3' style='padding:0px'>" +
-                                "<button class='btn btn-info' type='button'>New Question</button>" +
+                            "<div class='col-xs-4 col-sm-4 col-md-2' style='padding:0px'>" +
+                                "<input type='checkbox' id='qcheck" + questionnaires[i].id + "' />" +
                             "</div>" +
-                            "<div class='col-xs-12 col-sm-2 col-md-1' style='padding:0px'>" +
-                                "<a class='btn btn-default' href=''>Edit</a>" +
-                            "</div>" +
-                            "<div class='col-xs-12 col-sm-2 col-md-2' style='padding:0px'>" +
-                                "<button class='btn btn-danger' type='button' onclick=\"show_confirm_modal('" + questionnaires[i].id + "','" + questionnaire_name_to_delete + "')\">Delete</button>" +
-                            "</div>" +
-                            "<div class='col-xs-12 col-sm-offset-1 col-sm-3 col-md-offset-3 col-md-3'>" +
-                                "<button class='btn btn-link' type='button'>Questions</button>" +
+                            "<div class='col-xs-offset-1 col-xs-3 col-sm-offset-5 col-sm-3 col-md-offset-8 col-md-2'>" +
+                              "<div class='dropdown'>" +
+                                  "<span class='dropdown-toggle btn btn-default' type='button' data-toggle='dropdown' onclick='questionnaire_id = " + questionnaires[i].id + "; questionnaire_index = " + i + ";'>Actions " +
+                                  "<span class='caret'></span></span>" +
+                                  "<ul class='dropdown-menu' >" +
+                                    "<li class='settingsitem'><a onclick=\"show_confirm_modal()\"><i class='glyphicon glyphicon-trash'></i> Delete</a></li>" +
+                                    "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> View logs</a></li>" +
+                                    "<li class='settingsitem'><a onclick=\"show_actions_modal()\"><i class='fa fa-cogs'></i> More settings</a></li>" +
+                                  "</ul>" +
+                              "</div>" +
                             "</div>" +
                         "</div>" +
                     "</div>";
+                    $("#questionnaire-list").html($("#questionnaire-list").html() + out);
+          }
+          for(i = 0; i < questionnaires.length; i++)
+          {
+
+            $("#qcheck" + questionnaires[i].id).bootstrapSwitch('state',questionnaires[i].public);
           }
       }
       else {
-        out += "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
+        out = "<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
                     "<div class='col-xs-12'>" +
                         "<div class='alert alert-danger'>We don't have any available questionnaire in our database. </div>" +
                     "</div>" +
                 "</a>";
+        $("#questionnaire-list").html($("#questionnaire-list").html() + out);
       }
-      $("#questionnaire-list").html(out);
+    }
+
+  });
+}
+
+function show_actions_modal()
+{
+  showModal('questionnaire-management-settings');
+  $('#qtitle-actions-modal').html("<span class='glyphicon glyphicon-lock'></span> Actions for " + questionnaires[questionnaire_index].name);
+  $("#questionnaire-deletion-button").bind("click",function() {
+    show_confirm_modal(questionnaire_id,questionnaires[questionnaire_index].name);
+  });
+}
+
+function getQuestionnaireMembers()
+{
+  $("#questionnaire-members-dropdown").find("option").remove();
+  $.post(webRoot + "get-users-from-questionnaire",
+  {
+    "questionnaire-id" : questionnaire_id
+  },
+  function(data,status){
+    if(status == "success")
+    {
+
+      var users = data.users,
+          i = 0,
+          out = "";
+      for(i=0; i<users.length;i++)
+      {
+        out = "<option value='" + users[i].id + "' data-tokens='";
+
+        out += users[i].email + " ";
+
+        if(users[i].access == 1)
+        {
+            out += "player ";
+        }
+        else if(users[i].access == 2)
+        {
+          out += "moderator ";
+        }
+        else if(users[i].access == 3)
+        {
+          out += "examiner ";
+        }
+
+        out += users[i].gender + " " + users[i].country + " " +
+               users[i].city + " " + users[i].address + " " + users[i].phone;
+
+        out += "'>" + users[i].name + " " + users[i].surname + "</option>";
+        $("#questionnaire-members-dropdown").append(out);
+      }
+        $("#questionnaire-members-dropdown").selectpicker('refresh');
     }
   });
 }
 
-function show_confirm_modal(questionnaire_to_delete,questionnaire_name_to_delete)
+//type = ban , unban
+//confirmed = if modal box confirmed
+function ban_members_from_questionnaire(action_type,confirmed)
+{
+  var selected_users = [],
+      i = 0;
+
+  if($('#questionnaire-members-dropdown').val() == null)
+  {
+    show_notification("error","You must select some users.",4000);
+    return;
+  }
+  else if(!confirmed)
+  {
+    display_confirm_dialog("Confirm","Are you sure to ban these selected members of this questionnaire ?","btn-default","btn-default","black","ban_members_from_questionnaire('" + action_type + "',true)","");
+    return;
+  }
+
+  var temp = String($('#questionnaire-members-dropdown').val());
+  if(temp.indexOf(',') >= 0)
+  {
+    selected_users = temp.split(",");
+  }
+  else {
+    selected_users[0] = temp;
+  }
+
+  var counter = 0,
+      user_results_array = [];
+  for(i = 0; i<selected_users.length; i++)
+  {
+      user_results_array[i] = String($("#questionnaire-members-dropdown option[value=" + selected_users[i] + "]").text());
+      //users.push({ "id" : this.value });
+      $.post(webRoot + "ban-user",
+      {
+        "user-id" : selected_users[i],
+        "action-type" : action_type
+      },
+      function(data,status){
+        if(status == "success")
+        {
+          alert(data);
+          var user_name = user_results_array[counter][0];
+          counter++;
+          /*
+            0 : All ok
+            1 : User doesnt Exist
+            2 : Database Error
+            3 : invalid action
+            4 : Cant ban a moderator
+            -1 : No data
+          */
+          if(data == "0")
+          {
+            show_notification("success",user_name + " banned successfully.",4000);
+          }
+          else if(data == "1")
+          {
+            show_notification("error","User doesnt Exist. { " + user_name + " }",6000);
+          }
+          else if(data == "2")
+          {
+            show_notification("error","General database error. { " + user_name + " }",6000);
+          }
+          else if(data == "3")
+          {
+            show_notification("error","Invalid action. { " + user_name + " }",6000);
+          }
+          else if(data == "4")
+          {
+            show_notification("error","Can't ban a moderator. { " + user_name + " }",6000);
+          }
+          else if(data == "-1")
+          {
+            show_notification("error","You didn't send data. { " + user_name + " }",6000);
+          }
+          else
+          {
+            show_notification("error","Unknow error.Please contact with us. { " + user_name + " }",6000);
+          }
+        }
+        getQuestionnaireMembers();
+      });
+  }
+}
+
+function show_confirm_modal()
 {
   showModal('confirm-questionnaire-deletion');
-  $('#qtitle-confirm-deletion-modal').html("<span class='glyphicon glyphicon-lock'></span> Delete questionnaire " + questionnaire_name_to_delete);
+  $('#qtitle-confirm-deletion-modal').html("<span class='glyphicon glyphicon-lock'></span> Delete questionnaire " + questionnaires[questionnaire_index].name);
   $("#confirm-questionnaire-deletion-button").bind("click",function() {
-    delete_questionnaire(questionnaire_to_delete);
+    delete_questionnaire();
   });
 }
 
-function delete_questionnaire(questionnaire_to_delete)
+function delete_questionnaire()
 {
   var password = $("#confirm-password-text").val();
   $.post(webRoot + "delete-questionnaire",
   {
-    'questionnaire-id' : questionnaire_to_delete,
+    'questionnaire-id' : questionnaire_id,
     'password' : password
   },
   function(data,status)
@@ -99,6 +308,87 @@ function delete_questionnaire(questionnaire_to_delete)
       else
       {
         show_notification("error","Unknow error. Please contact with us.",4000);
+      }
+    }
+  });
+  $("#confirm-password-text").val('');
+  $("#confirm-password-text").focus();
+}
+
+function ban_all_examiners_from_questionnaire()
+{
+  $.post(webRoot + "ban-examiners-from-questionnaire",
+  {
+    'questionnaire-id' : questionnaire_id
+  },
+  function(data,status)
+  {
+    if(status == "success")
+    {
+      /*
+        0 : All ok
+        1 : Database Error
+       -1 : No data
+      */
+      if(data == "0")
+      {
+        show_notification("success","Questionnaire examiners banned successfully.",3000);
+      }
+      else if(data == "1")
+      {
+        show_notification("error","General database error.",4000);
+      }
+      else if(data == "-1")
+      {
+        show_notification("error","You didn't send data.",4000);
+      }
+      else {
+        show_notification("error","Unknown error. Please contact with us.",4000);
+      }
+    }
+  });
+}
+
+function change_coordinator()
+{
+  $.post(webRoot + "change-coordinator",
+  {
+    "questionnaire-id" : questionnaire_id,
+    "user-id" : user_id
+  },
+  function(data,status)
+  {
+    /*
+    0 : All ok
+      1 : Questionnaire does not exist
+      2 : User doesnt not exist
+      3 : User Access Level is lower than Examiner
+      4 : Database Error
+      -1: No Data
+    */
+    if(status == "success")
+    {
+      if(data == "0")
+      {
+        show_notification("success","Coordinator changed successfully.",3000);
+      }
+      else if(data == "1") {
+        show_notification("error","Questionnaire does not exist.",4000);
+      }
+      else if(data == "2") {
+        show_notification("error","User does not exist.",4000);
+      }
+      else if(data == "3") {
+        show_notification("error","User access level is lower than examiner.",4000);
+      }
+      else if(data == "4") {
+        show_notification("error","General database error.",4000);
+      }
+      else if(data == "-1") {
+        show_notification("error","You didn't send data.",4000);
+      }
+      else {
+        show_notification("error","Unknown error. Please contact with us.",4000);
       }
     }
   });

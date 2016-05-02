@@ -20,7 +20,7 @@
 				$this->defSection('MAIN_CONTENT','moderator/QuestionnaireManagementView.php');
 
 				$this->defSection('CONFIRM_QUESTIONNAIRE_DELETION','moderator/ConfirmQuestionnaireDeletetionModalView.php');
-
+				$this->defSection('QUESTIONNAIRE_MANAGEMENT_SETTINGS','moderator/QuestionnaireManagementSettingsModalView.php');
 
 			}
 
