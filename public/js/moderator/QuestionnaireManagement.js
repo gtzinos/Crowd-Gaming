@@ -5,14 +5,17 @@ var questionnaire_id,
     questionnaire_index,
     questionnaires = [];
 
-//Initialization
-$(document).ready(function() {
+
+function initialize()
+{
   $.fn.bootstrapSwitch.defaults.offText = "<span class='glyphicon glyphicon-lock'> </span>";
   $.fn.bootstrapSwitch.defaults.onText = "<span class='glyphicon glyphicon-globe'> </span>";
   $.fn.bootstrapSwitch.defaults.offColor = 'danger';
   $.fn.bootstrapSwitch.defaults.size = 'small';
 
-  //get_questionnaire_i_manage();
+  //***ONLY THERE***
+  get_questionnaire_i_manage();
+
   $(document)
   .on("mouseover",".settingsitem",function(e) {
     if(e.target.nodeName == "A")
@@ -35,11 +38,11 @@ $(document).ready(function() {
           getAvailableCoordinators();
   });
 
-});
+}
+
 
 $(window).on('load',function(){
-  //***ONLY THERE***
-  get_questionnaire_i_manage();
+  initialize();
 });
 
 /*
@@ -327,10 +330,11 @@ function ban_members_from_questionnaire(action_type,confirmed)
     selected_users[0] = temp;
   }
 
-  var counter = 0,
-      user_results_array = [];
+  var user_results_array = [];
   for(i = 0; i<selected_users.length; i++)
   {
+    (function(i)
+    {
       user_results_array[i] = String($("#questionnaire-members-dropdown option[value=" + selected_users[i] + "]").text());
       //users.push({ "id" : this.value });
       $.post(webRoot + "ban-user",
@@ -341,8 +345,7 @@ function ban_members_from_questionnaire(action_type,confirmed)
       function(data,status){
         if(status == "success")
         {
-          var user_name = user_results_array[counter];
-          counter++;
+          var user_name = user_results_array[i];
           /*
             0 : All ok
             1 : User doesnt Exist
@@ -379,10 +382,11 @@ function ban_members_from_questionnaire(action_type,confirmed)
           {
             show_notification("error","Unknow error.Please contact with us. { " + user_name + " }",6000);
           }
+          getQuestionnaireMembers();
         }
       });
+      })(i);
   }
-  getQuestionnaireMembers();
 }
 
 function show_confirm_modal()
