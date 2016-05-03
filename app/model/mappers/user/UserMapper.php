@@ -527,7 +527,8 @@
 						INNER JOIN `QuestionnaireParticipation`
 						ON `QuestionnaireParticipation` .`user_id`=`User`.`id`
 						SET `User`.`banned`=1
-						WHERE `QuestionnaireParticipation`.`participation_type`=2 AND `QuestionnaireParticipation`.`questionnaire_id`=?";
+						WHERE `QuestionnaireParticipation`.`participation_type`=2 AND `QuestionnaireParticipation`.`questionnaire_id`=?
+						AND `User`.`access`<>3";
 
 			$statement = $this->getStatement($query);
 
