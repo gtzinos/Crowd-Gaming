@@ -18,6 +18,7 @@
 				 2 : Database Error
 				 3 : Invalid action-type
 				 4 : Cant ban a moderator
+				 5 : If action is ban means the user is already banned, the opposite if the action is unban.
 				-1 : No post data
 			 */
 			if( isset( $_POST["user-id"] , $_POST["action-type"]) )
@@ -41,6 +42,13 @@
 				if( $user->getAccessLevel() == 3)
 				{
 					$this->setOutput("response-code" , 4);
+					return;
+				}
+
+				if( ( $_POST["action-type"]=="ban" && $user->getBanned() ) ||
+				    ( $_POST["action-type"]=="unban" && !$user->getBanned() ) )
+				{
+					$this->setOutput("response-code" , 5);
 					return;
 				}
 
