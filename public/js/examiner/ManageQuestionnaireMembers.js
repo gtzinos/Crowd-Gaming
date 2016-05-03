@@ -9,7 +9,7 @@ function any_no_completed_request()
   return no_completed_request;
 }
 
-$(document).ready(function(e){
+$(window).on('load',function(e){
   $('#manage-questionnaire-members').on('shown.bs.modal', function() {
           getQuestionnairesICanAccess();
           no_completed_request=false;
@@ -85,13 +85,14 @@ function copy_questionnaire_members(participation_type)
 
 function getQuestionnaireMembers()
 {
+
   if(any_no_completed_request()){
     return;
   }
   no_completed_request = true;
 
-
   $("#questionnaire-members-dropdown").find("option").remove();
+
   $.post(webRoot + "get-users-from-questionnaire",
   {
     "questionnaire-id" : questionnaire_id
@@ -100,9 +101,11 @@ function getQuestionnaireMembers()
     if(status == "success")
     {
 
+
       var users = data.users,
           i = 0,
           out = "";
+
       for(i=0; i<users.length;i++)
       {
         out = "<option value='" + users[i].id + "' data-tokens='";
@@ -152,6 +155,7 @@ function getQuestionnairesICanAccess()
       var questionnaire = data.questionnaires,
           i = 0,
           out = "";
+
       for(i=0; i<questionnaire.length;i++)
       {
         out = "<option value='" + questionnaire[i].id + "' data-tokens='";
@@ -210,12 +214,21 @@ function getQuestionnairesICanAccess()
     }
 
     var temp = String($('#questionnaire-members-dropdown').val());
-    selected_users = temp.split(",");
 
-    //var users = [];
+    if(temp.indexOf(',') >= 0)
+    {
+      selected_users = temp.split(",");
+    }
+    else {
+      selected_users[0] = temp;
+    }
+
+    var user_results_array = [];
     for(i = 0; i<selected_users.length; i++)
     {
-        //users.push({ "id" : this.value });
+      (function(i)
+      {
+        user_results_array[i] = String($("#questionnaire-members-dropdown option[value=" + selected_users[i] + "]").text());
         $.post(webRoot + "delete-questionnaire-participation",
         {
           "questionnaire-id" : questionnaire_id,
@@ -225,7 +238,7 @@ function getQuestionnairesICanAccess()
         function(data,status){
           if(status == "success")
           {
-            var user_name = $("#questionnaire-members-dropdown option[value='" + selected_users[i] + "']").text();
+            var user_name = user_results_array[i];
             var type_name = "";
             if(type == 1)
             {
@@ -281,6 +294,7 @@ function getQuestionnairesICanAccess()
           no_completed_request = false;
           getQuestionnaireMembers();
         });
+      })(i);
     }
   }
  $(document).ready(function() {
@@ -396,6 +410,7 @@ function getQuestionnairesICanAccess()
       if(status == "success")
       {
         var selected_user_id = $("#find-a-user").text();
+        var user_name = "";
         /*
           0 : All ok
           1 : Questionnaire doesnt exists

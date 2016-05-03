@@ -1,7 +1,7 @@
 <?php if($section == "CSS") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/css/bootstrap-select.min.css"); ?>">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<!-- JUST TEST IGNORE	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.css"); ?>">
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
@@ -11,7 +11,7 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- JUST TEST IGNORE <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/coordinator/QuestionnaireSettings.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/clockpicker-manager.js"); ?>"></script>
