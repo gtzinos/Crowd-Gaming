@@ -39,7 +39,7 @@
 
 			$participationMapper = new ParticipationMapper;
 
-			if( ! $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 2) ){
+			if( !( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 2) || $_SESSION["USER_LEVEL"]==3) ){
 				// Invalid Access
 				return;
 			}

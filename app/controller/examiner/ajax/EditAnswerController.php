@@ -38,7 +38,7 @@
 
 
 
-				if( !$participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) ){
+				if( !($participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) || $_SESSION["USER_LEVEL"]==3 ) ){
 					// Invalid Access
 					$this->setOutput('response-code' , 2);
 					return;

@@ -19,7 +19,7 @@
 			$questionGroupId = $this->params[1];
 			$participationMapper = new ParticipationMapper;
 
-			if( ! $participationMapper->participatesInGroup( $_SESSION["USER_ID"] , $questionGroupId, 2)  ){
+			if( ! ($participationMapper->participatesInGroup( $_SESSION["USER_ID"] , $questionGroupId, 2) || $_SESSION["USER_LEVEL"]==3) ){
 				$this->setOutput("response_code" , 2);
 				return;
 			}

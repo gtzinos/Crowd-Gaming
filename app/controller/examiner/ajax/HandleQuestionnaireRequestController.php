@@ -52,7 +52,7 @@
 
 				$participationMapper = new ParticipationMapper;
 
-				if( !$participationMapper->participates($_SESSION["USER_ID"] , $request->getQuestionnaireId() , 2 ))
+				if( !($participationMapper->participates($_SESSION["USER_ID"] , $request->getQuestionnaireId() , 2 )|| $_SESSION["USER_LEVEL"]==3) )
 				{
 					$this->setOutput("response-code" , 3);
 					return;

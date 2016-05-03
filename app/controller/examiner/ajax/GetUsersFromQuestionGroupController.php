@@ -24,7 +24,7 @@
 			{
 				$participationMapper = new ParticipationMapper;
 
-				if( !$participationMapper->participatesInGroup($_SESSION["USER_ID"] , $_POST["question-group-id"] , 2) )
+				if( !($participationMapper->participatesInGroup($_SESSION["USER_ID"] , $_POST["question-group-id"] , 2)|| $_SESSION["USER_LEVEL"]==3) )
 				{
 					$this->setOutput("response_code" , 1);
 					return;
