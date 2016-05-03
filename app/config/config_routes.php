@@ -63,7 +63,7 @@
 	/*
 		Moderator level pages
 	 */
-	 Routes::add( 'questionnaire-management' , 'moderator/QuestionnaireManagementController.php' , $_USER_LEVEL["MODERATOR"]);
+	Routes::add( 'questionnaire-management' , 'moderator/QuestionnaireManagementController.php' , $_USER_LEVEL["MODERATOR"]);
 
 	//Ajax
 	Routes::add( 'handle-questionnaire-public-request' , 'moderator/ajax/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
@@ -74,7 +74,7 @@
 	Routes::add( 'change-coordinator' , 'moderator/ajax/ChangeQuestionnaireCoordinatorController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'get-publish-requests' , 'moderator/ajax/GetPublishRequestsController.php' , $_USER_LEVEL["MODERATOR"]);
 	Routes::add( 'set-questionnaire-public' , 'moderator/ajax/SetQuestionnairePublicController.php' , $_USER_LEVEL["MODERATOR"] );
-
+	Routes::add( 'get-available-coordinators' , 'moderator/ajax/GetAvailableCoordinatorsController.php' , $_USER_LEVEL["MODERATOR"] );
 	/*
 		The Page to load when the page parameter is not defined
 	*/

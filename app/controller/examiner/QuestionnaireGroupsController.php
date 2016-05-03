@@ -30,7 +30,7 @@
 
 			$participationMapper = new ParticipationMapper;
 
-			if( ! $participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2) )
+			if( ! ($participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2) || $_SESSION["USER_LEVEL"]==3) )
 			{
 				$this->redirect("questionnaireslist");
 			}

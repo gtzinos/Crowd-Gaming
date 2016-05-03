@@ -42,7 +42,7 @@
 
 			if( !isset( $this->params[1] ) || 
 				$questionnaireMapper->findById($this->params[1]) === null || 
-				!$participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2 ) )
+				!($participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2 ) || $_SESSION["USER_LEVEL"]==3) )
 			{
 
 				$this->redirect("questionnaireslist");

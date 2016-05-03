@@ -25,7 +25,7 @@
 
 				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
 
-				if( $questionnaire === null || $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] ){
+				if( $questionnaire === null || !($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"] || $_SESSION["USER_LEVEL"]==3) ){
 					$this->setOutput("response-code" , 6);
 				}
 
