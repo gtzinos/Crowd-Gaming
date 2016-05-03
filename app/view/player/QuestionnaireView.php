@@ -2,10 +2,6 @@
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.css"); ?>">
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/css/bootstrap-select.min.css"); ?>">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<style>
-
-</style>
-	<?php elseif($section == "JAVASCRIPT") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.css"); ?>">
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
