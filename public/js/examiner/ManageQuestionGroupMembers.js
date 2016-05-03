@@ -1,5 +1,5 @@
 var selected_user_id;
-$(document).ready(function(e) {
+$(window).on('load',function(e) {
   $('#question-group-users').on('shown.bs.modal', function() {
     get_question_groups();
   });
@@ -27,10 +27,12 @@ function add_user_on_question_group()
   else {
     users_array = String($("#questionnaire-users-dropdown").val());
   }
-var counter = 0;
+
 var user_name_array = [];
   for(i = 0; i<users_array.length; i++)
   {
+    (function(i)
+    {
       user_name_array[i] = String($("#questionnaire-users-dropdown option[value=" + users_array[i] + "]").text());
 
       $.post(webRoot + "add-user-to-question-group",
@@ -41,8 +43,8 @@ var user_name_array = [];
       function(data,status){
         if(status == "success")
         {
-          var user_name = user_name_array[counter];
-          counter ++;
+            var user_name = user_name_array[i];
+
             if(data == "0")
             {
               /*
@@ -81,6 +83,7 @@ var user_name_array = [];
             }
           }
       });
+      })(i);
     }
     getQuestionnaireMembers();
     getQuestionGroupUsers();
@@ -102,10 +105,11 @@ function delete_user_from_question_group()
   else {
     users_array = String($("#question-group-users-dropdown").val());
   }
-  var counter = 0;
   var user_name_array = [];
   for(i = 0; i<users_array.length; i++)
   {
+    (function(i)
+    {
       user_name_array[i] = String($("#question-group-users-dropdown option[value=" + users_array[i] + "]").text());
 
       $.post(webRoot + "remove-user-from-question-group",
@@ -116,8 +120,7 @@ function delete_user_from_question_group()
       function(data,status){
         if(status == "success")
         {
-          var user_name = user_name_array[counter];
-          counter ++;
+          var user_name = user_name_array[i];
             if(data == "0")
             {
               /*
@@ -151,6 +154,7 @@ function delete_user_from_question_group()
             }
           }
       });
+      })(i);
     }
     getQuestionnaireMembers();
     getQuestionGroupUsers();

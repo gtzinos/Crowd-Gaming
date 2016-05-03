@@ -25,7 +25,7 @@
     </div>
   </div>
   <!-- Title -->
-  <legend class="text-center header">Questionnaire Groups</legend>
+  <legend class="text-center header">Question Groups</legend>
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback row">
     <div class="col-xs-offset-0 col-xs-12 col-sm-1">
