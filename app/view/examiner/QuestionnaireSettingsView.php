@@ -32,8 +32,16 @@
                             </span>
                         ";
                       }
-                      else
+                      else if( get("questionnaire")["active-publish-request"])
                       {
+                        echo "
+                            <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
+                            <span class='input-group-btn'>
+                                 <button class='btn btn-danger' type='button' onclick=\"delete_public_request()\">Delete request</button>
+                            </span>
+                        ";
+                      }
+                      else {
                         echo "
                             <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
                             <span class='input-group-btn'>

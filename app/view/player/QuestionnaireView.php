@@ -489,7 +489,7 @@
 	/*
 		Illegal actions
 	*/
-	if(get("questionnaire")["examiner-participation"])
+	if(get("questionnaire")["examiner-participation"] || $_SESSION['USER_LEVEL'] == 3)
 	{
 		load("EDIT_QUESTIONNAIRE");
 	}
