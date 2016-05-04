@@ -14,7 +14,7 @@
 					 $item_class = "col-xs-12";
 
 					 //only for coordinators
-					 if(get("questionnaire")["questionnaire"]->getCoordinatorId() == $_SESSION["USER_ID"])
+					 if(get("questionnaire")["questionnaire"]->getCoordinatorId() == $_SESSION["USER_ID"]  || $_SESSION["USER_LEVEL"] == 3)
 					 {
 						 $item_class = "col-xs-9 col-sm-9";
 					 }
@@ -53,7 +53,7 @@
 								echo ")</a>";
 
 								//only for coordinators
-								if(get("questionnaire")["questionnaire"]->getCoordinatorId() == $_SESSION["USER_ID"])
+								if(get("questionnaire")["questionnaire"]->getCoordinatorId() == $_SESSION["USER_ID"] || $_SESSION["USER_LEVEL"] == 3)
 								{
 									echo "<span onclick='remove_participant(" . $member["user"]->getId() . ",true)' class='col-xs-offset-1 col-xs-1 remove-question glyphicon glyphicon-trash remove-user'>
 												</span>";
