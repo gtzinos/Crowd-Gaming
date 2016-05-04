@@ -173,7 +173,7 @@ function set_questionnaire_public()
   $.post(webRoot + "set-questionnaire-status",
   {
     'questionnaire-id' : questionnaire_id,
-    'status' : 'public'
+    'status-code' : 'public'
   }
   ,
   function(data,status)
@@ -229,7 +229,7 @@ function set_questionnaire_private()
   $.post(webRoot + "set-questionnaire-status",
   {
     'questionnaire-id' : questionnaire_id,
-    'status' : 'private'
+    'status-code' : 'private'
   }
   ,
   function(data,status)
