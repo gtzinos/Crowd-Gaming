@@ -338,7 +338,7 @@
 						/*
 							If he is logged in
 						*/
-						if(isset($_SESSION["USER_LEVEL"])) {
+						if(isset($_SESSION["USER_LEVEL"]) && $_SESSION["USER_ID"] != $questionnaire->getCoordinatorId()) {
 
 							/*
 								Echo dropdown button
