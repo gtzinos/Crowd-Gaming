@@ -95,10 +95,25 @@ function get_questionnaire_i_manage()
     {
       var i = 0,
           out = "";
-      questionnaires = data.questionnaires;
+
+      if(questionnaires.length > 0)
+      {
+        var counter = 0;
+        for(i = questionnaires.length;i<data.questionnaires.length; i++)
+        {
+          questionnaires[i] = data.questionnaires[counter];
+          counter ++;
+        }
+      }
+      else
+      {
+        questionnaires = data.questionnaires;
+      }
+
+
       if(data.questionnaires.length > 0)
       {
-          for(i; i < questionnaires.length; i++)
+          for(i = 0; i < questionnaires.length; i++)
           {
             out = "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + questionnaires[i].id + "'>" +
                         "<div class='col-xs-12'>" +
