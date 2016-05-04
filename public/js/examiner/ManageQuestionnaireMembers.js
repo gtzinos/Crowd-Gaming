@@ -430,7 +430,7 @@ function getQuestionnairesICanAccess()
     }
     no_completed_request = true;
 
-    var selected_user_id,
+    var selected_users = [],
         i = 0;
 
     var type_name = "";
@@ -442,7 +442,7 @@ function getQuestionnairesICanAccess()
       type_name = "Examiner";
     }
 
-    if($('#find-a-user').val() == "")
+    if($('#add-questionnaire-member-dropdown').val() == null)
     {
       show_notification("error","You must find a user.",4000);
       no_completed_request = false;
@@ -455,62 +455,78 @@ function getQuestionnairesICanAccess()
       return;
     }
 
-    selected_user_name = $('#find-a-user').val();
+    var temp = String($('#add-questionnaire-member-dropdown').val());
 
-    $.post(webRoot + "create-questionnaire-participation",
+    if(temp.indexOf(',') >= 0)
     {
-      "questionnaire-id" : questionnaire_id,
-      "user-id" : selected_user_id,
-      "participation-type" : type
-    },
-    function(data,status){
-      if(status == "success")
+      selected_users = temp.split(",");
+    }
+    else {
+      selected_users[0] = temp;
+    }
+
+    var user_results_array = [];
+    for(i = 0; i<selected_users.length; i++)
+    {
+      (function(i)
       {
-        var selected_user_id = $("#find-a-user").text();
-        var user_name = "";
-        /*
-          0 : All ok
-          1 : Questionnaire doesnt exists
-          2 : You must be coordinator
-          3 : participation-type must be 1 or 2
-          4 : The participation doesnt exist
-          5 : User already participates
-          6 : Database Error
-          -1 : No post data.
-        */
-        if(data == "0")
+        user_results_array[i] = String($("#add-questionnaire-member-dropdown option[value=" + selected_users[i] + "]").text());
+
+        $.post(webRoot + "create-questionnaire-participation",
         {
-          show_notification("success",type_name + " " + user_name + " added successfully.",4000);
-        }
-        else if(data == "1")
-        {
-          show_notification("error","Questionnaire doesnt exists. { " + user_name + " }",6000);
-        }
-        else if(data == "2")
-        {
-          show_notification("error","You must be coordinator. { " + user_name + " }",6000);
-        }
-        else if(data == "3")
-        {
-          show_notification("error","Participation type must be 1 or 2. { " + user_name + " }",6000);
-        }
-        else if(data == "4")
-        {
-          show_notification("error","The participation doesnt exist. { " + user_name + " }",6000);
-        }
-        else if(data == "5")
-        {
-          show_notification("error","User already participates. { " + user_name + " }",6000);
-        }
-        else if(data == "6")
-        {
-          show_notification("error","Database Error. { " + user_name + " }",6000);
-        }
-        else if(data == "-1")
-        {
-          show_notification("error","You didn't send data. { " + user_name + " }",6000);
-        }
-      }
-      no_completed_request = false;
-    });
+          "questionnaire-id" : questionnaire_id,
+          "user-id" : selected_users[i],
+          "participation-type" : type
+        },
+        function(data,status){
+          if(status == "success")
+          {
+            /*
+              0 : All ok
+              1 : Questionnaire doesnt exists
+              2 : You must be coordinator
+              3 : participation-type must be 1 or 2
+              4 : The participation doesnt exist
+              5 : User already participates
+              6 : Database Error
+              -1 : No post data.
+            */
+            if(data == "0")
+            {
+              show_notification("success",type_name + " " + user_results_array[i] + " added successfully.",4000);
+            }
+            else if(data == "1")
+            {
+              show_notification("error","Questionnaire doesnt exists. { " + user_results_array[i] + " }",6000);
+            }
+            else if(data == "2")
+            {
+              show_notification("error","You must be coordinator. { " + user_results_array[i] + " }",6000);
+            }
+            else if(data == "3")
+            {
+              show_notification("error","Participation type must be 1 or 2. { " + user_results_array[i] + " }",6000);
+            }
+            else if(data == "4")
+            {
+              show_notification("error","The participation doesnt exist. { " + user_results_array[i] + " }",6000);
+            }
+            else if(data == "5")
+            {
+              show_notification("error","User already participates. { " + user_results_array[i] + " }",6000);
+            }
+            else if(data == "6")
+            {
+              show_notification("error","Database Error. { " + user_results_array[i] + " }",6000);
+            }
+            else if(data == "-1")
+            {
+              show_notification("error","You didn't send data. { " + user_results_array[i] + " }",6000);
+            }
+          }
+          no_completed_request = false;
+          getQuestionnaireMembers();
+        });
+      })(i);
+    }
   }
