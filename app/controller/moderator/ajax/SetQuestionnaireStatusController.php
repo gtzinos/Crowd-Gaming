@@ -1,7 +1,7 @@
 <?php
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	
- 	class SetQuestionnairePublicController extends Controller 
+ 	class SetQuestionnaireStatusController extends Controller 
 	{
  		public function init()
  		{
@@ -15,12 +15,13 @@
  				Response Codes
  				0 : All ok
  				1 : Questionnaire Doesnt Exist
- 				2 : Questionnaire Already public
+ 				2 : Questionnaire Already public , or already private if "status-code" is "private"
  				3 : Database Error
+ 				4 : status-code , invalid value
  				-1 : No data
  			 */
  			
- 			if( isset( $_POST["questionnaire-id"]) )
+ 			if( isset( $_POST["questionnaire-id"] , $_POST["status-code"]) )
  			{
  				$questionnaireMapper = new questionnaireMapper;
 
@@ -32,13 +33,20 @@
  					return;
  				}
 
- 				if( $questionnaire->getPublic() )
+ 				if( $_POST["status-code"] != "private" && $_POST["status-code"]!="public" )
+ 				{
+ 					$this->setOutput("response-code" , 4);
+ 					return;
+ 				}
+
+ 				if( ( $_POST["status-code"]=="public" && $questionnaire->getPublic() ) || 
+ 					( $_POST["status-code"]=="private" && !$questionnaire->getPublic() ) )
  				{
  					$this->setOutput("response-code" , 2);
  					return;
  				}	
 
- 				$questionnaire->setPublic(true);
+ 				$questionnaire->setPublic( $_POST["status-code"] == "public" );
 
  				try
  				{	

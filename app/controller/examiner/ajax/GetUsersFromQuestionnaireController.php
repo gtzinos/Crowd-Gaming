@@ -31,7 +31,7 @@
 					return;
 				}
 
-				if( !( $questionnaire->getCoordinatorId() == $_SESSION["USER_ID"]  || $_SESSION["USER_LEVEL"] == $_USER_LEVEL["EXAMINER"] ) )
+				if( !( $questionnaire->getCoordinatorId() == $_SESSION["USER_ID"]  || $_SESSION["USER_LEVEL"] ==3 ) )
 				{
 					$this->setOutput("response_code" , 2);
 					return;

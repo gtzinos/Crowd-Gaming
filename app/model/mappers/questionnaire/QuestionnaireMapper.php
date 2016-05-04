@@ -62,6 +62,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$arrayItem["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 2);
 				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
+
 				$questionnaires[] = $arrayItem;
 			}
 
@@ -112,7 +113,9 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaireInfo["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$questionnaireInfo["members-participating"] = $userMapper->findAllParticipants($questionnaire->getId());
+				$questionnaireInfo["active-publish-request"] = $requestMapper->hasActivePublishRequest($questionnaire->getId());
 				$questionnaireInfo["coordinator"] = $userMapper->findById( $questionnaire->getCoordinatorId() );
+
 
 				return $questionnaireInfo;
 			}
