@@ -148,8 +148,6 @@ function getQuestionnaireMembers()
   }
   no_completed_request = true;
 
-  $("#questionnaire-members-dropdown").find("option").remove();
-
   $.post(webRoot + "get-users-from-questionnaire",
   {
     "questionnaire-id" : questionnaire_id
@@ -165,7 +163,7 @@ function getQuestionnaireMembers()
 
       for(i=0; i<users.length;i++)
       {
-        out = "<option value='" + users[i].id + "' data-tokens='";
+        out += "<option value='" + users[i].id + "' data-tokens='";
 
         out += users[i].email + " ";
 
@@ -186,9 +184,9 @@ function getQuestionnaireMembers()
                users[i].city + " " + users[i].address + " " + users[i].phone;
 
         out += "'>" + users[i].name + " " + users[i].surname + "</option>";
-        $("#questionnaire-members-dropdown").append(out);
       }
-        $("#questionnaire-members-dropdown").selectpicker('refresh');
+      $("#questionnaire-members-dropdown").html(out);
+      $("#questionnaire-members-dropdown").selectpicker('refresh');
     }
     no_completed_request = false;
   });
@@ -354,71 +352,7 @@ function getQuestionnairesICanAccess()
       })(i);
     }
   }
- $(document).ready(function() {
-   $("#find-a-user").on("change keydown",function(e){
-   $("#find-a-user").autocomplete({
-       source: function(request, response) {
-           $.ajax({
-               url: webRoot + "get-users-by-pattern",
-               dataType: "json",
-               data: {
-                   "pattern" : $("#find-a-user").val(),
-               },
-               success: function (data) {
-                 response($.map(data.d, function (item) {
-                    return {
-                       id: item.id,
-                       value: item.name + " " + item.surname + " (" + item.email + ")"
-                    }
-                 }))
-               },
-               select: function (event, ui) {
-                  $(this).data("Selected", item);
-               }
-           });
-       },
-       min_length: 3,
-       delay: 300
-   });
-    $( "#find-a-user" ).autocomplete( "option", "appendTo", "#questionnaire-members-form" );
- });
 
- });
-   /*
-   $("#find-a-user").on("change keydown",function(e){
-     var users_from_search = [];
-
-       var client_data = $('#find-a-user').val();
-
-       $.post(webRoot + "get-users-by-pattern",
-       {
-         "pattern" : client_data
-       },
-       function(data,status){
-         if(status == "success")
-         {
-           if(data.response_code == "0" && data.users.length > 0)
-           {
-
-             var i = 0;
-             for(i = 0; i < data.users.length; i++)
-             {
-               users_from_search[i] = data.users[i].name + " " + data.users[i].surname + " (" + data.users[i].email + ")";
-               //alert(users_from_search[i]);
-             }
-
-
-             $("#find-a-user").autocomplete({
-               source: data
-             });
-             $( "#find-a-user" ).autocomplete( "option", "appendTo", "#questionnaire-members-form" );
-           }
-         }
-       });
-   });
-
- });
-*/
 
   //type = participation type
   //confirmed = if modal box confirmed
