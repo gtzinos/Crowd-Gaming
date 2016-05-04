@@ -1,5 +1,9 @@
-
+/*
+  Global variables
+*/
 var no_completed_request = false;
+var users_from_search = [];
+
 function any_no_completed_request()
 {
   if(no_completed_request)
@@ -15,6 +19,59 @@ $(window).on('load',function(e){
           no_completed_request=false;
           getQuestionnaireMembers();
   });
+
+
+  $("[data-id=add-questionnaire-member-dropdown]").next().children().children().on('change keyup',function() {
+
+      var client_data = $(this).val();
+
+      $.post(webRoot + "get-users-by-pattern",
+      {
+        "pattern" : client_data
+      },
+      function(data,status){
+        if(status == "success")
+        {
+          $("#add-questionnaire-member-dropdown").html('');
+          if(data.response_code == "0" && data.users.length > 0)
+          {
+            users_from_search = data.users;
+            var i = 0,
+                out = "";
+                //alert(users_from_search.length);
+            for(i = 0; i < users_from_search.length; i++)
+            {
+              out += "<option value='" + users_from_search[i].id + "' data-tokens='";
+
+              out += users_from_search[i].name + " " + users_from_search[i].surname + " " + users_from_search[i].email + " ";
+
+              if(users_from_search[i].access == 1)
+              {
+                  out += "player ";
+              }
+              else if(users_from_search[i].access == 2)
+              {
+                out += "moderator ";
+              }
+              else if(users_from_search[i].access == 3)
+              {
+                out += "examiner ";
+              }
+
+              out += users_from_search[i].gender + " " + users_from_search[i].country + " " +
+                     users_from_search[i].city + " " + users_from_search[i].address + " " + users_from_search[i].phone;
+
+              out += "'>" + users_from_search[i].name + " " + users_from_search[i].surname + "</option>";
+
+            }
+            $("#add-questionnaire-member-dropdown").html(out);
+            $("#add-questionnaire-member-dropdown").selectpicker('refresh');
+          }
+        }
+      });
+  //end of keyup change event
+  });
+  //end of window.load event
 });
 
 /*

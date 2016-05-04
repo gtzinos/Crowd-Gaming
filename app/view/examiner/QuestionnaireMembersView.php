@@ -29,7 +29,9 @@
            </div>
            <div class="form-group">
              <div class="col-xs-7 col-sm-5" >
-               	<input id="find-a-user" type="text" class="form-control" >
+               <select id="add-questionnaire-member-dropdown" class="selectpicker form-control" multiple data-live-search="true" title="Search some users">
+
+               </select>
              </div>
              <div class="col-xs-3 col-sm-4">
                <div class="dropdown">
