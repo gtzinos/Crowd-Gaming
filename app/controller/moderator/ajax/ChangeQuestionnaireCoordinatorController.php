@@ -1,6 +1,7 @@
 <?php
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/actions/RequestMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
 
 	class ChangeQuestionnaireCoordinatorController extends Controller
@@ -70,6 +71,13 @@
 					$playerParticipation->setParticipationType( 1);
 				}
 
+
+
+				$requestMapper = new RequestMapper;
+
+				$playerRequest = $requestMapper->getActivePlayerRequest( $user->getId() , $questionnaire->getId() );
+				$examinerRequest = $requestMapper->getActiveExaminerRequest( $user->getId() , $questionnaire->getId() );
+
 				$questionnaire->setCoordinatorId( $user->getId() );
 
 				try
@@ -80,6 +88,19 @@
 						$participationMapper->persist($examinerParticipation);
 					if( $playerParticipation !== null )
 						$participationMapper->persist($playerParticipation);
+
+					if( $playerRequest !== null )
+					{
+						$playerRequest->setResponse(true);
+						$requestMapper->persist($playerRequest);
+					}
+
+					if( $examinerRequest !== null )
+					{
+						$examinerRequest->setResponse(true);
+						$requestMapper->persist($examinerRequest);
+					}
+
 					$questionnaireMapper->persist($questionnaire);
 
 					DatabaseConnection::getInstance()->commit();
