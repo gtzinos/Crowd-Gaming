@@ -27,7 +27,7 @@
 		<script src="<?php print LinkUtils::generatePublicLink("js/AjaxRequests.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/homePageEvents.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/public/MainTemplate.js"); ?>"></script>
 
 		<title>
 			<?php show("PAGE_TITLE") ?>

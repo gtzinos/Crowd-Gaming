@@ -42,11 +42,11 @@
 	 */
 	$moderatorMenu = Menu::create("ModeratorMenu");
 
-	$menuItem = MenuItem::create("Menu" , "DROPDOWN" , "");
+	$menuItem = MenuItem::create("Control Panel" , "DROPDOWN" , "");
 
-	$menuItem->addItem( MenuItem::create("Sub Item 1" , "LINK" , "home") );
-	$menuItem->addItem( MenuItem::create("Sub Item 2" , "LINK" , "info") );
-	$menuItem->addItem( MenuItem::create("Sub Item 3" , "LINK" , "asdads") );
+	$menuItem->addItem( MenuItem::create("Manage Questionnaires" , "LINK" , "questionnaire-management") );
+	$menuItem->addItem( MenuItem::create("Participation requests" , "LINK" , "home") );
+	$menuItem->addItem( MenuItem::create("Publication requests" , "LINK" , "home") );
 
 	$moderatorMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
 	$moderatorMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
