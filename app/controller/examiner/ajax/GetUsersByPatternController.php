@@ -17,7 +17,8 @@
 
 				$userMapper = new UserMapper;
 
-				$users = $userMapper->findByPattern( $_POST["pattern"] );
+				$users = $userMapper->findByPattern( $_POST["pattern"] ,10);
+				$userCount = $userMapper->findCountByPattern( $_POST["pattern"]  );
 
 				$usersJson = array();
 				foreach ($users as $user) 
@@ -35,6 +36,7 @@
 					$usersJson[] = $arrayItem;
 				}
 
+				$this->setOutput("result-count" , $userCount );
 				$this->setOutput("response_code",0);
 				$this->setOutput("users" , $usersJson);
 			}
