@@ -60,6 +60,7 @@
 	Routes::add( 'get-users-by-pattern' , 'examiner/ajax/GetUsersByPatternController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'copy-participants' , 'examiner/ajax/CopyParticipantsController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-questionnaire-requests' , 'examiner/ajax/GetQuestionnaireRequests.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'participation-requests' , 'examiner/ParticipationRequestsController.php' , $_USER_LEVEL["EXAMINER"] );
 	/*
 		Moderator level pages
 	 */
@@ -75,6 +76,7 @@
 	Routes::add( 'get-publish-requests' , 'moderator/ajax/GetPublishRequestsController.php' , $_USER_LEVEL["MODERATOR"]);
 	Routes::add( 'set-questionnaire-status' , 'moderator/ajax/SetQuestionnaireStatusController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'get-available-coordinators' , 'moderator/ajax/GetAvailableCoordinatorsController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'publication-requests' , 'moderator/PublicationRequestsController.php' , $_USER_LEVEL["MODERATOR"] );
 	/*
 		The Page to load when the page parameter is not defined
 	*/
