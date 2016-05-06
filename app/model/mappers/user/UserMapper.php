@@ -185,12 +185,18 @@
 						`country` LIKE ? or
 						`address` LIKE ? or
 						`phone` LIKE ? or
-						`city` LIKE ? LIMIT ?";
+						`city` LIKE ?";
+
+			if( $limit !== null )
+				$query .= " LIMIT ?";
 
 			$statement = $this->getStatement($query);
 
 			$pattern = '%'.$pattern.'%';
-			$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$limit);
+			if( $limit !== null )
+				$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$limit);
+			else
+				$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern);
 
 			$resultSet = $statement->execute();
 
