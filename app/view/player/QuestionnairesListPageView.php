@@ -65,7 +65,7 @@
 											<div class='questionnaire-description col-xs-12'>
 										"
 											. $questionnaires["questionnaire"]->getSmallDescription() .
-									 "  	. . .
+									 " ...
 									 		</div>
 											<div class='questionnaire-more-info'>
 									 ";
@@ -98,7 +98,7 @@
 									{
 										echo "<div class='col-xs-12'> <span style='color:grey'> <i class='fi-lock'> </i>Message required</span></div>";
 									}
-									echo "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>
+									echo "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-8 col-sm-3'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""
 													. LinkUtils::generatePageLink('questionnaire') . "/"
 												  . $questionnaires["questionnaire"]->getId() . "\">Read More
