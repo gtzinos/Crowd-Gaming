@@ -87,7 +87,9 @@
 											echo "<span style='color:red'>Private </span></div>";
 										}
 									}
-
+									echo "<div class='col-xs-12'>Created : "
+											.	$questionnaires["questionnaire"] -> getCreationDate() .
+												"</div>";
 									echo "</div>";
 									/*
 										If questionnaire is public
