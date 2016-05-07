@@ -1,4 +1,4 @@
-var questionnaire_id;
+var requests_array = [];
 
 $(window).on('load',function()
 {
@@ -14,7 +14,6 @@ function getPublicationRequests()
   {
     if(status == "success")
     {
-      console.log(JSON.stringify(data));
       /*
         0 : All ok
         1 : Invalid Access
@@ -22,32 +21,31 @@ function getPublicationRequests()
       if(data.requests.length > 0)
       {
           var i = 0,
-              out = "",
-              requests = data.requests;
+              out = "";
+          requests_array = data.requests;
 
-
-          for(i = 0; i < requests.length; i++)
+          for(i = 0; i < requests_array.length; i++)
           {
-            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests[i]['request-id'] + "'>" +
-                      "<div class='col-xs-12'>" +
-                          "<div class='col-xs-12'>" +
-                              "<h4 class='list-group-item-heading'><a href='' target='_blank'>" + requests[i]['questionnaire-name'] + "</a></h4>" +
+            out += "<div style='margin-top:1.5%;border : 1.7px solid #008080' class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests_array[i]['request-id'] + "'>" +
+                      "<div class='row'>" +
+                          "<div class='visible-xs col-xs-offset-5 col-xs-7'>" +
+                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request-date'].split(" ")[0] + "</div>" +
+                          "</div>" +
+                          "<div class='col-xs-12 col-sm-7 col-md-8''>" +
+                              "<h4 class='list-group-item-heading'><a href='" + questionnaire_page + "/" + requests_array[i]['questionnaire-id'] + "' target='_blank'>" + requests_array[i]['questionnaire-name'] + "</a></h4>" +
+                          "</div>" +
+                          "<div class='hidden-xs col-sm-offset-1 col-sm-3 col-md-2'>" +
+                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request-date'].split(" ")[0] + "</div>" +
                           "</div>" +
                       "</div>" +
-                      "<div class='col-xs-12'>" +
-                        "<div class='col-xs-7'>" +
-                            "<h5 class='list-group-item-heading'>By : <a target='_blank'>" + requests[i]['user-name'] + " " + requests[i]['user-surname'] + "</a> (" + requests[i]['request-date'] + ")</h5>" +
+                      "<div class='row'>" +
+                        "<div class='col-xs-12 col-sm-5 col-md-6'>" +
+                            "<h5 class='list-group-item-heading'>By: <a target='_blank' style='color:black' href='" + user_page + "/" + requests_array[i]['user-id'] + "'>" + requests_array[i]['user-name'] + " " + requests_array[i]['user-surname'] + "</a></h5>" +
                         "</div>" +
-                          "<div class='col-xs-3 col-sm-offset-2 col-sm-3 col-md-2'>" +
-                            "<div class='dropdown'>" +
-                                "<span class='dropdown-toggle btn btn-default' type='button' data-toggle='dropdown'>Actions" +
-                                "<span class='caret'></span></span>" +
-                                "<ul class='dropdown-menu' >" +
-                                  "<li class='actionli'><a onclick=\"handleQuestionnairePublicRequest(" + requests[i]['request-id'] + ",'accept')\"><i class='fa fa-thumbs-o-up' ></i> Accept</a></li>" +
-                                  "<li class='actionli'><a onclick=\"handleQuestionnairePublicRequest(" + requests[i]['request-id'] + ",'decline'); return false;\"><i class='fa fa-thumbs-o-down'></i> Decline</a></li>" +
-                                "</ul>" +
-                            "</div>" +
-                          "</div>" +
+                        "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-3 col-sm-3 col-md-2'>" +
+                            "<button type='button' class='btn btn-success' onclick=\"handleQuestionnairePublicRequest(" + requests_array[i]['request-id'] + ",'accept'," + i + ")\"><span class='fa fa-check'></span></button> " +
+                            "<button type='button' class='btn btn-danger' onclick=\"handleQuestionnairePublicRequest(" + requests_array[i]['request-id'] + ",'decline'," + i + ")\"><span class='fi-x'></span></button>" +
+                        "</div>" +
                       "</div>" +
                   "</div>";
           }
@@ -66,7 +64,7 @@ function getPublicationRequests()
 
 }
 
-function handleQuestionnairePublicRequest(request_id,response)
+function handleQuestionnairePublicRequest(request_id,response,request_index)
 {
   $.post(webRoot + "handle-questionnaire-public-request",
   {
@@ -80,11 +78,11 @@ function handleQuestionnairePublicRequest(request_id,response)
       if(data == "0")
       {
         if(response == "accept") {
-          show_notification("success","Questionnaire published successfully.",3000);
+          show_notification("success",requests_array[request_index]['questionnaire-name'] + " published successfully.",3000);
         }
         else
         {
-          show_notification("success","Questionnaire public request declined successfully.",3000);
+          show_notification("success",requests_array[request_index]['questionnaire-name'] + " request declined successfully.",3000);
         }
         $("#ritem" + request_id).remove();
         if($("[id~=ritem]").length == 0)
@@ -98,27 +96,27 @@ function handleQuestionnairePublicRequest(request_id,response)
       }
       else if(data == "1")
       {
-        show_notification("error","Request does not exists.",4000);
+        show_notification("error","Request does not exists. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "2")
       {
-        show_notification("error","You can only handle publish requests.",4000);
+        show_notification("error","You can only handle publish requests. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "4")
       {
-        show_notification("error","Response must either 'accept' or 'decline'.",4000);
+        show_notification("error","Response must either 'accept' or 'decline'. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "5")
       {
-        show_notification("error","Response already handled.",4000);
+        show_notification("error","Response already handled. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "6")
       {
-        show_notification("error","General Database Error.",4000);
+        show_notification("error","General Database Error. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data.",4000);
+        show_notification("error","You didnt send data. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
     }
   });

@@ -5,6 +5,12 @@
   <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/moderator/PublicationRequests.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
+  <?php
+      echo "  <script>
+                var user_page = '" . LinkUtils::generatePageLink('user') . "';
+                var questionnaire_page = '" . LinkUtils::generatePageLink('questionnaire') . "';
+              </script>";
+  ?>
   <legend class="text-center header">Publication Requests</legend>
 
   <div class="container-fluid">
