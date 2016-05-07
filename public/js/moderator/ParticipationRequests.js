@@ -26,13 +26,13 @@ function getParticipationRequests()
           requests_array = data.requests;
           for(i = 0; i < requests_array.length; i++)
           {
-            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' style='border: 2px solid " + types[requests_array[i]['request_type']]['color'] + "' id='ritem" + requests_array[i]['request_id'] + "'>" +
+            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' style='margin-top:1.5%;border: 2px solid " + types[requests_array[i]['request_type']]['color'] + "' id='ritem" + requests_array[i]['request_id'] + "'>" +
                       "<div class='row'>" +
-                        "<div class='visible-xs col-xs-offset-6 col-xs-6'>" +
+                        "<div class='visible-xs col-xs-offset-5 col-xs-7'>" +
                             "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request_date'].split(" ")[0] + "</div>" +
                         "</div>" +
                           "<div class='col-xs-12 col-sm-7 col-md-8'>" +
-                              "<div style='font-size:18px' class='list-group-item-heading'><a class='user_name' style='color:black' target='_blank'>" + requests_array[i]['user_name'] + " " + requests_array[i]['user_surname'] + "</a></div>" +
+                              "<div style='font-size:18px' class='list-group-item-heading'><a class='user_name' href='" + user_page + "/" + requests_array[i]['user_id'] + "' style='color:black' target='_blank'>" + requests_array[i]['user_name'] + " " + requests_array[i]['user_surname'] + "</a></div>" +
                           "</div>" +
                           "<div class='hidden-xs col-sm-offset-2 col-sm-3 col-md-2'>" +
                               "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request_date'].split(" ")[0] + "</div>" +
@@ -43,9 +43,9 @@ function getParticipationRequests()
                             "<div style='font-size:17px' > Type: <span style='color:" + types[requests_array[i]['request_type']]['color'] + "'>" + types[requests_array[i]['request_type']]['type'] + "</span></div>" +
                         "</div>" +
                         "<div class='col-xs-12 col-sm-5 col-md-6'>" +
-                            "<div style='font-size:17px' > Game: <a class='user_name' style='color:black'>" + requests_array[i]['questionnaire_id'] + "</a></div>" +
+                            "<div style='font-size:17px' > Game: <a class='user_name' target='_blank' href='" + questionnaire_page + "/" + requests_array[i]['questionnaire_id'] + "' style='color:black'>" + requests_array[i]['questionnaire_name'] + "</a></div>" +
                         "</div>" +
-                          "<div class='col-xs-offset-6 col-xs-6 col-sm-offset-4 col-sm-3 col-md-2'>" +
+                          "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-4 col-sm-3 col-md-2'>" +
                             "<button type='button' class='btn btn-success' onclick=\"handleQuestionnaireParticipationRequest(" + requests_array[i]['request_id'] + ",'accept'," + i + ")\"><span class='fa fa-check'></span></button> " +
                             "<button type='button' class='btn btn-danger' onclick=\"handleQuestionnaireParticipationRequest(" + requests_array[i]['request_id'] + ",'decline'," + i + ")\"><span class='fi-x'></span></button>" +
                           "</div>" +
