@@ -31,23 +31,51 @@
                                  <button class='btn btn-error' type='button' disabled>Published</button>
                             </span>
                         ";
+
                       }
                       else if( get("questionnaire")["active-publish-request"])
                       {
-                        echo "
-                            <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
-                            <span class='input-group-btn'>
-                                 <button class='btn btn-danger' type='button' onclick=\"delete_public_request()\">Delete request</button>
-                            </span>
-                        ";
+                        //moderator view
+                        if($_SESSION["USER_LEVEL"] == 3)
+                        {
+                          echo "
+                              <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
+                              <span class='input-group-btn'>
+                                   <button class='btn btn-danger' type='button' disabled>Delete request</button>
+                              </span>
+                          ";
+                        }
+                        else
+                        {
+                          echo "
+                              <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
+                              <span class='input-group-btn'>
+                                   <button class='btn btn-danger' type='button' onclick=\"delete_public_request()\">Delete request</button>
+                              </span>
+                          ";
+                        }
                       }
                       else {
-                        echo "
-                            <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
-                            <span class='input-group-btn'>
-                                 <button class='btn btn-success' type='button' onclick=\"$('#required-message-modal').modal('show');\">Request for public</button>
-                            </span>
-                        ";
+                        //moderator view
+                        if($_SESSION["USER_LEVEL"] == 3)
+                        {
+                          echo "
+                              <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
+                              <span class='input-group-btn'>
+                                   <button class='btn btn-success' type='button' disabled>Request for public</button>
+                              </span>
+                          ";
+                        }
+                        else
+                        {
+                          echo "
+                              <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
+                              <span class='input-group-btn'>
+                                   <button class='btn btn-success' type='button' onclick=\"$('#required-message-modal').modal('show');\">Request for public</button>
+                              </span>
+                          ";
+                        }
+
                       }
                     ?>
                   </div>
