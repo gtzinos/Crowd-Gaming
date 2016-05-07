@@ -89,9 +89,10 @@
 
 		public function getActiveRequestsInfo($questionnaireId ,$requestType )
 		{
-			$query =   "SELECT `QuestionnaireRequest`.* , `User`.`email`
+			$query =   "SELECT `QuestionnaireRequest`.* , `User`.`email` ,`User`.`surname`,`User`.`name` as uname, `Questionnaire`.`name` as qname
 						FROM `QuestionnaireRequest` 
 						INNER JOIN `User` on `User`.`id`=`QuestionnaireRequest`.`user_id`
+						INNER JOIN `Questionnaire` on `QuestionnaireRequest`.`questionnaire_id`=`Questionnaire`.`id`
 						WHERE `questionnaire_id`=? AND `request_type`=? AND `accepted` IS NULL";
 
 			$statement = $this->getStatement($query);
@@ -102,13 +103,16 @@
 			while( $res->next() )
 			{
 				
-				$arrayItem["user-email"] = $res->get("email");
-				$arrayItem["request-id"] = $res->get("id");
-				$arrayItem["user-id"] =  $res->get("user_id");
-				$arrayItem["questionnaire-id"] =  $res->get("questionnaire_id");
-				$arrayItem["request-text"] =  $res->get("request_text");
-				$arrayItem["request-date"] =  $res->get("request_date");
-				$arrayItem["request-type"] =  $res->get("request_type");
+				$arrayItem["user_name"] = $res->get("uname");
+				$arrayItem["user_surname"] = $res->get("surname");
+				$arrayItem["questionnaire_name"] = $res->get("qname");
+				$arrayItem["user_email"] = $res->get("email");
+				$arrayItem["request_id"] = $res->get("id");
+				$arrayItem["user_id"] =  $res->get("user_id");
+				$arrayItem["questionnaire_id"] =  $res->get("questionnaire_id");
+				$arrayItem["request_text"] =  $res->get("request_text");
+				$arrayItem["request_date"] =  $res->get("request_date");
+				$arrayItem["request_type"] =  $res->get("request_type");
 
 				$requestInfo[] =  $arrayItem;
 			}
