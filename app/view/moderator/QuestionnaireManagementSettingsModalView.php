@@ -8,12 +8,10 @@
 				 </div>
 				 <div class="modal-body container-fluid">
            <ul class="nav nav-tabs">
-              <li><a data-toggle="tab" href="#ban">Ban users</a></li>
+              <li class="active"><a data-toggle="tab" href="#ban">Ban users</a></li>
               <li><a data-toggle="tab" href="#coordinator">Coordinator</a></li>
            </ul>
-
            <div class="tab-content">
-
                <!-- Schedule menu started -->
                <div id="ban" class="tab-pane fade in active">
                  <br><br>
