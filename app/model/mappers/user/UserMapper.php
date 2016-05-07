@@ -176,7 +176,7 @@
 			return $members;
 		}
 
-		public function findByPattern( $pattern )
+		public function findByPattern( $pattern  , $limit)
 		{
 			$query =   "SELECT * FROM `User`
 						WHERE `name` LIKE ? or
@@ -185,12 +185,18 @@
 						`country` LIKE ? or
 						`address` LIKE ? or
 						`phone` LIKE ? or
-						`city` LIKE ? LIMIT ?";
+						`city` LIKE ?";
+
+			if( $limit !== null )
+				$query .= " LIMIT ?";
 
 			$statement = $this->getStatement($query);
 
 			$pattern = '%'.$pattern.'%';
-			$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,10);
+			if( $limit !== null )
+				$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$limit);
+			else
+				$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern);
 
 			$resultSet = $statement->execute();
 
@@ -238,6 +244,32 @@
 			}
 
 			return $users;
+		}
+
+		public function findCountByPattern( $pattern )
+		{
+			$query =   "SELECT count(*) as counter FROM `User`
+						WHERE `name` LIKE ? or
+						`surname` LIKE ? or
+						`email` LIKE ? or
+						`country` LIKE ? or
+						`address` LIKE ? or
+						`phone` LIKE ? or
+						`city` LIKE ?";
+
+			$statement = $this->getStatement($query);
+
+			$pattern = '%'.$pattern.'%';
+			$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$limit);
+
+			$resultSet = $statement->execute();
+
+			if($resultSet->next())
+			{
+				return $resultSet->get("counter");
+			}
+
+			return 0;
 		}
 
 		public function findUsersByQuestionnaire($questionnaireId,$participationType)

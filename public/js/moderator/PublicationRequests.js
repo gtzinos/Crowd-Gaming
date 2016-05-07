@@ -66,7 +66,6 @@ function getPublicationRequests()
 
 }
 
-
 function handleQuestionnairePublicRequest(request_id,response)
 {
   $.post(webRoot + "handle-questionnaire-public-request",
