@@ -15,9 +15,9 @@
 			/*
 				
 			 */
-			if( isset($_POST["questionnaire-id"] , $_POST["pattern"]) )
+			if( isset($_POST["questionnaire-id"] , $_POST["pattern"] , $_POST["participation-type"]) )
 			{
-				questionnaireMapper = new QuestionnaireMapper;
+				$questionnaireMapper = new QuestionnaireMapper;
 
 				$questionnaire = $questionnaireMapper->findById($_POST["questionnaire-id"]);
 
@@ -47,13 +47,16 @@
 				$participations = array();
 
 				foreach ($users as $user) {
-					$participation = new Participation;
+					if( !$participationMapper->participates( $user->getId() , $questionnaire->getId() , $_POST["participation-type"]) )
+					{
+						$participation = new Participation;
 
-					$participation->setUserId( $_POST["user-id"] );
-					$participation->setQuestionnaireId($questionnaire->getId());
-					$participation->setParticipationType($_POST["participation-type"]);
+						$participation->setUserId( $user->getId() );
+						$participation->setQuestionnaireId($questionnaire->getId());
+						$participation->setParticipationType($_POST["participation-type"]);
 
-					$participations[] = $participation;
+						$participations[] = $participation;
+					}
 				}
 
 				try
@@ -72,6 +75,8 @@
 					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 6);
 				}
+				return;
 			}
+			$this->setOutput("response-code" , -1);
 		}
 	}
