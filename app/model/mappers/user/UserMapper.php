@@ -196,7 +196,7 @@
 			if( $limit !== null )
 				$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$limit);
 			else
-				$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern);
+				$statement->setParameters('sssssss' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern);
 
 			$resultSet = $statement->execute();
 
