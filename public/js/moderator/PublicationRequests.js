@@ -1,11 +1,12 @@
 var questionnaire_id;
 
-getPublicationRequests();
+$(window).on('load',function()
+{
+  getPublicationRequests();
+});
 
 function getPublicationRequests()
 {
-
-
   $.post(webRoot + "get-publish-requests",
   {
   },
