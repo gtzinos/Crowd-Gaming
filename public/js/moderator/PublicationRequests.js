@@ -19,12 +19,13 @@ function getPublicationRequests()
         0 : All ok
         1 : Invalid Access
       */
-      var i = 0,
-          out = "",
-          requests = data.requests;
-
-      if(requests.length > 0)
+      if(data.requests.length > 0)
       {
+          var i = 0,
+              out = "",
+              requests = data.requests;
+
+
           for(i = 0; i < requests.length; i++)
           {
             out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests[i]['request-id'] + "'>" +
