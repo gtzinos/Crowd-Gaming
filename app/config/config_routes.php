@@ -66,6 +66,7 @@
 		Moderator level pages
 	 */
 	Routes::add( 'questionnaire-management' , 'moderator/QuestionnaireManagementController.php' , $_USER_LEVEL["MODERATOR"]);
+	Routes::add( 'examiner-applications' , 'moderator/ExaminerApplicationsController.php' , $_USER_LEVEL["MODERATOR"]);
 
 	//Ajax
 	Routes::add( 'handle-questionnaire-public-request' , 'moderator/ajax/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );

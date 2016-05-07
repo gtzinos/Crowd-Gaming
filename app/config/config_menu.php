@@ -58,6 +58,7 @@
 	$moderatorControlPanel->addItem( MenuItem::create("Manage Questionnaires" , "LINK" , "questionnaire-management") );
 	$moderatorControlPanel->addItem( MenuItem::create("Participation requests" , "LINK" , "participation-requests") );
 	$moderatorControlPanel->addItem( MenuItem::create("Publication requests" , "LINK" , "publication-requests") );
+	$moderatorControlPanel->addItem( MenuItem::create("Examiner applications" , "LINK" , "examiner-applications") );
 
 	$moderatorMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
 	$moderatorMenu->addItem( $moderatorQuestionnaires );
