@@ -21,31 +21,43 @@ function getPublicationRequests()
       var i = 0,
           out = "",
           requests = data.requests;
-      for(i = 0; i < requests.length; i++)
+
+      if(requests.length > 0)
       {
-        out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests[i]['request-id'] + "'>" +
-                  "<div class='col-xs-12'>" +
+          for(i = 0; i < requests.length; i++)
+          {
+            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests[i]['request-id'] + "'>" +
                       "<div class='col-xs-12'>" +
-                          "<h4 class='list-group-item-heading'><a href='' target='_blank'>" + requests[i]['questionnaire-name'] + "</a></h4>" +
+                          "<div class='col-xs-12'>" +
+                              "<h4 class='list-group-item-heading'><a href='' target='_blank'>" + requests[i]['questionnaire-name'] + "</a></h4>" +
+                          "</div>" +
                       "</div>" +
-                  "</div>" +
-                  "<div class='col-xs-12'>" +
-                    "<div class='col-xs-7'>" +
-                        "<h5 class='list-group-item-heading'>By : <a target='_blank'>" + requests[i]['user-name'] + " " + requests[i]['user-surname'] + "</a> (" + requests[i]['request-date'] + ")</h5>" +
-                    "</div>" +
-                      "<div class='col-xs-3 col-sm-offset-2 col-sm-3 col-md-2'>" +
-                        "<div class='dropdown'>" +
-                            "<span class='dropdown-toggle btn btn-default' type='button' data-toggle='dropdown'>Actions" +
-                            "<span class='caret'></span></span>" +
-                            "<ul class='dropdown-menu' >" +
-                              "<li class='actionli'><a onclick=\"handleQuestionnairePublicRequest(" + requests[i]['request-id'] + ",'accept')\"><i class='fa fa-thumbs-o-up' ></i> Accept</a></li>" +
-                              "<li class='actionli'><a onclick=\"handleQuestionnairePublicRequest(" + requests[i]['request-id'] + ",'decline'); return false;\"><i class='fa fa-thumbs-o-down'></i> Decline</a></li>" +
-                            "</ul>" +
+                      "<div class='col-xs-12'>" +
+                        "<div class='col-xs-7'>" +
+                            "<h5 class='list-group-item-heading'>By : <a target='_blank'>" + requests[i]['user-name'] + " " + requests[i]['user-surname'] + "</a> (" + requests[i]['request-date'] + ")</h5>" +
                         "</div>" +
+                          "<div class='col-xs-3 col-sm-offset-2 col-sm-3 col-md-2'>" +
+                            "<div class='dropdown'>" +
+                                "<span class='dropdown-toggle btn btn-default' type='button' data-toggle='dropdown'>Actions" +
+                                "<span class='caret'></span></span>" +
+                                "<ul class='dropdown-menu' >" +
+                                  "<li class='actionli'><a onclick=\"handleQuestionnairePublicRequest(" + requests[i]['request-id'] + ",'accept')\"><i class='fa fa-thumbs-o-up' ></i> Accept</a></li>" +
+                                  "<li class='actionli'><a onclick=\"handleQuestionnairePublicRequest(" + requests[i]['request-id'] + ",'decline'); return false;\"><i class='fa fa-thumbs-o-down'></i> Decline</a></li>" +
+                                "</ul>" +
+                            "</div>" +
+                          "</div>" +
                       "</div>" +
-                  "</div>" +
-              "</div>";
-      }
+                  "</div>";
+          }
+        }
+        else
+        {
+          out = "<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
+                      "<div class='col-xs-12'>" +
+                          "<div class='alert alert-danger text-center'>We don't have any publication request in our database. </div>" +
+                      "</div>" +
+                  "</a>";
+        }
       $("#publication-requests-list").append(out);
     }
   });
@@ -74,6 +86,14 @@ function handleQuestionnairePublicRequest(request_id,response)
           show_notification("success","Questionnaire public request declined successfully.",3000);
         }
         $("#ritem" + request_id).remove();
+        if($("[id~=ritem]").length == 0)
+        {
+          $("#publication-requests-list").html("<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
+                                                    "<div class='col-xs-12'>" +
+                                                        "<div class='alert alert-danger text-center'>We don't have any publication request in our database. </div>" +
+                                                    "</div>" +
+                                                "</a>");
+        }
       }
       else if(data == "1")
       {
