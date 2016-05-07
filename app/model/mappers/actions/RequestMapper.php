@@ -62,7 +62,7 @@
 
 		public function getActiveExaminerRequest($userId , $questionnaireId)
 		{
-			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `user_id`=? AND `questionnaire_id`=? AND `request_type`=2 AND `accepted` IS NULL";
+			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `user_id`=? AND `request_type`=2 AND `accepted` IS NULL";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii',$userId , $questionnaireId);
@@ -97,6 +97,43 @@
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii', $questionnaireId , $requestType);
+			$res = $statement->execute();
+
+			$requestInfo = array();
+			while( $res->next() )
+			{
+				
+				$arrayItem["user_name"] = $res->get("uname");
+				$arrayItem["user_surname"] = $res->get("surname");
+				$arrayItem["questionnaire_name"] = $res->get("qname");
+				$arrayItem["user_email"] = $res->get("email");
+				$arrayItem["request_id"] = $res->get("id");
+				$arrayItem["user_id"] =  $res->get("user_id");
+				$arrayItem["questionnaire_id"] =  $res->get("questionnaire_id");
+				$arrayItem["request_text"] =  $res->get("request_text");
+				$arrayItem["request_date"] =  $res->get("request_date");
+				$arrayItem["request_type"] =  $res->get("request_type");
+
+				$requestInfo[] =  $arrayItem;
+			}
+			return $requestInfo;
+		}
+
+		public function getAllActiveRequestsInfo($requestType )
+		{
+			$query =   "SELECT qr.* , u1.email ,u1.surname,u1.name as uname, q.name as qname
+						FROM `QuestionnaireRequest` qr
+						INNER JOIN `User` u1 on u1.id=qr.user_id
+						INNER JOIN `User` u2 on u2.id=1
+						INNER JOIN `Questionnaire` q on qr.questionnaire_id=q.id ";
+
+			if( $_SESSION["USER_LEVEL"] == 2)
+			$query.=   "INNER JOIN `QuestionnaireParticipation` qp on qp.user_id=u2.id and qp.questionnaire_id=q.id and qp.participation_type=2 ";
+
+			$query.=   "WHERE qr.request_type=? AND qr.accepted IS NULL";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $requestType);
 			$res = $statement->execute();
 
 			$requestInfo = array();

@@ -11,6 +11,7 @@
 
 		public function run()
 		{
+			$requestMapper = new RequestMapper;
 
 			/*
 				Reponse Codes
@@ -28,8 +29,6 @@
 					return;
 				}
 
-				$requestMapper = new RequestMapper;
-
 				$examinerRequests = array();
 				$playerRequests = array();
 
@@ -44,6 +43,27 @@
 				{
 					$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1);
 					$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 );
+				}
+
+				$this->setOutput("response-code" , 0);
+				$this->setOutput("requests" , array_merge($playerRequests , $examinerRequests) );
+			}
+			else
+			{
+				$examinerRequests = array();
+				$playerRequests = array();
+
+				if( isset( $_POST["request-type"] ) && ($_POST["request-type"]=='1' || $_POST["request-type"]=='2'  ) )
+				{
+					if( $_POST["request-type"]=='1' )
+						$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1);
+					else
+						$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 );
+				}
+				else
+				{
+					$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1);
+					$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 );
 				}
 
 				$this->setOutput("response-code" , 0);

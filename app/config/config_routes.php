@@ -35,6 +35,7 @@
 	Routes::add( 'questionnaire-schedule' , 'examiner/QuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'questionnaire-requests' , 'examiner/QuestionnaireRequestsController.php',$_USER_LEVEL["EXAMINER"] );
 	Routes::add( 'create-question-group' , 'examiner/CreateQuestionGroupController.php' , $_USER_LEVEL["EXAMINER"]);
+	Routes::add( 'participation-requests' , 'examiner/ParticipationRequestsController.php' , $_USER_LEVEL["EXAMINER"] );
 
 	// Ajax
 	Routes::add( 'questionnaire-edit' , 'examiner/ajax/QuestionnaireEditController.php' , $_USER_LEVEL["EXAMINER"]);
@@ -61,7 +62,6 @@
 	Routes::add( 'get-users-by-pattern' , 'examiner/ajax/GetUsersByPatternController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'copy-participants' , 'examiner/ajax/CopyParticipantsController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-questionnaire-requests' , 'examiner/ajax/GetQuestionnaireRequests.php' , $_USER_LEVEL["EXAMINER"]);
-	Routes::add( 'participation-requests' , 'examiner/ParticipationRequestsController.php' , $_USER_LEVEL["EXAMINER"] );
 	/*
 		Moderator level pages
 	 */
