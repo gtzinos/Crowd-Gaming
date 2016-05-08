@@ -102,7 +102,9 @@
 
 			if( $requestType !== null )
 				$query.= "AND qr.request_type=? ";
-
+			else
+				$query.= "AND qr.request_type<>3 ";
+			
 			if( $questionnaireId !== null )
 				$query.= "AND q.id=? ";
 

@@ -6,6 +6,11 @@
 		
 		protected function authenticateToken()
 		{
+
+			// If is called by the website , no need to authenticate by header.
+			if( isset( $_SESSION["USER_ID"] ) )
+				return $_SESSION["USER_ID"];
+
 			$headers = getallheaders();
 
 			/*
