@@ -14,6 +14,7 @@ function getExaminerApplications()
   {
     if(status == "success")
     {
+
       /*
         0 : All ok
         1 : Invalid Access
@@ -23,28 +24,27 @@ function getExaminerApplications()
           var i = 0,
               out = "";
           requests_array = data.applications;
-
           for(i = 0; i < requests_array.length; i++)
           {
-            out += "<div style='margin-top:1.5%;border : 1.7px solid #008080' class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests_array[i]['request-id'] + "'>" +
+            out = "<div style='margin-top:1.5%;border : 1.7px solid #008080' class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests_array[i]['id'] + "'>" +
                       "<div class='row'>" +
                           "<div class='visible-xs col-xs-offset-5 col-xs-7'>" +
-                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request-date'].split(" ")[0] + "</div>" +
+                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['date'].split(" ")[0] + "</div>" +
                           "</div>" +
                           "<div class='col-xs-12 col-sm-7 col-md-8''>" +
                               "<h4 class='list-group-item-heading'><a href='" + user_page + "/" + requests_array[i]['user-id'] + "' target='_blank'>" + requests_array[i]['user-name'] + " " +  requests_array[i]['user-surname'] + "</a></h4>" +
                           "</div>" +
                           "<div class='hidden-xs col-sm-offset-1 col-sm-3 col-md-2'>" +
-                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request-date'].split(" ")[0] + "</div>" +
+                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['date'].split(" ")[0] + "</div>" +
                           "</div>" +
                       "</div>" +
                       "<div class='row'>" +
                         "<div class='col-xs-12 col-sm-5 col-md-6'>" +
-                            "<h5 class='list-group-item-heading'>Message: " + requests_array[i]['request-message'] + "</h5>" +
+                            "<h5 class='list-group-item-heading'>Message: " + requests_array[i]['application-text'] + "</h5>" +
                         "</div>" +
                         "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-3 col-sm-3 col-md-2'>" +
-                            "<button type='button' class='btn btn-success' onclick=\"handleExaminerApplication(" + requests_array[i]['request-id'] + ",'accept'," + i + ")\"><span class='fa fa-check'></span></button> " +
-                            "<button type='button' class='btn btn-danger' onclick=\"handleExaminerApplication(" + requests_array[i]['request-id'] + ",'decline'," + i + ")\"><span class='fi-x'></span></button>" +
+                            "<button type='button' class='btn btn-success' onclick=\"handleExaminerApplication(" + requests_array[i]['id'] + ",'accept'," + i + ")\"><span class='fa fa-check'></span></button> " +
+                            "<button type='button' class='btn btn-danger' onclick=\"handleExaminerApplication(" + requests_array[i]['id'] + ",'decline'," + i + ")\"><span class='fi-x'></span></button>" +
                         "</div>" +
                       "</div>" +
                   "</div>";
