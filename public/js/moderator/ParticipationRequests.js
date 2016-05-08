@@ -1,4 +1,6 @@
-var requests_array = [];
+var all_requests_array = [],
+    request_offset = 0,
+    request_limit = 10;
 
 $(window).on('load',function(){
   getParticipationRequests();
@@ -7,11 +9,8 @@ $(window).on('load',function(){
 var iScrollPos = 0,
     processing = false;
 $(window).scroll(function () {
-
     var iCurScrollPos = $(this).scrollTop();
-
     if (iCurScrollPos > iScrollPos) {
-
       if (processing)
       {
         return false;
@@ -132,7 +131,6 @@ function handleQuestionnaireParticipationRequest(request_id,response,request_ind
         6 : General Database Error
         -1 : No data
       */
-      var fullName = requests_array[request_index]['user_name'] + " " + requests_array[request_index]['user_surname'];
       if(data == "0")
       {
         if(response == "accept") {
