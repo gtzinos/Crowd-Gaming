@@ -5,6 +5,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
 
 	class GetQuestionController extends AuthenticatedController
 	{
@@ -26,9 +27,22 @@
 			$questionGroupMapper = new QuestionGroupMapper;
 			$questionGroupParticipationMapper = new QuestionGroupParticipationMapper;
 			$questionMapper = new QuestionMapper;
+			$scheduleMapper = new QuestionnaireScheduleMapper;
 
 			$response = array();
 
+			if($scheduleMapper->findMinutesToStart($questionnaireId) !== 0)
+			{
+				/*
+					Questionnaire Offline
+				 */
+				$response["code"] = "403";
+				$response["message"] = "Forbidden, Questionnaire offline";
+
+				http_response_code(403);
+				print json_encode($response);
+				return;
+			}
 		
 
 			/*
