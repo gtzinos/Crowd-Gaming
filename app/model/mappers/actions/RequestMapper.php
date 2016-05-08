@@ -119,7 +119,7 @@
 			return $requestInfo;
 		}
 
-		public function getAllActiveRequestsInfo($requestType )
+		public function getAllActiveRequestsInfo( $requestType )
 		{
 			$query =   "SELECT qr.* , u1.email ,u1.surname,u1.name as uname, q.name as qname
 						FROM `QuestionnaireRequest` qr
