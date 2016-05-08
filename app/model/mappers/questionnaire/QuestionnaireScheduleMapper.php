@@ -57,18 +57,124 @@
 
 		public function findMinutesToStart($questionnaireId)
 		{
-
 			$schedules = $this->findByQuestionnaire($questionnaireId);
 
 			$minMinutes = PHP_INT_MAX;
 
-			$dateNow = date("d-m-y");
+			$dateNowString = date("Y-m-d");
+			$dateNow = new DateTime($dateNowString);
+			$now = time();
+
+			$day = $dateNow->format('w');
+			if( $day == 0)
+				$day = 7;
 
 			foreach ($schedules as $schedule) 
 			{
-				
+				$startDate = new DateTime($schedule->getStartDate());
+				$endDate = new DateTime($schedule->getEndDate());
+				$startTime = $startDate->getTimestamp() + $schedule->getStartTime()*60;			
+				$endTime = $endDate->getTimestamp() + $schedule->getEndTime()*60;
+
+				// After End date. its over.
+				if( $dateNow>$endDate )
+				{
+					continue;
+				}
+				// Before start date
+				else if( $dateNow<$startDate && $schedule->getDay()==0 )
+				{
+					$min = ( $startTime - $now ) / 60;
+					if( $min < $minMinutes)
+						$minMinutes = $min;
+				}
+				// Before start date, we have day restriction
+				else if( $dateNow<$startDate && $schedule->getDay()!=0 )
+				{
+					$thatDay = $startDate->format('w');
+					if( $thatDay == 0)
+						$thatDay = 7;
+
+					$daysDiff =0;
+					if( $thatDay<$schedule->getDay() )
+						$daysDiff = $schedule->getDay()-$thatDay;
+					else
+						$daysDiff = 7 - $thatDay + $schedule->getDay();
+
+					$startNextDate = clone $startDate;
+					$startNextDate->modify('+'.$daysDiff.' days');
+
+					// its over already lol
+					if( $startNextDate > $endDate)
+						continue;
+
+					$startNextDateStart = $startNextDate->getTimestamp() + $schedule->getStartTime()*60;
+					$min = ( $startNextDateStart - $now ) / 60;
+					if( $min < $minMinutes)
+						$minMinutes = $min;
+
+				}
+				// Questionnarie starts somewhere today
+				else if( $schedule->getDay()==0 || $day==$schedule->getDay() )
+				{
+					$todayStart = $dateNow->getTimestamp() + $schedule->getStartTime()*60;
+					$todayEnd = $dateNow->getTimestamp() + $schedule->getEndTime()*60;
+
+					// check next time this record repeats
+					if( $now > $todayEnd )
+					{
+						$nextWeek = clone $dateNow;
+
+						if( $schedule->getDay()==0 )
+							$nextWeek->modify('+1 day');
+						else
+							$nextWeek->modify('+1 week');
+						
+						// its over
+						if( $nextWeek > $endDate)
+							continue;
+
+						$nextWeekStart = $nextWeek->getTimestamp() + $schedule->getStartTime()*60;
+						$min = ( $nextWeekStart - $now ) / 60;
+						if( $min < $minMinutes)
+							$minMinutes = $min;
+					}
+					// today before start time
+					else if( $now < $todayStart)
+					{
+						$min = ( $todayStart - $now ) / 60;
+						if( $min < $minMinutes)
+							$minMinutes = $min;
+					}
+					else
+						$minMinutes = 0;
+				}
+				else
+				{
+					$daysDiff =0;
+					if( $day<$schedule->getDay() )
+						$daysDiff = $schedule->getDay()-$day;
+					else
+						$daysDiff = 7 - $day + $schedule->getDay();
+
+					$nextDate = clone $dateNow;
+					$nextDate->modify('+'.$daysDiff.' days');
+
+					// its over
+					if( $nextDate > $endDate)
+						continue;
+
+					$nextDateStart = $nextDate->getTimestamp() + $schedule->getStartTime()*60;
+					$min = ( $nextDateStart - $now ) / 60;
+					if( $min < $minMinutes)
+						$minMinutes = $min;
+				}
 			}
 
+			
+			if( $minMinutes == PHP_INT_MAX)
+				return -1;
+			return (int)$minMinutes;
 		}
 
 		public function findById($scheduleId){

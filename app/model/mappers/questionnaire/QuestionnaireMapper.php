@@ -6,6 +6,7 @@
 	include_once '../app/model/mappers/actions/RequestMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
 
 	class QuestionnaireMapper extends DataMapper{
 
@@ -42,6 +43,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 
 			$participationMapper = new ParticipationMapper;
 			$requestMapper = new RequestMapper;
+			$scheduleMapper = new QuestionnaireScheduleMapper;
 
 			// init the array that will be returned
 			$questionnaires = array();
@@ -63,7 +65,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$arrayItem["examiner-participation"] = $participationMapper->participates($_SESSION["USER_ID"] , $questionnaire->getId() , 2);
 				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
-
+				$arrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
 				$questionnaires[] = $arrayItem;
 			}
 
@@ -94,7 +96,7 @@ WHERE `Questionnaire`.`id`=? ";
 			$participationMapper = new ParticipationMapper;
 			$requestMapper = new RequestMapper;
 			$userMapper = new UserMapper;
-
+			$scheduleMapper = new QuestionnaireScheduleMapper;
 
 			if( $resultSet->next() ){
 				$questionnaire  = new Questionnaire();
@@ -116,7 +118,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaireInfo["members-participating"] = $userMapper->findAllParticipants($questionnaire->getId());
 				$questionnaireInfo["active-publish-request"] = $requestMapper->hasActivePublishRequest($questionnaire->getId());
 				$questionnaireInfo["coordinator"] = $userMapper->findById( $questionnaire->getCoordinatorId() );
-
+				$questionnaireInfo["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
 
 				return $questionnaireInfo;
 			}
