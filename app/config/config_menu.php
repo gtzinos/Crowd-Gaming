@@ -23,6 +23,7 @@
 
 	$playerMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
 	$playerMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
+	$playerMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
 	$playerMenu->addItem( MenuItem::create("Become an Examiner" , "LINK" , "become-examiner") );
 	$playerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
 
@@ -41,6 +42,7 @@
 
   $examinerMenu->addItem($examinerQuestionnaires);
 	$examinerMenu->addItem($examinerControlPanel);
+	$examinerMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
 	$examinerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
 
 
@@ -63,6 +65,7 @@
 	$moderatorMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
 	$moderatorMenu->addItem( $moderatorQuestionnaires );
 	$moderatorMenu->addItem( $moderatorControlPanel );
+	$moderatorMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
 	$moderatorMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 
 	/*

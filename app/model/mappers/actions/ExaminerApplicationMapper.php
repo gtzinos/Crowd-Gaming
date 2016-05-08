@@ -1,7 +1,7 @@
 <?php
 	include_once '../core/model/DataMapper.php';
 	include_once '../app/model/domain/actions/ExaminerApplication.php';
-	
+
 	class ExaminerApplicationMapper extends DataMapper
 	{
 
@@ -46,10 +46,10 @@
 
 		public function findActiveApplications()
 		{
-			$query = "SELECT `ExaminerApplication`.* , `User`.name , `User`.`surname` 
+			$query = "SELECT `ExaminerApplication`.* , `User`.name , `User`.`surname`
 					  FROM `ExaminerApplication`
 					  INNER JOIN `User` on `User`.`id`=`ExaminerApplication`.`user_id`
-					  WHERE `ExaminerApplication`.`accepted` IS NULL";
+					  WHERE `ExaminerApplication`.`accepted` = 0";
 
 			$statement = $this->getStatement($query);
 
@@ -66,7 +66,7 @@
 				$arrayItem["application-text"] = $set->get("application_text");
 				$arrayItem["date"] = $set->get("date");
 				$arrayItem["id"] = $set->get("id");
-				
+
 				$output[] = $arrayItem;
 			}
 
@@ -102,7 +102,7 @@
 		private function _create($examinerApplication)
 		{
 			$statement = $this->getStatement("INSERT INTO `ExaminerApplication` (`user_id`,`date`, `application_text`) VALUES ( ? , CURRENT_TIMESTAMP,?)");
-			
+
 			$statement->setParameters("is", $examinerApplication->getUserId() , $examinerApplication->getApplicationText() );
 
 			$statement->executeUpdate();
