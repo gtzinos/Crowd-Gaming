@@ -25,6 +25,7 @@
 	Routes::add( 'become-examiner' , 'player/ExaminerApplicationController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'questionnaire' , 'player/QuestionnaireController.php' , $_USER_LEVEL["PLAYER"]);
 	Routes::add( 'user' , 'player/UserController.php' , $_USER_LEVEL["PLAYER"] );
+	Routes::add( 'my-questionnaires' , 'player/MyQuestionnairesController.php' , $_USER_LEVEL["PLAYER"] );
 
 	/*
 		Examiner level pages
