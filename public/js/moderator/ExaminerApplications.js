@@ -18,11 +18,11 @@ function getExaminerApplications()
         0 : All ok
         1 : Invalid Access
       */
-      if(data.requests.length > 0)
+      if(data.applications.length > 0)
       {
           var i = 0,
               out = "";
-          requests_array = data.requests;
+          requests_array = data.applications;
 
           for(i = 0; i < requests_array.length; i++)
           {
