@@ -183,15 +183,17 @@
 			return null;
 		}
 
-		public function getActivePublishRequestsInfo()
+		public function getActivePublishRequestsInfo($offset , $limit)
 		{
-			$query = "SELECT `QuestionnaireRequest`.* , `User`.`email` , `Questionnaire`.`name`
+			$query = "SELECT `QuestionnaireRequest`.* , `User`.`email`,  `User`.`name` as uname , `User`.`surname` ,  `Questionnaire`.`name`
 FROM `QuestionnaireRequest` 
 INNER JOIN `Questionnaire` on `Questionnaire`.`id`=`QuestionnaireRequest`.`questionnaire_id`
 INNER JOIN `User` on `User`.`id`=`QuestionnaireRequest`.`user_id`
-WHERE `request_type`=3 AND `accepted` IS NULL";
+WHERE `request_type`=3 AND `accepted` IS NULL
+LIMIT ?,?";
 
 			$statement = $this->getStatement($query);
+			$statement->setParameters("ii" , $offset , $limit);
 			$res = $statement->execute();
 
 			$requestInfo = array();
@@ -199,6 +201,8 @@ WHERE `request_type`=3 AND `accepted` IS NULL";
 			{
 				
 				$arrayItem["user-email"] = $res->get("email");
+				$arrayItem["user-name"] = $res->get("uname");
+				$arrayItem["user-surname"] = $res->get("surname");
 				$arrayItem["questionnaire-name"] = $res->get("name");
 				$arrayItem["request-id"] = $res->get("id");
 				$arrayItem["user-id"] =  $res->get("user_id");
