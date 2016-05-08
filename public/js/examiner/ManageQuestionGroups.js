@@ -212,7 +212,7 @@ function show_question_groups()
     /*
       Increment the offset
     */
-    question_group_offset += 10;
+    question_group_offset += question_group_count;
     processing = false;
 }
 
