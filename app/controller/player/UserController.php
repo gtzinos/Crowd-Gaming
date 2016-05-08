@@ -30,6 +30,11 @@
 
 			$user = $userMapper->findById( $this->params[1] );
 
+			if( $user === null )
+			{
+				$this->redirect("home");
+			}
+
 			$this->setArg("PAGE_TITLE",$user->getName() . ' '.$user->getSurname());
 
 			if($user->getId() == $_SESSION['USER_ID'])
@@ -37,8 +42,7 @@
 				$this->redirect("profile");
 			}
 
-			if($user !== null )
-				$this->setArg("user" , $user);
+			$this->setArg("user" , $user);
 		}
 
 	}
