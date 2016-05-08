@@ -21,6 +21,7 @@
 			}	
 
 			$questionnaireMapper = new QuestionnaireMapper;
+			$scheduleMapper = new QuestionnaireScheduleMapper;
 			$response = array();
 
 			if( $questionnaireId === null )
@@ -41,7 +42,7 @@
 					$questionnaireArrayItem["name"] = $questionnaire->getName();
 					$questionnaireArrayItem["description"] = $questionnaire->getDescription();
 					$questionnaireArrayItem["creation-date"] = $questionnaire->getCreationDate();
-
+					$questionnaireArrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
 					$questionnaireArray[] = $questionnaireArrayItem;
 				}
 
