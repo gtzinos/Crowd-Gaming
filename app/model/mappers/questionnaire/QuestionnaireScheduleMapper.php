@@ -113,7 +113,7 @@
 		}
 
 		private function _create($questionnaireSchedule){
-			$query = "INSERT INTO `QuestionnaireSchedule`(`questionnaire_id`, `day`, `start_time`, `start_date`, `end_time`, `end_date`) VALUES (?,?,?,?,?,?)";
+			$query = "INSERT INTO `QuestionnaireSchedule`(`questionnaire_id`, `day`, `start_time`, `start_date`, `end_time`, `end_date`) VALUES (?,?,?,STR_TO_DATE(?, '%d/%m/%Y'),?,STR_TO_DATE(?, '%d/%m/%Y'))";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('iiisis' ,
@@ -128,7 +128,7 @@
 		}
 
 		private function _update($questionnaireSchedule){
-			$query = "UPDATE `QuestionnaireSchedule` SET `questionnaire_id`=?,`day`=?,`start_time`=?,`start_date`=?,`end_time`=?,`end_date`=? WHERE `id`=?";
+			$query = "UPDATE `QuestionnaireSchedule` SET `questionnaire_id`=?,`day`=?,`start_time`=?,`start_date`=STR_TO_DATE(?, '%d/%m/%Y'),`end_time`=?,`end_date`=STR_TO_DATE(?, '%d/%m/%Y') WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('iiisisi' ,

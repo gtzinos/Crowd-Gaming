@@ -27,6 +27,7 @@
 				$scheduleMapper = new QuestionnaireScheduleMapper;
 				$schedules = $scheduleMapper->findByQuestionnaire($_POST["questionnaire-id"]);
 
+				$schedulesToPersist = array();
 				$out = array();
 
 				foreach ($schedules as $schedule) 
