@@ -2,7 +2,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../libs/htmlpurifier-4.7.0/HTMLPurifier.auto.php';
 
-	class QuestionnaireEditController extends Controller{
+	class EditQuestionnaireController extends Controller{
 
 		public function init(){
 			$this->setOutputType( OutputType::ResponseStatus );

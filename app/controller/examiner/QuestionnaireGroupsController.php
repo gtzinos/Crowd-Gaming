@@ -39,13 +39,13 @@
 
 			$questionnaire = $questionnaireMapper->findById( $this->params[1] );
 
-			$this->setArg("PAGE_TITLE",$questionnaire->getName()." , Handle questionnaire content.");
-			
+	
 			if( $questionnaire === null )
 			{
 				$this->redirect("questionnaireslist");
 			}
-
+			$this->setArg("PAGE_TITLE",$questionnaire->getName()." , Handle questionnaire content.");
+		
 			$this->setArg( "questionnaire-id" , $questionnaire->getId() );
 			$this->setArg( "questionnaire" , $questionnaire );
 
