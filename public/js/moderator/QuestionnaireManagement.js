@@ -152,7 +152,7 @@ function get_questionnaire_i_manage()
                 "</a>";
         $("#questionnaire-list").append(out);
       }
-      questionnaire_offset += 10;
+      questionnaire_offset += questionnaire_limit;
     }
   });
 }
