@@ -2,7 +2,7 @@
 	include_once '../app/model/mappers/actions/RequestMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
-	class GetQuestionnaireRequests extends Controller
+	class GetQuestionnaireRequestsController extends Controller
 	{
 		public function init()
 		{
