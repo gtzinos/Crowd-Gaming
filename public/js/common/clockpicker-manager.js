@@ -11,8 +11,21 @@
 let default_options = {
   donetext : 'Done',
   placement: 'top',
-  align: 'left'
+  align: 'left',
+  beforeShow: function() {
+    $('body').on({
+          'mousewheel': function(e) {
+              if (e.target.id == 'el') return;
+              e.preventDefault();
+              e.stopPropagation();
+           }
+    });
+  },
+  beforeHide: function() {
+    $('body').unbind('mousewheel');
+  }
 }
+
 function initialize_clock_picker(element,options)
 {
   if(options != null)
