@@ -69,7 +69,7 @@
 	 */
 	Routes::add( 'questionnaire-management' , 'moderator/QuestionnaireManagementController.php' , $_USER_LEVEL["MODERATOR"]);
 	Routes::add( 'examiner-applications' , 'moderator/ExaminerApplicationsController.php' , $_USER_LEVEL["MODERATOR"]);
-
+	Routes::add( 'publication-requests' , 'moderator/PublicationRequestsController.php' , $_USER_LEVEL["MODERATOR"] );
 	//Ajax
 	Routes::add( 'handle-questionnaire-public-request' , 'moderator/ajax/HandleQuestionnaireRequestController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'handle-examiner-application' , 'moderator/ajax/HandleExaminerApplicationController.php' , $_USER_LEVEL["MODERATOR"] );
@@ -80,7 +80,7 @@
 	Routes::add( 'get-publish-requests' , 'moderator/ajax/GetPublishRequestsController.php' , $_USER_LEVEL["MODERATOR"]);
 	Routes::add( 'set-questionnaire-status' , 'moderator/ajax/SetQuestionnaireStatusController.php' , $_USER_LEVEL["MODERATOR"] );
 	Routes::add( 'get-available-coordinators' , 'moderator/ajax/GetAvailableCoordinatorsController.php' , $_USER_LEVEL["MODERATOR"] );
-	Routes::add( 'publication-requests' , 'moderator/PublicationRequestsController.php' , $_USER_LEVEL["MODERATOR"] );
+	Routes::add( 'get-examiner-applications' , 'moderator/ajax/GetExaminerApplicationsController.php' , $_USER_LEVEL["MODERATOR"] );
 	/*
 		The Page to load when the page parameter is not defined
 	*/
