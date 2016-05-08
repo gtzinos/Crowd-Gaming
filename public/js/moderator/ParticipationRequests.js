@@ -4,10 +4,39 @@ $(window).on('load',function(){
   getParticipationRequests();
 });
 
+var iScrollPos = 0,
+    processing = false;
+$(window).scroll(function () {
+
+    var iCurScrollPos = $(this).scrollTop();
+
+    if (iCurScrollPos > iScrollPos) {
+
+      if (processing)
+      {
+        return false;
+      }
+      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
+          processing = true; //sets a processing AJAX request flag
+          if(request_offset != 0)
+          {
+            getParticipationRequests();
+          }
+      }
+      processing = false;
+    }
+    iScrollPos = iCurScrollPos;
+  });
+
+var request_offset = 0,
+    request_limit = 10;
 function getParticipationRequests()
 {
+
   $.post(webRoot + "get-questionnaire-requests",
   {
+    offset : request_offset,
+    limit : request_limit
   },
   function(data,status)
   {
@@ -17,13 +46,28 @@ function getParticipationRequests()
         0 : All ok
         1 : Invalid Access
       */
+
+      if(data.requests.length > 0)
+      {
+        var counter = 0;
+        for(i = requests_array.length;i<data.requests.length; i++)
+        {
+          requests_array[i] = data.requests[counter];
+          counter ++;
+        }
+      }
+      else
+      {
+        requests_array = data.requests;
+      }
+
       if(data.requests.length > 0)
       {
           var i = 0,
               out = "",
               types = { 1 : { 'type' : 'Player', 'color' : '#30ADFF' }, 2 : { 'type' : 'Examiner' , 'color' : 'orange'}};
 
-          requests_array = data.requests;
+          out = "";
           for(i = 0; i < requests_array.length; i++)
           {
             out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' style='margin-top:1.5%;border: 2px solid " + types[requests_array[i]['request_type']]['color'] + "' id='ritem" + requests_array[i]['request_id'] + "'>" +
@@ -53,14 +97,15 @@ function getParticipationRequests()
                   "</div>";
           }
         }
-        else {
+        else if(request_offset == 0) {
           out = "<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
                       "<div class='col-xs-12'>" +
                           "<div class='alert alert-danger text-center'>We don't have any participation request in our database. </div>" +
                       "</div>" +
                   "</a>";
         }
-      $("#participation-requests-list").append(out);
+        $("#participation-requests-list").append(out);
+        request_offset += request_limit;
     }
   });
 }
