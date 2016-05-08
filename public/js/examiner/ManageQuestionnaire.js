@@ -16,6 +16,21 @@ $(document)
     $(e.target).css('cursor', 'pointer');
   });
 
+$(window).load(function() {
+  $("#datepicker").on('show.daterangepicker',function() {
+    $('body').on({
+          'mousewheel': function(e) {
+              if (e.target.id == 'el') return;
+              e.preventDefault();
+              e.stopPropagation();
+           }
+    });
+  });
+  $("#datepicker").on('hide.daterangepicker',function() {
+      $('body').unbind('mousewheel');
+  });
+});
+
 function delete_public_request(confirmed)
 {
   if(!confirmed)
