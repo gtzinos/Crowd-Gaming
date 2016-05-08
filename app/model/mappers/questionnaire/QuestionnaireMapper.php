@@ -5,6 +5,7 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/RequestMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
 
 	class QuestionnaireMapper extends DataMapper{
 

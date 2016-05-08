@@ -45,14 +45,13 @@
 				if( isset( $_POST["request-type"] ) && ($_POST["request-type"]=='1' || $_POST["request-type"]=='2'  ) )
 				{
 					if( $_POST["request-type"]=='1' )
-						$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1 , $offset , $limit);
+						$examinerRequests = $requestMapper->getAllActiveRequestsInfo( $_POST["questionnaire-id"] , 1 , $offset , $limit);
 					else
-						$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 , $offset , $limit );
+						$playerRequests = $requestMapper->getAllActiveRequestsInfo( $_POST["questionnaire-id"] , 2 , $offset , $limit );
 				}
 				else
 				{
-					$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1 , $offset , $limit);
-					$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 , $offset , $limit);
+					$examinerRequests = $requestMapper->getAllActiveRequestsInfo( $_POST["questionnaire-id"] , null , $offset , $limit);
 				}
 
 				$this->setOutput("response-code" , 0);
@@ -66,14 +65,13 @@
 				if( isset( $_POST["request-type"] ) && ($_POST["request-type"]=='1' || $_POST["request-type"]=='2'  ) )
 				{
 					if( $_POST["request-type"]=='1' )
-						$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1 , $offset , $limit);
+						$examinerRequests = $requestMapper->getAllActiveRequestsInfo(null ,1 , $offset , $limit);
 					else
-						$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 , $offset , $limit);
+						$playerRequests = $requestMapper->getAllActiveRequestsInfo(null , 2 , $offset , $limit);
 				}
 				else
 				{
-					$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1 , $offset , $limit);
-					$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 , $offset , $limit);
+					$examinerRequests = $requestMapper->getAllActiveRequestsInfo(null ,null , $offset , $limit);
 				}
 
 				$this->setOutput("response-code" , 0);

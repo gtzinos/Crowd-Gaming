@@ -87,40 +87,7 @@
 			return null;
 		}
 
-		public function getActiveRequestsInfo($questionnaireId ,$requestType , $offset , $limit)
-		{
-			$query =   "SELECT `QuestionnaireRequest`.* , `User`.`email` ,`User`.`surname`,`User`.`name` as uname, `Questionnaire`.`name` as qname
-						FROM `QuestionnaireRequest` 
-						INNER JOIN `User` on `User`.`id`=`QuestionnaireRequest`.`user_id`
-						INNER JOIN `Questionnaire` on `QuestionnaireRequest`.`questionnaire_id`=`Questionnaire`.`id`
-						WHERE `questionnaire_id`=? AND `request_type`=? AND `accepted` IS NULL
-						ORDER BY QuestionnaireRequest`.`id` DESC LIMIT ?,?";
-
-			$statement = $this->getStatement($query);
-			$statement->setParameters('iiii', $questionnaireId , $requestType , $offset , $limit);
-			$res = $statement->execute();
-
-			$requestInfo = array();
-			while( $res->next() )
-			{
-				
-				$arrayItem["user_name"] = $res->get("uname");
-				$arrayItem["user_surname"] = $res->get("surname");
-				$arrayItem["questionnaire_name"] = $res->get("qname");
-				$arrayItem["user_email"] = $res->get("email");
-				$arrayItem["request_id"] = $res->get("id");
-				$arrayItem["user_id"] =  $res->get("user_id");
-				$arrayItem["questionnaire_id"] =  $res->get("questionnaire_id");
-				$arrayItem["request_text"] =  $res->get("request_text");
-				$arrayItem["request_date"] =  $res->get("request_date");
-				$arrayItem["request_type"] =  $res->get("request_type");
-
-				$requestInfo[] =  $arrayItem;
-			}
-			return $requestInfo;
-		}
-
-		public function getAllActiveRequestsInfo( $requestType , $offset , $limit)
+		public function getAllActiveRequestsInfo( $questionnaireId, $requestType , $offset , $limit)
 		{
 			$query =   "SELECT qr.* , u1.email ,u1.surname,u1.name as uname, q.name as qname
 						FROM `QuestionnaireRequest` qr
@@ -129,13 +96,29 @@
 						INNER JOIN `Questionnaire` q on qr.questionnaire_id=q.id ";
 
 			if( $_SESSION["USER_LEVEL"] == 2)
-			$query.=   "INNER JOIN `QuestionnaireParticipation` qp on qp.user_id=u2.id and qp.questionnaire_id=q.id and qp.participation_type=2 ";
+				$query.=   "INNER JOIN `QuestionnaireParticipation` qp on qp.user_id=u2.id and qp.questionnaire_id=q.id and qp.participation_type=2 ";
 
-			$query.=   "WHERE qr.request_type=? AND qr.accepted IS NULL
-						ORDER BY qr.id DESC LIMIT ?,?";
+			$query.=   "WHERE qr.accepted IS NULL ";
+
+			if( $requestType !== null )
+				$query.= "AND qr.request_type=? ";
+
+			if( $questionnaireId !== null )
+				$query.= "AND q.id=? ";
+
+			$query .= "ORDER BY qr.id DESC LIMIT ?,?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('iii' , $requestType , $offset , $limit);
+
+			if( $questionnaireId !== null && $requestType !== null )
+				$statement->setParameters('iiii' , $requestType , $questionnaireId , $offset , $limit);
+			else if( $questionnaireId !== null && $requestType === null )
+				$statement->setParameters('iii' , $questionnaireId , $offset , $limit);
+			else if( $questionnaireId === null && $requestType !== null )
+				$statement->setParameters('iii' , $requestType , $offset , $limit);
+			else
+				$statement->setParameters('ii' , $offset , $limit);
+
 			$res = $statement->execute();
 
 			$requestInfo = array();

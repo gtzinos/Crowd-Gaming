@@ -55,6 +55,22 @@
 			return $schedules;
 		}
 
+		public function findMinutesToStart($questionnaireId)
+		{
+
+			$schedules = $this->findByQuestionnaire($questionnaireId);
+
+			$minMinutes = PHP_INT_MAX;
+
+			$dateNow = date("d-m-y");
+
+			foreach ($schedules as $schedule) 
+			{
+				
+			}
+
+		}
+
 		public function findById($scheduleId){
 			$query = "SELECT * FROM `QuestionnaireSchedule` WHERE `id`=?";
 
