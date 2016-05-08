@@ -13,6 +13,16 @@
 		{
 			$requestMapper = new RequestMapper;
 
+			$limit = 10;
+			$offset = 0;
+
+			if( isset( $_POST["limit"]) && $_POST["limit"]>0  )
+				$limit = $_POST["limit"];
+
+			if( isset( $_POST["offset"]) && $_POST["offset"]>0 )
+				$offset = $_POST["offset"];
+
+
 			/*
 				Reponse Codes
 				0 : All ok
@@ -35,14 +45,14 @@
 				if( isset( $_POST["request-type"] ) && ($_POST["request-type"]=='1' || $_POST["request-type"]=='2'  ) )
 				{
 					if( $_POST["request-type"]=='1' )
-						$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1);
+						$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1 , $offset , $limit);
 					else
-						$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 );
+						$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 , $offset , $limit );
 				}
 				else
 				{
-					$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1);
-					$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 );
+					$examinerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 1 , $offset , $limit);
+					$playerRequests = $requestMapper->getActiveRequestsInfo( $_POST["questionnaire-id"] , 2 , $offset , $limit);
 				}
 
 				$this->setOutput("response-code" , 0);
@@ -56,14 +66,14 @@
 				if( isset( $_POST["request-type"] ) && ($_POST["request-type"]=='1' || $_POST["request-type"]=='2'  ) )
 				{
 					if( $_POST["request-type"]=='1' )
-						$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1);
+						$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1 , $offset , $limit);
 					else
-						$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 );
+						$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 , $offset , $limit);
 				}
 				else
 				{
-					$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1);
-					$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 );
+					$examinerRequests = $requestMapper->getAllActiveRequestsInfo(1 , $offset , $limit);
+					$playerRequests = $requestMapper->getAllActiveRequestsInfo(2 , $offset , $limit);
 				}
 
 				$this->setOutput("response-code" , 0);

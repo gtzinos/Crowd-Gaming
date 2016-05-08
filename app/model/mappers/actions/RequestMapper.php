@@ -87,16 +87,17 @@
 			return null;
 		}
 
-		public function getActiveRequestsInfo($questionnaireId ,$requestType )
+		public function getActiveRequestsInfo($questionnaireId ,$requestType , $offset , $limit)
 		{
 			$query =   "SELECT `QuestionnaireRequest`.* , `User`.`email` ,`User`.`surname`,`User`.`name` as uname, `Questionnaire`.`name` as qname
 						FROM `QuestionnaireRequest` 
 						INNER JOIN `User` on `User`.`id`=`QuestionnaireRequest`.`user_id`
 						INNER JOIN `Questionnaire` on `QuestionnaireRequest`.`questionnaire_id`=`Questionnaire`.`id`
-						WHERE `questionnaire_id`=? AND `request_type`=? AND `accepted` IS NULL";
+						WHERE `questionnaire_id`=? AND `request_type`=? AND `accepted` IS NULL
+						ORDER BY QuestionnaireRequest`.`id` DESC LIMIT ?,?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('ii', $questionnaireId , $requestType);
+			$statement->setParameters('iiii', $questionnaireId , $requestType , $offset , $limit);
 			$res = $statement->execute();
 
 			$requestInfo = array();
@@ -119,7 +120,7 @@
 			return $requestInfo;
 		}
 
-		public function getAllActiveRequestsInfo( $requestType )
+		public function getAllActiveRequestsInfo( $requestType , $offset , $limit)
 		{
 			$query =   "SELECT qr.* , u1.email ,u1.surname,u1.name as uname, q.name as qname
 						FROM `QuestionnaireRequest` qr
@@ -130,10 +131,11 @@
 			if( $_SESSION["USER_LEVEL"] == 2)
 			$query.=   "INNER JOIN `QuestionnaireParticipation` qp on qp.user_id=u2.id and qp.questionnaire_id=q.id and qp.participation_type=2 ";
 
-			$query.=   "WHERE qr.request_type=? AND qr.accepted IS NULL";
+			$query.=   "WHERE qr.request_type=? AND qr.accepted IS NULL
+						ORDER BY qr.id DESC LIMIT ?,?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('i' , $requestType);
+			$statement->setParameters('iii' , $requestType , $offset , $limit);
 			$res = $statement->execute();
 
 			$requestInfo = array();
