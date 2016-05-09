@@ -46,7 +46,7 @@
 					$questionnaireArray[] = $questionnaireArrayItem;
 				}
 
-				$response["questionnaire"] = $questionnaireArray;
+				$response["questionnaire"] = $questionnair[BeArray;
 
 			}
 			else
@@ -65,13 +65,13 @@
 					$response["questionnaire"]["name"] = $questionnaire->getName();
 					$response["questionnaire"]["description"] = $questionnaire->getDescription();
 					$response["questionnaire"]["creation-date"] = $questionnaire->getCreationDate();
+					$response["questionnaire"]["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
 				}
 				else
 				{
 					http_response_code(404);
 					$response["code"] = "404";
 					$response["message"] = "Not Found";
-					
 				}
 			}
 
