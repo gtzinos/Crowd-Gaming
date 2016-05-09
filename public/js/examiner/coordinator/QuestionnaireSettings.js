@@ -1,5 +1,7 @@
 var selected_days_id = [];
-$(document).ready(function() {
+
+function initialize()
+{
   /*
     Create a datepicker
   */
@@ -8,6 +10,11 @@ $(document).ready(function() {
     $('#datepicker').val(picker.startDate.format('DD/MM/YYYY'));
     $('#datepicker').val($('#datepicker').val() + " - " + picker.endDate.format('DD/MM/YYYY'));
   });
+}
+
+$(window).on('load',function() {
+  initialize();
+
   $('#multiple-day-dropdown').on('changed.bs.select', function (e,clickedIndex, newValue, oldValue) {
     //NEVER REMOVE THIS LINE
     clickedIndex++;
@@ -36,7 +43,90 @@ $(document).ready(function() {
         }
     }
   });
+  $("#questionnaire-settings").on("shown.bs.modal",function() {
+     getSchedulePlans();
+  });
 });
+
+function getSchedulePlans()
+{
+  $.post(webRoot + "get-questionnaire-schedule",
+  {
+    'questionnaire-id' : questionnaire_id
+  },
+  function(data,status)
+  {
+    if(status == "success")
+    {
+      if(data.schedule.length > 0)
+      {
+        var i = 0;
+
+        var selected_days = [],counter = 0;
+        for(i = 0;i<data.schedule.length;i++)
+        {
+          if(data.schedule[i].day != null) {
+              selected_days[counter] = data.schedule[i].day;
+              counter++;
+          }
+        }
+
+        for(i = 0;i<data.schedule.length;i++)
+        {
+          (function(i)
+          {
+            if(data.schedule[i].day != null) {
+              $("#multiple-day-dropdown").trigger("changed.bs.select",[ data.schedule[i].day - 1, true, false]);
+
+              if(data.schedule[i]['start-time'] != null)
+              {
+                var hours = 0,minutes = 0;
+                if(data.schedule[i]['start-time'] > 60)
+                {
+                  hours = parseInt(data.schedule[i]['start-time'] / 60);
+                }
+                minutes = parseInt(data.schedule[i]['start-time'] - hours);
+
+                //Convert to time
+                hours = (hours < 9 ? "0" : "") + hours;
+                minutes = (minutes < 9 ? "0" : "") + minutes;
+
+                $("#multiple-day-dropdown").promise().done(function() {
+
+                  $("#start_time_timer" + data.schedule[i].day).val(hours + ":" + minutes);
+                });
+              }
+
+              if(data.schedule[i]['end-time'] != null)
+              {
+                var hours = 0,minutes = 0;
+                if(data.schedule[i]['end-time'] > 60)
+                {
+                  hours = parseInt(data.schedule[i]['end-time'] / 60);
+                }
+                minutes = parseInt(data.schedule[i]['end-time'] - hours);
+
+                //convert to time
+                hours = (hours < 9 ? "0" : "") + hours;
+                minutes = (minutes < 9 ? "0" : "") + minutes;
+                $("#multiple-day-dropdown").promise().done(function() {
+                  $("#stop_time_timer" + data.schedule[i].day).val(hours + ":" + minutes);
+                });
+              }
+
+              //set start - stop date
+              if(data.schedule[i]['start-date'] != null && data.schedule[i]['end-date'] != null)
+              {
+                $("#datepicker").val(data.schedule[i]['start-date'] + " - " + data.schedule[i]['end-date']);
+              }
+            }
+          })(i);
+        }
+        $("#multiple-day-dropdown").selectpicker("val",selected_days);
+      }
+    }
+  });
+}
 
 function addSchedulePlan(index)
 {
@@ -81,4 +171,9 @@ function addSchedulePlan(index)
 function removeSchedulePlan(selector)
 {
   $(selector).remove();
+}
+
+function updateSchedulePlan()
+{
+
 }
