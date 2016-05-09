@@ -7,14 +7,13 @@ function initialize()
   */
   var daterangerpicker = create_daterangerpicker("#datepicker",{minDate : moment(),"autoUpdateInput": false});
   $('#datepicker').on('apply.daterangepicker', function(ev, picker) {
-    $('#datepicker').val(picker.startDate.format('DD/MM/YYYY'));
-    $('#datepicker').val($('#datepicker').val() + " - " + picker.endDate.format('DD/MM/YYYY'));
+    $('#datepicker').val(picker.startDate.format('YYYY-MM-DD'));
+    $('#datepicker').val($('#datepicker').val() + " - " + picker.endDate.format('YYYY-MM-DD'));
   });
 }
 
 $(window).on('load',function() {
   initialize();
-
   $('#multiple-day-dropdown').on('changed.bs.select', function (e,clickedIndex, newValue, oldValue) {
     //NEVER REMOVE THIS LINE
     clickedIndex++;
@@ -117,7 +116,11 @@ function getSchedulePlans()
               //set start - stop date
               if(data.schedule[i]['start-date'] != null && data.schedule[i]['end-date'] != null)
               {
+                //set value on textbox
                 $("#datepicker").val(data.schedule[i]['start-date'] + " - " + data.schedule[i]['end-date']);
+                //initialize date picker
+                $('#datepicker').data('daterangepicker').setStartDate(data.schedule[i]['start-date']);
+                $('#datepicker').data('daterangepicker').setEndDate(data.schedule[i]['end-date']);
               }
             }
           })(i);
