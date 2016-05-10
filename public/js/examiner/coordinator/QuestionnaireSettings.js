@@ -188,7 +188,7 @@ function updateSchedulePlan()
   if(String($('#multiple-day-dropdown').val()).indexOf(",") >= 0)
   {
     $.each(String($('#multiple-day-dropdown').val()).split(","),function(){
-      days["'" + this + "'"] = {
+      days["" + this + ""] = {
         'start-time' : $("#start_time_timer" + this).val().length == 5 ? convertToDecimal($("#start_time_timer" + this).val()) : 0,
         'end-time' : $("#stop_time_timer" + this).val().length == 5 ? convertToDecimal($("#stop_time_timer" + this).val()) : 1440
       };
