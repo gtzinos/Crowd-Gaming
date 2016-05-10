@@ -46,7 +46,7 @@
 					$questionnaireArray[] = $questionnaireArrayItem;
 				}
 
-				$response["questionnaire"] = $questionnair[BeArray;
+				$response["questionnaire"] = $questionnaireArray;
 
 			}
 			else
