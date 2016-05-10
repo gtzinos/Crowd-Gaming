@@ -27,7 +27,7 @@
 				/*
 					User doesnt participate to this questionnaire.
 				 */
-				$response["code"] = "403";
+				$response["code"] = "604";
 				$response["message"] = "Forbidden, You dont have access to that questionnaire";
 
 				http_response_code(403);

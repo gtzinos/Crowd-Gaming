@@ -32,8 +32,8 @@
 			/*
 				Token not found, send 403.
 			 */
-			http_response_code(401);
-			$response["code"] = "401";
+			http_response_code(403);
+			$response["code"] = "403";
 			$response["message"] = "Unauthorised access";
 
 			print json_encode($response);

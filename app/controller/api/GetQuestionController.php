@@ -36,7 +36,7 @@
 				/*
 					Questionnaire Offline
 				 */
-				$response["code"] = "403";
+				$response["code"] = "603";
 				$response["message"] = "Forbidden, Questionnaire offline";
 
 				http_response_code(403);
@@ -53,7 +53,7 @@
 				/*
 					User doesnt participate to this questionnaire.
 				 */
-				$response["code"] = "403";
+				$response["code"] = "604";
 				$response["message"] = "Forbidden, You dont have access to that questionnaire";
 
 				http_response_code(403);
@@ -70,7 +70,7 @@
 				/*
 					Question Group does not belong to questionnaire
 				 */
-				$response["code"] = "404";
+				$response["code"] = "608";
 				$response["message"] = "Not Found, Group doesnt not exist or doesnt belong to questionnaire";
 
 				http_response_code(404);
@@ -88,7 +88,7 @@
 				$coordinates = $this->getCoordinates();	
 				if( $coordinates == null)
 				{
-					$response["code"] = "403";
+					$response["code"] = "606";
 					$response["message"] = "Forbidden, Coordinates not provided.";
 
 					http_response_code(403);
@@ -99,7 +99,7 @@
 						     $questionGroupParticipationMapper->participates($userId , $groupId) ) )
 				{
 
-					$response["code"] = "403";
+					$response["code"] = "607";
 					$response["message"] = "Forbidden, Invalid location or user not in participation group.";
 
 					http_response_code(403);
@@ -112,7 +112,7 @@
 				$coordinates = $this->getCoordinates();	
 				if( $coordinates == null)
 				{
-					$response["code"] = "403";
+					$response["code"] = "606";
 					$response["message"] = "Forbidden, Coordinates not provided.";
 
 					http_response_code(403);
@@ -122,7 +122,7 @@
 				else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) )
 				{
 
-					$response["code"] = "403";
+					$response["code"] = "607";
 					$response["message"] = "Forbidden, Invalid location.";
 
 					http_response_code(403);
@@ -135,7 +135,7 @@
 				if( !$questionGroupParticipationMapper->participates($userId , $groupId) )
 				{
 
-					$response["code"] = "403";
+					$response["code"] = "607";
 					$response["message"] = "Forbidden, User not in participation group.";
 
 					http_response_code(403);
@@ -182,7 +182,7 @@
 			{
 
 				http_response_code(404);
-				$response["code"] = "404";
+				$response["code"] = "609";
 				$response["message"] = "Question Group doesnt have any more questions";
 			}
 
