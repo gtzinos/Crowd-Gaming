@@ -13,6 +13,7 @@ function initialize()
 }
 
 $(window).on('load',function() {
+
   initialize();
   $('#multiple-day-dropdown').on('changed.bs.select', function (e,clickedIndex, newValue, oldValue) {
     //NEVER REMOVE THIS LINE
@@ -64,7 +65,7 @@ function getSchedulePlans()
         var selected_days = [],counter = 0;
         for(i = 0;i<data.schedule.length;i++)
         {
-          if(data.schedule[i].day != null) {
+          if(data.schedule[i].day != 0) {
               selected_days[counter] = data.schedule[i].day;
               counter++;
           }
@@ -74,7 +75,7 @@ function getSchedulePlans()
         {
           (function(i)
           {
-            if(data.schedule[i].day != null) {
+            if(data.schedule[i].day != 0) {
               $("#multiple-day-dropdown").trigger("changed.bs.select",[ data.schedule[i].day - 1, true, false]);
 
               if(data.schedule[i]['start-time'] != null)
@@ -178,5 +179,82 @@ function removeSchedulePlan(selector)
 
 function updateSchedulePlan()
 {
+  let data = {
+    'start-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[0] : null,
+    'end-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[2] : null
+  };
 
+  let days = {};
+  if(String($('#multiple-day-dropdown').val()).indexOf(",") >= 0)
+  {
+    $.each(String($('#multiple-day-dropdown').val()).split(","),function(){
+      days["'" + this + "'"] = {
+        'start-time' : $("#start_time_timer" + this).val().length == 5 ? convertToDecimal($("#start_time_timer" + this).val()) : 0,
+        'end-time' : $("#stop_time_timer" + this).val().length == 5 ? convertToDecimal($("#stop_time_timer" + this).val()) : 1440
+      };
+    });
+  }
+  else if($('#multiple-day-dropdown').val() != null){
+    days['1'] = {
+      'start-time' : $("#start_time_timer1").val().length == 5 ? convertToDecimal($("#start_time_timer1").val()) : 0,
+      'end-time' : $("#stop_time_timer1").val().length == 5 ? convertToDecimal($("#stop_time_timer1").val()) : 1440
+    };
+  }
+
+  data['days'] = days;
+  alert(JSON.stringify(data));
+  $.post(webRoot + "update-questionnaire-schedule",
+  {
+    'questionnaire-id' : questionnaire_id,
+    'data' : JSON.stringify(data)
+  },
+  function(data,status)
+  {
+    if(status == "success")
+    {
+      /*
+        0 : all ok
+        1 : Invalid Access
+        2 : Data Validation error
+        3 : Database Error
+        -1: No data
+      */
+      if(data == "0")
+      {
+        show_notification("success","Questionnaire schedule updated successfully.",3000);
+      }
+      else if(data == "1")
+      {
+        show_notification("error","Invalid access.",4000);
+      }
+      else if(data == "2")
+      {
+        show_notification("error","Data validation error.",4000);
+      }
+      else if(data == "3")
+      {
+        show_notification("error","General Database error.",4000);
+      }
+      else if(data == "-1")
+      {
+        show_notification("error","You didn't send data.",4000);
+      }
+      else {
+        show_notification("error","Unknown error. Please contact with us.",4000);
+      }
+    }
+  });
+}
+
+function convertToDecimal(value)
+{
+  if(value.indexOf(":") < 0 && value.length != 5)
+  {
+    return 0;
+  }
+
+  var hours = parseInt(value.split(":")[0]) * 60,
+      minutes = parseInt(value.split(":")[1]);
+
+  return minutes + hours;
 }
