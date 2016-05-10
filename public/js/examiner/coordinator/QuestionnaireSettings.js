@@ -202,7 +202,7 @@ function updateSchedulePlan()
   }
 
   data['days'] = days;
-  alert(JSON.stringify(data));
+
   $.post(webRoot + "update-questionnaire-schedule",
   {
     'questionnaire-id' : questionnaire_id,
