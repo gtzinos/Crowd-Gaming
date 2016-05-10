@@ -31,32 +31,27 @@
 					return;
 				}
 
-				/*
-					input json example
-
-					{
-						"start-date" : "12/13/1994",
-						"end-date" : "12/12/1232",
-						"days" : {
-							"1" : { "start-time":"20:30","end-time":"21:40" },
-							"4" : { "start-time":"20:30","end-time":"21:40" }
-						}
-					}
-				 */
 
 				$dataInput = json_decode($_POST["data"] ,true);
 				$newSchdules = array();
 
-				if( isset( $dataInput['days'] ) )
+				if( ($dataInput['start-date'] !== null && $dataInput['start-date'] === null) || 
+					($dataInput['start-date'] === null && $dataInput['start-date'] !== null) )
 				{
+					$this->setOutput("response-code" , 5);
+					return;
+				}
+
+				if( count( $dataInput['days'] ) >0 )
+				{
+
 					foreach ($dataInput['days'] as $day => $times) 
 					{
-						$startTime = explode(":", $times["start-time"]);
-						$endTime = explode(":" , $times["end-time"]);
 
-						if( $day<1 || $day>7  ||
-							count($startTime)!=2 || $startTime[0]<0 || $startTime[0]>24 || $startTime[1]<0 || $startTime[1]>60 ||
-							count($endTime)!=2 || $endTime[0]<0 || $endTime[0]>24 || $endTime[1]<0 || $endTime[1]>60)
+						if(  intval($day) <1 || intval($day) >7 ||
+							 $times["start-time"] < 0 || $times["start-time"] > 1440 ||
+							 $times["end-time"] < 0 || $times["end-time"] > 1440 ||
+							 $times["start-time"] > $times["end-time"] )
 						{
 							$this->setOutput("response-code" , 2);
 							return;
@@ -69,11 +64,8 @@
 						$schedule->setStartDate( $dataInput['start-date'] );
 						$schedule->setEndDate( $dataInput['end-date'] );
 						$schedule->setDay( $day);
-						$schedule->setStartTime( ((int)$startTime[0]) * 60 + ( (int) $startTime[1]) );
-
-					
-
-						$schedule->setEndTime( ((int)$endTime[0]) * 60 + ( (int) $endTime[1]) );
+						$schedule->setStartTime( $times["start-time"] );
+						$schedule->setEndTime( $times["end-time"] );
 
 						$newSchdules[] = $schedule;
 					}
