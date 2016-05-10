@@ -67,7 +67,6 @@ $(window).scroll(function () {
             get_questionnaire_i_manage();
           }
       }
-      processing = false;
     }
     iScrollPos = iCurScrollPos;
   });
@@ -93,67 +92,57 @@ function get_questionnaire_i_manage()
 
     if(status == "success")
     {
-      var i = 0,
-          out = "";
-
-      if(questionnaires.length > 0)
-      {
-        var counter = 0;
-        for(i = questionnaires.length;i<data.questionnaires.length; i++)
-        {
-          questionnaires[i] = data.questionnaires[counter];
-          counter ++;
-        }
-      }
-      else
-      {
-        questionnaires = data.questionnaires;
-      }
-
-
       if(data.questionnaires.length > 0)
       {
-          for(i = 0; i < questionnaires.length; i++)
-          {
-            out = "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + questionnaires[i].id + "'>" +
-                        "<div class='col-xs-12'>" +
-                            "<h4 class='list-group-item-heading'>" + questionnaires[i].name + "</h4>" +
+        var i = 0,
+            out = "",
+            counter = 0;
+
+        counter = questionnaires.length;
+        for(i = 0; i < data.questionnaires.length; i++)
+        {
+          questionnaires[counter] = data.questionnaires[i];
+          out = "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + data.questionnaires[i].id + "'>" +
+                    "<div class='col-xs-12'>" +
+                        "<h4 class='list-group-item-heading'>" + data.questionnaires[i].name + "</h4>" +
+                    "</div>" +
+                    "<div class='col-xs-12' style='margin-top:3%;padding:0px'>" +
+                        "<div class='col-xs-4 col-sm-4 col-md-2' style='padding:0px'>" +
+                            "<input type='checkbox' data-index='" + counter + "' id='qcheck" + data.questionnaires[i].id + "' />" +
                         "</div>" +
-                        "<div class='col-xs-12' style='margin-top:3%;padding:0px'>" +
-                            "<div class='col-xs-4 col-sm-4 col-md-2' style='padding:0px'>" +
-                                "<input type='checkbox' id='qcheck" + questionnaires[i].id + "' />" +
-                            "</div>" +
-                            "<div class='col-xs-offset-1 col-xs-3 col-sm-offset-5 col-sm-3 col-md-offset-8 col-md-2'>" +
-                              "<div class='dropdown'>" +
-                                  "<span class='dropdown-toggle btn btn-default' type='button' data-toggle='dropdown' onclick='questionnaire_id = " + questionnaires[i].id + "; questionnaire_index = " + i + ";'>Actions " +
-                                  "<span class='caret'></span></span>" +
-                                  "<ul class='dropdown-menu' >" +
-                                    "<li class='settingsitem'><a onclick=\"show_confirm_modal()\"><i class='glyphicon glyphicon-trash'></i> Delete</a></li>" +
-                                    "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> View logs</a></li>" +
-                                    "<li class='settingsitem'><a onclick=\"show_actions_modal()\"><i class='fa fa-cogs'></i> More settings</a></li>" +
-                                  "</ul>" +
-                              "</div>" +
-                            "</div>" +
+                        "<div class='col-xs-offset-1 col-xs-3 col-sm-offset-5 col-sm-3 col-md-offset-8 col-md-2'>" +
+                          "<div class='dropdown'>" +
+                              "<span class='dropdown-toggle btn btn-default' type='button' data-toggle='dropdown' onclick='questionnaire_id = " + data.questionnaires[i].id + "; questionnaire_index = " + counter + ";'>Actions " +
+                              "<span class='caret'></span></span>" +
+                              "<ul class='dropdown-menu' >" +
+                                "<li class='settingsitem'><a onclick=\"show_confirm_modal()\"><i class='glyphicon glyphicon-trash'></i> Delete</a></li>" +
+                                "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> View logs</a></li>" +
+                                "<li class='settingsitem'><a onclick=\"show_actions_modal()\"><i class='fa fa-cogs'></i> More settings</a></li>" +
+                              "</ul>" +
+                          "</div>" +
                         "</div>" +
-                    "</div>";
-                    $("#questionnaire-list").append(out);
+                    "</div>" +
+                "</div>";
+                $("#questionnaire-list").append(out);
+                counter ++;
           }
-          for(i = 0; i < questionnaires.length; i++)
+          for(i = 0; i < data.questionnaires.length; i++)
           {
 
-            $("#qcheck" + questionnaires[i].id).bootstrapSwitch('state',questionnaires[i].public);
+            $("#qcheck" + data.questionnaires[i].id).bootstrapSwitch('state',questionnaires[i].public);
 
-            $("#qcheck" + questionnaires[i].id).on('switchChange.bootstrapSwitch', function(event, state) {
+            $("#qcheck" + data.questionnaires[i].id).on('switchChange.bootstrapSwitch', function(event, state) {
               questionnaire_id = $(this).attr('id').replace("qcheck","");
               if(state)
               {
-                set_questionnaire_public();
+                set_questionnaire_public($(this).data('index'));
               }
               else {
-                set_questionnaire_private();
+                set_questionnaire_private($(this).data('index'));
               }
             });
           }
+          processing = false;
       }
       else if(questionnaire_offset == 0) {
         out = "<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
@@ -163,12 +152,12 @@ function get_questionnaire_i_manage()
                 "</a>";
         $("#questionnaire-list").append(out);
       }
-      questionnaire_offset += 10;
+      questionnaire_offset += questionnaire_limit;
     }
   });
 }
 
-function set_questionnaire_public()
+function set_questionnaire_public(local_index)
 {
   $.post(webRoot + "set-questionnaire-status",
   {
@@ -180,15 +169,6 @@ function set_questionnaire_public()
   {
     if(status == "success")
     {
-      var i = 0;
-      for(i=0;i<questionnaires.length;i++)
-      {
-        if(questionnaires[i].id == questionnaire_id)
-        {
-          questionnaire_index = i;
-          break;
-        }
-      }
       /*
         0 : All ok
         1 : Questionnaire Doesnt Exist
@@ -198,33 +178,33 @@ function set_questionnaire_public()
       */
       if(data == "0")
       {
-        show_notification("success","Questionnaire " + questionnaires[questionnaire_index].name + " is now public.",3000);
+        show_notification("success","Questionnaire " + questionnaires[local_index].name + " is now public.",3000);
       }
       else if(data == "1")
       {
-        show_notification("error","Questionnaire " + questionnaires[questionnaire_index].name + " doesn't exist.",4000);
+        show_notification("error","Questionnaire " + questionnaires[local_index].name + " doesn't exist.",4000);
       }
       else if(data == "2")
       {
-        show_notification("error","Questionnaire " + questionnaires[questionnaire_index].name + " already public.",4000);
+        show_notification("error","Questionnaire " + questionnaires[local_index].name + " already public.",4000);
       }
       else if(data == "3")
       {
-        show_notification("error","General database error. { " + questionnaires[questionnaire_index].name + " }",4000);
+        show_notification("error","General database error. { " + questionnaires[local_index].name + " }",4000);
       }
       else if(data == "-1")
       {
-          show_notification("error","You didn't send data. { " + questionnaires[questionnaire_index].name + " }",4000);
+          show_notification("error","You didn't send data. { " + questionnaires[local_index].name + " }",4000);
       }
       else
       {
-        show_notification("error","Unknown error. Please contact with us { " + questionnaires[questionnaire_index].name + " }",4000);
+        show_notification("error","Unknown error. Please contact with us { " + questionnaires[local_index].name + " }",4000);
       }
     }
   });
 }
 
-function set_questionnaire_private()
+function set_questionnaire_private(local_index)
 {
   $.post(webRoot + "set-questionnaire-status",
   {
@@ -236,15 +216,6 @@ function set_questionnaire_private()
   {
     if(status == "success")
     {
-      var i = 0;
-      for(i=0;i<questionnaires.length;i++)
-      {
-        if(questionnaires[i].id == questionnaire_id)
-        {
-          questionnaire_index = i;
-          break;
-        }
-      }
       /*
         0 : All ok
         1 : Questionnaire Doesnt Exist
@@ -254,27 +225,27 @@ function set_questionnaire_private()
       */
       if(data == "0")
       {
-        show_notification("success","Questionnaire " + questionnaires[questionnaire_index].name + " is now private.",3000);
+        show_notification("success","Questionnaire " + questionnaires[local_index].name + " is now private.",3000);
       }
       else if(data == "1")
       {
-        show_notification("error","Questionnaire " + questionnaires[questionnaire_index].name + " doesn't exist.",4000);
+        show_notification("error","Questionnaire " + questionnaires[local_index].name + " doesn't exist.",4000);
       }
       else if(data == "2")
       {
-        show_notification("error","Questionnaire " + questionnaires[questionnaire_index].name + " already private.",4000);
+        show_notification("error","Questionnaire " + questionnaires[local_index].name + " already private.",4000);
       }
       else if(data == "3")
       {
-        show_notification("error","General database error. { " + questionnaires[questionnaire_index].name + " }",4000);
+        show_notification("error","General database error. { " + questionnaires[local_index].name + " }",4000);
       }
       else if(data == "-1")
       {
-          show_notification("error","You didn't send data. { " + questionnaires[questionnaire_index].name + " }",4000);
+          show_notification("error","You didn't send data. { " + questionnaires[local_index].name + " }",4000);
       }
       else
       {
-        show_notification("error","Unknown error. Please contact with us { " + questionnaires[questionnaire_index].name + " }",4000);
+        show_notification("error","Unknown error. Please contact with us { " + questionnaires[local_index].name + " }",4000);
       }
     }
   });

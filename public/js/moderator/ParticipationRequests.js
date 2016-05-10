@@ -1,4 +1,6 @@
-var requests_array = [];
+var all_requests_array = [],
+    request_offset = 0,
+    request_limit = 10;
 
 $(window).on('load',function(){
   getParticipationRequests();
@@ -7,13 +9,11 @@ $(window).on('load',function(){
 var iScrollPos = 0,
     processing = false;
 $(window).scroll(function () {
-
     var iCurScrollPos = $(this).scrollTop();
-
     if (iCurScrollPos > iScrollPos) {
-
       if (processing)
       {
+        //request_offset += request_limit;
         return false;
       }
       if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
@@ -23,16 +23,12 @@ $(window).scroll(function () {
             getParticipationRequests();
           }
       }
-      processing = false;
     }
     iScrollPos = iCurScrollPos;
   });
 
-var request_offset = 0,
-    request_limit = 10;
 function getParticipationRequests()
 {
-
   $.post(webRoot + "get-questionnaire-requests",
   {
     offset : request_offset,
@@ -46,73 +42,65 @@ function getParticipationRequests()
         0 : All ok
         1 : Invalid Access
       */
-
       if(data.requests.length > 0)
       {
-        var counter = 0;
-        for(i = requests_array.length;i<data.requests.length; i++)
-        {
-          requests_array[i] = data.requests[counter];
-          counter ++;
-        }
-      }
-      else
-      {
-        requests_array = data.requests;
-      }
+          var counter = 0,
+              i;
 
-      if(data.requests.length > 0)
-      {
-          var i = 0,
-              out = "",
+          var out = "",
               types = { 1 : { 'type' : 'Player', 'color' : '#30ADFF' }, 2 : { 'type' : 'Examiner' , 'color' : 'orange'}};
 
           out = "";
-          for(i = 0; i < requests_array.length; i++)
+          counter = all_requests_array.length;
+          for(i = 0; i < data.requests.length; i++)
           {
-            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' style='margin-top:1.5%;border: 2px solid " + types[requests_array[i]['request_type']]['color'] + "' id='ritem" + requests_array[i]['request_id'] + "'>" +
+            all_requests_array[counter] = data.requests[i];
+
+            out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' style='margin-top:1.5%;border: 2px solid " + types[data.requests[i]['request_type']]['color'] + "' id='ritem" + data.requests[i]['request_id'] + "'>" +
                       "<div class='row'>" +
                         "<div class='visible-xs col-xs-offset-5 col-xs-7'>" +
-                            "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request_date'].split(" ")[0] + "</div>" +
+                            "<div style='font-size:15px' class='list-group-item-heading'>" + data.requests[i]['request_date'].split(" ")[0] + "</div>" +
                         "</div>" +
                           "<div class='col-xs-12 col-sm-7 col-md-8'>" +
-                              "<div style='font-size:18px' class='list-group-item-heading'><a class='user_name' href='" + user_page + "/" + requests_array[i]['user_id'] + "' style='color:black' target='_blank'>" + requests_array[i]['user_name'] + " " + requests_array[i]['user_surname'] + "</a></div>" +
+                              "<div style='font-size:18px' class='list-group-item-heading'><a class='user_name' href='" + user_page + "/" + data.requests[i]['user_id'] + "' style='color:black' target='_blank'>" + data.requests[i]['user_name'] + " " + data.requests[i]['user_surname'] + "</a></div>" +
                           "</div>" +
                           "<div class='hidden-xs col-sm-offset-2 col-sm-3 col-md-2'>" +
-                              "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request_date'].split(" ")[0] + "</div>" +
+                              "<div style='font-size:15px' class='list-group-item-heading'>" + data.requests[i]['request_date'].split(" ")[0] + "</div>" +
                           "</div>" +
                       "</div>" +
                       "<div class='row'>" +
                         "<div class='col-xs-12'>" +
-                            "<div style='font-size:17px' > Type: <span style='color:" + types[requests_array[i]['request_type']]['color'] + "'>" + types[requests_array[i]['request_type']]['type'] + "</span></div>" +
+                            "<div style='font-size:17px' > Type: <span style='color:" + types[data.requests[i]['request_type']]['color'] + "'>" + types[data.requests[i]['request_type']]['type'] + "</span></div>" +
                         "</div>" +
                         "<div class='col-xs-12 col-sm-5 col-md-6'>" +
-                            "<div style='font-size:17px' > Game: <a class='user_name' target='_blank' href='" + questionnaire_page + "/" + requests_array[i]['questionnaire_id'] + "' style='color:black'>" + requests_array[i]['questionnaire_name'] + "</a></div>" +
+                            "<div style='font-size:17px' > Game: <a class='user_name' target='_blank' href='" + questionnaire_page + "/" + data.requests[i]['questionnaire_id'] + "' style='color:black'>" + data.requests[i]['questionnaire_name'] + "</a></div>" +
                         "</div>" +
                           "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-4 col-sm-3 col-md-2'>" +
-                            "<button type='button' class='btn btn-success' onclick=\"handleQuestionnaireParticipationRequest(" + requests_array[i]['request_id'] + ",'accept'," + i + ")\"><span class='fa fa-check'></span></button> " +
-                            "<button type='button' class='btn btn-danger' onclick=\"handleQuestionnaireParticipationRequest(" + requests_array[i]['request_id'] + ",'decline'," + i + ")\"><span class='fi-x'></span></button>" +
+                            "<button type='button' class='btn btn-success' onclick=\"handleQuestionnaireParticipationRequest(" + data.requests[i]['request_id'] + ",'accept'," + (counter) + ")\"><span class='fa fa-check'></span></button> " +
+                            "<button type='button' class='btn btn-danger' onclick=\"handleQuestionnaireParticipationRequest(" + data.requests[i]['request_id'] + ",'decline'," + (counter) + ")\"><span class='fi-x'></span></button>" +
                           "</div>" +
                       "</div>" +
                   "</div>";
+                  counter ++;
           }
         }
-        else if(request_offset == 0) {
+        else if(request_offset == 10) {
           out = "<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
                       "<div class='col-xs-12'>" +
                           "<div class='alert alert-danger text-center'>We don't have any participation request in our database. </div>" +
                       "</div>" +
                   "</a>";
         }
-        $("#participation-requests-list").append(out);
+
         request_offset += request_limit;
+        $("#participation-requests-list").append(out);
+        processing = false;
     }
   });
 }
 
 function handleQuestionnaireParticipationRequest(request_id,response,request_index)
 {
-
   $.post(webRoot + "handle-questionnaire-request",
   {
     'request-id' : request_id,
@@ -132,7 +120,7 @@ function handleQuestionnaireParticipationRequest(request_id,response,request_ind
         6 : General Database Error
         -1 : No data
       */
-      var fullName = requests_array[request_index]['user_name'] + " " + requests_array[request_index]['user_surname'];
+      var fullName = all_requests_array[request_index]['user_name'] + " " + all_requests_array[request_index]['user_surname'];
       if(data == "0")
       {
         if(response == "accept") {

@@ -118,7 +118,7 @@
                 <br>
                 <div class="form-group">
                   <div class="col-xs-4 col-xs-offset-0 col-sm-offset-3 col-sm-4">
-                    	<input type="button" class="btn btn-primary" value="Save Changes">
+                    	<input type="button" class="btn btn-primary" value="Save Changes" onclick="updateSchedulePlan()">
                   </div>
                 </div>
               </form>

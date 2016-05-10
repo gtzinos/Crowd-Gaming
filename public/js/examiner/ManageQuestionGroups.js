@@ -157,6 +157,30 @@ $(document).ready(function(e) {
 });
 
 
+var iScrollPos = 0,
+    processing = false;
+$(window).scroll(function () {
+
+    var iCurScrollPos = $(this).scrollTop();
+
+    if (iCurScrollPos > iScrollPos) {
+
+      if (processing)
+      {
+        return false;
+      }
+      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
+          processing = true; //sets a processing AJAX request flag
+          if(question_group_offset != 0)
+          {
+            show_question_groups();
+          }
+      }
+    }
+    iScrollPos = iCurScrollPos;
+  });
+
+
 /*
   Question group list Variables
 */
@@ -188,7 +212,8 @@ function show_question_groups()
     /*
       Increment the offset
     */
-    question_group_offset += 10;
+    question_group_offset += question_group_count;
+    processing = false;
 }
 
 /*
@@ -1054,28 +1079,6 @@ function delete_question_group_response(question_group_id)
     }
   }
 }
-
-
-var iScrollPos = 0,
-    processing = false;
-$(window).scroll(function () {
-
-    var iCurScrollPos = $(this).scrollTop();
-
-    if (iCurScrollPos > iScrollPos) {
-
-      if (processing)
-      {
-        return false;
-      }
-      if ($(window).scrollTop() >= ($(document).height() - $(window).height())*0.8){
-          processing = true; //sets a processing AJAX request flag
-          show_question_groups();
-      }
-      processing = false;
-    }
-    iScrollPos = iCurScrollPos;
-  });
 
 
   //get_question_group_users(36);
