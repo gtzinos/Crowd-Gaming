@@ -6,7 +6,13 @@
     require '../core/router/RouteDispatcher.php';
     require '../core/router/Routes.php';
 
-    
+    /*
+        start session
+        Normaly this shouldnt exist
+        rest apis have no session
+    */
+    session_start();    
+
 	/*
 		User level constants
 	*/
