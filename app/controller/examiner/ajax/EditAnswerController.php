@@ -24,7 +24,8 @@
 				6  : General Database Error
 				-1 : No Data
 			 */
-			if( isset( $_POST["answer-id"] , $_POST["question-id"] , $_POST["answer-text"] , $_POST["is-correct"] ) ){
+			// disabled
+			if( false && isset( $_POST["answer-id"] , $_POST["question-id"] , $_POST["answer-text"] , $_POST["is-correct"] ) ){
 
 				$participationMapper = new ParticipationMapper;
 				$answerMapper = new AnswerMapper;

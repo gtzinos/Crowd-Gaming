@@ -146,6 +146,59 @@ WHERE `Questionnaire`.`id`=? ";
 			return false;
 		}
 
+		public function isPublic( $questionnaireId )
+		{
+			$query = "SELECT `public` from `Questionnaire` WHERE `id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId);
+
+			$set = $statement->execute();
+
+			if( $set->next() ){
+				if( $set->get("public") == 1)
+					return true;
+			}
+			return false;
+		}
+
+		public function isGroupPublic( $questionGroup )
+		{
+			$query =   "SELECT `Questionnaire`.`public` from `Questionnaire` 
+						INNER JOIN `QuestionGroup` on `QuestionGroup`.`questionnaire_id`=`Questionnaire`.`id`
+						WHERE `QuestionGroup`.`id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionGroup);
+
+			$set = $statement->execute();
+
+			if( $set->next() ){
+				if( $set->get("public") == 1)
+					return true;
+			}
+			return false;
+		}
+
+		public function isQuestionPublic( $questionId )
+		{
+			$query =   "SELECT `Questionnaire`.`public` from `Questionnaire` 
+						INNER JOIN `QuestionGroup` on `QuestionGroup`.`questionnaire_id`=`Questionnaire`.`id`
+						INNER JOIN `Question` on `Question`.`question_group_id`=`QuestionGroup`.`id`
+						WHERE `Question`.`id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionId);
+
+			$set = $statement->execute();
+
+			if( $set->next() ){
+				if( $set->get("public") == 1)
+					return true;
+			}
+			return false;
+		}
+
 		/**
 		 * [Returns the number of pages required to show all questionnaires]
 		 * @param  [boolean] $public [if true , only public questionnaire will be counted]

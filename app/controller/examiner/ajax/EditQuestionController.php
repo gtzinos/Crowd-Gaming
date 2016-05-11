@@ -2,6 +2,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../libs/htmlpurifier-4.7.0/HTMLPurifier.auto.php';
 
 	class EditQuestionController extends Controller
@@ -26,6 +27,7 @@
 				5 Multiplier validation error
 				6 Database Error
 				7 Invalid Correct Answer
+				8 You cant edit a public questionnaire
 			   -1 No data
 			 */
 
@@ -43,6 +45,7 @@
 				$participationMapper = new ParticipationMapper;
 				$answerMapper = new AnswerMapper;
 				$questionMapper = new QuestionMapper;
+				$questionnaireMapper = new QuestionnaireMapper;
 
 				$question = $questionMapper->findById($_POST["question-id"] );
 
@@ -56,6 +59,13 @@
 				{
 					// Invalid Access
 					$this->setOutput('response-code' , 2);
+					return;
+				}
+
+				if( $questionnaireMapper->isGroupPublic($question->getQuestionGroupId()) && $_SESSION["USER_LEVEL"]!=3 )
+				{
+					// Invalid Access
+					$this->setOutput('response-code' , 8);
 					return;
 				}
 

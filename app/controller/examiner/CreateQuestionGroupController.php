@@ -33,6 +33,7 @@
 				4 longitude validation error
 				5 radius validation error
 				6 Database error
+				7 Cant edit a public questionnaire
 			 */
 			$questionnaireId = null;
 
@@ -49,6 +50,9 @@
 			}
 
 			$questionnaireId = $this->params[1];
+
+
+
 			$this->setArg("questionnaire-id" , $this->params[1]);
 
 
@@ -61,6 +65,11 @@
 					return;
 				}
 
+				if( $questionnaireMapper->isPublic($questionnaireId) && $_SESSION["USER_LEVEL"]!=3)
+				{
+					$this->setOutput('response-code' , 7);
+					return;
+				}
 
 
 				if( strlen( $_POST["name"] ) < 2 || strlen($_POST["name"] ) >255 )

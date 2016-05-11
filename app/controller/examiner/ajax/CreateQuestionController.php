@@ -2,6 +2,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 
 	class CreateQuestionController extends Controller
 	{
@@ -23,6 +24,7 @@
 				5 Database Error
 				6 Answer Text validation error
 				7 Correct answer error
+				8 Cant create a question when the questionnaire is public
 			   -1 No data
 			 */
 
@@ -36,11 +38,19 @@
 			{
 
 				$participationMapper = new ParticipationMapper;
+				$questionnaireMapper = new QuestionnaireMapper;
 
 				if( !($participationMapper->participatesInGroup( $_SESSION["USER_ID"] , $_POST["question-group-id"] , 2 ) || $_SESSION["USER_LEVEL"]==3 ) )
 				{
 					// Invalid Access
 					$this->setOutput('response-code' , 1);
+					return;
+				}
+				
+				if( $questionnaireMapper->isGroupPublic($_POST["question-group-id"]) && $_SESSION["USER_LEVEL"]!=3 )
+				{
+					// Invalid Access
+					$this->setOutput('response-code' , 8);
 					return;
 				}
 

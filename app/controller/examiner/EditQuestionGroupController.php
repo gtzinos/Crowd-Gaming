@@ -1,6 +1,7 @@
 <?php
-	include "../app/model/mappers/questionnaire/QuestionGroupMapper.php";
-	include "../app/model/mappers/actions/ParticipationMapper.php";
+	include_once "../app/model/mappers/questionnaire/QuestionGroupMapper.php";
+	include_once "../app/model/mappers/questionnaire/QuestionnaireMapper.php";
+	include_once "../app/model/mappers/actions/ParticipationMapper.php";
 
 	class EditQuestionGroupController extends Controller
 	{
@@ -58,9 +59,17 @@
 				4 longitude validation error
 				5 radius validation error
 				6 Database error
+				7 Cant Edit a public Questionnaire
 			 */
 			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] ) )
 			{
+				$questionnaireMapper = new QuestionnaireMapper;
+				if( $questionnaireMapper->isGroupPublic($groupId) && $_SESSION["USER_LEVEL"]!=3)
+				{
+					$this->setOutput('response-code' , 7);
+					return;
+				}
+
 
 				$name = htmlspecialchars($_POST["name"] ,ENT_QUOTES);
 

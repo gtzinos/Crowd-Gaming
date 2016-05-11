@@ -1,6 +1,7 @@
 <?php
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 
 	class DeleteQuestionController extends Controller
@@ -21,17 +22,27 @@
 				 1 Authentication failed
 				 2 Access error
 				 3 Database error
+				 4 Questionnaire is public , you cant delete it.
 				-1 No Data
 			 */
 			if( isset( $_POST["question-id"] ) )
 			{
 
 				$participationMapper = new ParticipationMapper;
+				$questionnaireMapper = new QuestionnaireMapper;
 
 				if( !( $participationMapper->participatesInQuestion( $_SESSION["USER_ID"] , $_POST["question-id"] , 2 ) || $_SESSION["USER_LEVEL"]==3 ) )
 				{
 
 					$this->setOutput("response-code" , 2);
+					return;
+				}
+
+				
+				if( $questionnaireMapper->isQuestionPublic($_POST["question-id"]) && $_SESSION["USER_LEVEL"]!=3 )
+				{
+					// Invalid Access
+					$this->setOutput('response-code' , 4);
 					return;
 				}
 
