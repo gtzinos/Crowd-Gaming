@@ -4,6 +4,10 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
+	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/actions/RequestMapper.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class DeleteQuestionnaireController extends Controller
 	{
@@ -40,6 +44,10 @@
 				$answerMapper = new AnswerMapper;
 				$questionGroupMapper = new QuestionGroupMapper;
 				$questionnaireMapper = new QuestionnaireMapper;
+				$userAnswerMapper = new UserAnswerMapper;
+				$groupParticipationMapper = new QuestionGroupParticipationMapper;
+				$participationMapper = new ParticipationMapper;
+				$requestMapper = new RequestMapper;
 
 				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
 
@@ -60,10 +68,15 @@
 				{
 					DatabaseConnection::getInstance()->startTransaction();
 
+					$userAnswerMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
 					$answerMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
 					$questionMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
+					$groupParticipationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
 					$questionGroupMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
+					$requestMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
+					$participationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$questionnaireMapper->deleteById( $_POST["questionnaire-id"]);
+
 
 					DatabaseConnection::getInstance()->commit();
 					$this->setOutput("response-code" , 0); 

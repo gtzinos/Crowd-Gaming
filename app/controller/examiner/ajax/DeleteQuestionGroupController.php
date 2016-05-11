@@ -4,6 +4,8 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class DeleteQuestionGroupController extends Controller
 	{
@@ -41,6 +43,8 @@
 				$answerMapper = new AnswerMapper;
 				$questionGroupMapper = new QuestionGroupMapper;
 				$questionnaireMapper = new QuestionnaireMapper;
+				$userAnswerMapper = new UserAnswerMapper;
+				$groupParticipationMapper = new QuestionGroupParticipationMapper;
 
 				if ( $questionnaireMapper->isGroupPublic($_POST["question-group-id"]) && $_SESSION["USER_LEVEL"]!=3 )
 				{
@@ -52,8 +56,10 @@
 				{
 					DatabaseConnection::getInstance()->startTransaction();
 
+					$userAnswerMapper->deleteByGroup( $_POST["question-group-id"] );
 					$answerMapper->deleteByGroup( $_POST["question-group-id"] );
 					$questionMapper->deleteByGroup( $_POST["question-group-id"]);
+					$groupParticipationMapper->deleteByGroup( $_POST["question-group-id"] );
 					$questionGroupMapper->deleteById( $_POST["question-group-id"]);
 
 					DatabaseConnection::getInstance()->commit();

@@ -3,6 +3,7 @@
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class DeleteQuestionController extends Controller
 	{
@@ -48,12 +49,14 @@
 
 				$questionMapper = new QuestionMapper;
 				$answerMapper = new AnswerMapper;
+				$userAnswerMapper = new UserAnswerMapper;
 
 
 				try
 				{
 					DatabaseConnection::getInstance()->startTransaction();
 
+					$userAnswerMapper->deleteByQuestion( $_POST["question-id"] );
 					$answerMapper->deleteByQuestion( $_POST["question-id"] );
 					$questionMapper->deleteById( $_POST["question-id"]);
 

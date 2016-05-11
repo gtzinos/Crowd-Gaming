@@ -271,6 +271,16 @@ LIMIT ?,?";
 			return false;
 		}
 
+		public function deleteByQuestionnaire($questionnaireId)
+		{
+			$query = "DELETE FROM `QuestionnaireRequest` WHERE `questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
 		public function delete($request)
 		{
 			$query = "DELETE FROM `QuestionnaireRequest` WHERE `id`=?";

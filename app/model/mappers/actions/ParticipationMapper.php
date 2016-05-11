@@ -114,6 +114,15 @@
 			}
 		}
 
+		public function deleteByQuestionnaire($questionnaireId){
+			$query = "DELETE FROM `QuestionnaireParticipation` WHERE `questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i', $questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
 		public function delete($participation){
 			$query = "DELETE FROM `QuestionnaireParticipation` WHERE `user_id`=? AND `questionnaire_id`=? AND `participation_type`=?";
 

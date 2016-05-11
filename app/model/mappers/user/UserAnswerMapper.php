@@ -6,9 +6,11 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/domain/user/UserAnswer.php';
 
-	class UserAnswerMapper extends DataMapper{
+	class UserAnswerMapper extends DataMapper
+	{
 
-		public function findAnswersCountByGroup($questionGroupId ,$userId){
+		public function findAnswersCountByGroup($questionGroupId ,$userId)
+		{
 			$query = "SELECT count(*) as counter FROM `UserAnswer` ".
 					 "INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id` ".
 					 "WHERE `Question`.`question_group_id`=? AND `UserAnswer`.`user_id`=?";
@@ -18,7 +20,8 @@
 
 			$set = $statement->execute();
 			
-			if($set->next()){
+			if($set->next())
+			{
 				return $set->get("counter");
 			}
 			return 0;
@@ -27,7 +30,8 @@
 		/*
 			Checks if the user can answer that question 
 		 */
-		public function canAnswer($questionId , $userId , $groupId){
+		public function canAnswer($questionId , $userId , $groupId)
+		{
 			/*
 				Check if question belongs to questionnaire.
 			 */
@@ -35,7 +39,8 @@
 
 			
 
-			if( $groupId !==  null ){
+			if( $groupId !==  null )
+			{
 				$question = $questionMapper->findNextQuestion($userId,$groupId);
 
 				if($question !== null && $question->getId() == $questionId)
@@ -46,7 +51,8 @@
 			return false;
 		}
 
-		public function findByQuestion($userId, $questionId){
+		public function findByQuestion($userId, $questionId)
+		{
 			$query = "SELECT * FROM `UserAnswer` WHERE `user_id`=? AND `question_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -54,7 +60,8 @@
 
 			$set = $statement->execute();
 
-			if($set->next()){
+			if($set->next())
+			{
 				$userAnswer = new UserAnswer;
 
 				$userAnswer->setUserId( $set->get("user_id") );
@@ -69,7 +76,8 @@
 			return null;
 		}
 
-		public function findByGroup($userId , $groupId){
+		public function findByGroup($userId , $groupId)
+		{
 			$query = "SELECT * FROM `UserAnswer` ".
 					 "INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id` ".
 					 "WHERE `user_id`=? AND `Question`.`question_group_id`=?";
@@ -81,7 +89,8 @@
 
 			$userAnswers = array();
 
-			while($set->next()){
+			while($set->next())
+			{
 				$userAnswer = new UserAnswer;
 
 				$userAnswer->setUserId( $set->get("user_id") );
@@ -96,7 +105,8 @@
 			return $userAnswers;
 		}
 
-		public function findQuestionnaireScore($userId , $questionnaireId ){
+		public function findQuestionnaireScore($userId , $questionnaireId )
+		{
 			$query ="SELECT
 						`Question`.`question_group_id`,
 						count(`UserAnswer`.`is_correct`) as correct_answers,
@@ -118,7 +128,8 @@
 
 			$score = array();
 
-			while( $set->next() ){
+			while( $set->next() )
+			{
 				$arrayItem["group-id"] = $set->get("question_group_id");
 				$arrayItem["correct_answers"] = $set->get("correct_answers");
 				$arrayItem["total_answer"] = $set->get("total_answers");
@@ -131,7 +142,8 @@
 			return $score;
 		}
 
-		public function findQuestionGroupScore($userId , $questionGroupId){
+		public function findQuestionGroupScore($userId , $questionGroupId)
+		{
 			$query ="SELECT
 						count(`UserAnswer`.`is_correct`) as correct_answers,
 						count(`UserAnswer`.`question_id`) as total_answers,
@@ -148,7 +160,8 @@
 
 			$set = $statement->execute();
 
-			if( $set->next() ){
+			if( $set->next() )
+			{
 				$score["correct_answers"] = $set->get("correct_answers");
 				$score["total_answer"] = $set->get("total_answers");
 				$score["score"] = $set->get("score");
@@ -160,8 +173,44 @@
 			return $null;
 		}
 
+		public function deleteByQuestionnaire($questionnaireId)
+		{
+			$query = "DELETE `UserAnswer`.* FROM `UserAnswer`
+					  INNER JOIN `Question` on `Question`.`id`=UserAnswer`.`question_id`
+					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
+					  WHERE `QuestionGroup`.`questionnaire_id`=?";
 
-		public function delete($userAnswer){
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteByGroup($groupId)
+		{
+			$query = "DELETE `UserAnswer`.* FROM `UserAnswer`
+					  INNER JOIN `Question` on `Question`.`id`=`UserAnswer`.`question_id`
+					  WHERE `Question`.`id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $groupId);
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteByQuestion($questionId)
+		{
+			$query = "DELETE FROM `UserAnswer` WHERE `question_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionId );
+
+			$statement->executeUpdate();
+		}
+
+
+		public function delete($userAnswer)
+		{
 			$query = "DELETE FROM `UserAnswer` WHERE `user_id`=? AND `answer_id`=? AND `question_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -170,11 +219,13 @@
 			$statement->executeUpdate();
 		}
 
-		public function persist($userAnswer){
+		public function persist($userAnswer)
+		{
 			$this->_create($userAnswer);
 		}
 
-		private function _create($userAnswer){
+		private function _create($userAnswer)
+		{
 			$query = "INSERT INTO `UserAnswer`(`user_id`, `answer_id`, `question_id`, `latitude`, `longitude`, `answered_time`,`is_correct` ,`answered_date`) VALUES (?,?,?,?,?,?,?,CURRENT_TIMESTAMP)";
 
 			$statement = $this->getStatement($query);
