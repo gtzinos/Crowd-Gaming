@@ -260,7 +260,7 @@
 			$statement = $this->getStatement($query);
 
 			$pattern = '%'.$pattern.'%';
-			$statement->setParameters('sssssssi' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$limit);
+			$statement->setParameters('sssssss' ,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern,$pattern);
 
 			$resultSet = $statement->execute();
 
