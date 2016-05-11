@@ -86,7 +86,7 @@ function getSchedulePlans()
                   hours = parseInt(data.schedule[i]['start-time'] / 60);
                 }
                 minutes = parseInt(data.schedule[i]['start-time'] - (hours*60));
-                alert(hours  + " " + minutes + " " + data.schedule[i]['start-time']);
+
                 //Convert to time
                 hours = (hours < 9 ? "0" : "") + hours;
                 minutes = (minutes < 9 ? "0" : "") + minutes;
