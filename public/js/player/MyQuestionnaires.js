@@ -16,6 +16,7 @@ function getMyQuestionnaires()
           out = "";
       for(i=0;i<data.questionnaire.length;i++)
       {
+
         var minutes_left = data.questionnaire[i]['time-left'];
 
         out += "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' style='margin-top:1.5%;border: 2px solid lightblue' id='ritem" + data.questionnaire[i]['id'] + "'>" +
@@ -69,8 +70,6 @@ function getMyQuestionnaires()
               "</div>";
         }
 
-        var access = data.questionnaire[i]['time-left'] != 0 ? "disabled" : "";
-
         out += "</div>" +
               "<div class='row'>" +
                 "<div class='col-xs-12'>" +
@@ -79,9 +78,17 @@ function getMyQuestionnaires()
                 "<div class='col-xs-12 col-sm-5 col-md-6'>" +
                     "<div style='font-size:17px' > Players: 100 </a></div>" +
                 "</div>" +
-                  "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-4 col-sm-3 col-md-2'>" +
-                    "<button type='button' class='btn btn-success' " + access + " onclick=\"handleQuestionnaireParticipationRequest(" + data.questionnaire[i]['id'] + ",'accept')\"><span class='fa fa-play'> Play</span></button> " +
-                  "</div>" +
+                  "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-4 col-sm-3 col-md-2'>";
+
+         if(data.questionnaire[i]['time-left'] == 0)
+         {
+           out += "<button type='button' class='btn btn-success' onclick=\"playQuestionnaire(" + data.questionnaire[i]['id'] + ")\"><span class='fa fa-play'> Play</span></button> ";
+         }
+         else {
+           out += "<button type='button' class='btn btn-success' disabled><span class='fa fa-play'> Play</span></button> ";
+
+         }
+          out += "</div>" +
               "</div>" +
           "</div>";
        }
@@ -89,4 +96,9 @@ function getMyQuestionnaires()
        $("#my-questionnaires-list").append(out);
     }
   });
+}
+
+function playQuestionnaire(questionnaire_id)
+{
+  window.location.replace(play_questionnaire_page + "/" + questionnaire_id);
 }

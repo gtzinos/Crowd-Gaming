@@ -5,7 +5,8 @@
   <legend class="text-center header">My Questionnaires</legend>
   <?php
       echo "  <script>
-                var questionnaire_page = '" . LinkUtils::generatePageLink('questionnaire') . "';
+                var questionnaire_page = '" . LinkUtils::generatePageLink('play-questionnaire') . "';
+                var play_questionnaire_page = '" . LinkUtils::generatePageLink('play-questionnaire') . "';
               </script>";
   ?>
   <div class="container-fluid">
