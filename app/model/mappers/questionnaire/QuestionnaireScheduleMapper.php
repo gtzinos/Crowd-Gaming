@@ -31,7 +31,7 @@
 		}
 
 		public function findByQuestionnaire($questionnaireId){
-			$query = "SELECT * FROM `QuestionnaireSchedule` WHERE `questionnaire_id`=?";
+			$query = "SELECT * FROM `QuestionnaireSchedule` WHERE `questionnaire_id`=? ORDER BY day ASC";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' , $questionnaireId);
@@ -62,92 +62,102 @@
 
 			$schedules = $this->findByQuestionnaire($questionnaireId);
 
+
 			$maxMinutes = -1;
+
 
 			$dateNowString = date("Y-m-d");
 			$dateNow = new DateTime($dateNowString);
-			$now = time();
 
 			$day = $dateNow->format('w');
 			if( $day == 0)
 				$day = 7;
 
+			$now = time();
+			/*
+			
+				3
+				4
+				5 -> here
+				6 
+
+			 */
+			$queue = new SplQueue();
+			for($i=0; $i < count($schedules); $i++)
+			{
+				if( $schedules[$i]->getDay() != 0 &&
+					$schedules[$i]->getDay() < $day )
+				{
+					$queue->push( $schedules[$i] );
+					unset($schedules[$i]);
+				}
+			}
+
+			while( !$queue->isEmpty() )
+			{
+				$schedules[] = $queue->pop();
+			}
 
 			$ranges = array();
-			for ($i=1; $i <=7 ; $i++) 
-			{ 
-				$ranges[$i] = array();
-			}
+
 
 
 			foreach ($schedules as $schedule) 
 			{
-				if( $schedule->getDay() ==0 )
+				if( $schedule->getDay() ==0 && 
+					$schedule->getStartTime()==0 &&
+					$schedule->getEndTime()==1440 &&
+					$schedule->getStartDate()!==null &&
+					$schedule->getEndDate()!==null)
+				{
+					$startDate = new DateTime($schedule->getStartDate());
+					$endDate = new DateTime($schedule->getEndDate());
+
+					$startTime = $startDate->getTimestamp() + ($schedule->getStartTime() * 60);
+					$endTime = $endDate->getTimestamp() + ($schedule->getEndTime() *60);
+
+					return ($endTime - $now)/60;
+				}
+				else if( $schedule->getDay() ==0 )
 				{
 					$thatDay = clone $dateNow;
 					for ($i=1; $i <= 7 ; $i++) 
 					{ 
-						$startTime = $thatDay->getTimestamp() + $schedule->getStartTime();
-						$endTime = $thatDay->getTimestamp() + $schedule->getEndTime();
+						$startTime = $thatDay->getTimestamp() + ($schedule->getStartTime() * 60);
+						$endTime = $thatDay->getTimestamp() + ($schedule->getEndTime() *60);
 
-						$flag = true;
-						foreach ($ranges[$schedule->getDay()] as $day_range) 
-						{
-							if( $startTime >= $day_range["start_time"] && $startTime<=$day_range["end_time"] )
-							{
-								$flag = false;
-								if( $endTime > $day_range["end_time"] )
-									$day_range["end_time"] = $endTime;
-								break;
-							}
-							else if ($endTime >= $day_range["start_time"] && $endTime<=$day_range["end_time"])
-							{
-								$flag = false;
-								if( $startTime < $day_range["start_time"] )
-									$day_range["end_time"] = $startTime;
-								break;
-							}
-						}
-						if( $flag)
-						{
-							$range["start_time"] = $startTime;
-							$range["end_time"] = $endTime;
+						$range["start_time"] = $startTime;
+						$range["end_time"] = $endTime;
 
-							$ranges[$schedule->getDay()][] = $range;
-						}
+						$ranges[$schedule->getDay()][] = $range;
+						
 						$thatDay->modify("+1 day");
 					}
 				}
 				else
 				{
-					$startTime = $dateNow->getTimestamp() + $schedule->getStartTime();
-					$endTime = $dateNow->getTimestamp() + $schedule->getEndTime();
+					$daysDiff =0;
 
-					$flag = true;
-					foreach ($ranges[$schedule->getDay()] as $day_range) 
-					{
-						if( $startTime >= $day_range["start_time"] && $startTime<=$day_range["end_time"] )
-						{
-							$flag = false;
-							if( $endTime > $day_range["end_time"] )
-								$day_range["end_time"] = $endTime;
-							break;
-						}
-						else if ($endTime >= $day_range["start_time"] && $endTime<=$day_range["end_time"])
-						{
-							$flag = false;
-							if( $startTime < $day_range["start_time"] )
-								$day_range["end_time"] = $startTime;
-							break;
-						}
-					}
-					if( $flag)
-					{
-						$range["start_time"] = $startTime;
-						$range["end_time"] = $endTime;
+					if( $day<=$schedule->getDay() )
+						$daysDiff = $schedule->getDay()-$day;
+					else
+						$daysDiff = 7 - $day + $schedule->getDay();
 
-						$ranges[$schedule->getDay()][] = $range;
-					}
+					
+					$thatDate = clone $dateNow;
+					$thatDate->modify("+".$daysDiff." days");
+
+				//	print "daysDiff : ".$daysDiff." Day:".$schedule->getDay()." Now:".$day." ".$thatDate->format('Y-m-d h:m');
+				//	print " TimeStamp ".$thatDate->getTimestamp()." ".$schedule->getStartTime()." ".$schedule->getEndTime()."<br>";
+
+
+					$startTime = $thatDate->getTimestamp() + ($schedule->getStartTime() *60);
+					$endTime = $thatDate->getTimestamp() + ($schedule->getEndTime() *60);
+
+					$range["start_time"] = $startTime;
+					$range["end_time"] = $endTime;
+
+					$ranges[$schedule->getDay()][] = $range;
 				}
 			}
 
@@ -157,26 +167,41 @@
 			{
 				foreach ($day_range as $time_range) 
 				{
+					//print_r($time_range);
+					//print '<br>';
 					$time_windows[] = $time_range;
 				}
 			}
+			//print "<br><br>";
 
-			for ($i=1; $i < count($time_windows); $i++) 
+			$count =count($time_windows);
+			for ($i=1; $i < $count; $i++) 
 			{ 
-				if(	$time_windows[$i]["start_time"] >= $time_windows[$i-1]["start_time"] &&
-					$time_windows[$i]["start_time"] >= $time_windows[$i-1]["end_time"] )
+				if( $time_windows[$i]["start_time"] == $time_windows[$i-1]["end_time"] )
 				{
-					if( $time_windows[$i]["end_time"] >= $time_windows[$i-1]["end_time"])
-					{
-						$time_windows[$i]["start_time"] = $time_windows[$i-1]["start_time"];
-						unset( $time_windows[$i-1] );
-					}
+					$time_windows[$i]["start_time"] = $time_windows[$i - 1]["start_time"];
+					
+					unset($time_windows[$i-1]);
 				}
 			}
 
-			// At this point $time_windows has all the ranges the questionnaire is online.
-			// 
-			// Work in progress
+
+			//foreach ($time_windows as $window) 
+			//{
+				//print_r($window);
+				//print '<br>';
+			//}
+
+
+			foreach ($time_windows as $window) 
+			{
+				if( $now >= $window["start_time"] && $now <=$window["end_time"])
+				{
+					$maxMinutes = $window["end_time"] - $now;
+					break;
+				}
+			}
+
 
 			return (int)($maxMinutes/60);
 		}
