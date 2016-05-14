@@ -1059,6 +1059,14 @@ function delete_question_group_response(question_group_id)
             Success message
           */
           $("#qgitem"+question_group_id).remove();
+          if($("[id^=qgitem]").length == 0)
+          {
+            $("#question-group-list").html("<a class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
+                        "<div class='col-xs-12'>" +
+                            "<div class='alert alert-danger'>We don't have any question group in our database. </div>" +
+                        "</div>" +
+                        "</a>");
+          }
           show_notification("success","Question group " + question_group_id + " deleted successfully.",5000);
       }
 
