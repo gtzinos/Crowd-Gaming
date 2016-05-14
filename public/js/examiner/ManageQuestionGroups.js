@@ -372,7 +372,6 @@ function show_edit_question_data(question_id,question_text,time_to_answer,creati
     var Optional = {
       ResponseMethod() { return "show_edit_question_data_response"; }
     };
-
     /*
       Send ajax request
     */
@@ -503,6 +502,8 @@ function update_question(question_id)
         4 time-to-answer validation error
         5 Multiplier validation error
         6 Database Error
+        7 Invalid Correct Answer
+        8 You cant edit a public questionnaire
         -1 No data
       */
 
@@ -577,6 +578,22 @@ function update_question(question_id)
         else if(xmlHttp.responseText.localeCompare("6") == 0)
         {
          response_message += "<div class='alert alert-danger'>General Database Error.</div>";
+        }
+        /*
+           If response message == 7
+           Invalid Correct Answer
+        */
+        else if(xmlHttp.responseText.localeCompare("7") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Invalid Correct Answer.</div>";
+        }
+        /*
+           If response message == 8
+           You can't edit a public questionnaire
+        */
+        else if(xmlHttp.responseText.localeCompare("8") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>You can't edit a public questionnaire.</div>";
         }
         /*
            If response message == -1
@@ -693,6 +710,7 @@ function response_create_question(question_group_id)
         5 Database Error
         6 Answer Text validation error
         7 Correct answer error
+        8 Cant create a question when the questionnaire is public
         -1 No data
       */
 
@@ -801,6 +819,14 @@ function response_create_question(question_group_id)
          response_message += "<div class='alert alert-danger'>This is not a valid correct answer.</div>";
         }
         /*
+           If response message == 8
+           7 Correct answer error
+        */
+        else if(xmlHttp.responseText.localeCompare("8") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Cant create a question when the questionnaire is public.</div>";
+        }
+        /*
            If response message == -1
            No data error
         */
@@ -871,6 +897,7 @@ function delete_question_response(question_group_id,question_id)
         1 Authentication failed
         2 Access error
         3 Database error
+        4 Questionnaire is public , you cant delete it.
         -1 No Data
       */
 
@@ -924,6 +951,14 @@ function delete_question_response(question_group_id,question_id)
         else if(xmlHttp.responseText.localeCompare("3") == 0)
         {
          response_message += "<div class='alert alert-danger'>General database error.</div>";
+        }
+        /*
+           If response message == 4
+           Database error
+        */
+        else if(xmlHttp.responseText.localeCompare("4") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Questionnaire is public , you can't delete it.</div>";
         }
         /*
            If response message == -1
@@ -1010,6 +1045,7 @@ function delete_question_group_response(question_group_id)
         1 Authentication failed
         2 Access error
         3 Database error
+        4 Questionnaire is public , you cant delete this.
         -1 No Data
       */
       /*
@@ -1058,6 +1094,14 @@ function delete_question_group_response(question_group_id)
         else if(xmlHttp.responseText.localeCompare("3") == 0)
         {
          response_message += "<div class='alert alert-danger'>General database error.</div>";
+        }
+        /*
+           If response message == 4
+           Questionnaire is public, you cant delete this.
+        */
+        else if(xmlHttp.responseText.localeCompare("4") == 0)
+        {
+         response_message += "<div class='alert alert-danger'>Questionnaire is public, you cant delete this.</div>";
         }
         /*
            If response message == -1
