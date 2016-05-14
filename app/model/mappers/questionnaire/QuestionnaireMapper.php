@@ -66,6 +66,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
+				$arrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
 				$questionnaires[] = $arrayItem;
 			}
 
@@ -119,11 +120,28 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaireInfo["active-publish-request"] = $requestMapper->hasActivePublishRequest($questionnaire->getId());
 				$questionnaireInfo["coordinator"] = $userMapper->findById( $questionnaire->getCoordinatorId() );
 				$questionnaireInfo["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
-
+				$questionnaireInfo["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
 				return $questionnaireInfo;
 			}
 
 			return null;
+		}
+
+		public function findQuestionCount($questionnarieId)
+		{
+			$query = "SELECT count(*) as counter FROM `Question`
+					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
+					  WHERE `QuestionGroup`.`questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+
+			$statement->setParameters("i" , $questionnaireId);
+
+			$res = $statement->execute();
+
+			if( $res->next())
+				return $res->get("counter");
+			return 0;
 		}
 
 		/**

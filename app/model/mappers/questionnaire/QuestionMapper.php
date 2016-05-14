@@ -4,10 +4,12 @@
 	include_once '../app/model/domain/questionnaire/Question.php';
 	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
-	class QuestionMapper extends DataMapper{
+	class QuestionMapper extends DataMapper
+	{
 
 		
-		public function findAll(){
+		public function findAll()
+		{
 			$query = "SELECT * FROM `Question`";
 			$statement = $this->getStatement($query);
 
@@ -15,7 +17,8 @@
 
 			$questions= array();
 
-			while($set->next()){
+			while($set->next())
+			{
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
@@ -31,7 +34,10 @@
 			return $questions;
 		}
 
-		public function findNextQuestion($userId , $groupId){
+		
+
+		public function findNextQuestion($userId , $groupId)
+		{
 
 			$userAnswerMapper = new UserAnswerMapper;
 
@@ -46,7 +52,8 @@
 
 			$set = $statement->execute();
 
-			if($set->next()){
+			if($set->next())
+			{
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
@@ -62,7 +69,8 @@
 
 		}
 
-		public function findGroupIdIfParticipates($questionId , $userId , $participationType , $latitude , $longitude){
+		public function findGroupIdIfParticipates($questionId , $userId , $participationType , $latitude , $longitude)
+		{
 			$query = "SELECT `QuestionGroup`.`id` FROM `QuestionGroup` ".
 					 "INNER JOIN `Question` on `Question`.`question_group_id`=`QuestionGroup`.`id` ".
 					 "INNER JOIN `Questionnaire` on `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` ".
@@ -77,13 +85,15 @@
 
 			$set = $statement->execute();
 
-			if($set->next()){
+			if($set->next())
+			{
 				return $set->get("id");
 			}
 			return null;
 		}
 
-		public function findByQuestionGroup($questionGroupId){
+		public function findByQuestionGroup($questionGroupId)
+		{
 			$query = "SELECT * FROM `Question` WHERE `question_group_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -93,7 +103,8 @@
 
 			$questions= array();
 
-			while($set->next()){
+			while($set->next())
+			{
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
@@ -109,7 +120,8 @@
 			return $questions;
 		}
 
-		public function findById($questionId){
+		public function findById($questionId)
+		{
 			$query = "SELECT * FROM `Question` WHERE `id`=?";
 			
 			$statement = $this->getStatement($query);
@@ -117,7 +129,8 @@
 
 			$set = $statement->execute();
 
-			if($set->next()){
+			if($set->next())
+			{
 				$question = new Question;
 
 				$question->setId( $set->get("id") );
@@ -132,7 +145,8 @@
 				return null;
 		}
 
-		public function findCountByGroup( $questionGroupId ){
+		public function findCountByGroup( $questionGroupId )
+		{
 			$query = "SELECT count(*) as counter FROM `Question` WHERE `question_group_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -145,12 +159,14 @@
 			return 0;
 		}
 
-		public function delete($question){
+		public function delete($question)
+		{
 			$this->deleteById($question->getId());
 		}
 
 		
-		public function findLastCreatedId($question_group_id){
+		public function findLastCreatedId($question_group_id)
+		{
 			$query = "SELECT `id` FROM `Question` WHERE `question_group_id`=? ORDER BY `id` DESC LIMIT 1";
 
 			$statement = $this->getStatement($query);
@@ -164,7 +180,8 @@
 
 		}
 
-		public function deleteById($questionId){
+		public function deleteById($questionId)
+		{
 			$query = "DELETE FROM `Question` WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
@@ -173,7 +190,8 @@
 			$statement->executeUpdate();
 		}
 
-		public function deleteByGroup($groupId){
+		public function deleteByGroup($groupId)
+		{
 			$query = "DELETE FROM `Question` WHERE `question_group_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -182,7 +200,8 @@
 			$statement->executeUpdate();
 		}
 
-		public function deleteByQuestionnaire($questionnaireId){
+		public function deleteByQuestionnaire($questionnaireId)
+		{
 			$query = "DELETE `Question`.* FROM `Question` 
 					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
 					  WHERE `QuestionGroup`.`questionnaire_id`=?";
@@ -193,15 +212,20 @@
 			$statement->executeUpdate();
 		}
 
-		public function persist($question){
-			if( $question->getId() === null ){
+		public function persist($question)
+		{
+			if( $question->getId() === null )
+			{
 				$this->_create($question);
-			}else{
+			}
+			else
+			{
 				$this->_update($question);
 			}
 		}
 
-		private function _create($question){
+		private function _create($question)
+		{
 			$query = "INSERT INTO `Question`(`question_group_id`, `question`, `time_to_answer`, `creation_date` , `multiplier` ) VALUES (?,?,?,CURRENT_TIMESTAMP,?)";
 
 			$statement = $this->getStatement($query);
@@ -215,7 +239,8 @@
 			$statement->executeUpdate();
 		}
 
-		private function _update($question){
+		private function _update($question)
+		{
 			$query = "UPDATE `Question` SET `question_group_id`=?,`question`=?,`time_to_answer`=? ,`multiplier`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
