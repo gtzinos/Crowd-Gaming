@@ -912,7 +912,7 @@ function delete_question_response(question_group_id,question_id)
             Success message
           */
           if (parseInt($("#qcounter"+question_group_id).text()) == 1) {
-            $("#question-list-group").html("<label class='alert alert-danger text-center'>There are no questions on this questionnaire group</label>");
+            $("#question-list-group").html("<label class='alert alert-danger text-center'>There are no questions on this question group</label>");
           }
           $("#qitem"+question_id).remove();
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) - 1);

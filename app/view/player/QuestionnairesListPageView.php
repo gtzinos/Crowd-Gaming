@@ -119,7 +119,7 @@
 	</div>
 
 	<!-- Pager form -->
-	<div class="container-fluid col-xs-12 col-sm-offset-2 col-sm-8	">
+	<div class="container-fluid col-xs-12 col-sm-offset-2 col-sm-8">
 
 		<center>
 			<ul class="pagination">
