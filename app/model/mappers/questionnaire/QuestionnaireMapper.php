@@ -127,7 +127,7 @@ WHERE `Questionnaire`.`id`=? ";
 			return null;
 		}
 
-		public function findQuestionCount($questionnarieId)
+		public function findQuestionCount($questionnaireId)
 		{
 			$query = "SELECT count(*) as counter FROM `Question`
 					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`

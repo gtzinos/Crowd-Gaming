@@ -32,7 +32,7 @@
 		{
 			$query = "SELECT count(*) as counter FROM `UserAnswer` ".
 					 "INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id` ".
-					 "INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` "
+					 "INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` ".
 					 "WHERE `QuestionGroup`.`questionnaire_id`=? AND `UserAnswer`.`user_id`=?";
 					
 			$statement = $this->getStatement($query);
