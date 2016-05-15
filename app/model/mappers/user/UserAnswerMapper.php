@@ -27,6 +27,27 @@
 			return 0;
 		}
 
+
+		public function findAnswersCountByQuestionnaire($questionnaireId ,$userId)
+		{
+			$query = "SELECT count(*) as counter FROM `UserAnswer` ".
+					 "INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id` ".
+					 "INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` "
+					 "WHERE `QuestionGroup`.`questionnaire_id`=? AND `UserAnswer`.`user_id`=?";
+					
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $questionnaireId , $userId);
+
+			$set = $statement->execute();
+			
+			if($set->next())
+			{
+				return $set->get("counter");
+			}
+			return 0;
+		}
+
+
 		/*
 			Checks if the user can answer that question 
 		 */

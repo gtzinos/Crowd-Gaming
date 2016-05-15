@@ -2,6 +2,7 @@
 	include_once 'AuthenticatedController.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class GetQuestionGroupController extends AuthenticatedController
 	{
@@ -24,6 +25,7 @@
 
 			$participationMapper = new ParticipationMapper;
 			$questionGroupMapper = new QuestionGroupMapper;
+			$userAnswerMapper = new UserAnswerMapper;
 
 			$response = array();
 
@@ -59,6 +61,8 @@
 					$arrayItem["radius"] = $questionGroup->getRadius();
 					$arrayItem["creation_date"] = $questionGroup->getCreationDate();
 					$arrayItem["id"] = $questionGroup->getId();
+					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
+					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
 
 					$response["question-group"][] = $arrayItem;
 				}
@@ -84,7 +88,10 @@
 					$response["question-group"]["radius"] = $questionGroup->getRadius();
 					$response["question-group"]["creation_date"] = $questionGroup->getCreationDate();
 					$response["question-group"]["id"] = $questionGroup->getId();
-				
+					$response["question-group"]["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
+					$response["question-group"]["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
+
+
 				}
 				else
 				{
