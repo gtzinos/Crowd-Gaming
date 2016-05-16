@@ -3,9 +3,8 @@ var client_longitude;
 var client_latitude;
 $(window).on("load",function()
  {
-   getGeoLocation();
-   show_clock("#count-down",moment().add(1441,'minutes').format("YYYY/MM/DD hh:mm:ss"));
-   getQuestionGroups();
+     getGeoLocation();
+
  });
 
  function getGeoLocation() {
@@ -19,6 +18,8 @@ $(window).on("load",function()
  function showPosition(position) {
      client_longitude = position.coords.longitude;
      client_latitude = position.coords.latitude;
+     show_clock("#count-down",moment().add(1441,'minutes').format("YYYY/MM/DD hh:mm:ss"));
+     getQuestionGroups();
  }
 
  function showError(error) {
@@ -117,7 +118,7 @@ function displayData()
                                     "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" +
                                 "</div>" +
                                 "<div id='distance'>" +
-                                      "Distance: 132123m <span style='color:#36A0FF' class='fa fa-refresh'></span>" +
+                                      "Distance: " + calculateDistance(i) + "m <span style='color:#36A0FF' class='fa fa-refresh'></span>" +
                                 "</div>"
                               : //else
                                 "<span style='color:red'>No address<span>") +
@@ -135,7 +136,7 @@ function displayData()
   }
 }
 
-function calculateDistance()
+function calculateDistance(i)
 {
     /** Converts numeric degrees to radians */
   if (typeof(Number.prototype.toRad) === "undefined") {
@@ -143,15 +144,15 @@ function calculateDistance()
       return this * Math.PI / 180;
     }
   }
-
-  var R = 6371; // km
-  var dLat = (lat2-lat1).toRad();
-  var dLon = (lon2-lon1).toRad();
-  var lat1 = lat1.toRad();
-  var lat2 = lat2.toRad();
+  var R = groups[i]["radius"]; // km
+  var dLat = (groups[i]["latitude"]-client_latitude).toRad();
+  var dLon = (groups[i]["longitude"]-client_longitude).toRad();
+  var lat1 = groups[i]["latitude"].toRad();
+  var lat2 = client_latitude.toRad();
 
   var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
           Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c;
+  return d;
 }
