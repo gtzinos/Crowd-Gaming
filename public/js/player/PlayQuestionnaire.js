@@ -1,9 +1,45 @@
 var groups = [];
+var client_longitude;
+var client_latitude;
 $(window).on("load",function()
  {
+   getGeoLocation();
    show_clock("#count-down",moment().add(1441,'minutes').format("YYYY/MM/DD hh:mm:ss"));
    getQuestionGroups();
  });
+
+ function getGeoLocation() {
+     if (navigator.geolocation) {
+         navigator.geolocation.getCurrentPosition(showPosition, showError);
+     } else {
+         window.location.replace(webRoot);
+     }
+ }
+
+ function showPosition(position) {
+     client_longitude = position.coords.longitude;
+     client_latitude = position.coords.latitude;
+ }
+
+ function showError(error) {
+     switch(error.code) {
+         case error.PERMISSION_DENIED:
+             show_notification("error","User denied the request for Geolocation.",2000);
+             break;
+         case error.POSITION_UNAVAILABLE:
+             show_notification("error","Location information is unavailable.",2000);
+             break;
+         case error.TIMEOUT:
+             show_notification("error","The request to get user location timed out.",2000);
+             break;
+         case error.UNKNOWN_ERROR:
+             show_notification("error","An unknown error occurred.",2000);
+             break;
+     }
+     setTimeout(function() {
+      window.location.replace(webRoot);
+    },2000);
+ }
 
 //get question groups
 function getQuestionGroups()
@@ -45,7 +81,7 @@ function getAddresses()
         },
         function(data,status)
         {
-            groups[i]["address"] = data["results"] != undefined ? data["results"][0]["formatted_address"] : "";
+            groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
             if(groups[groups.length-1]["address"] != undefined)
             {
               displayData();
@@ -74,10 +110,17 @@ function displayData()
                         "<div class='panel-body'>" +
                           "<div>Answered " +
                             groups[i]["answered-questions"] + "/" + groups[i]["total-questions"] +
-                          "</div>"+
-                          "<div id='location'>" +
-                                  (groups[i]["address"] ? "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" : "<span style='color:red'>No address<span>") +
                           "</div>" +
+                          (groups[i]["address"]
+                              ? //if true (groups[i]["address"] != undefined
+                                "<div id='location'>" +
+                                    "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" +
+                                "</div>" +
+                                "<div id='distance'>" +
+                                      "Distance: 132123m <span style='color:#36A0FF' class='fa fa-refresh'></span>" +
+                                "</div>"
+                              : //else
+                                "<span style='color:red'>No address<span>") +
                           "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>" +
                               "<button class='btn btn-primary round' type='button' " +
                                 (groups[i]["answered-questions"] == groups[i]["total-questions"] ? " disabled>Completed" : ">Play now") +
