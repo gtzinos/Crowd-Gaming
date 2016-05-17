@@ -55,6 +55,42 @@ $(window).on("load",function()
       window.location.replace(webRoot);
     },2000);
  }
+ //change auto refresh status
+ function changeAutoRefreshStatus()
+ {
+   if($("#auto-refresh").css('color') == 'rgb(255, 0, 0)') {
+     $("#auto-refresh").css('color','green');
+     auto_refresh = navigator.geolocation.watchPosition(refreshAllDistances,showError);
+     show_notification("success","Auto refresh enabled successfully.",3000);
+   }
+   else {
+     $("#auto-refresh").css('color','red');
+     navigator.geolocation.clearWatch(auto_refresh);
+     show_notification("success","Auto refresh disabled successfully.",3000);
+   }
+ }
+ //refresh all question groups
+ function refreshAllDistances(position)
+ {
+   //save user location
+   client_longitude = position.coords.longitude;
+   client_latitude = position.coords.latitude;
+   var i,distance;
+   for(i=0;i<groups.length;i++)
+   {
+     distance = calculateDistance(i);
+     $("#distance" + groups[i].id).html("Distance: " + distance + "m ");
+     if(groups[i]["total-questions"] != groups[i]["answered-questions"])
+     {
+       if(distance > 0) {
+         $("#play" + groups[i].id).prop("disabled",true);
+       }
+       else {
+         $("#play" + groups[i].id).prop("disabled",false);
+       }
+     }
+   }
+ }
 
 //get question groups
 function getQuestionGroups()
