@@ -92,6 +92,27 @@ $(window).on("load",function()
    }
  }
 
+ //refresh a specific question groups
+ function refreshASpecificGroup(position)
+ {
+   //save user location
+   client_longitude = position.coords.longitude;
+   client_latitude = position.coords.latitude;
+   var distance;
+   distance = calculateDistance(target_group_index);
+   $("#distance" + groups[target_group_index].id).html("Distance: " + distance + "m ");
+   if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"])
+   {
+     if(distance > 0) {
+       $("#play" + groups[target_group_index].id).prop("disabled",true);
+     }
+     else {
+       $("#play" + groups[target_group_index].id).prop("disabled",false);
+     }
+   }
+   show_notification("success",groups[target_group_index].name + " distance updated successfully",3000);
+ }
+
 //get question groups
 function getQuestionGroups()
 {
