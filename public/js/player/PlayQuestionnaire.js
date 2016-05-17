@@ -1,27 +1,41 @@
 var groups = [];
 var client_longitude;
 var client_latitude;
+var auto_refresh; //auto refresh time out refference
+var target_group_index;
+//initialize page
 $(window).on("load",function()
  {
-     getGeoLocation();
-
+     if(getBrowserCompatibility())
+     {
+       navigator.geolocation.getCurrentPosition(initializePosition, showError);
+     }
+     else
+     {
+       window.location.replace(webRoot);
+     }
  });
-
- function getGeoLocation() {
+ //try to access on client geolocation
+ function getBrowserCompatibility() {
      if (navigator.geolocation) {
-         navigator.geolocation.getCurrentPosition(showPosition, showError);
+         return true;
      } else {
-         window.location.replace(webRoot);
+         return false;
      }
  }
-
- function showPosition(position) {
+ //save client location
+ function initializePosition(position) {
      client_longitude = position.coords.longitude;
      client_latitude = position.coords.latitude;
+
      show_clock("#count-down",moment().add(1441,'minutes').format("YYYY/MM/DD hh:mm:ss"));
+     //change visibility of elements
+     $("#questionnaire-name").css("display","block");
+     $("#count-down").css("display","block");
+     $("#auto-refresh").css("display","block");
      getQuestionGroups();
  }
-
+ //show geolocation errors
  function showError(error) {
      switch(error.code) {
          case error.PERMISSION_DENIED:
@@ -58,7 +72,7 @@ function getQuestionGroups()
     }
   });
 }
-
+//get address from google api
 function getAddresses()
 {
   var i = 0;
@@ -91,7 +105,7 @@ function getAddresses()
      })(i);
   }
 }
-
+//display data on page
 function displayData()
 {
   out = "";
@@ -118,13 +132,13 @@ function displayData()
                                 "<div id='location'>" +
                                     "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" +
                                 "</div>" +
-                                "<div id='distance'>" +
-                                      "Distance: " + calculateDistance(i) + "m <span style='color:#36A0FF' class='fa fa-refresh'></span>" +
+                                "<div>" +
+                                      "<span id='distance" + groups[i].id + "'>Distance: " + calculateDistance(i) + "m </span><span style='color:#36A0FF' class='fa fa-refresh' onclick='target_group_index = " + i + "; navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);'></span>" +
                                 "</div>"
                               : //else
                                 "<span style='color:red'>No address<span>") +
                           "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>" +
-                              "<button class='btn btn-primary round' type='button' " +
+                              "<button id='play" + groups[i].id + "' class='btn btn-primary round' type='button' " +
                                 (groups[i]["answered-questions"] == groups[i]["total-questions"] ? " disabled>Completed" : ">Play now") +
                               "</button>"+
                           "</div>" +
@@ -137,7 +151,7 @@ function displayData()
   }
       $("#accordion").html(out);
 }
-
+//calculate client distance
 function calculateDistance(i)
 {
     /** Converts numeric degrees to radians */
@@ -146,7 +160,7 @@ function calculateDistance(i)
       return this * Math.PI / 180;
     }
   }
-  var R = 6371; // km
+  var R = 6371000; // m
   var dLat = (groups[i]["latitude"]-client_latitude).toRad();
   var dLon = (groups[i]["longitude"]-client_longitude).toRad();
   var lat1 = groups[i]["latitude"].toRad();
@@ -156,5 +170,10 @@ function calculateDistance(i)
           Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c;
+
+  if(d-groups[i] >= 0)
+  {
+    d = d - groups[i].radius;
+  }
   return d.toFixed(2);
 }
