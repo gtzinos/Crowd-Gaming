@@ -25,9 +25,7 @@ $(window).on("load",function()
  }
  //save client location
  function initializePosition(position) {
-     client_longitude = position.coords.longitude;
-     client_latitude = position.coords.latitude;
-
+     savePlayerLocation(position);
      show_clock("#count-down",moment().add(1441,'minutes').format("YYYY/MM/DD hh:mm:ss"));
      //change visibility of elements
      $("#questionnaire-name").css("display","block");
@@ -95,22 +93,39 @@ $(window).on("load",function()
  //refresh a specific question groups
  function refreshASpecificGroup(position)
  {
-   //save user location
-   client_longitude = position.coords.longitude;
-   client_latitude = position.coords.latitude;
+   savePlayerLocation(position);
    var distance;
    distance = calculateDistance(target_group_index);
-   $("#distance" + groups[target_group_index].id).html("Distance: " + distance + "m ");
-   if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"])
+   if(displayDistance(distance))
    {
-     if(distance > 0) {
-       $("#play" + groups[target_group_index].id).prop("disabled",true);
-     }
-     else {
-       $("#play" + groups[target_group_index].id).prop("disabled",false);
-     }
+     show_notification("success",groups[target_group_index].name + " distance updated successfully",3000);
    }
-   show_notification("success",groups[target_group_index].name + " distance updated successfully",3000);
+   else
+   {
+     show_notification("error","Something going wrong",3000);
+   }
+ }
+  //display distance to target group index
+  function displayDistance(distance)
+  {
+    $("#distance" + groups[target_group_index].id).html("Distance: " + distance + "m ");
+    if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"])
+    {
+      if(distance > 0) {
+        $("#play" + groups[target_group_index].id).prop("disabled",true);
+      }
+      else {
+        $("#play" + groups[target_group_index].id).prop("disabled",false);
+      }
+    }
+    return true;
+  }
+
+ //save user location
+ function savePlayerLocation(position)
+ {
+   client_longitude = position.coords.longitude;
+   client_latitude = position.coords.latitude;
  }
 
 //get question groups
@@ -195,8 +210,8 @@ function displayData()
                               : //else
                                 "<span style='color:red'>No address<span>") +
                           "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>" +
-                              "<button id='play" + groups[i].id + "' class='btn btn-primary round' type='button' " +
-                                (groups[i]["answered-questions"] == groups[i]["total-questions"] ? " disabled>Completed" : ">Play now") +
+                              "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' " +
+                                (groups[i]["answered-questions"] == groups[i]["total-questions"] ? " disabled value='Completed'>" : "value='Play now' onclick='playQuestionGroup(" + i + ")'>") +
                               "</button>"+
                           "</div>" +
                       "</div>" +
