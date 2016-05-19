@@ -22,7 +22,7 @@ function show_clock(element,finalDate,strftime="%m months %-d days %-H h %M min 
   })
   //when will finish
   .on('finish.countdown', function(event) {
-    if(flag != 1)
+    if(flag != 1 && onFinishMessage != "")
     {
       flag = 1;
       show_notification("error",onFinishMessage,5000);
