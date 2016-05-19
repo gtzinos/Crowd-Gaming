@@ -18,6 +18,8 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/moment.min.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/daterangepicker/daterangepicker.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/daterangepicker-manager.js"); ?>"></script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/jQuery-countdown/dist/jquery.countdown.min.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/common/jquery-clock.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<?php
 		/*
@@ -35,31 +37,8 @@
 						$minutes_left = intval(get("questionnaire")["time-left"]);
 						if($minutes_left > 0)
 						{
-							/*
-								1 hour => 60 minutes
-								1 day = 1440 minutes
-							*/
-							$days_left = 0;
-							if($minutes_left >= 1440)
-							{
-								$days_left = intval($minutes_left / 1440); //days left
-								$minutes_left -= intval($days_left * 1440);
-							}
-
-							$hours_left = 0;
-							if($minutes_left >= 60)
-							{
-								$hours_left = intval($minutes_left / 60); //days left
-								$minutes_left -= intval($hours_left * 60);
-							}
-							echo "<div class='visible-xs progress-bar progress-bar-striped progress-bar-info' role='progressbar' style='width:100%'>"
-							 	. "" . $days_left . "d " . $hours_left . "h " . $minutes_left . "m" .
-									"</div>
-							";
-							echo "<div class='hidden-xs progress-bar progress-bar-striped progress-bar-info' role='progressbar' style='width:100%'>"
-							 	. "" . $days_left . "d " . $hours_left . "h " . $minutes_left . "m left" .
-									"</div>
-							";
+							echo "<div class='count-down visible-xs progress-bar progress-bar-striped progress-bar-info' role='progressbar' style='width:100%'></div>
+										<div class='count-down hidden-xs progress-bar progress-bar-striped progress-bar-info' role='progressbar' style='width:100%'></div>";
 						}
 						else if($minutes_left == 0)
 						{
