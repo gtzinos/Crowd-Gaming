@@ -249,3 +249,91 @@ function calculateDistance(i)
   }
   return d.toFixed(2);
 }
+
+//try to get client geolocation
+function playQuestionGroup(target)
+{
+  target_group_index = target;
+  navigator.geolocation.getCurrentPosition(getQuestions, showError);
+}
+
+//try to get questions
+function getQuestions(position)
+{
+  $.when(refreshASpecificGroup(position)).done(function() {
+    $.post(webRoot +
+            "/rest_api/questionnaire/" +
+            questionnaire_id + "/group/" +
+            groups[target_group_index].id + "/question/" +
+            groups[target_group_index].latitude + ";" + groups[target_group_index].longitude,
+    {
+    },
+    function(data,status)
+    {
+      if(status == "success")
+      {
+        var out;
+        /*
+            200 : Everything ok.
+            603 : Forbidden, Questionnaire offline
+            604 : Forbidden, You dont have access to that questionnaire
+            606 : Forbidden, Coordinates not provided.
+            607 : Forbidden, Invalid location or user not in participation group.
+            608 : Not Found, Group doesnt not exist or doesnt belong to questionnaire
+            609 : Question Group doesnt have any more questions
+        */
+        if(data.code == "200")
+        {
+          var answers;
+          if(!$("#play-questionnaire").hasClass('in'))
+          {
+            showModal("play-questionnaire");
+          }
+          out = "<div class='form-group'>" +
+                    "<div class='col-xs-2 col-sm-offset-1 col-sm-2'>" +
+                        "<span class='text-center'><i class='material-icons bigicon'>question_answer</i></span>" +
+                    "</div>" +
+                    "<div class='col-xs-7 gt-input-group'>" +
+                        "<label id='question-game'>" + data.question['question-text'] + "</label>" +
+                    "</div>" +
+                "</div>";
+                var i;
+                for(i=0;i<data.answer.length;i++)
+                {
+                  out += "<div class='form-group'>" +
+                            "<div class='col-xs-offset-2 col-xs-7 col-sm-offset-3 radio'>" +
+                              "<label class='active'><input type='radio' checked='' name='optradio'>" + data.answer[i]['answer-text'] + "</label>" +
+                            "</div>" +
+                         "</div>";
+                }
+          $("#play-questionnaire-form").html(out);
+          //alert(JSON.stringify(data));
+        }
+        else if(data.code == "603")
+        {
+          show_notification("Forbidden. Questionnaire is offline.");
+        }
+        else if(data.code == "604")
+        {
+          show_notification("Forbidden. You dont have access to that questionnaire.");
+        }
+        else if(data.code == "606")
+        {
+          show_notification("Forbidden. Coordinates not provided.");
+        }
+        else if(data.code == "607")
+        {
+          show_notification("Forbidden. Invalid location or user not in participation group.");
+        }
+        else if(data.code == "608")
+        {
+          show_notification("Forbidden. Group doesnt not exist or doesnt belong to questionnaire.");
+        }
+        else if(data.code == "609")
+        {
+          show_notification("Forbidden. Question Group doesnt have any more questions.");
+        }
+      }
+    });
+  });
+}
