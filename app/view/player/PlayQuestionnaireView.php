@@ -35,6 +35,8 @@
       </div>
     </form>
   </div>
-
+  <?php
+    load("PLAY_GAME");
+  ?>
 
 <?php endif; ?>
