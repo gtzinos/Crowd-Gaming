@@ -12,7 +12,7 @@
 			$this->defSection('CSS','player/PlayQuestionnaireView.php');
 			$this->defSection('JAVASCRIPT','player/PlayQuestionnaireView.php');
 			$this->defSection('MAIN_CONTENT','player/PlayQuestionnaireView.php');
-
+			$this->defSection('PLAY_GAME','player/PlayGameModal.php');
 		}
 
 		public function run(){
