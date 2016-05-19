@@ -7,7 +7,7 @@ var default_clock_options = {
 };
 var flag = 0;
 // Countdown initialization
-function show_clock(element,finalDate,strftime="%m months %-d days %-H h %M min %S sec",onFinishMessage = "")
+function show_clock(element,finalDate,strftime="%m months %-d days %-H h %M min %S sec",onFinishMessage = "Your time expired.")
 {
   $(element).countdown(finalDate)
   //for each update

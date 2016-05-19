@@ -26,7 +26,11 @@
 			Questionnaire Object
 		*/
 		$questionnaire = get("questionnaire")["questionnaire"];
-		echo "<script> var questionnaire_id = " . $questionnaire->getId() . "; </script>";
+		$minutes_left = intval(get("questionnaire")["time-left"]);
+		echo "<script>
+						var questionnaire_id = " . $questionnaire->getId() . ";
+						var time_left = " . $minutes_left . ";
+		 			</script>";
 	?>
 	<div class="container-fluid">
 		<div class="row">
@@ -34,7 +38,6 @@
 				<div class="progress">
 					<!-- active title gives background animation -->
 					<?php
-						$minutes_left = intval(get("questionnaire")["time-left"]);
 						if($minutes_left > 0)
 						{
 							echo "<div class='count-down visible-xs progress-bar progress-bar-striped progress-bar-info' role='progressbar' style='width:100%'></div>
