@@ -341,6 +341,7 @@ function getNextQuestion(position)
         else if(data.code == "609")
         {
           show_notification("Forbidden. Question Group doesnt have any more questions.");
+          navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
           $("#play-questionnaire").modal("toggle");
         }
       }
