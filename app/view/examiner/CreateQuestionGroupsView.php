@@ -13,7 +13,7 @@
     </div>
   </div>
   <!-- Title -->
-  <legend class="text-center header">Create Questionnaire Group</legend>
+  <legend class="text-center header">Create Question Group</legend>
   <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
     <!-- Question Group Name -->
     <div class="form-group has-feedback">
