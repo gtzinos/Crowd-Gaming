@@ -66,10 +66,15 @@ function getMyQuestionnaires()
                 "</div>" +
                   "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-4 col-sm-3 col-md-2'>";
 
-         if(data.questionnaire[i]['time-left'] == 0)
+         if(data.questionnaire[i]['time-left-to-end'] == 0)
+         {
+            out += "<button type='button' class='btn btn-success' onclick=\"viewQuestionnaireResults(" + data.questionnaire[i]['id'] + ")\"><span class='glyphicon glyphicon-stats'> Results</span></button> ";
+         }
+         else if(data.questionnaire[i]['time-left'] == 0)
          {
            if(data.questionnaire[i]['answered-questions'] == data.questionnaire[i]['total-questions'])
            {
+             out += "<button type='button' class='btn btn-success' disabled><span class='fa fa-play'> Completed</span></button> ";
            }
            else
            {
