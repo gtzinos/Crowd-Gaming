@@ -272,7 +272,7 @@ function getNextQuestion(position)
     {
       if(status == "success")
       {
-        var out;
+        var out = "";
         /*
             200 : Everything ok.
             603 : Forbidden, Questionnaire offline
@@ -284,7 +284,6 @@ function getNextQuestion(position)
         */
         if(data.code == "200")
         {
-          var answers;
           if(!$("#play-questionnaire").hasClass('in'))
           {
             showModal("play-questionnaire");
@@ -318,7 +317,8 @@ function getNextQuestion(position)
           							 "</div>" +
           				"</div>";
           $("#play-questionnaire-form").html(out);
-          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'seconds').format("YYYY/MM/DD hh:mm:ss"),"%m months %-d days %-H h %M min %S sec","Answer time expired.",false);
+          //answer_countdown = data.question['time-to-answer'];
+          show_clock("#question-count-down",moment().add(parseInt(data.question['time-to-answer']),'seconds').format("YYYY/MM/DD hh:mm:ss"));
         }
         else if(data.code == "603")
         {
@@ -354,15 +354,20 @@ function getNextQuestion(position)
 function confirmAnwser(question_id)
 {
   var selected_answer_id = $("input[name='optradio']:checked").val();
-  $.post(webRoot + "rest_api/answer",
+  let data =
   {
     'question-id' : question_id,
     'answer-id' : selected_answer_id,
     'time-answered' : 5
-  },
-  function(data,status)
-  {
-    if(status == "success")
+  };
+  $.ajax({
+    method: "POST",
+    url: webRoot + "rest_api/answer",
+    headers: {
+        "X-Coordinates": groups[target_group_index].latitude + ";" + groups[target_group_index].longitude
+    },
+    data: data,
+    success: function(data)
     {
       /*
         200 : Everything ok.
