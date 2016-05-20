@@ -52,7 +52,7 @@
 				Redirect the page to my-questionnaires
 			 */
 			if($questionnaireInfo === null || $questionnaireInfo["time-left"] != 0 || !$questionnaireInfo["player-participation"])
-			//	$this->redirect("my-questionnaires");
+				$this->redirect("my-questionnaires");
 
 
 			/*
