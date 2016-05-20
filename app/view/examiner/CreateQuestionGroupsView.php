@@ -9,7 +9,7 @@
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback row">
     <div class="col-xs-1">
-      <a class="gt-submit fa fa-hand-o-left" style="font-size:24px" title="Go Back"  href="<?php echo LinkUtils::generatePageLink('questionnaire-groups') . "/" . get("questionnaire-id"); ?>"></a>
+      <a class="gt-submit fa fa-hand-o-left" style="font-size:24px" title="Go Back"  href="<?php echo LinkUtils::generatePageLink('question-groups') . "/" . get("questionnaire-id"); ?>"></a>
     </div>
   </div>
   <!-- Title -->
