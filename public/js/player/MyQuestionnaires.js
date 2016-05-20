@@ -39,9 +39,15 @@ function getMyQuestionnaires()
         }
         else if(minutes_left == 0)
         {
-          out += "    <div class='col-xs-12 col-sm-7 col-md-8'>" +
-                    "<div style='font-size:18px' class='list-group-item-heading'><a class='user_name' href='" + questionnaire_page + "/" + data.questionnaire[i]['id'] + "' style='color:black' target='_blank'>" + data.questionnaire[i]['name'] + "</a></div>" +
-                "</div>";
+          out += "<div class='visible-xs col-xs-offset-5 col-xs-7'>" +
+                    "<div style='font-size:15px' class='list-group-item-heading'> <div class='progress-bar progress-bar-striped progress-bar-success active' role='progressbar' style='width:100%'>Running</div></div>" +
+                  "</div>" +
+                  "<div class='col-xs-12 col-sm-7 col-md-8'>" +
+                      "<div style='font-size:18px' class='list-group-item-heading'><a class='user_name' href='" + questionnaire_page + "/" + data.questionnaire[i]['id'] + "' style='color:black' target='_blank'>" + data.questionnaire[i]['name'] + "</a></div>" +
+                  "</div>" +
+                  "<div class='hidden-xs col-sm-offset-2 col-sm-3 col-md-2'>" +
+                      "<div style='font-size:15px' class='list-group-item-heading'><div class='progress-bar progress-bar-striped progress-bar-success active' role='progressbar' style='width:100%'>Running</div></div>" +
+                  "</div>";
         }
         else if(minutes_left == -1){
           out += "<div class='visible-xs col-xs-offset-5 col-xs-7'>" +
