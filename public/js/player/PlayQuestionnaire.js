@@ -254,11 +254,11 @@ function calculateDistance(i)
 function playQuestionGroup(target)
 {
   target_group_index = target;
-  navigator.geolocation.getCurrentPosition(getQuestions, showError);
+  navigator.geolocation.getCurrentPosition(getNextQuestion, showError);
 }
 
 //try to get questions
-function getQuestions(position)
+function getNextQuestion(position)
 {
   $.when(refreshASpecificGroup(position)).done(function() {
     $.post(webRoot +
@@ -341,6 +341,7 @@ function getQuestions(position)
         else if(data.code == "609")
         {
           show_notification("Forbidden. Question Group doesnt have any more questions.");
+          $("#play-questionnaire").modal("toggle");
         }
       }
     });
