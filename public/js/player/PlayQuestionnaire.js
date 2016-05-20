@@ -302,12 +302,21 @@ function getQuestions(position)
                 {
                   out += "<div class='form-group'>" +
                             "<div class='col-xs-offset-2 col-xs-7 col-sm-offset-3 radio'>" +
-                              "<label class='active'><input type='radio' checked='' name='optradio'>" + data.answer[i]['answer-text'] + "</label>" +
+                              "<label class='active'><input type='radio' name='optradio' value='" + data.answer[i]['id'] + "'>" + data.answer[i]['answer-text'] + "</label>" +
                             "</div>" +
                          "</div>";
                 }
+          out += "<br><br><div class='form-group'>" +
+          							 "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
+          								 "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
+          							 "</div>" +
+          							 "<div class='col-xs-3 col-sm-2'>" +
+          								 "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
+          									 "Cancel" +
+          								 "</button>" +
+          							 "</div>" +
+          				"</div>";
           $("#play-questionnaire-form").html(out);
-          //alert(JSON.stringify(data));
         }
         else if(data.code == "603")
         {
@@ -335,5 +344,65 @@ function getQuestions(position)
         }
       }
     });
+  });
+}
+
+function confirmAnwser(question_id)
+{
+  var selected_answer_id = $("input[name='optradio']:checked").val();
+  alert(question_id + " " + selected_answer_id);
+  $.post(webRoot + "rest_api/answer",
+  {
+    'question-id' : question_id,
+    'answer-id' : selected_answer_id,
+    'time-answered' : 5
+  },
+  function(data,status)
+  {
+    if(status == "success")
+    {
+      /*
+        200 : Everything ok.
+        603 : Forbidden, Questionnaire offline
+        605 : Forbidden, You cant answer this question
+        606 : Forbidden, Coordinates not provided.
+        607 : Forbidden, Invalid location or user not in participation group.
+        500 : Internal server error.
+        610 : Invalid Request, question-id and/or answer-id were not given
+      */
+      if(data.code == "200")
+      {
+        show_notification("success","Question anwsered successfully.",3000);
+        playQuestionGroup(target_group_index);
+      }
+      else if(data.code == "603")
+      {
+        show_notification("error","Forbidden, Questionnaire is offline",3000);
+      }
+      else if(data.code == "605")
+      {
+        show_notification("error","Forbidden, You cant answer this question",3000);
+      }
+      else if(data.code == "606")
+      {
+        show_notification("error","Forbidden, Coordinates not provided.",3000);
+      }
+      else if(data.code == "607")
+      {
+        show_notification("error","Forbidden, Invalid location or user not in participation group.",3000);
+      }
+      else if(data.code == "500")
+      {
+        show_notification("error","Internal server error.",3000);
+      }
+      else if(data.code == "610")
+      {
+        show_notification("error","Invalid Request, question-id and/or answer-id were not given.",3000);
+      }
+      else
+      {
+        show_notification("error","Unknow error. Please contact with us.",3000);
+      }
+    }
   });
 }
