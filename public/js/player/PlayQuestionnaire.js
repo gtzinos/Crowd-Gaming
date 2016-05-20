@@ -354,7 +354,6 @@ function getNextQuestion(position)
 function confirmAnwser(question_id)
 {
   var selected_answer_id = $("input[name='optradio']:checked").val();
-  alert(question_id + " " + selected_answer_id);
   $.post(webRoot + "rest_api/answer",
   {
     'question-id' : question_id,
