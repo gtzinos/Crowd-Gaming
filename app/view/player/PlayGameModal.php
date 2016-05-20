@@ -11,10 +11,6 @@
 
 						</form>
 				 </div>
-				<!-- Footer fields -->
-				<div class="modal-footer container-fluid">
-
-				 </div>
 			 </div>
 		 </div>
 	 </div>
