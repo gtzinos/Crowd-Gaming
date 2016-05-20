@@ -58,7 +58,8 @@ function getMyQuestionnaires()
         out += "</div>" +
               "<div class='row'>" +
                 "<div class='col-xs-12'>" +
-                    "<div style='font-size:17px' > Answers : 10/50 </div>" +
+                    "<div style='font-size:17px' >" +
+                      " Answers : " + data.questionnaire[i]['answered-questions'] + "/" + data.questionnaire[i]['total-questions'] + " </div>" +
                 "</div>" +
                 "<div class='col-xs-12 col-sm-5 col-md-6'>" +
                     "<div style='font-size:17px' > Players: 100 </a></div>" +
@@ -67,11 +68,16 @@ function getMyQuestionnaires()
 
          if(data.questionnaire[i]['time-left'] == 0)
          {
-           out += "<button type='button' class='btn btn-success' onclick=\"playQuestionnaire(" + data.questionnaire[i]['id'] + ")\"><span class='fa fa-play'> Play</span></button> ";
-         }
+           if(data.questionnaire[i]['answered-questions'] == data.questionnaire[i]['total-questions'])
+           {
+           }
+           else
+           {
+             out += "<button type='button' class='btn btn-success' onclick=\"playQuestionnaire(" + data.questionnaire[i]['id'] + ")\"><span class='fa fa-play'> Play</span></button> ";
+           }
+           }
          else {
            out += "<button type='button' class='btn btn-success' disabled><span class='fa fa-play'> Play</span></button> ";
-
          }
           out += "</div>" +
               "</div>" +
