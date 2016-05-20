@@ -318,7 +318,7 @@ function getNextQuestion(position)
           							 "</div>" +
           				"</div>";
           $("#play-questionnaire-form").html(out);
-          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'seconds').format("YYYY/MM/DD hh:mm:ss"));
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'seconds').format("YYYY/MM/DD hh:mm:ss"),"%m months %-d days %-H h %M min %S sec","Answer time expired.",false);
         }
         else if(data.code == "603")
         {
