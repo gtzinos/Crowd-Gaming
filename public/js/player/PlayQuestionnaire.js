@@ -26,7 +26,7 @@ $(window).on("load",function()
  //save client location
  function initializePosition(position) {
      savePlayerLocation(position);
-     show_clock("#count-down",moment().add(1441,'minutes').format("YYYY/MM/DD hh:mm:ss"));
+     show_clock("#count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD hh:mm:ss"));
      //change visibility of elements
      $("#questionnaire-name").css("display","block");
      $("#count-down").css("display","block");
