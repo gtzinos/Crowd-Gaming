@@ -289,14 +289,15 @@ function getNextQuestion(position)
           {
             showModal("play-questionnaire");
           }
-          out = "<div class='form-group'>" +
-                    "<div class='col-xs-2 col-sm-offset-1 col-sm-2'>" +
-                        "<span class='text-center'><i class='material-icons bigicon'>question_answer</i></span>" +
-                    "</div>" +
-                    "<div class='col-xs-7 gt-input-group'>" +
-                        "<label id='question-game'>" + data.question['question-text'] + "</label>" +
-                    "</div>" +
-                "</div>";
+          out = " <div class='col-xs-4 col-xs-offset-8 col-sm-offset-9 col-sm-3' id='question-count-down'> </div>" +
+                  "<div class='form-group'>" +
+                      "<div class='col-xs-2 col-sm-offset-1 col-sm-2'>" +
+                          "<span class='text-center'><i class='material-icons bigicon'>question_answer</i></span>" +
+                      "</div>" +
+                      "<div class='col-xs-7 gt-input-group'>" +
+                          "<label id='question-game'>" + data.question['question-text'] + "</label>" +
+                      "</div>" +
+                  "</div>";
                 var i;
                 for(i=0;i<data.answer.length;i++)
                 {
@@ -317,6 +318,7 @@ function getNextQuestion(position)
           							 "</div>" +
           				"</div>";
           $("#play-questionnaire-form").html(out);
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'seconds').format("YYYY/MM/DD hh:mm:ss"));
         }
         else if(data.code == "603")
         {
