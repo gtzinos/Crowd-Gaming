@@ -240,7 +240,7 @@
 
 		public function findRepeatCount($groupId , $userId)
 		{
-			$query ="SELECT `repeat_count' FROM `QuestionGroupRepeats` 
+			$query ="SELECT `repeat_count` FROM `QuestionGroupRepeats` 
 					 WHERE `user_id`=? AND `question_group_id`=?";
 
 			$statement = $this->getStatement($query);
@@ -250,12 +250,21 @@
 
 			if( $set->next() )
 				return $set->get("repeat_count");
-			return 0;
+			return 1;
 		}
 
 		public function persistRepeats($groupId , $userId , $repeatCounter)
 		{
-			$query = "UPDATE `QuestionGroupRepeats` SET `repeat_count`=? WHERE `user_id`=? AND `question_group_id`=?";
+			if ( $repeatCounter==2)
+			{
+				$query = "INSERT INTO `QuestionGroupRepeats` (`repeat_count`,`user_id`,`question_group_id`) VALUES (?,?,?)";
+			}
+			else
+			{
+				$query = "UPDATE `QuestionGroupRepeats` SET `repeat_count`=? WHERE `user_id`=? AND `question_group_id`=?";
+			}
+
+			
 			
 			$statement = $this->getStatement($query);
 			$statement->setParameters('iii',$repeatCounter , $userId , $groupId);

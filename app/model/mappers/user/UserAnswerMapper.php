@@ -211,10 +211,22 @@
 		{
 			$query = "DELETE `UserAnswer`.* FROM `UserAnswer`
 					  INNER JOIN `Question` on `Question`.`id`=`UserAnswer`.`question_id`
-					  WHERE `Question`.`id`=?";
+					  WHERE `Question`.`question_group_id`=?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' , $groupId);
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteByGroupAndUser($groupId, $userId)
+		{
+			$query = "DELETE `UserAnswer`.* FROM `UserAnswer`
+					  INNER JOIN `Question` on `Question`.`id`=`UserAnswer`.`question_id`
+					  WHERE `Question`.`question_group_id`=? AND `UserAnswer`.`user_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $groupId,$userId);
 
 			$statement->executeUpdate();
 		}
