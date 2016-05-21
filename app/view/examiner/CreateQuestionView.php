@@ -4,7 +4,7 @@
     <div class="modal-content">
        <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span>Create Question</h4>
+         <h4 class="gt-modal-header"><span class="material-icons">question_answer</span> Create Question</h4>
        </div>
        <div class="modal-body container-fluid">
           <form id="create-question-form" onsubmit="return false" class="form-horizontal">
