@@ -10,7 +10,7 @@
 						<form id="required-message-form" onsubmit="return false" method="POST" class="form-horizontal">
               <div class="form-group has-feedback">
                   <div class=" col-xs-2 col-sm-offset-1 col-sm-2">
-                      <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
+                      <span class="text-center"><i class="fa fa-key bigicon"></i></span>
                   </div>
                   <div class="col-xs-7 gt-input-group" data-validate="length" data-length="2">
                       <input type="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" maxlength="1000" id="required-message" style="height:60px" name="required-message" placeholder="Password. (Required)" required>
