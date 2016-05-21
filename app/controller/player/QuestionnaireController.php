@@ -22,7 +22,7 @@
 			$this->defSection("QUESTIONNAIRE_PLAYERS" , "player/QuestionnairePlayersView.php");
 			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
 			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditModalView.php");
-			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersView.php");
+			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersModalView.php");
 			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsView.php");
 			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredMessageModalView.php");
 
