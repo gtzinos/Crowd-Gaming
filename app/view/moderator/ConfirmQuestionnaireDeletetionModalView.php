@@ -11,7 +11,7 @@
 							<!-- Password Field -->
 							<div class="form-group has-feedback">
 									<div class="col-xs-offset-1 col-xs-2 col-sm-offset-1 col-sm-2">
-										<span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
+										<span class="text-center mediumicon" ><i class="fa fa-key "></i></span>
 									</div>
 									<div class="col-xs-offset-0 col-xs-7 gt-input-group" data-validate="length" data-length="8">
 											<input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="confirm-password-text" type="password" placeholder="Password (Required) *Length >= 8" required >
@@ -26,10 +26,10 @@
 						<div class="form-group">
 							 <div class="col-xs-offset-0 col-xs-6 col-sm-offset-1 col-sm-5">
 								 <!-- A Script will add on click method -->
-								 <button form="confirm-modal-form" id="confirm-questionnaire-deletion-button" type="button" class="btn btn-primary btn-md round gt-submit" disabled>Confirm &#38; Delete</button>
+								 <button form="confirm-modal-form" id="confirm-questionnaire-deletion-button" type="button" class="btn btn-primary btn-md gt-submit" disabled>Confirm &#38; Delete</button>
 							 </div>
 							 <div class="col-xs-3 col-sm-2">
-								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >
+								 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
 									 Cancel
 								 </button>
 							 </div>
