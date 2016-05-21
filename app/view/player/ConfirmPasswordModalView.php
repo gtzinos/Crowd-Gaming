@@ -40,10 +40,10 @@
 						<form id="confirm-modal-form" onsubmit="return false" class="form-horizontal">
 							<!-- Password Field -->
 							<div class="form-group has-feedback">
-									<div class="col-xs-offset-1 col-xs-2 col-sm-offset-1 col-sm-2">
+									<div class="col-xs-offset-1 col-xs-1 col-sm-offset-1">
 										<span class="text-center mediumicon"><i class="fa fa-key"></i></span>
 									</div>
-									<div class="col-xs-offset-0 col-xs-7 gt-input-group" data-validate="length" data-length="8">
+									<div class="col-xs-7 gt-input-group" data-validate="length" data-length="8">
 											<input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="confirm-password" type="password" placeholder="Password (Required) *Length >= 8" required >
 											<span class="gt-icon"></span>
 									</div>
@@ -57,22 +57,18 @@
 									<label id="confirm-response" class="responseLabel"></label>
 								</div>
 							</div>
+							<div class="form-group">
+								 <div class="col-xs-offset-2 col-xs-6 col-sm-offset-2 col-sm-3">
+									 <!-- A Script will add on click method -->
+									 <button form="confirm-modal-form" id="confirm-button" type="button" class="btn btn-primary btn-md gt-submit" disabled>Confirm Password</button>
+								 </div>
+								 <div class="hidden-xs col-xs-3 col-sm-2">
+									 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
+										 Cancel
+									 </button>
+								 </div>
+							</div>
 						</form>
-				 </div>
-				<!-- Footer fields -->
-				<div class="modal-footer container-fluid">
-						<!-- Confirm Password / Cancel Button Field -->
-						<div class="form-group">
-							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-3 col-sm-4">
-								 <!-- A Script will add on click method -->
-								 <button form="confirm-modal-form" id="confirm-button" type="button" class="btn btn-primary btn-md gt-submit" disabled>Confirm Password</button>
-							 </div>
-							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
-								 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
-									 Cancel
-								 </button>
-							 </div>
-						</div>
 				 </div>
 			 </div>
 		 </div>
