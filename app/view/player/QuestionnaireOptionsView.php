@@ -5,18 +5,18 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Join on this questionnaire </h4>
+					 <h4 class="gt-modal-header"><span class="fa fa-lock"></span> Join on this questionnaire </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form onsubmit="return !$('#option-request-button').prop('disabled')" method="POST" class="form-horizontal">
 
-							<!-- Message Text Field -->
+							<!-- Password Text Field -->
               <div class="form-group has-feedback row">
                   <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
-                      <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
+                      <span class="text-center mediumicon"><i class="fa fa-key"></i></span>
                   </div>
                   <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="length" data-length="1">
-                      <textarea class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 characters" maxlength="250" name="message" placeholder="Would you like to send us something ? (Optional)" ></textarea>
+                      <input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 1 characters" maxlength="250" name="message" placeholder="Password (*Required)" required>
                       <span class="gt-icon"></span>
                   </div>
               </div>
