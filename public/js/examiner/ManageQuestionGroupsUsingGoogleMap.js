@@ -1,3 +1,15 @@
+$(window).on("load",function(){
+  $("#longitude,#latitude,#radius").on("keydown change",function(){
+    if(this.value.length > 0)
+    {
+      $("#longitude,#latitude,#radius").prop("required",true);
+    }
+    else if($("#longitude").val().length == 0 && $("#latitude").val().length == 0 && $("#radius").val().length == 0) {
+      $("#longitude,#latitude,#radius").removeAttr("required");
+    }
+  });
+});
+
 /*
   Initialize variables
 */
