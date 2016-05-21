@@ -66,6 +66,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$arrayItem["active-player-request"] = $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["active-examiner-request"] = $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaire->getId() );
 				$arrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
+				
 				$questionnaires[] = $arrayItem;
 			}
 
@@ -119,7 +120,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaireInfo["active-publish-request"] = $requestMapper->hasActivePublishRequest($questionnaire->getId());
 				$questionnaireInfo["coordinator"] = $userMapper->findById( $questionnaire->getCoordinatorId() );
 				$questionnaireInfo["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
-
+				
 				return $questionnaireInfo;
 			}
 
@@ -197,6 +198,24 @@ WHERE `Questionnaire`.`id`=? ";
 					return true;
 			}
 			return false;
+		}
+
+		public function findIdByQuestion( $questionId)
+		{
+			$query = "SELECT `QuestionGroup`.`questionnaire_id` FROM `QuestionGroup`
+					  INNER JOIN `Question` ON `Question`.`question_group_id`=`QuestionGroup`.`id`
+					  WHERE `Question`.`id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionId);
+
+			$set = $statement->execute();
+
+			if ( $set->next() )
+			{
+				return $set->get("questionnaire_id");
+			}
+			return 0;
 		}
 
 		/**

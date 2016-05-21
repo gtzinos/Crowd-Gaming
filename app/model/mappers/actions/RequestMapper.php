@@ -327,7 +327,7 @@ LIMIT ?,?";
 				$request->getResponseText(),
 				$request->getResponse(),
 				$request->getId() );
-
+			
 			$statement->executeUpdate();
 		}		
 

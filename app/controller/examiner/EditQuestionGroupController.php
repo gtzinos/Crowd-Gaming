@@ -60,8 +60,9 @@
 				5 radius validation error
 				6 Database error
 				7 Cant Edit a public Questionnaire
+				8 Invalid allowed repeats
 			 */
-			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] ) )
+			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] , $_POST["allowed_repeats"]) )
 			{
 				$questionnaireMapper = new QuestionnaireMapper;
 				if( $questionnaireMapper->isGroupPublic($groupId) && $_SESSION["USER_LEVEL"]!=3)
@@ -87,8 +88,15 @@
 					return;
 				}
 
-				$questionGroup->setName( $name );				
+				if( $_POST["allowed_repeats"] < 1 )
+				{
+					$this->setOutput('response-code' , 8);
+					return;
+				}
 
+				$questionGroup->setName( $name );				
+				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
+				
 				if(  !empty( $_POST["latitude"]) && !empty($_POST["longitude"]) && !empty($_POST["radius"]) )
 				{
 					if( !is_numeric($_POST["latitude"]) || $_POST["latitude"]< -90 || $_POST["latitude"] > 90 )

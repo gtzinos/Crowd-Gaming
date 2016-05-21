@@ -5,6 +5,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
 
 	class UserAnswerController extends AuthenticatedController
@@ -37,16 +38,18 @@
 				print json_encode($response);
 				return;
 			}
-
-			$scheduleMapper = new QuestionnaireScheduleMapper;
 			
-			if($scheduleMapper->findMinutesToStart($questionnaireId) !== 0)
+		
+			$scheduleMapper = new QuestionnaireScheduleMapper;
+			$questionnaireMapper = new QuestionnaireMapper;
+			
+			if($scheduleMapper->findMinutesToStart($questionnaireMapper->findIdByQuestion($parameters["question-id"])) !== 0)
 			{
 				/*
 					Questionnaire Offline
 				 */
 				$response["code"] = "603";
-				$response["message"] = "Forbidden, Questionnaire offline";
+				$response["message"] = "Forbidden, Questionnaire FUCK offline";
 
 				http_response_code(403);
 				print json_encode($response);
@@ -104,6 +107,8 @@
 				}
 				else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) )
 				{
+
+					print $coordinates["latitude"]. ' '. $coordinates["longitude"].'<br>';
 
 					$response["code"] = "607";
 					$response["message"] = "Forbidden, Invalid location.";
