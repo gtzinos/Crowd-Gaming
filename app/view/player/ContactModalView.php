@@ -4,7 +4,7 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Ask Something </h4>
+					 <h4 class="gt-modal-header"><span class="material-icons">message</span> Ask Something </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form id="contact-form" onsubmit="return !$('#contact-coordinator').prop('disabled')" method="POST" class="form-horizontal">
