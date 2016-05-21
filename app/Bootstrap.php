@@ -43,7 +43,7 @@
 	if( isset($_SESSION["USER_ID"]))
 	{
 
-		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordView.php");
+		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordModalView.php");
 
 
 		if( $_SESSION["USER_LEVEL"] == 1)
