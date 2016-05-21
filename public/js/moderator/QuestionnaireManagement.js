@@ -439,7 +439,7 @@ function ban_members_from_questionnaire(action_type,confirmed)
 function show_confirm_modal()
 {
   showModal('confirm-questionnaire-deletion');
-  $('#qtitle-confirm-deletion-modal').html("<span class='glyphicon glyphicon-lock'></span> Delete questionnaire " + questionnaires[questionnaire_index].name);
+  $('#qtitle-confirm-deletion-modal').html("<span class='fa fa-lock'></span> Delete questionnaire " + questionnaires[questionnaire_index].name);
   $("#confirm-questionnaire-deletion-button").bind("click",function() {
     delete_questionnaire();
   });
