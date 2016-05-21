@@ -5,7 +5,7 @@
 
 	class CreateQuestionnaireController extends Controller
 	{
-		
+
 		public function init()
 		{
 			if( isset($this->params[1]) && $this->params[1]=="ajax")
@@ -21,8 +21,8 @@
 				$this->defSection('CSS','examiner/CreateQuestionnaireView.php');
 				$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireView.php');
 				$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireView.php');
-			}			
-			
+			}
+
 			$this->setArg("PAGE_TITLE","Create a new Questionnaire!");
 		}
 
@@ -35,11 +35,11 @@
 				0			: Created successfully
 				1			: Name Validation error
 				2			: Description Validation error
-				3			: Message Required Error
+				3			: Password Required Error
 				4			: Database Error
 				5			: Name already exists
 			 */
-			
+
 			if( isset($this->params[1], $_POST["name"] ,  $_POST["description"] , $_POST["message_required"] ) && $this->params[1]=="ajax" )
 			{
 
@@ -63,7 +63,7 @@
 
 				if( strlen($name) < 3 )
 				{
-					
+
 					print 1; // Name Validation error
 
 				}
@@ -73,14 +73,14 @@
 				}
 				else if( strlen($description) < 30 )
 				{
-					
+
 					print 2; // Descriptin validation error
 
 				}
 				else if( $messageRequired != "no" && $messageRequired != "yes")
 				{
 
-					print 3; // Message required error
+					print 3; // Password required error
 
 				}
 				else
@@ -104,7 +104,7 @@
 					$playerParticipation->setUserId( $_SESSION["USER_ID"]);
 					$playerParticipation->setParticipationType( 1 );
 
-					
+
 					$participationMapper = new ParticipationMapper;
 
 					try
@@ -112,7 +112,7 @@
 						DatabaseConnection::getInstance()->startTransaction();
 
 
-						$questionnaireMapper->persist($questionnaire);	
+						$questionnaireMapper->persist($questionnaire);
 
 						$questionnaireId = $questionnaireMapper->findLastCreateId($_SESSION["USER_ID"]);
 
@@ -132,7 +132,7 @@
 					}
 					catch(DatabaseException $ex)
 					{
-						
+
 						DatabaseConnection::getInstance()->rollback();
 						print 4; // Database Error
 					}

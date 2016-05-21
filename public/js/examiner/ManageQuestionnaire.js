@@ -17,7 +17,7 @@ $(document)
   });
 
 $(window).load(function() {
-  //on message required list change
+  //on password required list change
   $("#message-required").on("change",function(){
     if(this.value == "yes")
     {
@@ -256,7 +256,7 @@ function responseCreateQuestionnaire()
         0			: Created successfully
         1			: Name Validation error
         2			: Description Validation error
-        3			: Message Required Error
+        3			: Password Required Error
         4			: Database Error
       */
 
@@ -311,11 +311,11 @@ function responseCreateQuestionnaire()
         }
         /*
            If response message == 3
-           Message Required Error
+           Password Required Error
         */
         else if(xmlHttp.responseText.localeCompare("3") == 0)
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid message required option.</div>";
+         response_message += "<div class='alert alert-danger'>This is not a valid password required option.</div>";
         }
         /*
            If response message == 4
@@ -404,7 +404,7 @@ function responseUpdateQuestionnaire()
     0			: Edited successfully
     1			: Name Validation error
     2			: Description Validation error
-    3			: Message Required Error
+    3			: Password Required Error
     4			: Database Error
    */
    /*
@@ -474,11 +474,11 @@ function responseUpdateQuestionnaire()
  					}
  					/*
  						 If response message == 3
- 						 Not a valid Message Required value
+ 						 Not a valid Password Required value
  					*/
  					else if(xmlHttp.responseText.localeCompare("3") == 0)
  					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid Message Required value.</div>";
+ 					 response_message += "<div class='alert alert-danger'>Not a valid password required value.</div>";
  					}
  					/*
  						 If response message == 4

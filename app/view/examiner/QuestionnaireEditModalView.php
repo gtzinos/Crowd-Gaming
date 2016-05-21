@@ -39,7 +39,7 @@
                   </div>
               </div>
 
-              <!-- Message Required -->
+              <!-- Password Required -->
               <div class="form-group has-feedback">
                   <div class="col-xs-12 col-sm-offset-3 col-sm-9">
                     <label for="email">Would you like users send a password ?</label>
@@ -48,7 +48,7 @@
                     <select id="mrequired" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
                       <?php
                         /*
-                          Message required
+                          Password required
                         */
                         if($questionnaire->getMessageRequired())
                         {
@@ -56,7 +56,7 @@
                           echo "<option value='yes' selected>Yes</option>";
                         }
                         /*
-                          No Message required
+                          No Password required
                         */
                         else
                         {

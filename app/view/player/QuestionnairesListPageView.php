@@ -96,7 +96,7 @@
 									*/
 									if($questionnaires["questionnaire"] -> getMessageRequired() == 1 )
 									{
-										echo "<div class='col-xs-12'> <span style='color:grey'> <i class='fi-lock'> </i>Message required</span></div>";
+										echo "<div class='col-xs-12'> <span style='color:grey'> <i class='fi-lock'> </i>Password required</span></div>";
 									}
 									echo "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-8 col-sm-3'>
 													<a class='btn btn-primary round' target='_blank' type='button' href=\""

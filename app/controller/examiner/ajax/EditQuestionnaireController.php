@@ -9,13 +9,13 @@
 		}
 
 		public function run(){
-			
+
 			/*
 				Response code values
 				0			: Edited successfully
 				1			: Name Validation error
 				2			: Description Validation error
-				3			: Message Required Error
+				3			: Password Required Error
 				4			: Database Error
 				5			: Name already in use
 				6			: User must be coordinator
@@ -65,7 +65,7 @@
 
 				if( $messageRequired != "no" && $messageRequired != "yes"){
 
-					$this->setOutput("response-code" , 3); // Message required error
+					$this->setOutput("response-code" , 3); // Password required error
 					return;
 				}
 
@@ -76,7 +76,7 @@
 				$questionnaire->setMessage( $message);
 				$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
 
-					
+
 				try{
 					DatabaseConnection::getInstance()->startTransaction();
 

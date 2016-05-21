@@ -27,14 +27,14 @@
 								 	<span class="gt-icon"></span>
 							</div>
 					</div>
-					<!-- Message Required -->
+					<!-- Password Required -->
 					<div class="form-group has-feedback">
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
 								<label for="email">Would you like users send a password ?</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
 								<select id="message-required" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
-									<option value="-" disabled selected>Message Required</option>
+									<option value="-" disabled selected>Password Required</option>
 									<option value="no">No</option>
 									<option value="yes">Yes</option>
 								</select>

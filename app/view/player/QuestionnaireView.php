@@ -104,7 +104,7 @@
 				*/
 				if($questionnaire -> getMessageRequired() == 1 )
 				{
-					echo "<span style='color:grey'> <i class='fi-lock'> </i>Message required</span>";
+					echo "<span style='color:grey'> <i class='fi-lock'> </i>Password required</span>";
 				}
 				?>
 			</div>
