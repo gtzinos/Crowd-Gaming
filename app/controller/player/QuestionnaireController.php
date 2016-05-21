@@ -21,7 +21,7 @@
 			$this->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsView.php");
 			$this->defSection("QUESTIONNAIRE_PLAYERS" , "player/QuestionnairePlayersView.php");
 			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
-			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditView.php");
+			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditModalView.php");
 			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersView.php");
 			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsView.php");
 			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredMessageModalView.php");
@@ -73,11 +73,11 @@
 				15 : Message is Required
 			 */
 			if( $questionnaire->getCoordinatorId() != $_SESSION["USER_ID"] && (
-				isset($_POST["player-join"]) || 
-				isset($_POST["player-unjoin"]) || 
+				isset($_POST["player-join"]) ||
+				isset($_POST["player-unjoin"]) ||
 				isset($_POST["player-cancel-request"]) ||
-				isset($_POST["examiner-join"]) || 
-				isset($_POST["examiner-unjoin"]) || 
+				isset($_POST["examiner-join"]) ||
+				isset($_POST["examiner-unjoin"]) ||
 				isset($_POST["examiner-cancel-request"]) ) )
 			{
 				$this->handleQuestionnaireRequest($this->params[1] , $questionnaireMapper->isMessageRequired($this->params[1]) );
@@ -370,7 +370,7 @@
 							 "Email : ".$user->getEmail().' \n'.
 							 "Message : \n \n".$message;
 
-			if(!$mail->send()) 
+			if(!$mail->send())
 			{
 				$this->setArg("response-code" , 14); // Email Error
 			}else
