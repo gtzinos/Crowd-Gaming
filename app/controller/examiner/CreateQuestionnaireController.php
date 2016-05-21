@@ -53,6 +53,14 @@
 
 				$messageRequired = $_POST["message_required"];
 
+				$message = NULL;
+
+				if( isset($_POST["message"]) && strlen($_POST["message"])<255)
+				{
+					$message = htmlspecialchars($_POST["message"]);
+				}
+
+
 				if( strlen($name) < 3 )
 				{
 					
@@ -84,6 +92,7 @@
 					$questionnaire->setDescription( $description );
 					$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
 					$questionnaire->setPublic( false );
+					$questionnaire->setMessage( $message);
 					$questionnaire->setCoordinatorId( $_SESSION["USER_ID"] );
 
 

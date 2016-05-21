@@ -19,7 +19,7 @@
 		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfo($sorting , $limit , $offset , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 AND `QuestionnaireParticipation`.`participation_type`=1 ";
@@ -56,6 +56,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
 				$questionnaire->setPublic( $resultSet->get("public") );
+				$questionnaire->setMessage( $resultSet->get("message") ); 
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 
@@ -81,7 +82,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfoById($questionnaireId , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` AND `QuestionnaireParticipation`.`participation_type`=1
 WHERE `Questionnaire`.`id`=? ";
@@ -107,6 +108,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
@@ -262,7 +264,7 @@ WHERE `Questionnaire`.`id`=? ";
 			Returns a list of all questionnaires
 		 */
 		public function findAll($sort , $offset , $limit){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 				FROM `Questionnaire`
 				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 				AND `QuestionnaireParticipation`.`participation_type`=1
@@ -289,6 +291,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
@@ -304,7 +307,7 @@ WHERE `Questionnaire`.`id`=? ";
 		 */
 		public function findPublic(){
 
-			$statement = $this->getStatement("SELECT `id`, `coordinator_id`, `name`, `description`, `public`, `message_required`, `creation_date` FROM `Questionnaire` WHERE `public`=1");
+			$statement = $this->getStatement("SELECT `id`, `message`,`coordinator_id`, `name`, `description`, `public`, `message_required`, `creation_date` FROM `Questionnaire` WHERE `public`=1");
 
 			$resultSet = $statement->execute();
 
@@ -317,6 +320,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
@@ -332,7 +336,7 @@ WHERE `Questionnaire`.`id`=? ";
 			false if the questionnaire does not exist
 		 */
 		public function findById($questionnaireId){
-			$statement = $this->getStatement("SELECT `coordinator_id`, `name`, `description`,`public`, `message_required`, `creation_date` FROM `Questionnaire` WHERE id=?");
+			$statement = $this->getStatement("SELECT `coordinator_id`,`message`, `name`, `description`,`public`, `message_required`, `creation_date` FROM `Questionnaire` WHERE id=?");
 			$statement->setParameters('i' , $questionnaireId);
 
 			$resultSet = $statement->execute();
@@ -344,6 +348,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
@@ -355,7 +360,7 @@ WHERE `Questionnaire`.`id`=? ";
 		}
 
 		public function findByCoordinator($coordinatorId , $sort = "date" , $offset = 0 , $limit = 10){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
 				FROM `Questionnaire`
 				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 				AND `QuestionnaireParticipation`.`participation_type`=1
@@ -383,6 +388,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $resultSet->get("coordinator_id") );
 				$questionnaire->setDescription( $resultSet->get("description") );
 				$questionnaire->setName( $resultSet->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
@@ -419,6 +425,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $set->get("coordinator_id") );
 				$questionnaire->setDescription( $set->get("description") );
 				$questionnaire->setName( $set->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $set->get("public") );
 				$questionnaire->setMessageRequired( $set->get("message_required") );
 				$questionnaire->setCreationDate( $set->get("creation_date") );
@@ -454,6 +461,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setCoordinatorId( $set->get("coordinator_id") );
 				$questionnaire->setDescription( $set->get("description") );
 				$questionnaire->setName( $set->get("name") );
+				$questionnaire->setMessage( $resultSet->get("message") );
 				$questionnaire->setPublic( $set->get("public") );
 				$questionnaire->setMessageRequired( $set->get("message_required") );
 				$questionnaire->setCreationDate( $set->get("creation_date") );
@@ -522,14 +530,15 @@ WHERE `Questionnaire`.`id`=? ";
 			Inserts the questionnaire to the database
 		 */
 		private function _create($questionnaire){
-			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)");
+			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`,`message`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?)");
 
 			$statement->setParameters( 'issii' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
 				$questionnaire->getPublic(),
-				$questionnaire->getMessageRequired() );
+				$questionnaire->getMessageRequired(),
+				$questionnaire->getMessage() );
 
 			$statement->executeUpdate();
 
@@ -539,14 +548,15 @@ WHERE `Questionnaire`.`id`=? ";
 			Updates a questionnaire in the databae
 		 */
 		private function _update($questionnaire){
-			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=? WHERE `id`=?");
+			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=?,`message`=? WHERE `id`=?");
 
-			$statement->setParameters( 'issiii' ,
+			$statement->setParameters( 'issiiis' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
 				$questionnaire->getPublic(),
 				$questionnaire->getMessageRequired(),
+				$questionnaire->getMessage(),
 				$questionnaire->getId()
 			 	);
 
