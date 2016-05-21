@@ -6,7 +6,7 @@
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
 			<legend class="text-center header">Create a new questionnaire</legend>
-			<form method="POST" class="form-horizontal" action="return false">
+			<form method="POST" class="form-horizontal" onsubmit="return false">
 					<!-- Questionnaire Name -->
 					<div class="form-group has-feedback">
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
@@ -38,6 +38,16 @@
 									<option value="no">No</option>
 									<option value="yes">Yes</option>
 								</select>
+								 <span class="gt-icon"></span>
+							</div>
+					</div>
+					<!-- Questionnaire password -->
+					<div class="form-group has-feedback">
+							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
+								<label for="password">Questionnaire password</label>
+							</div>
+							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="1">
+								<input id="questionnaire-password" type="text" class="form-control" maxlength="255" gt-error-message="Must contain at least 1 character">
 								 <span class="gt-icon"></span>
 							</div>
 					</div>
