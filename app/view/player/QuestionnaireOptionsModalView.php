@@ -12,7 +12,7 @@
 
 							<!-- Password Text Field -->
               <div class="form-group has-feedback row">
-                  <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+                  <div class="col-xs-offset-0 col-xs-1 col-md-offset-1 col-md-1">
                       <span class="text-center mediumicon"><i class="fa fa-key"></i></span>
                   </div>
                   <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-8 gt-input-group" data-validate="length" data-length="1">
@@ -22,12 +22,12 @@
               </div>
 							<!--Confirm send request / Button Field -->
 							<div class="form-group row">
-								 <div class="col-xs-offset-3 col-xs-4 col-sm-offset-3 col-sm-3">
+								 <div class="col-xs-offset-2 col-xs-4  col-sm-3">
 									 <!-- A Script will add on click method -->
-									 <button id="send-request-button" type="submit" class="btn btn-primary btn-md round gt-submit" disabled>Send request</button>
+									 <button id="send-request-button" type="submit" class="btn btn-primary btn-md gt-submit" disabled>Send request</button>
 								 </div>
-								 <div class="col-xs-offset-0 col-xs-3 col-sm-offset-0 col-sm-3">
-									 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >
+								 <div class="col-xs-3 col-sm-3">
+									 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
 										 Cancel
 									 </button>
 								 </div>

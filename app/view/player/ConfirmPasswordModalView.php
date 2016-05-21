@@ -65,10 +65,10 @@
 						<div class="form-group">
 							 <div class="col-xs-offset-0 col-xs-5 col-sm-offset-3 col-sm-4">
 								 <!-- A Script will add on click method -->
-								 <button form="confirm-modal-form" id="confirm-button" type="button" class="btn btn-primary btn-md round gt-submit" disabled>Confirm Password</button>
+								 <button form="confirm-modal-form" id="confirm-button" type="button" class="btn btn-primary btn-md gt-submit" disabled>Confirm Password</button>
 							 </div>
 							 <div class="col-xs-offset-2 col-xs-3 col-sm-offset-0 col-sm-2">
-								 <button type="button" class="btn btn-primary btn-md round" data-dismiss="modal" >
+								 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
 									 Cancel
 								 </button>
 							 </div>
