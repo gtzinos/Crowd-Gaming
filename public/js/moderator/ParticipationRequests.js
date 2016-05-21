@@ -131,7 +131,7 @@ function handleQuestionnaireParticipationRequest(request_id,response,request_ind
           show_notification("success",fullName + " participation request declined successfully.",3000);
         }
         $("#ritem" + request_id).remove();
-        if($("[id~=ritem]").length == 0)
+        if($("[id^=ritem]").length == 0)
         {
           $("#participation-requests-list").html("<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
                                                     "<div class='col-xs-12'>" +

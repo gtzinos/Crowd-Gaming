@@ -14,9 +14,9 @@
 
 			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->defSection('CSS','examiner/CreateQuestionnaireGroupsView.php');
-			$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireGroupsView.php');
-			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireGroupsView.php');
+			$this->defSection('CSS','examiner/CreateQuestionGroupsView.php');
+			$this->defSection('JAVASCRIPT','examiner/CreateQuestionGroupsView.php');
+			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionGroupsView.php');
 
 			$this->setArg("PAGE_TITLE","Create a new question group!");
 		}
@@ -42,8 +42,8 @@
 			$participationMapper = new ParticipationMapper;
 			$questionGroupMapper = new QuestionGroupMapper;
 
-			if( !isset( $this->params[1] ) || 
-				$questionnaireMapper->findById($this->params[1]) === null || 
+			if( !isset( $this->params[1] ) ||
+				$questionnaireMapper->findById($this->params[1]) === null ||
 				!($participationMapper->participates( $_SESSION["USER_ID"] , $this->params[1] , 2 ) || $_SESSION["USER_LEVEL"]==3) )
 			{
 
@@ -60,7 +60,7 @@
 			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] , $_POST["allowed_repeats"] ) )
 			{
 
-				if( $questionGroupMapper->nameExists( $_POST["name"] ) ) 
+				if( $questionGroupMapper->nameExists( $_POST["name"] ) )
 				{
 					$this->setOutput('response-code' , 1);
 					return;
@@ -91,19 +91,20 @@
 				$questionGroup->setQuestionnaireId( $questionnaireId );
 				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
 
+
 				if(  !empty( $_POST["latitude"]) && !empty($_POST["longitude"]) && !empty($_POST["radius"]) )
 				{
 					if( !is_numeric($_POST["latitude"]) || $_POST["latitude"]< -90 || $_POST["latitude"] > 90 )
 					{
 						$this->setOutput('response-code' , 3);
 						return;
-					} 
+					}
 
 					if( !is_numeric($_POST["longitude"]) || $_POST["longitude"]< -180 || $_POST["longitude"] > 180 )
 					{
 						$this->setOutput('response-code' , 4);
 						return;
-					} 
+					}
 
 					if( !is_numeric($_POST["radius"]) || $_POST["radius"]< 5 )
 					{
@@ -113,7 +114,7 @@
 
 					$questionGroup->setLatitude( $_POST["latitude"] );
 					$questionGroup->setLongitude( $_POST["longitude"] );
-					$questionGroup->setRadius( $_POST["radius"] ); 
+					$questionGroup->setRadius( $_POST["radius"] );
 				}else{
 					$questionGroup->setLatitude( null );
 					$questionGroup->setLongitude( null  );

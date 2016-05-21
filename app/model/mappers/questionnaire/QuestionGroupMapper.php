@@ -34,6 +34,21 @@
 			return $questionGroups;
 		}
 
+		public function findQuestionCount($groupId)
+		{
+			$query = "SELECT count(*) as counter FROM `Question` WHERE `question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+
+			$statement->setParameters("i" , $groupId);
+
+			$res = $statement->execute();
+
+			if( $res->next())
+				return $res->get("counter");
+			return 0;
+		}
+
 		public function findByQuestionnaire($questionnaireId)
 		{
 			$query = "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?";

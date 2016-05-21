@@ -14,12 +14,12 @@
 			$query = "SELECT count(*) as counter FROM `UserAnswer` ".
 					 "INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id` ".
 					 "WHERE `Question`.`question_group_id`=? AND `UserAnswer`.`user_id`=?";
-					
+
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $questionGroupId , $userId);
 
 			$set = $statement->execute();
-			
+
 			if($set->next())
 			{
 				return $set->get("counter");
@@ -27,8 +27,29 @@
 			return 0;
 		}
 
+
+		public function findAnswersCountByQuestionnaire($questionnaireId ,$userId)
+		{
+			$query = "SELECT count(*) as counter FROM `UserAnswer` ".
+					 "INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id` ".
+					 "INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` ".
+					 "WHERE `QuestionGroup`.`questionnaire_id`=? AND `UserAnswer`.`user_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $questionnaireId , $userId);
+
+			$set = $statement->execute();
+
+			if($set->next())
+			{
+				return $set->get("counter");
+			}
+			return 0;
+		}
+
+
 		/*
-			Checks if the user can answer that question 
+			Checks if the user can answer that question
 		 */
 		public function canAnswer($questionId , $userId , $groupId)
 		{
@@ -37,7 +58,7 @@
 			 */
 			$questionMapper = new QuestionMapper;
 
-			
+
 
 			if( $groupId !==  null )
 			{
@@ -116,7 +137,7 @@
 					FROM `UserAnswer`
 					INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id`
 					INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id`
-					WHERE 
+					WHERE
 						`UserAnswer`.`user_id`=? AND
 					    `QuestionGroup`.`questionnaire_id`=?
 					GROUP BY `Question`.`question_group_id`";
@@ -151,7 +172,7 @@
 						sum(`Question`.`multiplier`) as max_score
 					FROM `UserAnswer`
 					INNER JOIN `Question` ON `Question`.`id`=`UserAnswer`.`question_id`
-					WHERE 
+					WHERE
 						`UserAnswer`.`user_id`=? AND
 					    `Question`.`question_group_id`=?";
 
@@ -242,6 +263,3 @@
 		}
 
 	}
-
-
-	

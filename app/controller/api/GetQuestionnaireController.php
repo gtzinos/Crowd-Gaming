@@ -1,6 +1,7 @@
 <?php
 	include_once 'AuthenticatedController.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class GetQuestionnaireController extends AuthenticatedController
 	{
@@ -22,6 +23,8 @@
 
 			$questionnaireMapper = new QuestionnaireMapper;
 			$scheduleMapper = new QuestionnaireScheduleMapper;
+			$userAnswerMapper = new UserAnswerMapper;
+
 			$response = array();
 
 			if( $questionnaireId === null )
@@ -43,6 +46,9 @@
 					$questionnaireArrayItem["description"] = $questionnaire->getDescription();
 					$questionnaireArrayItem["creation-date"] = $questionnaire->getCreationDate();
 					$questionnaireArrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
+					$questionnaireArrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
+					$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
+					$questionnaireArrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId(), $userId);
 					$questionnaireArray[] = $questionnaireArrayItem;
 				}
 
@@ -66,6 +72,10 @@
 					$response["questionnaire"]["description"] = $questionnaire->getDescription();
 					$response["questionnaire"]["creation-date"] = $questionnaire->getCreationDate();
 					$response["questionnaire"]["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
+					$response["questionnaire"]["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
+					$response["questionnaire"]["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
+					$response["questionnaire"]["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId() , $userId);
+
 				}
 				else
 				{

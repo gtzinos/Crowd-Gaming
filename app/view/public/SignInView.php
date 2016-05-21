@@ -53,7 +53,7 @@
 											</div>
 									</div>
 						</form>
-						<div style="margin-left:auto;width:130px">
+						<div style="margin-left:auto;width:150px">
 							<span style="font-size:12px;">
 								 <a href="" onclick="return showModal('registerModal')">
 									 Not a member? Sign Up

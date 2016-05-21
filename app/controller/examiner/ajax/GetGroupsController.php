@@ -59,7 +59,7 @@
 				$this->setArg("offset",$this->params[2]);
 			}
 
-			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionnaireGroupsView.php" , "QUESTION_GROUP_LIST");
+			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionGroupsView.php" , "QUESTION_GROUP_LIST");
 
 			print $groupHtmlOutput;
 		}

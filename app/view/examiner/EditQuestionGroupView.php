@@ -11,11 +11,11 @@
 		<!-- ShortCut Buttons -->
 		<div class="form-group has-feedback row">
 			<div class="col-xs-1">
-				<a class="gt-submit fa fa-hand-o-left" style="font-size:24px" title="Go Back" href="<?php echo LinkUtils::generatePageLink('questionnaire-groups') . "/" . get("question-group")->getQuestionnaireId(); ?>"></a>
+				<a class="gt-submit fa fa-hand-o-left" style="font-size:24px" title="Go Back" href="<?php echo LinkUtils::generatePageLink('question-groups') . "/" . get("question-group")->getQuestionnaireId(); ?>"></a>
       </div>
 		</div>
     <!-- Title -->
-    <legend class="text-center header">Edit Questionnaire Group</legend>
+    <legend class="text-center header">Edit Question Group</legend>
     <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
       <!-- Question Group Name -->
       <div class="form-group has-feedback">

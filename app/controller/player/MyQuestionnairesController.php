@@ -9,7 +9,6 @@
 			$this->defSection('CSS','player/MyQuestionnairesView.php');
 			$this->defSection('JAVASCRIPT','player/MyQuestionnairesView.php');
 			$this->defSection('MAIN_CONTENT','player/MyQuestionnairesView.php');
-
 		}
 
 		public function run(){
