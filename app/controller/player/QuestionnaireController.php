@@ -24,7 +24,7 @@
 			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditModalView.php");
 			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersModalView.php");
 			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsModalView.php");
-			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredMessageModalView.php");
+			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredPasswordModalView.php");
 
 		}
 
