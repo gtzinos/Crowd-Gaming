@@ -318,31 +318,31 @@ function getNextQuestion(position)
           				"</div>";
           $("#play-questionnaire-form").html(out);
           //answer_countdown = data.question['time-to-answer'];
-          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"));
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
         }
         else if(data.code == "603")
         {
-          show_notification("Forbidden. Questionnaire is offline.");
+          show_notification("error","Forbidden. Questionnaire is offline.",3000);
         }
         else if(data.code == "604")
         {
-          show_notification("Forbidden. You dont have access to that questionnaire.");
+          show_notification("error","Forbidden. You dont have access to that questionnaire.",3000);
         }
         else if(data.code == "606")
         {
-          show_notification("Forbidden. Coordinates not provided.");
+          show_notification("error","Forbidden. Coordinates not provided.",3000);
         }
         else if(data.code == "607")
         {
-          show_notification("Forbidden. Invalid location or user not in participation group.");
+          show_notification("error","Forbidden. Invalid location or user not in participation group.",3000);
         }
         else if(data.code == "608")
         {
-          show_notification("Forbidden. Group doesnt not exist or doesnt belong to questionnaire.");
+          show_notification("error","Forbidden. Group doesnt not exist or doesnt belong to questionnaire.",3000);
         }
         else if(data.code == "609")
         {
-          show_notification("Forbidden. Question Group doesnt have any more questions.");
+          show_notification("success","Forbidden. Question Group doesnt have any more questions.",3000);
           navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
           $("#play-questionnaire").modal("toggle");
         }
@@ -366,7 +366,7 @@ function confirmAnwser(question_id)
     headers: {
         "X-Coordinates": groups[target_group_index].latitude + ";" + groups[target_group_index].longitude
     },
-    data: data,
+    data: JSON.stringify(data),
     success: function(data)
     {
       /*
