@@ -46,7 +46,7 @@
  					return;
  				}	
 
- 				$questionnaire->setPublic( $_POST["status-code"] == "public" );
+ 				$questionnaire->setPublic($_POST["status-code"]=="public" );
 
  				try
  				{	

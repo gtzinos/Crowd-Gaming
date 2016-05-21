@@ -12,6 +12,7 @@
 		private $message_required;
 		private $creationDate;
 		private $coordinatorId;
+		private $message;
 
 		/*
 			An array of objects of the type QuestionGroup
@@ -48,6 +49,13 @@
 			unset($this->subExaminers[$subExaminerId]);
 		}
 
+		public function getMessage(){
+			return $this->message;
+		}
+		
+		public function setMessage($message){
+			$this->message = $message;
+		}
 		/*
 			Get and Set methods bellow
 		 */

@@ -34,6 +34,7 @@
 				5 radius validation error
 				6 Database error
 				7 Cant edit a public questionnaire
+				8 Invalid allowed_repeats
 			 */
 			$questionnaireId = null;
 
@@ -56,7 +57,7 @@
 			$this->setArg("questionnaire-id" , $this->params[1]);
 
 
-			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] ) )
+			if( isset( $_POST["name"] , $_POST["latitude"] , $_POST["longitude"] , $_POST["radius"] , $_POST["allowed_repeats"] ) )
 			{
 
 				if( $questionGroupMapper->nameExists( $_POST["name"] ) )
@@ -78,10 +79,17 @@
 					return;
 				}
 
+				if( $_POST["allowed_repeats"] < 1 )
+				{
+					$this->setOutput('response-code' , 8);
+					return;
+				}
+
 				$questionGroup = new QuestionGroup;
 
 				$questionGroup->setName( htmlspecialchars($_POST["name"] ,ENT_QUOTES) );
 				$questionGroup->setQuestionnaireId( $questionnaireId );
+				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
 
 
 				if(  !empty( $_POST["latitude"]) && !empty($_POST["longitude"]) && !empty($_POST["radius"]) )

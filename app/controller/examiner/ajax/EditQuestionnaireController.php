@@ -35,7 +35,15 @@
 				$purifier = new HTMLPurifier($config);
 				$description = $purifier->purify($_POST["description"]);
 
+
 				$messageRequired = $_POST["message_required"];
+
+				$message = NULL;
+
+				if( isset($_POST["message"]) && strlen($_POST["message"])<255)
+				{
+					$message = htmlspecialchars($_POST["message"]);
+				}
 
 				if( strlen($name) < 3 ){
 
@@ -65,6 +73,7 @@
 
 				$questionnaire->setName( $name );
 				$questionnaire->setDescription( $description );
+				$questionnaire->setMessage( $message);
 				$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
 
 					

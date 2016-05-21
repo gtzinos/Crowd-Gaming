@@ -63,7 +63,8 @@
 					$arrayItem["id"] = $questionGroup->getId();
 					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
 					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
-
+					$arrayItem["allowed-repeats"] = $questionGroup->getAllowedRepeats();
+					$arrayItem["current-repeats"] = $questionGroupMapper->findRepeatCount($groupId , $userId);
 					$response["question-group"][] = $arrayItem;
 				}
 

@@ -78,6 +78,17 @@
 				return;
 			}
 
+			$questionGroup = $questionGroupMapper->findById($groupId);
+
+			if( $questionGroupMapper->findRepeatCount($groupId,$userId) > $questionGroup->getAllowedRepeats() )
+			{
+				$response["code"] = "611";
+				$response["message"] = "Maximum times of question group replays reached.";
+
+				http_response_code(403);
+				print json_encode($response);
+				return;
+			}
 			
 
 			/*

@@ -80,7 +80,8 @@
 				isset($_POST["examiner-unjoin"]) ||
 				isset($_POST["examiner-cancel-request"]) ) )
 			{
-				$this->handleQuestionnaireRequest($this->params[1] , $questionnaireMapper->isMessageRequired($this->params[1]) );
+				$questionnaire = $questionnaireMapper->findById($this->params[1]);
+				$this->handleQuestionnaireRequest($this->params[1] , $questionnaireMapper->isMessageRequired($this->params[1]),$questionnaire->getMessage() );
 			}
 
 			/*
@@ -123,7 +124,7 @@
 		}
 
 
-		public function handleQuestionnaireRequest($questionnaireId , $messageRequired)
+		public function handleQuestionnaireRequest($questionnaireId , $messageRequired , $questionnaireMessage)
 		{
 
 			$message = null;
@@ -133,7 +134,7 @@
 			 */
 			if( isset($_POST["message"]) )
 			{
-				if( $_POST["message"]!="" && ( strlen($_POST["message"])<20 || strlen($_POST["message"])>255) )
+				if( $_POST["message"]!="" && ( strlen($_POST["message"])<3 || strlen($_POST["message"])>255) )
 				{
 					$this->setArg("response-code" , 1); // Message validation error
 					return;
@@ -151,6 +152,7 @@
 
 			$questionnaireRequest = null;
 			$participation = null;
+			$newParticipation = null;
 
 
 			if( isset( $_POST["player-join"]) )
@@ -173,13 +175,21 @@
 					$this->setArg("response-code" , 15); // Message is required
 					return;
 				}
-
-				$questionnaireRequest = new QuestionnaireRequest;
-				$questionnaireRequest->setUserId($_SESSION["USER_ID"]);
-				$questionnaireRequest->setRequestType(1); // Player Participation Request
-				$questionnaireRequest->setRequestText($message);
-				$questionnaireRequest->setQuestionnaireId($questionnaireId);
-
+				else if( $messageRequired && $message==$questionnaireMessage)
+				{
+					$newParticipation = new Participation;
+					$newParticipation->setUserId($_SESSION["USER_ID"]);
+					$newParticipation->setQuestionnaireId($questionnaireId);
+					$newParticipation->setParticipationType(1);
+				}
+				else
+				{
+					$questionnaireRequest = new QuestionnaireRequest;
+					$questionnaireRequest->setUserId($_SESSION["USER_ID"]);
+					$questionnaireRequest->setRequestType(1); // Player Participation Request
+					$questionnaireRequest->setRequestText($message);
+					$questionnaireRequest->setQuestionnaireId($questionnaireId);
+				}
 			}
 			else if( isset($_POST["player-cancel-request"]) )
 			{
@@ -300,10 +310,15 @@
 				{
 
 					$requestMapper->persist($questionnaireRequest);
-				}else if( $participation !== null )
+				}
+				else if( $participation !== null )
 				{
 
 					$participationMapper->delete($participation);
+				}
+				else if( $newParticipation !== null)
+				{
+					$participationMapper->persist($newParticipation);
 				}
 
 				DatabaseConnection::getInstance()->commit();

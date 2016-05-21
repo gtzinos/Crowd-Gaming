@@ -10,6 +10,7 @@
 		private $longitude; // number
 		private $radius; // number
 		private $creationDate; // string , timestamp in database
+		private $allowedRepeats;
 
 		private $questionCount;
 		/*
@@ -37,6 +38,15 @@
 			$this->questions = $questions;
 		}
 
+
+		public function getAllowedRepeats(){
+			return $this->allowedRepeats;
+		}
+		
+		public function setAllowedRepeats($allowedRepeats){
+			$this->allowedRepeats = $allowedRepeats;
+		}
+		
 		/*
 			Get and Set methods bellow
 		 */

@@ -24,7 +24,8 @@
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );	
+				$questionGroup->setRadius( $set->get("radius") );
+				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));	
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -69,6 +70,7 @@
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
 				$questionGroup->setRadius( $set->get("radius") );
+				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -100,6 +102,7 @@
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
 				$questionGroup->setRadius( $set->get("radius") );
+				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				$questionGroups[] = $questionGroup;
@@ -126,7 +129,8 @@
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );			
+				$questionGroup->setRadius( $set->get("radius") );
+				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));			
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
@@ -152,7 +156,8 @@
 				$questionGroup->setName( $set->get("name") );
 				$questionGroup->setLatitude( $set->get("latitude") );
 				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );		
+				$questionGroup->setRadius( $set->get("radius") );
+				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));		
 				$questionGroup->setCreationDate( $set->get("creation_date") );
 
 				return $questionGroup;
@@ -233,6 +238,50 @@
 			return false;
 		}
 
+		public function findRepeatCount($groupId , $userId)
+		{
+			$query ="SELECT `repeat_count` FROM `QuestionGroupRepeats` 
+					 WHERE `user_id`=? AND `question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii', $userId , $groupId);
+
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return $set->get("repeat_count");
+			return 1;
+		}
+
+		public function persistRepeats($groupId , $userId , $repeatCounter)
+		{
+			if ( $repeatCounter==2)
+			{
+				$query = "INSERT INTO `QuestionGroupRepeats` (`repeat_count`,`user_id`,`question_group_id`) VALUES (?,?,?)";
+			}
+			else
+			{
+				$query = "UPDATE `QuestionGroupRepeats` SET `repeat_count`=? WHERE `user_id`=? AND `question_group_id`=?";
+			}
+
+			
+			
+			$statement = $this->getStatement($query);
+			$statement->setParameters('iii',$repeatCounter , $userId , $groupId);
+
+			$set = $statement->executeUpdate();
+		}
+
+		public function deleteRepeats($groupId)
+		{
+			$query = "DELETE FROM `QuestionGroupRepeats` WHERE `question_group_id`=?";
+			
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$groupId);
+
+			$set = $statement->executeUpdate();
+		}
+
 		public function groupBelongsTo($groupId , $questionnaireId)
 		{
 			$query  = "SELECT `Questionnaire`.`id` FROM `QuestionGroup` INNER JOIN `Questionnaire` ON `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` WHERE `QuestionGroup`.`id`=? AND `QuestionGroup`.`questionnaire_id`=? ";
@@ -286,23 +335,7 @@
 
 		private function _create($questionGroup)
 		{
-			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`,`latitude`, `longitude`, `radius`, `creation_date`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP)";
-
-			$statement = $this->getStatement($query);
-
-			$statement->setParameters('isddd' , 
-				$questionGroup->getQuestionnaireId(),
-				$questionGroup->getName(),
-				$questionGroup->getLatitude(),
-				$questionGroup->getLongitude(),
-				$questionGroup->getRadius() );
-
-			$statement->executeUpdate();
-		}
-
-		private function _update($questionGroup)
-		{
-			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=? WHERE `id`=?";
+			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`,`latitude`, `longitude`, `radius`, `creation_date` ,`allowed_repeats`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?)";
 
 			$statement = $this->getStatement($query);
 
@@ -311,7 +344,25 @@
 				$questionGroup->getName(),
 				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
+				$questionGroup->getRadius() ,
+				$questionGroup->getAllowedRepeats());
+
+			$statement->executeUpdate();
+		}
+
+		private function _update($questionGroup)
+		{
+			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=?,`allowed_repeats` WHERE `id`=?";
+
+			$statement = $this->getStatement($query);
+
+			$statement->setParameters('isdddii' , 
+				$questionGroup->getQuestionnaireId(),
+				$questionGroup->getName(),
+				$questionGroup->getLatitude(),
+				$questionGroup->getLongitude(),
 				$questionGroup->getRadius(),
+				$questionGroup->getAllowedRepeats(),
 				$questionGroup->getId() );
 
 			$statement->executeUpdate();
