@@ -262,7 +262,7 @@ function getNextQuestion(position)
 {
   $.when(refreshASpecificGroup(position)).done(function() {
     $.post(webRoot +
-            "/rest_api/questionnaire/" +
+            "rest_api/questionnaire/" +
             questionnaire_id + "/group/" +
             groups[target_group_index].id + "/question/" +
             groups[target_group_index].latitude + ";" + groups[target_group_index].longitude,
@@ -318,7 +318,7 @@ function getNextQuestion(position)
           				"</div>";
           $("#play-questionnaire-form").html(out);
           //answer_countdown = data.question['time-to-answer'];
-          show_clock("#question-count-down",moment().add(parseInt(data.question['time-to-answer']),'seconds').format("YYYY/MM/DD hh:mm:ss"));
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"));
         }
         else if(data.code == "603")
         {
