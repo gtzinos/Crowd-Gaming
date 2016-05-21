@@ -4,7 +4,7 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span>Send us some info for your request</h4>
+					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Password required</h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form id="required-message-form" onsubmit="return false" method="POST" class="form-horizontal">
@@ -12,8 +12,8 @@
                   <div class=" col-xs-2 col-sm-offset-1 col-sm-2">
                       <span class="text-center"><i class="glyphicon glyphicon-edit bigicon"></i></span>
                   </div>
-                  <div class="col-xs-7 gt-input-group" data-validate="length" data-length="5">
-                      <textarea class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 5 characters" maxlength="1000" id="required-message" style="height:60px" name="required-message" placeholder="Send us a message. (Required)" required></textarea>
+                  <div class="col-xs-7 gt-input-group" data-validate="length" data-length="2">
+                      <input type="password" class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" maxlength="1000" id="required-message" style="height:60px" name="required-message" placeholder="Password. (Required)" required>
                       <span class="gt-icon"></span>
                   </div>
               </div>
