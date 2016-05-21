@@ -100,6 +100,7 @@ function getMyQuestionnaires()
        }
        if(data.questionnaire.length == 0)
        {
+         $("#my-questionnaires-list").html("<div class='alert alert-danger'>You don't participate to any questionnaire.</div>");
        }
      }
   });
