@@ -14,7 +14,7 @@
     <div class="modal-content">
        <div class="modal-header">
          <button type="button" class="close" data-dismiss="modal">&times;</button>
-         <h4 class="gt-modal-header">Edit Questionnaire <span class="fa fa-pencil"></span> </h4>
+         <h4 class="gt-modal-header"><span class="fa fa-pencil"></span> Edit Questionnaire</h4>
        </div>
        <div class="modal-body container-fluid">
           <form method="POST" id="edit-questionnaire-form" class="form-horizontal" onsubmit="return false">
