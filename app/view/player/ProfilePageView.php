@@ -159,11 +159,11 @@
          </div>
          <!-- Login Button Field -->
          <div class="form-group">
-            <div class="hidden-xs col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
-              <button type="button" form="profile-form" class="btn btn-primary btn-md round gt-submit" onclick="confirmPassword('profileUpdate')">Save Profile</button>
+            <div class="col-xs-offset-1 col-xs-4 col-sm-offset-3 col-sm-2">
+              <button type="button" form="profile-form" class="btn btn-primary btn-md gt-submit" onclick="confirmPassword('profileUpdate')">Update Now</button>
             </div>
-            <div class="col-xs-offset-2 col-xs-5 col-sm-offset-0 col-sm-2">
-              <button type="button" class="btn btn-primary btn-md round" onclick="confirmPassword('deleteAccount')">Delete Account</button>
+            <div class="col-xs-5 col-sm-2">
+              <button type="button" class="btn btn-danger btn-md" onclick="confirmPassword('deleteAccount')">Delete Account</button>
             </div>
 
          </div>
