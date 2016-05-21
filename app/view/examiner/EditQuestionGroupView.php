@@ -19,11 +19,7 @@
     <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
       <!-- Question Group Name -->
       <div class="form-group has-feedback">
-        <!-- Question Group Name Label -->
-        <div class="col-xs-offset-0 col-xs-12 col-sm-8 col-sm-offset-2">
-            <label>Name</label>
-        </div>
-        <div class="col-xs-offset-0 col-xs-12 col-sm-8 col-sm-offset-2 gt-input-group" data-validate="length" data-length="10">
+        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="length" data-length="10">
           <?php
 						$value = "";
 						if(exists("response-code") && get("response-code") != 0)
@@ -37,6 +33,21 @@
 					 ?>
 					<span class="gt-icon"></span>
         </div>
+				<div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="1" >
+					<?php
+						$value = "";
+						if(exists("response-code") && get("response-code") != 0)
+						{
+							$value .= $_POST["allowed_repeats"];
+						}
+						else if(get("question-group")->getAllowedRepeats() != "") {
+							$value .= get("question-group")->getAllowedRepeats();
+						}
+						echo "<input class='form-control' value='" . $value . "' id='name' name='name' type='text' placeholder='Allowed repeats' data-toggle='tooltip' gt-error-message='Must be integer > 0' maxlength='255' required>";
+					 ?>
+					<span class="gt-icon"></span>
+				</div>
+
       </div>
         <!-- Google Map -->
         <div class="form-group has-feedback" >
