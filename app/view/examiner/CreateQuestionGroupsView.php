@@ -17,16 +17,16 @@
   <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
     <!-- Question Group Name -->
     <div class="form-group has-feedback">
-      <!-- Question Group Name Label -->
-      <div class="col-xs-offset-0 col-xs-12 col-sm-8 col-sm-offset-2">
-          <label>Name</label>
-      </div>
-      <div class="col-xs-offset-0 col-xs-12 col-sm-8 col-sm-offset-2 gt-input-group" data-validate="length" data-length="10">
+      <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="length" data-length="10">
         <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["name"]; } ?>" id="name" name="name" type="text" placeholder="Group Name" data-toggle="tooltip" gt-error-message="Not a valid question group name" maxlength="50" required>
         <span class="gt-icon"></span>
       </div>
+      <!-- Repeated answers -->
+      <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
+        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["allowed-repeats"]; } ?>" name="allowed_repeats" gt-error-message="Must be integer > 0" value="" placeholder="Allowed repeats" required/>
+        <span class="gt-icon"> </span>
+      </div>
     </div>
-
       <!-- Google Map -->
       <div class="form-group has-feedback" >
         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
