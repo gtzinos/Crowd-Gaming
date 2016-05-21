@@ -12,7 +12,7 @@
       </div>
       <div class="row">
   	  	<h3>
-  				Your account has been successfuly deleted.
+  				Your account has been deleted sucessfully.
   			</h3>
       </div>
       <div class="row">
