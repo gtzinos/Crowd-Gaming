@@ -13,7 +13,7 @@
 			$this->defSection('CSS','examiner/QuestionGroupsView.php');
 			$this->defSection('JAVASCRIPT','examiner/QuestionGroupsView.php');
 	      	$this->defSection('MAIN_CONTENT','examiner/QuestionGroupsView.php');
-	      	$this->defSection("EDIT_QUESTION" , "examiner/EditQuestionView.php");
+	      	$this->defSection("EDIT_QUESTION" , "examiner/EditQuestionModalView.php");
 	      	$this->defSection("QUESTION_LIST" , "examiner/QuestionListView.php");
 	      	$this->defSection("CREATE_QUESTION", "examiner/CreateQuestionModalView.php");
 			$this->defSection("QUESTION_GROUP_USERS", "examiner/QuestionGroupUsersView.php");
