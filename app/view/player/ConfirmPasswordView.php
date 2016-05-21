@@ -34,14 +34,14 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4 class="gt-modal-header"><span class="glyphicon glyphicon-lock"></span> Confirm your current password </h4>
+					 <h4 class="gt-modal-header"><span class="fa fa-lock"></span> Confirm your current password </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form id="confirm-modal-form" onsubmit="return false" class="form-horizontal">
 							<!-- Password Field -->
 							<div class="form-group has-feedback">
 									<div class="col-xs-offset-1 col-xs-2 col-sm-offset-1 col-sm-2">
-										<span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
+										<span class="text-center mediumicon"><i class="fa fa-key"></i></span>
 									</div>
 									<div class="col-xs-offset-0 col-xs-7 gt-input-group" data-validate="length" data-length="8">
 											<input class="form-control" data-toggle="tooltip" gt-error-message="Must contain at least 8 characters" id="confirm-password" type="password" placeholder="Password (Required) *Length >= 8" required >
