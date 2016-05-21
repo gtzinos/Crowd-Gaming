@@ -100,7 +100,12 @@ function getMyQuestionnaires()
        }
        if(data.questionnaire.length == 0)
        {
-         $("#my-questionnaires-list").html("<div class='alert alert-danger text-center'>You don't participate to any questionnaire.</div>");
+         out = "<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
+                     "<div class='col-xs-12'>" +
+                         "<div class='alert alert-danger text-center'>You don't participate to any questionnaire.</div>" +
+                     "</div>" +
+                 "</a>";
+         $("#my-questionnaires-list").html(out);
        }
      }
   });
