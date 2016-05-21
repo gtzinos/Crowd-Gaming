@@ -63,7 +63,7 @@
 	{
 
 		$controller->defSection("SIGN_IN" , "public/SignInModalView.php");
-		$controller->defSection("SIGN_UP" , "public/SignUpView.php");
+		$controller->defSection("SIGN_UP" , "public/SignUpModalView.php");
 		$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestModalView.php");
 
 
