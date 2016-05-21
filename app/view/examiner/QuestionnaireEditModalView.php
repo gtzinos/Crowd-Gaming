@@ -68,12 +68,30 @@
                      <span class="gt-icon"></span>
                   </div>
               </div>
+              <!-- Questionnaire password -->
+              <div class="form-group has-feedback">
+                  <div class="col-xs-12 col-sm-offset-3 col-sm-9">
+                    <label for="email">Questionnaire password</label>
+                  </div>
+                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
+                    <?php
+                      if($questionnaire->getMessage() != "")
+                      {
+                        echo "<input type='password' class='form-control' value='" . $questionnaire->getMessage() . "' required>";
+                      }
+                      else {
+                        echo "<input type='password' class='form-control' value='' disabled>";
+                      }
+                      ?>
+                     <span class="gt-icon"></span>
+                  </div>
+              </div>
               <!-- Update questionnaire submit button -->
               <div class="form-group has-feedback">
-                <div class="col-xs-2 col-sm-offset-3 col-sm-2">
+                <div class="col-xs-4 col-sm-offset-3 col-sm-2">
                   <button type="button" id="edit-questionnaire" class="btn btn-primary gt-submit" form="edit-questionnaire-form" onclick="updateQuestionnaire(<?php echo $questionnaire->getId(); ?>)" disabled="disabled">Save</button>
                 </div>
-                <div class="col-xs-offset-1 col-xs-3 col-sm-offset-0 col-sm-3" style="padding:0px">
+                <div class="col-xs-3 col-sm-3" style="padding:0px">
                   <button type="button" class="btn btn-primary" onclick="location.href='<?php echo LinkUtils::generatePageLink('question-groups') . "/" . $questionnaire->getId(); ?>';" >Edit Groups</button>
                 </div>
               </div>
