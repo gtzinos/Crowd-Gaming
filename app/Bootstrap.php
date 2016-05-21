@@ -64,7 +64,7 @@
 
 		$controller->defSection("SIGN_IN" , "public/SignInView.php");
 		$controller->defSection("SIGN_UP" , "public/SignUpView.php");
-		$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestView.php");
+		$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestModalView.php");
 
 
 		$controller->setArg("primary-menu"   , "GuestMenu");
