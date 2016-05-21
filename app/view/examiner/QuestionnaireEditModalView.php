@@ -45,7 +45,7 @@
                     <label for="email">Would you like users send a password ?</label>
                   </div>
                   <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="length" data-length="2">
-                    <select id="mrequired" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
+                    <select id="message-required" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
                       <?php
                         /*
                           Password required
@@ -75,12 +75,12 @@
                   </div>
                   <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
                     <?php
-                      if($questionnaire->getMessage() != "")
+                      if($questionnaire->getMessage() != "" || $questionnaire->getMessageRequired())
                       {
-                        echo "<input type='password' class='form-control' value='" . $questionnaire->getMessage() . "' required>";
+                        echo "<input id='questionnaire-password' type='password' class='form-control' value='" . $questionnaire->getMessage() . "' required>";
                       }
                       else {
-                        echo "<input type='password' class='form-control' value='' disabled>";
+                        echo "<input id='questionnaire-password' type='password' class='form-control' value='' disabled>";
                       }
                       ?>
                      <span class="gt-icon"></span>

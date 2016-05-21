@@ -21,11 +21,17 @@ $(window).load(function() {
   $("#message-required").on("change",function(){
     if(this.value == "yes")
     {
-      $("#questionnaire-password").prop("disabled",false);
+      $("#questionnaire-password").prop("disabled",false)
+                                  .prop("required",true)
+                                  .trigger('change');
     }
     else
     {
-      $("#questionnaire-password").prop("disabled",true);
+      $("#questionnaire-password")
+            .prop("disabled",true)
+            .removeAttr("required")
+            .val("")
+            .trigger('change');
     }
 
   });
@@ -359,7 +365,7 @@ function updateQuestionnaire(id)
   */
   var name = $(document).find("#qname").val();
   var description = $(document).find("#qeditor").val();
-  var required = $(document).find("#mrequired").val();
+  var required = $(document).find("#message-required").val();
 
   /*
     Check the Variables before sending them
@@ -369,8 +375,13 @@ function updateQuestionnaire(id)
     var Required = {
         Url() { return webRoot + "questionnaire-edit/"; },
         SendType() { return "POST"; },
+        variables : "",
         Parameters() {
-          return "questionnaire-id=" + id + "&name=" + name + "&description=" + description + "&message_required=" + required;
+          this.variables = "questionnaire-id=" + id + "&name=" + name + "&description=" + description + "&message_required=" + required;
+          if($("#message-required").val() == "yes")
+          {
+            this.variables += "&message=" + $("#questionnaire-password").val();
+          }
         }
     };
     var Optional = {
