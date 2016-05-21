@@ -361,7 +361,7 @@
 						/*
 							If he is logged in
 						*/
-						if($_SESSION["USER_ID"] != $questionnaire->getCoordinatorId() && $_SESSION["USER_LEVEL"] != 3) {
+						if($_SESSION["USER_ID"] != $questionnaire->getCoordinatorId()) {
 
 							/*
 								Echo dropdown button
@@ -449,45 +449,48 @@
 										*/
 										echo "<li><input type='submit' class='btn btn-link' name='player-unjoin' value='Unjoin as player' > </li>";
 									}
-								/*
-									If he isnt an examiner and
-									he didnt have an active request to be a examiner
-								*/
-									if(!get("questionnaire")["active-examiner-request"] && !get("questionnaire")["examiner-participation"])
-									{
-										/*
-											He can send a request to be one
-										*/
-										if($questionnaire -> getMessageRequired() == 1 )
-										{
-											echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Join as examiner' > </li>";
-										}
-										else {
-											echo "<li><input type='submit' class='btn btn-link' name='examiner-join' value='Join as examiner' > </li>";
-										}
 
-									}
-									/*
-										If he had an active examiner request
-									*/
-									else if(get("questionnaire")["active-examiner-request"])
+									if($_SESSION["USER_LEVEL"] != 3)
 									{
-										/*
-											He can delete his request
-										*/
-										echo "<li><input type='submit' class='btn btn-link' name='examiner-cancel-request' value='Delete examiner request' > </li>";
-									}
-									/*
-										If he is one of the examiners
-									*/
-									else if(get("questionnaire")["examiner-participation"])
-									{
-										/*
-											He can unjoin from examiner list
-										*/
-										echo "<li><input type='submit' class='btn btn-link' name='examiner-unjoin' value='Unjoin as examiner' > </li>";
-									}
+											/*
+												If he isnt an examiner and
+												he didnt have an active request to be a examiner
+											*/
+											if(!get("questionnaire")["active-examiner-request"] && !get("questionnaire")["examiner-participation"])
+											{
+												/*
+													He can send a request to be one
+												*/
+												if($questionnaire -> getMessageRequired() == 1 )
+												{
+													echo "<li><input type='button' class='btn btn-link' onclick=\"sendQuestionnaireRequest('examiner-join','Join as examiner')\" value='Join as examiner' > </li>";
+												}
+												else {
+													echo "<li><input type='submit' class='btn btn-link' name='examiner-join' value='Join as examiner' > </li>";
+												}
 
+											}
+											/*
+												If he had an active examiner request
+											*/
+											else if(get("questionnaire")["active-examiner-request"])
+											{
+												/*
+													He can delete his request
+												*/
+												echo "<li><input type='submit' class='btn btn-link' name='examiner-cancel-request' value='Delete examiner request' > </li>";
+											}
+											/*
+												If he is one of the examiners
+											*/
+											else if(get("questionnaire")["examiner-participation"])
+											{
+												/*
+													He can unjoin from examiner list
+												*/
+												echo "<li><input type='submit' class='btn btn-link' name='examiner-unjoin' value='Unjoin as examiner' > </li>";
+											}
+									}
 							}
 
 							/*

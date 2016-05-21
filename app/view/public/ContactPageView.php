@@ -63,7 +63,6 @@
                                 <button id="submit" form="contact-form" type="submit" class="btn btn-primary btn-lg gt-submit" disabled>Send Message</button>
                             </div>
                         </div>
-
                         <!-- Response Label Field -->
                         <div class="form-group">
                           <div class="col-xs-offset-3 col-xs-9 col-sm-offset-3 col-sm-6">
