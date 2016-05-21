@@ -255,7 +255,7 @@ function set_questionnaire_private(local_index)
 function show_actions_modal()
 {
   showModal('questionnaire-management-settings');
-  $('#qtitle-actions-modal').html("<span class='glyphicon glyphicon-lock'></span> Actions for " + questionnaires[questionnaire_index].name);
+  $('#qtitle-actions-modal').html("<span class='fa fa-cogs'></span> Actions for " + questionnaires[questionnaire_index].name);
   $("#questionnaire-deletion-button").bind("click",function() {
     show_confirm_modal(questionnaire_id,questionnaires[questionnaire_index].name);
   });
