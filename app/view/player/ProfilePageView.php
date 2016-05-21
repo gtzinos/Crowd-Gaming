@@ -9,7 +9,7 @@
          <legend class="text-center header">Your personal profile info</legend>
          <!-- Email Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                     <span class="text-center"><i class="glyphicon glyphicon-envelope bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="email">
@@ -19,7 +19,7 @@
          </div>
          <!-- New Password Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8">
@@ -29,7 +29,7 @@
          </div>
          <!-- Repeat Password Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-lock bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="8" data-equal="profile-new-password">
@@ -39,7 +39,7 @@
          </div>
          <!-- First Name Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
@@ -49,7 +49,7 @@
          </div>
          <!-- Last Name Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-user bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="2">
@@ -59,7 +59,7 @@
          </div>
          <!-- Gender Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="fi-male-female bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="select">
@@ -97,7 +97,7 @@
          </div>
          <!-- Country Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-globe bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="3">
@@ -107,7 +107,7 @@
          </div>
          <!-- City Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="material-icons bigicon">location_city</i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="3">
@@ -117,7 +117,7 @@
          </div>
          <!-- Address Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-home bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="length" data-length="5">
@@ -127,7 +127,7 @@
          </div>
          <!-- Phone Field -->
          <div class="form-group has-feedback">
-             <div class="col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
+             <div class="hidden-xs col-xs-offset-0 col-xs-2 col-md-offset-1 col-md-2">
                <span class="text-center"><i class="glyphicon glyphicon-earphone bigicon"></i></span>
              </div>
              <div class="col-xs-offset-1 col-xs-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="phone">
@@ -159,7 +159,7 @@
          </div>
          <!-- Login Button Field -->
          <div class="form-group">
-            <div class="col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
+            <div class="hidden-xs col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
               <button type="button" form="profile-form" class="btn btn-primary btn-md round gt-submit" onclick="confirmPassword('profileUpdate')">Save Profile</button>
             </div>
             <div class="col-xs-offset-2 col-xs-5 col-sm-offset-0 col-sm-2">
