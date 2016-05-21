@@ -47,7 +47,7 @@
 								<label for="password">Questionnaire password</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="1">
-								<input id="questionnaire-password" type="text" class="form-control" maxlength="255" gt-error-message="Must contain at least 1 character">
+								<input disabled id="questionnaire-password" type="text" class="form-control" maxlength="255" gt-error-message="Must contain at least 1 character">
 								 <span class="gt-icon"></span>
 							</div>
 					</div>

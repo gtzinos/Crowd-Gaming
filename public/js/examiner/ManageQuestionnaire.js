@@ -17,6 +17,19 @@ $(document)
   });
 
 $(window).load(function() {
+  //on message required list change
+  $("#message-required").on("change",function(){
+    if(this.value == "yes")
+    {
+      $("#questionnaire-password").prop("disabled",false);
+    }
+    else
+    {
+      $("#questionnaire-password").prop("disabled",true);
+    }
+
+  });
+
   $("#datepicker").on('show.daterangepicker',function() {
     $('body').on({
           'mousewheel': function(e) {
@@ -177,6 +190,7 @@ function createQuestionnaire()
   var descriptionHTML = tinymce.activeEditor.getContent();
   var descriptionClearText = tinymce.activeEditor.getContent({format : 'text'});
   var message_required = $("#message-required").val();
+  var password = $("#questionnaire-password").val();
 
   if(name && descriptionClearText.length >= 31)
   {
@@ -195,6 +209,11 @@ function createQuestionnaire()
           }
 
           this.variables += "&message_required=" + message_required;
+
+          if(message_required == "yes")
+          {
+            this.variables += "&message" + password;
+          }
 
           return this.variables;
         }
