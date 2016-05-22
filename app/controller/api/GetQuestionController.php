@@ -188,6 +188,15 @@
 					$response["answer"][] = $arrayItem;
 				}
 
+				try
+				{
+					$questionMapper->addShownRecord($question->getId() , $userId);
+				}
+				catch(DatabaseException $ex)
+				{
+					// Ingore , just means this question has been shown recently show , just.
+				}
+				
 			}
 			else
 			{

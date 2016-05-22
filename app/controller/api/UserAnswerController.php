@@ -29,7 +29,7 @@
 			/*
 				Check if parameters are set
 			 */
-			if( !isset($parameters[ "question-id"] , $parameters["answer-id"] , $parameters["time-answered"]) )
+			if( !isset($parameters[ "question-id"] , $parameters["answer-id"]) )
 			{
 				$response["code"] = "610";
 				$response["message"] = "Invalid Request, question-id and/or answer-id were not given";
@@ -148,24 +148,28 @@
 				$userAnswer->setUserId($userId);
 				$userAnswer->setQuestionId($parameters[ "question-id"]);
 				$userAnswer->setAnswerId($parameters["answer-id"]);
-				$userAnswer->setAnsweredTime($parameters["time-answered"]);
+				$userAnswer->setAnsweredTime(0); // Whatever , who cares
 				$userAnswer->setLatitude( $coordinates !== null ? $coordinates["latitude"] : null );
 				$userAnswer->setLongitude( $coordinates !== null ? $coordinates["longitude"] : null);
-				$userAnswer->setCorrect( $answerMapper->isCorrect( $parameters["answer-id"] ) );
+				$userAnswer->setCorrect( $answerMapper->isCorrect( $parameters["answer-id"]) 
+										 && $questionMapper->isAnsweredInTime( $parameters[ "question-id"] , $userId ) );
+
 				/*
 					Try to insert it in the database
 				 */
 				try
 				{
-					
+					DatabaseConnection::getInstance()->startTransaction();
 					$userAnswerMapper->persist($userAnswer);
+					$questionMapper->deleteQuestionShownRecords($groupId , $userId);
 
 					$response["code"] = "200";
 					$response["message"] = "All ok , Answer was registered.";
-
+					DatabaseConnection::getInstance()->commit();
 				}
 				catch(DatabaseException $e)
 				{
+					DatabaseConnection::getInstance()->rollback();
 					print $e->getMessage();
 					$response["code"] = "500";
 					$response["message"] = "Internal server error.";

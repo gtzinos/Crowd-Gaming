@@ -180,14 +180,42 @@
 
 		}
 
-		public function isAnsweredInTime($questionId , $userId)
+		public function addShownRecord($questionId , $userId)
 		{
-			// to do
+			$query = "INSERT INTO `QuestionShown` (`question_id` , `user_id` , `timestamp`) VALUES (?,?,CURRENT_TIMESTAMP)";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii',$questionId , $userId);
+			$statement->executeUpdate();
 		}
 
-		public function deleteQuestionShownRecords($questionGroup, $userId)
+		public function isAnsweredInTime($questionId , $userId)
 		{
-			// to do
+			$query = "SELECT * FROM `QuestionShown`
+					  INNER JOIN `Question` on `Question`.`id`=`QuestionShown`.`question_id`
+					  WHERE `QuestionShown`.`user_id`=? AND `Question`.`id`=? AND
+					  TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP , `QuestionShown`.`timestamp` ) )<=`Question`.`time_to_answer`";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii',$userId, $questionId);
+
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return true;
+			return false;
+		}
+
+		public function deleteQuestionShownRecords($questionGroupId, $userId)
+		{
+			$query = "DELETE `QuestionShown`.* FROM `QuestionShown` 
+					  INNER JOIN `Question` on `Question`.`id`=`QuestionShown`.`question_id`
+					  WHERE `Question`.`question_group_id`=? AND `QuestionShown`.`user_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii',$questionGroupId, $userId);
+
+			$statement->executeUpdate();
 		}
 
 		public function deleteById($questionId)
