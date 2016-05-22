@@ -261,16 +261,18 @@ function playQuestionGroup(target)
 function getNextQuestion(position)
 {
   $.when(refreshASpecificGroup(position)).done(function() {
-    $.post(webRoot +
-            "rest_api/questionnaire/" +
-            questionnaire_id + "/group/" +
-            groups[target_group_index].id + "/question/" +
-            groups[target_group_index].latitude + ";" + groups[target_group_index].longitude,
+    $.ajax(
     {
-    },
-    function(data,status)
-    {
-      if(status == "success")
+      url: webRoot +
+              "rest_api/questionnaire/" +
+              questionnaire_id + "/group/" +
+              groups[target_group_index].id + "/question",
+      headers: {
+        'X-Coordinates': groups[target_group_index].latitude +
+                          ";" + groups[target_group_index].longitude,
+      },
+      dataType: 'json',
+      success: function(data)
       {
         var out = "";
         /*
@@ -307,15 +309,15 @@ function getNextQuestion(position)
                          "</div>";
                 }
           out += "<br><br><div class='form-group'>" +
-          							 "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
-          								 "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
-          							 "</div>" +
-          							 "<div class='col-xs-3 col-sm-2'>" +
-          								 "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
-          									 "Cancel" +
-          								 "</button>" +
-          							 "</div>" +
-          				"</div>";
+                         "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
+                           "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
+                         "</div>" +
+                         "<div class='col-xs-3 col-sm-2'>" +
+                           "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
+                             "Cancel" +
+                           "</button>" +
+                         "</div>" +
+                  "</div>";
           $("#play-questionnaire-form").html(out);
           //answer_countdown = data.question['time-to-answer'];
           show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
