@@ -359,8 +359,7 @@ function confirmAnwser(question_id)
   let data =
   {
     'question-id' : question_id,
-    'answer-id' : selected_answer_id,
-    'time-answered' : 5
+    'answer-id' : selected_answer_id
   };
   $.ajax({
     method: "POST",
