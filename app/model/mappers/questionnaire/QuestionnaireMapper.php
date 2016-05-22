@@ -532,7 +532,7 @@ WHERE `Questionnaire`.`id`=? ";
 		private function _create($questionnaire){
 			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`,`message`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?)");
 
-			$statement->setParameters( 'issii' ,
+			$statement->setParameters( 'issiis' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),

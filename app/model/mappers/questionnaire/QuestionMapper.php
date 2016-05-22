@@ -180,6 +180,16 @@
 
 		}
 
+		public function isAnsweredInTime($questionId , $userId)
+		{
+			// to do
+		}
+
+		public function deleteQuestionShownRecords($questionGroup, $userId)
+		{
+			// to do
+		}
+
 		public function deleteById($questionId)
 		{
 			$query = "DELETE FROM `Question` WHERE `id`=?";
