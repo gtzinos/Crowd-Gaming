@@ -415,6 +415,16 @@
 			$statement->executeUpdate();
 		}
 
+		public function deleteByQuestionnaire($questionnaireId)
+		{
+			$query = "DELETE FROM `QuestionnaireSchedule` WHERE `questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
 		public function persist($questionnaireSchedule){
 			if( $questionnaireSchedule->getId() === null ){
 				$this->_create($questionnaireSchedule);

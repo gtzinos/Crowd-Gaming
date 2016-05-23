@@ -13,7 +13,7 @@
 				$this->setHeadless(true);
 			}
 			else
-			{Settings 
+			{
 				global $_CONFIG;
 
 				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);

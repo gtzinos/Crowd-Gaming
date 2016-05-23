@@ -58,6 +58,7 @@
 
 					$userAnswerMapper->deleteByQuestion( $_POST["question-id"] );
 					$answerMapper->deleteByQuestion( $_POST["question-id"] );
+					$questionMapper->deleteQuestionShownRecordsByQuestion($_POST["question-id"]);
 					$questionMapper->deleteById( $_POST["question-id"]);
 
 					DatabaseConnection::getInstance()->commit();
@@ -66,7 +67,6 @@
 				}
 				catch(DatabaseException $ex)
 				{
-
 					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 3);
 				}

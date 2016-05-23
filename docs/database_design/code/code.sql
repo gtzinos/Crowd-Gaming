@@ -381,7 +381,7 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionGroupRepeats` (
   INDEX `fk_QuestionGroupRepeats_2_idx` (`user_id` ASC),
   CONSTRAINT `fk_QuestionGroupRepeats_1`
     FOREIGN KEY (`question_group_id`)
-    REFERENCES `quizapp`.`Question` (`id`)
+    REFERENCES `quizapp`.`QuestionGroup` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_QuestionGroupRepeats_2`

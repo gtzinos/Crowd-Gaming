@@ -58,8 +58,10 @@
 
 					$userAnswerMapper->deleteByGroup( $_POST["question-group-id"] );
 					$answerMapper->deleteByGroup( $_POST["question-group-id"] );
+					$questionMapper->deleteQuestionShownRecordsByGroup( $_POST["question-group-id"] );
 					$questionMapper->deleteByGroup( $_POST["question-group-id"]);
 					$groupParticipationMapper->deleteByGroup( $_POST["question-group-id"] );
+					$questionGroupMapper->deleteRepeats( $_POST["question-group-id"]);
 					$questionGroupMapper->deleteById( $_POST["question-group-id"]);
 
 					DatabaseConnection::getInstance()->commit();
@@ -67,7 +69,7 @@
 
 				}catch(DatabaseException $ex)
 				{
-
+					//print $ex->getMessage();
 					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 3);
 				}

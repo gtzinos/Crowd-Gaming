@@ -218,6 +218,41 @@
 			$statement->executeUpdate();
 		}
 
+		public function deleteQuestionShownRecordsByGroup($questionGroupId)
+		{
+			$query = "DELETE `QuestionShown`.* FROM `QuestionShown` 
+					  INNER JOIN `Question` on `Question`.`id`=`QuestionShown`.`question_id`
+					  WHERE `Question`.`question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$questionGroupId);
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteQuestionShownRecordsByQuestion($questionId)
+		{
+			$query = "DELETE FROM `QuestionShown` WHERE `question_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$questionId);
+
+			$statement->executeUpdate();
+		}
+
+		public function deleteQuestionShownRecordsByQuestionnaire($questionnaireId)
+		{
+			$query = "DELETE `QuestionShown`.* FROM `QuestionShown` 
+					  INNER JOIN `Question` on `Question`.`id`=`QuestionShown`.`question_id`
+					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
+					  WHERE `QuestionGroup`.`questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
 		public function deleteById($questionId)
 		{
 			$query = "DELETE FROM `Question` WHERE `id`=?";

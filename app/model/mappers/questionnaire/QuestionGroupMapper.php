@@ -282,6 +282,18 @@
 			$set = $statement->executeUpdate();
 		}
 
+		public function deleteRepeatsByQuestionnaire($questionnaireId)
+		{
+			$query = "DELETE `QuestionGroupRepeats`.* FROM `QuestionGroupRepeats`
+			          INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`QuestionGroupRepeats`.`question_group_id`
+			          WHERE `QuestionGroup`.`questionnaire_id`=?";
+			
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$questionnaireId);
+
+			$set = $statement->executeUpdate();
+		}
+
 		public function groupBelongsTo($groupId , $questionnaireId)
 		{
 			$query  = "SELECT `Questionnaire`.`id` FROM `QuestionGroup` INNER JOIN `Questionnaire` ON `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` WHERE `QuestionGroup`.`id`=? AND `QuestionGroup`.`questionnaire_id`=? ";
