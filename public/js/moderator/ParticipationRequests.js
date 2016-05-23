@@ -84,7 +84,7 @@ function getParticipationRequests()
                   counter ++;
           }
         }
-        else if(request_offset == 10) {
+        else if(request_offset == 0) {
           out = "<a class='col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10'>" +
                       "<div class='col-xs-12'>" +
                           "<div class='alert alert-danger text-center'>We don't have any participation request in our database. </div>" +

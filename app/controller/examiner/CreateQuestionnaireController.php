@@ -14,6 +14,7 @@
 			}
 			else
 			{
+
 				global $_CONFIG;
 
 				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
