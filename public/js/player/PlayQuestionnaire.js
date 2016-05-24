@@ -80,7 +80,7 @@ $(window).on("load",function()
      $("#distance" + groups[i].id).html("Distance: " + distance + "m ");
      if(groups[i]["total-questions"] != groups[i]["answered-questions"])
      {
-       if(distance > 0) {
+       if(distance > 0 && $("#play" + groups[i].id).val() != "Completed") {
          $("#play" + groups[i].id).prop("disabled",true);
        }
        else {
@@ -111,7 +111,7 @@ $(window).on("load",function()
     $("#distance" + groups[target_group_index].id).html("Distance: " + distance + "m ");
     if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"])
     {
-      if(distance > 0) {
+      if(distance > 0 && $("#play" + groups[target_group_index].id).val() != "Completed") {
         $("#play" + groups[target_group_index].id).prop("disabled",true);
       }
       else {
