@@ -98,7 +98,7 @@ $(window).on("load",function()
    distance = calculateDistance(target_group_index);
    if(displayDistance(distance))
    {
-     show_notification("success",groups[target_group_index].name + " distance updated successfully",3000);
+     //show_notification("success",groups[target_group_index].name + " distance updated successfully",3000);
    }
    else
    {
@@ -261,11 +261,112 @@ function calculateDistance(i)
 function playQuestionGroup(target)
 {
   target_group_index = target;
-  navigator.geolocation.getCurrentPosition(getNextQuestion, showError);
+  if(groups[target_group_index].latitude != null && groups[target_group_index].longitude != null)
+  {
+    navigator.geolocation.getCurrentPosition(getNextQuestionUsingCoordinates, showError);
+  }
+  //without address
+  else
+  {
+    getNextQuestionWithoutCoordinates();
+  }
 }
 
-//try to get questions
-function getNextQuestion(position)
+//try to get questions without coordinates
+function getNextQuestionWithoutCoordinates()
+{
+  $.ajax(
+  {
+    url: webRoot +
+            "rest_api/questionnaire/" +
+            questionnaire_id + "/group/" +
+            groups[target_group_index].id + "/question",
+    dataType: 'json',
+    success: function(data)
+    {
+      var out = "";
+      /*
+          200 : Everything ok.
+          603 : Forbidden, Questionnaire offline
+          604 : Forbidden, You dont have access to that questionnaire
+          606 : Forbidden, Coordinates not provided.
+          607 : Forbidden, Invalid location or user not in participation group.
+          608 : Not Found, Group doesnt not exist or doesnt belong to questionnaire
+          609 : Question Group doesnt have any more questions
+      */
+      if(data.code == "200")
+      {
+        if(!$("#play-questionnaire").hasClass('in'))
+        {
+          showModal("play-questionnaire");
+        }
+        out = " <div class='col-xs-4 col-xs-offset-8 col-sm-offset-9 col-sm-3' id='question-count-down'> </div>" +
+                "<div class='form-group'>" +
+                    "<div class='col-xs-2 col-sm-offset-1 col-sm-2'>" +
+                        "<span class='text-center'><i class='material-icons bigicon'>question_answer</i></span>" +
+                    "</div>" +
+                    "<div class='col-xs-7 gt-input-group'>" +
+                        "<label id='question-game'>" + data.question['question-text'] + "</label>" +
+                    "</div>" +
+                "</div>";
+              var i;
+              for(i=0;i<data.answer.length;i++)
+              {
+                out += "<div class='form-group'>" +
+                          "<div class='col-xs-offset-2 col-xs-7 col-sm-offset-3 radio'>" +
+                            "<label class='active'><input type='radio' name='optradio' value='" + data.answer[i]['id'] + "'>" + data.answer[i]['answer-text'] + "</label>" +
+                          "</div>" +
+                       "</div>";
+              }
+        out += "<br><br><div class='form-group'>" +
+                       "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
+                         "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
+                       "</div>" +
+                       "<div class='col-xs-3 col-sm-2'>" +
+                         "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
+                           "Cancel" +
+                         "</button>" +
+                       "</div>" +
+                "</div>";
+        $("#play-questionnaire-form").html(out);
+        //var answer_countdown = parseInt(data.question['time-to-answer']);
+        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
+      }
+    },
+    error: function(xhr, status, error) {
+        var code = JSON.parse(xhr.responseText).code;
+        if(code == "603")
+        {
+          show_notification("error","Forbidden. Questionnaire is offline.",3000);
+        }
+        else if(code == "604")
+        {
+          show_notification("error","Forbidden. You dont have access to that questionnaire.",3000);
+        }
+        else if(code == "606")
+        {
+          show_notification("error","Forbidden. Coordinates not provided.",3000);
+        }
+        else if(code == "607")
+        {
+          show_notification("error","Forbidden. Invalid location or user not in participation group.",3000);
+        }
+        else if(code == "608")
+        {
+          show_notification("error","Forbidden. Group doesnt exist or doesnt belong to questionnaire.",3000);
+        }
+        else if(code == "609")
+        {
+          show_notification("warning","Question Group doesnt have any questions.",3000);
+          navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
+          $("#play-questionnaire").modal("toggle");
+        }
+    }
+  });
+}
+
+//try to get questions using coordinates
+function getNextQuestionUsingCoordinates(position)
 {
   $.when(refreshASpecificGroup(position)).done(function() {
     $.ajax(
@@ -316,11 +417,11 @@ function getNextQuestion(position)
                          "</div>";
                 }
           out += "<br><br><div class='form-group'>" +
-                         "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
-                           "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
+                         "<div class='col-xs-3 col-sm-offset-3 col-sm-2'>" +
+                           "<button type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
                          "</div>" +
-                         "<div class='col-xs-3 col-sm-2'>" +
-                           "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
+                         "<div class='col-xs-4 col-sm-2'>" +
+                           "<button type='button' class='btn btn-primary' data-dismiss='modal' >" +
                              "Cancel" +
                            "</button>" +
                          "</div>" +
@@ -329,29 +430,32 @@ function getNextQuestion(position)
           //var answer_countdown = parseInt(data.question['time-to-answer']);
           show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
         }
-        else if(data.code == "603")
+      },
+      error: function(xhr, status, error) {
+        var code = JSON.parse(xhr.responseText).code;
+        if(code == "603")
         {
           show_notification("error","Forbidden. Questionnaire is offline.",3000);
         }
-        else if(data.code == "604")
+        else if(code == "604")
         {
           show_notification("error","Forbidden. You dont have access to that questionnaire.",3000);
         }
-        else if(data.code == "606")
+        else if(code == "606")
         {
           show_notification("error","Forbidden. Coordinates not provided.",3000);
         }
-        else if(data.code == "607")
+        else if(code == "607")
         {
           show_notification("error","Forbidden. Invalid location or user not in participation group.",3000);
         }
-        else if(data.code == "608")
+        else if(code == "608")
         {
-          show_notification("error","Forbidden. Group doesnt not exist or doesnt belong to questionnaire.",3000);
+          show_notification("error","Forbidden. Group doesnt exist or doesnt belong to questionnaire.",3000);
         }
-        else if(data.code == "609")
+        else if(code == "609")
         {
-          show_notification("success","Forbidden. Question Group doesnt have any more questions.",3000);
+          show_notification("warning","Question Group doesnt have any questions.",3000);
           navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
           $("#play-questionnaire").modal("toggle");
         }
