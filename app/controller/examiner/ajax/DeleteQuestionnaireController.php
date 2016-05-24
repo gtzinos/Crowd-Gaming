@@ -3,6 +3,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
@@ -48,6 +49,7 @@
 				$groupParticipationMapper = new QuestionGroupParticipationMapper;
 				$participationMapper = new ParticipationMapper;
 				$requestMapper = new RequestMapper;
+				$scheduleMapper = new QuestionnaireScheduleMapper;
 
 				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
 
@@ -70,11 +72,14 @@
 
 					$userAnswerMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
 					$answerMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
+					$questionMapper->deleteQuestionShownRecordsByQuestionnaire( $_POST["questionnaire-id"]);
 					$questionMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$groupParticipationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
+					$questionGroupMapper->deleteRepeatsByQuestionnaire( $_POST["questionnaire-id"]);
 					$questionGroupMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$requestMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$participationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
+					$scheduleMapper->deleteByQuestionnaire($_POST["questionnaire-id"]);
 					$questionnaireMapper->deleteById( $_POST["questionnaire-id"]);
 
 

@@ -197,7 +197,7 @@
 		public function deleteByQuestionnaire($questionnaireId)
 		{
 			$query = "DELETE `UserAnswer`.* FROM `UserAnswer`
-					  INNER JOIN `Question` on `Question`.`id`=UserAnswer`.`question_id`
+					  INNER JOIN `Question` on `Question`.`id`=`UserAnswer`.`question_id`
 					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
 					  WHERE `QuestionGroup`.`questionnaire_id`=?";
 
