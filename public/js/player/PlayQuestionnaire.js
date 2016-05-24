@@ -537,3 +537,21 @@ function confirmAnwser(question_id,usingCoordinates)
     }
   });
 }
+
+//Refresh question groups answers
+function refreshAnswers()
+{
+  //save values
+  var id = groups[target_group_index].id;
+  var answered = parseInt($("#answered"+id).html()) + 1;
+  var total_questions = parseInt($("#total-questions"+id).html());
+
+  //update answered-questions
+  $("#answered"+id).html(answered);
+  //check if question group completed
+  if(answered == total_questions)
+  {
+    $("#play" + id).val("Completed")
+                   .prop('disabled',true);
+  }
+}
