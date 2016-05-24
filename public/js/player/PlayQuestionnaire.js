@@ -153,8 +153,12 @@ function getAddresses()
   //get addresses from google api
   for(i=0; i<groups.length; i++)
   {
+    if(groups[i]["latitude"] == null || groups[i]["longitude"] == null) {
+      continue;
+    }
     (function(i)
     {
+
         /*
           Get real address name
           #URL : https://maps.googleapis.com/maps/api/geocode/json?address={*latitude,*longitude}
@@ -168,11 +172,14 @@ function getAddresses()
         },
         function(data,status)
         {
+          if(status == "success")
+          {
             groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
             if(groups[groups.length-1]["address"] != undefined)
             {
               displayData();
             }
+          }
         });
      })(i);
   }
@@ -319,7 +326,7 @@ function getNextQuestion(position)
                          "</div>" +
                   "</div>";
           $("#play-questionnaire-form").html(out);
-          //answer_countdown = data.question['time-to-answer'];
+          //var answer_countdown = parseInt(data.question['time-to-answer']);
           show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
         }
         else if(data.code == "603")
