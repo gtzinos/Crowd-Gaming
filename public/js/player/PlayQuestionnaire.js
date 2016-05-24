@@ -320,7 +320,7 @@ function getNextQuestionWithoutCoordinates()
               }
         out += "<br><br><div class='form-group'>" +
                        "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
-                         "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
+                         "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false)'>Confirm</button>" +
                        "</div>" +
                        "<div class='col-xs-3 col-sm-2'>" +
                          "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
@@ -418,7 +418,7 @@ function getNextQuestionUsingCoordinates(position)
                 }
           out += "<br><br><div class='form-group'>" +
                          "<div class='col-xs-3 col-sm-offset-3 col-sm-2'>" +
-                           "<button type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ")'>Confirm</button>" +
+                           "<button type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ",true)'>Confirm</button>" +
                          "</div>" +
                          "<div class='col-xs-4 col-sm-2'>" +
                            "<button type='button' class='btn btn-primary' data-dismiss='modal' >" +
@@ -464,9 +464,19 @@ function getNextQuestionUsingCoordinates(position)
   });
 }
 
-function confirmAnwser(question_id)
+function confirmAnwser(question_id,usingCoordinates)
 {
   var selected_answer_id = $("input[name='optradio']:checked").val();
+  let headersData = { };
+
+  if(usingCoordinates)
+  {
+    headersData = {
+      "X-Coordinates": groups[target_group_index].latitude +
+                        ";" + groups[target_group_index].longitude
+    }
+  }
+
   let data =
   {
     'question-id' : question_id,
@@ -475,9 +485,7 @@ function confirmAnwser(question_id)
   $.ajax({
     method: "POST",
     url: webRoot + "rest_api/answer",
-    headers: {
-        "X-Coordinates": groups[target_group_index].latitude + ";" + groups[target_group_index].longitude
-    },
+    headers: headersData,
     data: JSON.stringify(data),
     success: function(data)
     {
