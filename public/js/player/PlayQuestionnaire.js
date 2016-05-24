@@ -204,7 +204,9 @@ function displayData()
                       "<div id='collapse" + groups[i].id + "' class='panel-collapse collapse'>" +
                         "<div class='panel-body'>" +
                           "<div>Answered " +
-                            groups[i]["answered-questions"] + "/" + groups[i]["total-questions"] +
+                            "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
+                            "/" +
+                            "<span id='total-questions" + groups[i].id + "'>" + groups[i]["total-questions"] + "</span>" +
                           "</div>" +
                           (groups[i]["address"]
                               ? //if true (groups[i]["address"] != undefined
@@ -501,6 +503,7 @@ function confirmAnwser(question_id,usingCoordinates)
       if(data.code == "200")
       {
         show_notification("success","Question anwsered successfully.",3000);
+        refreshAnswers();
         playQuestionGroup(target_group_index);
       }
       else if(data.code == "603")
