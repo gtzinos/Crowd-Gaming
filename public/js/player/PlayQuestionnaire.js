@@ -502,6 +502,7 @@ function confirmAnwser(question_id,usingCoordinates)
       */
       if(data.code == "200")
       {
+        $('#question-count-down').countdown('stop');
         show_notification("success","Question anwsered successfully.",3000);
         refreshAnswers();
         playQuestionGroup(target_group_index);
