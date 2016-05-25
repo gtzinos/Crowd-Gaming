@@ -507,7 +507,10 @@ function confirmAnwser(question_id,usingCoordinates)
         refreshAnswers();
         playQuestionGroup(target_group_index);
       }
-      else if(data.code == "603")
+    },
+    error: function(xhr, status, error) {
+      var code = JSON.parse(xhr.responseText).code;
+      if(data.code == "603")
       {
         show_notification("error","Forbidden, Questionnaire is offline",3000);
       }
