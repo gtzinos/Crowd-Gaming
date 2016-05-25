@@ -27,6 +27,7 @@
 	Routes::add( 'user' , 'player/UserController.php' , $_USER_LEVEL["PLAYER"] );
 	Routes::add( 'my-questionnaires' , 'player/MyQuestionnairesController.php' , $_USER_LEVEL["PLAYER"] );
 	Routes::add( 'play-questionnaire' , 'player/PlayQuestionnaireController.php' , $_USER_LEVEL["PLAYER"] );
+	Routes::add( 'questionnaire-results' , 'player/QuestionnaireResultsController.php' , $_USER_LEVEL["PLAYER"] );
 
 	/*
 		Examiner level pages
