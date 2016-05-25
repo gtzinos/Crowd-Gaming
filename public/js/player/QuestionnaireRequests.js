@@ -14,5 +14,5 @@ function sendQuestionnaireRequest(request_name,request_value)
 
 $(window).on("load",function()
 {
-  show_clock(".count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD hh:mm:ss"),"%m months %-d days %-H h %M min %S sec","Questionnaire started. Page will reload.");
+  show_clock(".count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD HH:mm:ss"),"%m months %-d days %-H h %M min %S sec","Questionnaire started. Page will reload.");
 });
