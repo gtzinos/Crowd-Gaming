@@ -26,7 +26,7 @@ $(window).on("load",function()
  //save client location
  function initializePosition(position) {
      savePlayerLocation(position);
-     show_clock("#count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD hh:mm:ss"));
+     show_clock("#count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD HH:mm:ss"));
      //change visibility of elements
      $("#questionnaire-name").css("display","block");
      $("#count-down").css("display","block");
@@ -332,7 +332,7 @@ function getNextQuestionWithoutCoordinates()
                 "</div>";
         $("#play-questionnaire-form").html(out);
         //var answer_countdown = parseInt(data.question['time-to-answer']);
-        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
+        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"","Your time expired",false);
       }
     },
     error: function(xhr, status, error) {
@@ -430,7 +430,7 @@ function getNextQuestionUsingCoordinates(position)
                   "</div>";
           $("#play-questionnaire-form").html(out);
           //var answer_countdown = parseInt(data.question['time-to-answer']);
-          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD hh:mm:ss"),"","Your time expired",false);
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"","Your time expired",false);
         }
       },
       error: function(xhr, status, error) {
