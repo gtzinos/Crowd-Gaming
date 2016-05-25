@@ -94,8 +94,8 @@ function getMyQuestionnaires()
               "</div>" +
           "</div>";
           $("#my-questionnaires-list").append(out);
-          show_clock("#mobile-count-down" + data.questionnaire[i].id,moment().add(minutes_left,'seconds').format("YYYY/MM/DD hh:mm:ss"),"%m months %-d days %-H h %M min %S sec","");
-          show_clock("#medium-count-down" + data.questionnaire[i].id,moment().add(minutes_left,'seconds').format("YYYY/MM/DD hh:mm:ss"),"%m months %-d days %-H h %M min %S sec",data.questionnaire[i].name + " started. Page will reload.");
+          show_clock("#mobile-count-down" + data.questionnaire[i].id,moment().add(minutes_left,'seconds').format("YYYY/MM/DD HH:mm:ss"),"%m months %-d days %-H h %M min %S sec","");
+          show_clock("#medium-count-down" + data.questionnaire[i].id,moment().add(minutes_left,'seconds').format("YYYY/MM/DD HH:mm:ss"),"%m months %-d days %-H h %M min %S sec",data.questionnaire[i].name + " started. Page will reload.");
 
        }
        if(data.questionnaire.length == 0)
