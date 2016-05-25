@@ -504,8 +504,16 @@ function confirmAnwser(question_id,usingCoordinates)
       {
         $('#question-count-down').countdown('stop');
         show_notification("success","Question anwsered successfully.",3000);
-        refreshAnswers();
-        playQuestionGroup(target_group_index);
+        $.when(refreshAnswers()).done(function() {
+          if(!completed())
+          {
+            playQuestionGroup(target_group_index);
+          }
+          else
+          {
+            window.location.replace(webRoot);
+          }
+        });
       }
     },
     error: function(xhr, status, error) {
@@ -558,4 +566,9 @@ function refreshAnswers()
     $("#play" + id).val("Completed")
                    .prop('disabled',true);
   }
+}
+
+//return true if game completed
+function completed() {
+  return $("input[id^=play][disabled]").length == $("input[id^=play]").length;
 }
