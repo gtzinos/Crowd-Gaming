@@ -360,8 +360,22 @@ function getNextQuestionWithoutCoordinates()
         else if(code == "609")
         {
           show_notification("warning","Question Group doesnt have any questions.",3000);
-          navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
           $("#play-questionnaire").modal("toggle");
+          $("#play"+groups[target_group_index].id).val("Completed")
+                                       .prop("disabled",true);
+          $.when(refreshAnswers()).done(function() {
+            if(completed())
+            {
+              $("#play-questionnaire").modal("toggle");
+              HoldOn.open({
+                 theme:"sk-cube-grid",
+                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
+              });
+              setTimeout(function() {
+                window.location.replace(my_questionnaires_page);
+              },10000);
+            }
+          });
         }
     }
   });
@@ -459,9 +473,12 @@ function getNextQuestionUsingCoordinates(position)
         {
           show_notification("warning","Question Group doesnt have any questions.",3000);
           $("#play-questionnaire").modal("toggle");
+          $("#play"+groups[target_group_index].id).val("Completed")
+                                       .prop("disabled",true);
           $.when(refreshAnswers()).done(function() {
             if(completed())
             {
+              $("#play-questionnaire").modal("toggle");
               HoldOn.open({
                  theme:"sk-cube-grid",
                  message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
@@ -517,14 +534,13 @@ function confirmAnwser(question_id,usingCoordinates)
         $('#question-count-down').countdown('stop');
         show_notification("success","Question anwsered successfully.",3000);
         $.when(refreshAnswers()).done(function() {
-          $("#play"+target_group_index).val("Completed")
-                                       .prop("disabled",true);
           if(!completed())
           {
             playQuestionGroup(target_group_index);
           }
           else
           {
+            $("#play-questionnaire").modal("toggle");
             HoldOn.open({
                theme:"sk-cube-grid",
                message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
