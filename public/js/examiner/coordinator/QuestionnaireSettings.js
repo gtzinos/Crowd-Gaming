@@ -70,7 +70,6 @@ function getSchedulePlans()
               counter++;
           }
         }
-
         for(i = 0;i<data.schedule.length;i++)
         {
           (function(i)
@@ -113,16 +112,15 @@ function getSchedulePlans()
                   $("#stop_time_timer" + data.schedule[i].day).val(hours + ":" + minutes);
                 });
               }
-
-              //set start - stop date
-              if(data.schedule[i]['start-date'] != null && data.schedule[i]['end-date'] != null)
-              {
-                //set value on textbox
-                $("#datepicker").val(data.schedule[i]['start-date'] + " - " + data.schedule[i]['end-date']);
-                //initialize date picker
-                $('#datepicker').data('daterangepicker').setStartDate(data.schedule[i]['start-date']);
-                $('#datepicker').data('daterangepicker').setEndDate(data.schedule[i]['end-date']);
-              }
+            }
+            //set start - stop date
+            if(data.schedule[i]['start-date'] != null && data.schedule[i]['end-date'] != null)
+            {
+              //set value on textbox
+              $("#datepicker").val(data.schedule[i]['start-date'] + " - " + data.schedule[i]['end-date']);
+              //initialize date picker
+              $('#datepicker').data('daterangepicker').setStartDate(data.schedule[i]['start-date']);
+              $('#datepicker').data('daterangepicker').setEndDate(data.schedule[i]['end-date']);
             }
           })(i);
         }
