@@ -194,8 +194,8 @@ function updateSchedulePlan()
   }
   else if($('#multiple-day-dropdown').val() != null){
     days['1'] = {
-      'start-time' : $("#start_time_timer1").val().length == 5 ? convertToDecimal($("#start_time_timer1").val()) : 0,
-      'end-time' : $("#stop_time_timer1").val().length == 5 ? convertToDecimal($("#stop_time_timer1").val()) : 1440
+      'start-time' : $("#start_time_timer" + $('#multiple-day-dropdown').val()).val().length == 5 ? convertToDecimal($("#start_time_timer" + $('#multiple-day-dropdown').val()).val()) : 0,
+      'end-time' : $("#stop_time_timer" + $('#multiple-day-dropdown').val()).val().length == 5 ? convertToDecimal($("#stop_time_timer" + $('#multiple-day-dropdown').val()).val()) : 1440
     };
   }
 
