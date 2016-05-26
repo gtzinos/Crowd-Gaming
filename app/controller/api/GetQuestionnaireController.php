@@ -40,16 +40,19 @@
 				$questionnaireArray = array();
 				foreach ($questionnaires as $questionnaire) 
 				{
-
-					$questionnaireArrayItem["id"] = $questionnaire->getId();
-					$questionnaireArrayItem["name"] = $questionnaire->getName();
-					$questionnaireArrayItem["description"] = $questionnaire->getDescription();
-					$questionnaireArrayItem["creation-date"] = $questionnaire->getCreationDate();
-					$questionnaireArrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
-					$questionnaireArrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
-					$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
-					$questionnaireArrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId(), $userId);
-					$questionnaireArray[] = $questionnaireArrayItem;
+					
+					if ( $questionnaire->getPublic() )
+					{
+						$questionnaireArrayItem["id"] = $questionnaire->getId();
+						$questionnaireArrayItem["name"] = $questionnaire->getName();
+						$questionnaireArrayItem["description"] = $questionnaire->getDescription();
+						$questionnaireArrayItem["creation-date"] = $questionnaire->getCreationDate();
+						$questionnaireArrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
+						$questionnaireArrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
+						$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
+						$questionnaireArrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId(), $userId);
+						$questionnaireArray[] = $questionnaireArrayItem;
+					}	
 				}
 
 				$response["questionnaire"] = $questionnaireArray;
@@ -62,7 +65,7 @@
 				 */
 				$questionnaire = $questionnaireMapper->findQuestionnaireByParticipation($userId,$questionnaireId ,1);
 
-				if($questionnaire !=null )
+				if($questionnaire !=null && $questionnaire->getPublic() )
 				{
 					$response["code"] = "200";
 					$response["message"] = "Completed";
