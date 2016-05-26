@@ -464,7 +464,7 @@ function getNextQuestionUsingCoordinates(position)
             {
               HoldOn.open({
                  theme:"sk-cube-grid",
-                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. Well done. We will redict you, back to your questionnaires."
+                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
               });
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
@@ -517,6 +517,8 @@ function confirmAnwser(question_id,usingCoordinates)
         $('#question-count-down').countdown('stop');
         show_notification("success","Question anwsered successfully.",3000);
         $.when(refreshAnswers()).done(function() {
+          $("#play"+target_group_index).val("Completed")
+                                       .prop("disabled",true);
           if(!completed())
           {
             playQuestionGroup(target_group_index);
@@ -525,7 +527,7 @@ function confirmAnwser(question_id,usingCoordinates)
           {
             HoldOn.open({
                theme:"sk-cube-grid",
-               message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. Well done. We will redict you, back to your questionnaires."
+               message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
             });
             setTimeout(function() {
               window.location.replace(my_questionnaires_page);
