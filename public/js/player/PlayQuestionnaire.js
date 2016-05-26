@@ -252,9 +252,9 @@ function calculateDistance(i)
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c;
 
-  if(d-groups[i].radius >= 0)
+  if(d.toFixed(2) -groups[i].radius >= 0)
   {
-    d = d - groups[i].radius;
+    d = d.toFixed(2) - groups[i].radius;
   }
   return d.toFixed(2);
 }
@@ -363,9 +363,8 @@ function getNextQuestionWithoutCoordinates()
           $("#play-questionnaire").modal("toggle");
           $("#play"+groups[target_group_index].id).val("Completed")
                                        .prop("disabled",true);
-          $.when(refreshAnswers()).done(function() {
-            if(completed())
-            {
+          if(completed())
+          {
               $("#play-questionnaire").modal("toggle");
               HoldOn.open({
                  theme:"sk-cube-grid",
@@ -374,8 +373,7 @@ function getNextQuestionWithoutCoordinates()
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
               },10000);
-            }
-          });
+          }
         }
     }
   });
@@ -475,9 +473,8 @@ function getNextQuestionUsingCoordinates(position)
           $("#play-questionnaire").modal("toggle");
           $("#play"+groups[target_group_index].id).val("Completed")
                                        .prop("disabled",true);
-          $.when(refreshAnswers()).done(function() {
-            if(completed())
-            {
+          if(completed())
+          {
               $("#play-questionnaire").modal("toggle");
               HoldOn.open({
                  theme:"sk-cube-grid",
@@ -486,8 +483,7 @@ function getNextQuestionUsingCoordinates(position)
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
               },10000);
-            }
-          });
+          }
         }
       }
     });
