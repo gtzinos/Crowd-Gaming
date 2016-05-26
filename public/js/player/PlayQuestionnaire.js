@@ -458,8 +458,15 @@ function getNextQuestionUsingCoordinates(position)
         else if(code == "609")
         {
           show_notification("warning","Question Group doesnt have any questions.",3000);
-          navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
           $("#play-questionnaire").modal("toggle");
+          $.when(refreshAnswers()).done(function() {
+            if(completed())
+            {
+              setTimeout(function() {
+                window.location.replace(my_questionnaires_page);
+              },10000);
+            }
+          });
         }
       }
     });
@@ -511,7 +518,9 @@ function confirmAnwser(question_id,usingCoordinates)
           }
           else
           {
-            window.location.replace(webRoot);
+            setTimeout(function() {
+              window.location.replace(my_questionnaires_page);
+            },10000);
           }
         });
       }
