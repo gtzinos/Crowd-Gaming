@@ -28,10 +28,13 @@
   <legend class="text-center header">Question Groups</legend>
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback row">
-    <div class="col-xs-offset-0 col-xs-12 col-sm-1">
+    <div class="col-xs-4 col-sm-1">
       <a class="btn btn-primary gt-submit" href="<?php echo LinkUtils::generatePageLink('create-question-group') . "/" . get("questionnaire")->getId(); ?>">Add</a>
     </div>
-    <div class="col-xs-offset-0 col-xs-12 col-sm-1">
+    <div class="visible-xs col-xs-12">
+    </br>
+    </div>
+    <div class="col-xs-4 col-sm-1">
       <button class="btn" onclick="$('#question-group-users').modal('show')"><i class="fa fa-users bigicon"></i></buton>
     </div>
   </div>
