@@ -322,7 +322,7 @@ function getNextQuestionWithoutCoordinates()
               }
         out += "<br><br><div class='form-group'>" +
                        "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
-                         "<button type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false)'>Confirm</button>" +
+                         "<button id='confirm-answer-button' type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false)'>Confirm</button>" +
                        "</div>" +
                        "<div class='col-xs-3 col-sm-2'>" +
                          "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
@@ -420,7 +420,7 @@ function getNextQuestionUsingCoordinates(position)
                 }
           out += "<br><br><div class='form-group'>" +
                          "<div class='col-xs-3 col-sm-offset-3 col-sm-2'>" +
-                           "<button type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ",true)'>Confirm</button>" +
+                           "<button id='confirm-answer-button' type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ",true)'>Confirm</button>" +
                          "</div>" +
                          "<div class='col-xs-4 col-sm-2'>" +
                            "<button type='button' class='btn btn-primary' data-dismiss='modal' >" +
@@ -475,6 +475,7 @@ function getNextQuestionUsingCoordinates(position)
 
 function confirmAnwser(question_id,usingCoordinates)
 {
+  $("#confirm-answer-button").prop("disabled",true);
   var selected_answer_id = $("input[name='optradio']:checked").val();
   let headersData = { };
 

@@ -1,5 +1,4 @@
 <?php if($section == "CSS") : ?>
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
@@ -25,24 +24,8 @@
 
       </div>
 
-      <!--Call your modal-->
-    <div id="demo01" style="display:none" href="#animatedModal"> </div>
-
-    <!--DEMO01-->
-    <div id="animatedModal">
-        <!--THIS IS IMPORTANT! to close the modal, the class name has to match the name given on the ID  class="close-animatedModal" -->
-        <div class="close-animatedModal">
-            CLOSE MODAL
-        </div>
-
-        <div class="modal-content">
-                  <!--Your modal content goes here-->
-        </div>
-    </div>
   </div>
   <?php
     load("PLAY_GAME");
   ?>
-  <script src="<?php print LinkUtils::generatePublicLink("js/library/animated-modal/animatedModal.min.js"); ?>"> </script>
-
 <?php endif; ?>
