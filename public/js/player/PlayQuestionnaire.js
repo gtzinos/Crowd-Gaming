@@ -252,7 +252,7 @@ function calculateDistance(i)
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c;
 
-  if(d-groups[i] >= 0)
+  if(d-groups[i].radius >= 0)
   {
     d = d - groups[i].radius;
   }
