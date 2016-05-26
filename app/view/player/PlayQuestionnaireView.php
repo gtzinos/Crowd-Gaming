@@ -1,4 +1,5 @@
 <?php if($section == "CSS") : ?>
+  <link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("js/library/hold-on/src/css/HoldOn.min.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
@@ -6,6 +7,7 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/library/jQuery-countdown/dist/jquery.countdown.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/jquery-clock.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/player/PlayQuestionnaire.js"); ?>"> </script>
+<script src="<?php print LinkUtils::generatePublicLink("js/library/hold-on/src/js/HoldOn.min.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
   <?php
     $questionnaire = get("questionnaire")["questionnaire"];

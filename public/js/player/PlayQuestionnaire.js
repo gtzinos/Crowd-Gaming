@@ -462,6 +462,10 @@ function getNextQuestionUsingCoordinates(position)
           $.when(refreshAnswers()).done(function() {
             if(completed())
             {
+              HoldOn.open({
+                 theme:"sk-cube-grid",
+                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. Well done. We will redict you, back to your questionnaires."
+              });
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
               },10000);
@@ -519,6 +523,10 @@ function confirmAnwser(question_id,usingCoordinates)
           }
           else
           {
+            HoldOn.open({
+               theme:"sk-cube-grid",
+               message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. Well done. We will redict you, back to your questionnaires."
+            });
             setTimeout(function() {
               window.location.replace(my_questionnaires_page);
             },10000);
