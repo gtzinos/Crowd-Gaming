@@ -369,7 +369,7 @@ function getNextQuestionWithoutCoordinates()
               $("#play-questionnaire").modal("toggle");
               HoldOn.open({
                  theme:"sk-cube-grid",
-                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
+                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redirect you, to your questionnaires page."
               });
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
@@ -481,7 +481,7 @@ function getNextQuestionUsingCoordinates(position)
               $("#play-questionnaire").modal("toggle");
               HoldOn.open({
                  theme:"sk-cube-grid",
-                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
+                 message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redirect you, to your questionnaires page."
               });
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
@@ -543,7 +543,7 @@ function confirmAnwser(question_id,usingCoordinates)
             $("#play-questionnaire").modal("toggle");
             HoldOn.open({
                theme:"sk-cube-grid",
-               message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redict you, to your questionnaires page."
+               message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire completed successfully. We will redirect you, to your questionnaires page."
             });
             setTimeout(function() {
               window.location.replace(my_questionnaires_page);
