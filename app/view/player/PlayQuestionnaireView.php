@@ -13,6 +13,7 @@
     echo "<script>
             var questionnaire_id = " . $questionnaire->getId() . ";
             var time_left = " . intval(get("questionnaire")["time-left-to-end"]) . ";
+            var my_questionnaires_page = '" . LinkUtils::generatePageLink("my-questionnaires") . "';
           </script>";
   ?>
   <div id="count-down" style="color:red;display:none" class="col-xs-offset-7 col-sm-offset-10"> </div>
