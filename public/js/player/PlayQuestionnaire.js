@@ -242,11 +242,10 @@ function displayData()
                             "</div>" +
                         "</div>" +
                       "</div>";
-
     })(i);
-
   }
-      $("#accordion").html(out);
+    $("#accordion").html(out);
+    $("#auto-refresh-icon").trigger("click");
 }
 //calculate client distance
 function calculateDistance(i)

@@ -18,7 +18,7 @@
           </script>";
   ?>
   <div id="count-down" style="color:red;display:none" class="col-xs-offset-7 col-sm-offset-10"> </div>
-  <div id="auto-refresh" style="color:red;font-size:30px;display:none" class="col-xs-offset-8 col-sm-offset-10"><span title="Auto refresh" class="fa fa-refresh" onclick="changeAutoRefreshStatus()"> </span></div>
+  <div id="auto-refresh" style="color:red;font-size:30px;display:none" class="col-xs-offset-8 col-sm-offset-10"><span id="auto-refresh-icon" title="Auto refresh" class="fa fa-refresh" onclick="changeAutoRefreshStatus()"> </span></div>
   <legend class="text-center header" id="questionnaire-name" style="display:none"><?php echo $questionnaire->getName() ?></legend>
   <div class="container-fluid col-xs-12 col-sm-offset-2 col-sm-8">
 
