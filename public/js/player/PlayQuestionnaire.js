@@ -235,13 +235,13 @@ function displayData()
 //calculate client distance
 function calculateDistance(i)
 {
-    /** Converts numeric degrees to radians */
+  /** Converts numeric degrees to radians */
   if (typeof(Number.prototype.toRad) === "undefined") {
     Number.prototype.toRad = function() {
       return this * Math.PI / 180;
     }
   }
-  var R = 6371000; // m
+  var R = 6371; // Radius of the earth in km
   var dLat = (groups[i]["latitude"]-client_latitude).toRad();
   var dLon = (groups[i]["longitude"]-client_longitude).toRad();
   var lat1 = groups[i]["latitude"].toRad();
@@ -252,10 +252,20 @@ function calculateDistance(i)
   var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c;
 
-  if(d.toFixed(2) -groups[i].radius >= 0)
+  //Convert km to meters
+  d = d.toFixed(2) * 1000;
+
+  //Check the final distance
+  if(d.toFixed(2) - groups[i].radius >= 0)
   {
     d = d.toFixed(2) - groups[i].radius;
   }
+  else
+  {
+    d = 0;
+  }
+
+  //return value formatted with 2 decimals
   return d.toFixed(2);
 }
 
