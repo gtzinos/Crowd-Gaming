@@ -43,7 +43,7 @@
 						else if(get("question-group")->getAllowedRepeats() != "") {
 							$value .= get("question-group")->getAllowedRepeats();
 						}
-						echo "<input class='form-control' value='" . $value . "' id='name' name='name' type='text' placeholder='Allowed repeats' data-toggle='tooltip' gt-error-message='Must be integer > 0' maxlength='255' required>";
+						echo "<input class='form-control' value='" . $value . "' id='allowed_repeats' name='allowed_repeats' type='text' placeholder='Allowed repeats' data-toggle='tooltip' gt-error-message='Must be integer > 0' maxlength='255' required>";
 					 ?>
 					<span class="gt-icon"></span>
 				</div>
