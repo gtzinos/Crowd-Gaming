@@ -207,25 +207,41 @@ function displayData()
                             "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
                             "/" +
                             "<span id='total-questions" + groups[i].id + "'>" + groups[i]["total-questions"] + "</span>" +
-                          "</div>" +
-                          (groups[i]["address"]
-                              ? //if true (groups[i]["address"] != undefined
-                                "<div id='location'>" +
+                          "</div>";
+                          //if true (groups[i]["address"] != undefined
+                          if(groups[i]["address"])
+                          {
+                            out += "<div id='location'>" +
                                     "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" +
-                                "</div>" +
-                                "<div>" +
-                                      "<span id='distance" + groups[i].id + "'>Distance: " + calculateDistance(i) + "m </span><span style='color:#36A0FF' class='fa fa-refresh' onclick='target_group_index = " + i + "; navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);'></span>" +
-                                "</div>"
-                              : //else
-                                "<span style='color:red'>No address<span>") +
-                          "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>" +
-                              "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' " +
-                                (groups[i]["answered-questions"] == groups[i]["total-questions"] ? " disabled value='Completed'>" : "value='Play now' onclick='playQuestionGroup(" + i + ")'>") +
-                              "</button>"+
-                          "</div>" +
-                      "</div>" +
-                  "</div>" +
-                "</div>";
+                                  "</div>" +
+                                  "<div>" +
+                                        "<span id='distance" + groups[i].id + "'>Distance: " + calculateDistance(i) + "m </span><span style='color:#36A0FF' class='fa fa-refresh' onclick='target_group_index = " + i + "; navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);'></span>" +
+                                  "</div>";
+                          }
+                          //No address
+                          else {
+                            out += "<span style='color:red'>No address<span>";
+                          }
+                          out += "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>";
+                          //Questio group completed
+                          if(groups[i]["answered-questions"] == groups[i]["total-questions"])
+                          {
+                            out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' disabled value='Completed'> ";
+                          }
+                          //Question group not completed
+                          else {
+                            if(calculateDistance(i) == 0)
+                            {
+                              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
+                            }
+                            else {
+                              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' disabled>";
+                            }
+                          }
+                          out += "</div>" +
+                            "</div>" +
+                        "</div>" +
+                      "</div>";
 
     })(i);
 
