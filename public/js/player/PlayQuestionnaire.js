@@ -245,7 +245,11 @@ function displayData()
     })(i);
   }
     $("#accordion").html(out);
-    $("#auto-refresh-icon").trigger("click");
+    //if auto refresh icon is disabled
+    if($("#auto-refresh-icon").css("color") == "rgb(255, 0, 0)")
+    {
+      $("#auto-refresh-icon").trigger("click");
+    }
 }
 //calculate client distance
 function calculateDistance(i)
