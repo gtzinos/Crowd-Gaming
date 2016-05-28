@@ -29,7 +29,7 @@
 
 			$response = array();
 
-			if( !$participationMapper->participates($userId , $questionnaireId , 1)  )
+			if( !$participationMapper->participates($userId , $questionnaireId , 1 , 1)  )
 			{
 				/*
 					User doesnt participate to this questionnaire.
@@ -54,7 +54,6 @@
 
 				foreach ($questionGroups as $questionGroup) 
 				{
-
 					$arrayItem["name"] = $questionGroup->getName();
 					$arrayItem["latitude"] = $questionGroup->getLatitude();
 					$arrayItem["longitude"] = $questionGroup->getLongitude();

@@ -364,7 +364,7 @@
 
 		private function _update($questionGroup)
 		{
-			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=?,`allowed_repeats` WHERE `id`=?";
+			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=?,`allowed_repeats`=? WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 

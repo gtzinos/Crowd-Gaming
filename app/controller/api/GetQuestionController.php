@@ -48,7 +48,7 @@
 			/*
 				User participates to questionnaire
 			 */
-			if( !$participationMapper->participates($userId , $questionnaireId , 1)  )
+			if( !$participationMapper->participates($userId , $questionnaireId , 1 ,1)  )
 			{
 				/*
 					User doesnt participate to this questionnaire.

@@ -4,6 +4,7 @@
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
@@ -38,6 +39,21 @@
 				print json_encode($response);
 				return;
 			}
+
+			$participationMapper = new ParticipationMapper;
+
+			if( !$participationMapper->participatesInQuestion($userId , $parameters["question-id"] , 1 , 1))
+			{
+				/*
+					Questionnaire Offline
+				 */
+				$response["code"] = "603";
+				$response["message"] = "Forbidden";
+
+				http_response_code(403);
+				print json_encode($response);
+				return;
+			}
 			
 		
 			$scheduleMapper = new QuestionnaireScheduleMapper;
@@ -49,7 +65,7 @@
 					Questionnaire Offline
 				 */
 				$response["code"] = "603";
-				$response["message"] = "Forbidden, Questionnaire FUCK offline";
+				$response["message"] = "Forbidden, Questionnaire offline";
 
 				http_response_code(403);
 				print json_encode($response);
