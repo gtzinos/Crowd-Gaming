@@ -1,6 +1,5 @@
 var groups = [];
-var client_longitude;
-var client_latitude;
+var current_client_position;
 var auto_refresh; //auto refresh time out refference
 var target_group_index;
 //initialize page
@@ -71,8 +70,7 @@ $(window).on("load",function()
  function refreshAllDistances(position)
  {
    //save user location
-   client_longitude = position.coords.longitude;
-   client_latitude = position.coords.latitude;
+   current_client_position = position;
    var i,distance;
    for(i=0;i<groups.length;i++)
    {
@@ -124,8 +122,7 @@ $(window).on("load",function()
  //save user location
  function savePlayerLocation(position)
  {
-   client_longitude = position.coords.longitude;
-   client_latitude = position.coords.latitude;
+   current_client_position = position;
  }
 
 //get question groups
@@ -261,10 +258,10 @@ function calculateDistance(i)
     }
   }
   var R = 6371; // Radius of the earth in km
-  var dLat = (groups[i]["latitude"]-client_latitude).toRad();
-  var dLon = (groups[i]["longitude"]-client_longitude).toRad();
+  var dLat = (groups[i]["latitude"]-current_client_position.coords.latitude).toRad();
+  var dLon = (groups[i]["longitude"]-current_client_position.coords.longitude).toRad();
   var lat1 = groups[i]["latitude"].toRad();
-  var lat2 = client_latitude.toRad();
+  var lat2 = current_client_position.coords.latitude.toRad();
 
   var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
           Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);
@@ -294,7 +291,7 @@ function playQuestionGroup(target)
   target_group_index = target;
   if(groups[target_group_index].latitude != null && groups[target_group_index].longitude != null)
   {
-    navigator.geolocation.getCurrentPosition(getNextQuestionUsingCoordinates, showError);
+    getNextQuestionUsingCoordinates(current_client_position);
   }
   //without address
   else
@@ -419,8 +416,8 @@ function getNextQuestionUsingCoordinates(position)
               questionnaire_id + "/group/" +
               groups[target_group_index].id + "/question",
       headers: {
-        'X-Coordinates': groups[target_group_index].latitude +
-                          ";" + groups[target_group_index].longitude,
+        'X-Coordinates': position.coords.latitude +
+                          ";" + position.coords.longitude,
       },
       dataType: 'json',
       success: function(data)
