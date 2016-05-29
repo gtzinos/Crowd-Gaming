@@ -163,6 +163,45 @@
 			return $score;
 		}
 
+		public function findScore($questionnaireId)
+		{
+			$query =   "SELECT	
+							`Question`.`question_group_id`,`QuestionGroup`.`name` as gname, `User`.`name` ,`User`.`surname`,
+							sum(`UserAnswer`.`is_correct`) as correct_answers,
+							count(`UserAnswer`.`question_id`) as total_answers,
+							sum(`Question`.`multiplier` * `UserAnswer`.`is_correct`) as score,
+							sum(`Question`.`multiplier`) as max_score
+						FROM `Question`
+						INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` AND `QuestionGroup`.`questionnaire_id`=?
+						LEFT JOIN `UserAnswer` ON `Question`.`id`=`UserAnswer`.`question_id`
+						LEFT JOIN `User` on `User`.`id`=`UserAnswer`.`user_id`
+						INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`user_id`=`User`.`id` AND `QuestionnaireParticipation`.`participation_type`=1
+						GROUP BY `Question`.`question_group_id`,`User`.`id`";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i',$questionnaireId);
+
+			$set = $statement->execute();
+
+			$scoreArray = array();
+
+			while( $set->next() )
+			{
+				$arrayItem["group-id"] = $set->get("question_group_id");
+				$arrayItem["group-name"] = $set->get("gname");
+				$arrayItem["user-name"] = $set->get("name");
+				$arrayItem["user-surname"] = $set->get("surname");
+				$arrayItem["correct-answers"] = $set->get("correct_answers");
+				$arrayItem["total-answers"] = $set->get("total_answers");
+				$arrayItem["score"] = $set->get("score");
+				$arrayItem["max-score"] = $set->get("max_score");
+
+				$scoreArray[] = $arrayItem;
+			}
+
+			return $scoreArray;
+		}
+
 		public function findQuestionGroupScore($userId , $questionGroupId)
 		{
 			$query ="SELECT

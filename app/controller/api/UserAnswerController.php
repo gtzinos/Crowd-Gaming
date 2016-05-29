@@ -163,7 +163,7 @@
 
 				$userAnswer->setUserId($userId);
 				$userAnswer->setQuestionId($parameters[ "question-id"]);
-				$userAnswer->setAnswerId($parameters["answer-id"]);
+				$userAnswer->setAnswerId($parameters["answer-id"]!="null"?$parameters["answer-id"]:null);
 				$userAnswer->setAnsweredTime(0); // Whatever , who cares
 				$userAnswer->setLatitude( $coordinates !== null ? $coordinates["latitude"] : null );
 				$userAnswer->setLongitude( $coordinates !== null ? $coordinates["longitude"] : null);

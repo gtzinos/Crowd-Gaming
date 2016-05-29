@@ -172,7 +172,7 @@ DROP TABLE IF EXISTS `quizapp`.`UserAnswer` ;
 
 CREATE TABLE IF NOT EXISTS `quizapp`.`UserAnswer` (
   `user_id` INT NOT NULL COMMENT 'User id (Users:id)',
-  `answer_id` INT NOT NULL COMMENT 'Answer id (Answers:id)',
+  `answer_id` INT COMMENT 'Answer id (Answers:id)',
   `question_id` INT NOT NULL,
   `latitude` DOUBLE NULL COMMENT 'user altitude when he answer the question',
   `longitude` DOUBLE NULL COMMENT 'user longitude he answer the question',
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`UserAnswer` (
   `answered_date` TIMESTAMP NOT NULL,
   INDEX `uid_idx` (`user_id` ASC),
   INDEX `aid_idx` (`answer_id` ASC),
-  PRIMARY KEY (`user_id`, `answer_id`, `question_id`),
+  PRIMARY KEY (`user_id`, `question_id`),
   INDEX `question_user_answer_fk_idx` (`question_id` ASC),
   CONSTRAINT `User_who_answer_this_question`
     FOREIGN KEY (`user_id`)

@@ -15,6 +15,10 @@
 	*/
 	$_CONFIG["VERSION"] = "0";
 	/*
+		Google api key , web client needs it
+	 */
+	$_CONFIG["GOOGLE_API_KEY"] = "";
+	/*
 		Version String
 	*/
 	$_CONFIG["VERSION_STRING"] = "0.X Development Version";

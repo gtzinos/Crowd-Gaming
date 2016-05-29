@@ -12,18 +12,13 @@
 		public function run(){
 			$userId = $this->authenticateToken();
 			$questionnaireId = $this->params[1];
-			$questionGroupId = null;
-
-			if(isset($this->params[2]) )
-				$questionGroupId = $this->params[2];
 
 			$participationMapper = new ParticipationMapper;
-			$questionGroupMapper = new QuestionGroupMapper;
 			$userAnswerMapper = new UserAnswerMapper;
 
 			$response = array();
 
-			if( !$participationMapper->participates($userId , $questionnaireId , 1)  ){
+			if( !$participationMapper->participates($userId , $questionnaireId , 1 ,1)  ){
 				/*
 					User doesnt participate to this questionnaire.
 				 */
@@ -31,27 +26,26 @@
 				$response["message"] = "Forbidden, You dont have access to that questionnaire";
 
 				http_response_code(403);
-
-			}else if( $questionGroupId === null ){
-				/*
-					Return the score for all the groups
-				 */
-				
-				$score = $userAnswerMapper->findQuestionnaireScore($userId,$questionnaireId);
-
-				$response["code"] = "200";
-				$response["message"] = "ok";
-				$response["score"] = $score;
-
 			}else{
 				/*
 					Return the score for a specific group
 				 */
-				$score = $userAnswerMapper->findQuestionGroupScore($userId,$questionGroupId);
+				$score = $userAnswerMapper->findScore($questionnaireId);
+
+				$scoreJson = array();
+
+				foreach ($score as $scoreRow) 
+				{
+					$jsonItem["user-name"] = $scoreRow["user-name"];
+					$jsonItem["user-surname"] = $scoreRow["user-surname"];
+					$jsonItem["score"] =  $scoreRow["score"] * 100 / $scoreRow["max-score"];
+				
+					$scoreJson[ $scoreRow["group-name"] ][] = $jsonItem;
+				}
 
 				$response["code"] = "200";
 				$response["message"] = "ok";
-				$response["score"] = $score;
+				$response["score"] = $scoreJson;
 			}
 
 

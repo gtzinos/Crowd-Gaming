@@ -12,9 +12,10 @@
 	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/question' , 'api/GetQuestionController.php' , 0);
 	Routes::add( 'questionnaire\/[0-9]+\/group\/[0-9]+\/reset' , 'api/ResetQuestionGroupController.php' , 0);
 	Routes::add( 'questionnaire\/[0-9]+\/group' , 'api/GetQuestionGroupController.php' , 0);
+	Routes::add( 'questionnaire\/[0-9]+\/score' , 'api/GetScoreController.php' , 0);
 	Routes::add( 'questionnaire' , 'api/GetQuestionnaireController.php' , 0);
 	Routes::add( 'answer' , 'api/UserAnswerController.php' , 0);
-	Routes::add( 'score\/[0-9]+' , 'api/GetScoreController.php' , 0);
+
 	
 	/*
 		The Page to load when the page parameter is not defined
