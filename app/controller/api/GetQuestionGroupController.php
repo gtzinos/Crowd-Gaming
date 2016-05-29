@@ -63,7 +63,7 @@
 					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
 					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
 					$arrayItem["allowed-repeats"] = $questionGroup->getAllowedRepeats();
-					$arrayItem["current-repeats"] = $questionGroupMapper->findRepeatCount($groupId , $userId);
+					$arrayItem["current-repeats"] = $questionGroupMapper->findRepeatCount($questionGroup->getId() , $userId);
 					$response["question-group"][] = $arrayItem;
 				}
 
@@ -90,7 +90,8 @@
 					$response["question-group"]["id"] = $questionGroup->getId();
 					$response["question-group"]["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
 					$response["question-group"]["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
-
+					$response["question-group"]["allowed-repeats"] = $questionGroup->getAllowedRepeats();
+					$response["question-group"]["current-repeats"] = $questionGroupMapper->findRepeatCount($groupId , $userId);
 
 				}
 				else
