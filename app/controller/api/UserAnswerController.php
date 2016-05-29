@@ -153,7 +153,8 @@
 				Check if the user can answer this question and if the answer he choose belongs to that question
 			 */
 			if( $userAnswerMapper->canAnswer($parameters[ "question-id"] , $userId ,$groupId) && 
-				$answerMapper->answerBelongsToQuestion($parameters["answer-id"] , $parameters["question-id"]))
+				( $parameters["answer-id"] =="null" ||
+					$answerMapper->answerBelongsToQuestion($parameters["answer-id"] , $parameters["question-id"]) ) )
 			{
 
 				/*
