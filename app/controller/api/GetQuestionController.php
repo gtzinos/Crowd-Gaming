@@ -167,6 +167,9 @@
 
 				$answers = $answerMapper->findByQuestion($question->getId());
 
+				// Random order
+				shuffle($answers);
+				
 				$response["code"] = "200";
 				$response["message"] = "Success";
 
