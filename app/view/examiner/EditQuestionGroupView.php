@@ -1,7 +1,9 @@
 <?php if($section == "CSS") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/HomePage.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1P_ouQbGN0ehtuSm58zqrYxS-YPk4XwM" type="text/javascript"></script>
+	<?php
+	 global $_CONFIG;
+	 echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOOGLE_API_KEY"] . "' type='text/javascript'></script>"; ?>
 	<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
   <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 
