@@ -104,7 +104,7 @@ function get_questionnaire_i_manage()
           questionnaires[counter] = data.questionnaires[i];
           out = "<div class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='qitem" + data.questionnaires[i].id + "'>" +
                     "<div class='col-xs-12'>" +
-                        "<h4 class='list-group-item-heading'>" + data.questionnaires[i].name + "</h4>" +
+                      "<h4 class='list-group-item-heading'><a href='" + questionnaire_page + "/" + data.questionnaires[i].id + "' target='_blank'>" + data.questionnaires[i].name + "</a></h4>" +
                     "</div>" +
                     "<div class='col-xs-12' style='margin-top:3%;padding:0px'>" +
                         "<div class='col-xs-4 col-sm-4 col-md-2' style='padding:0px'>" +
