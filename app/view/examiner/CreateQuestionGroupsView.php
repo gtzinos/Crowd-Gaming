@@ -1,11 +1,13 @@
 <?php if($section == "CSS") : ?>
 <?php elseif($section == "JAVASCRIPT") : ?>
   <!-- Google Maps -->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1P_ouQbGN0ehtuSm58zqrYxS-YPk4XwM" type="text/javascript"></script>
+<?php global $_CONFIG;
+echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOOGLE_API_KEY"] . "' type='text/javascript'></script>"; ?>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
+
   <!-- ShortCut Buttons -->
   <div class="form-group has-feedback row">
     <div class="col-xs-1">

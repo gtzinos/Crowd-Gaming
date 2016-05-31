@@ -13,14 +13,17 @@
   <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
   <?php
+    echo "<script>
+      var questionnaire_page = '" . LinkUtils::generatePageLink('questionnaire') . "';
+    ";
     if(isset($_GET["sort"]))
     {
-      echo "<script> var questionnaire_sort = '" . $_GET["sort"] . "'; </script>";
+      echo "var questionnaire_sort = '" . $_GET["sort"] . "';";
     }
     else {
-      echo "<script> var questionnaire_sort = ''; </script>";
+      echo "var questionnaire_sort = '';";
     }
-
+    echo "</script>";
   ?>
 	<legend class="text-center header">Questionnaire management panel</legend>
     <!-- Sort by form -->

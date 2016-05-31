@@ -17,7 +17,7 @@
 	/*
 		Google api key , web client needs it
 	 */
-	$_CONFIG["GOOGLE_API_KEY"] = "";
+	$_CONFIG["GOOGLE_API_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
 	/*
 		Version String
 	*/
