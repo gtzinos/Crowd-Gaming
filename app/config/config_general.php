@@ -19,6 +19,14 @@
 	 */
 	$_CONFIG["GOOGLE_API_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
 	/*
+		Google recaptcha key , web client needs it
+	*/
+	$_CONFIG["CLIENT_GOOGLE_RECAPTCHA_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
+	/*
+		Google recaptcha key , web client needs it
+	*/
+	$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
+	/*
 		Version String
 	*/
 	$_CONFIG["VERSION_STRING"] = "0.X Development Version";
