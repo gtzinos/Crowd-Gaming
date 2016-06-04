@@ -21,11 +21,11 @@
 	/*
 		Google recaptcha key , web client needs it
 	*/
-	$_CONFIG["CLIENT_GOOGLE_RECAPTCHA_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
+	$_CONFIG["CLIENT_GOOGLE_RECAPTCHA_KEY"] = "6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A";
 	/*
 		Google recaptcha key , web client needs it
 	*/
-	$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
+	$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"] = "6LeluyETAAAAAGkhURxe-cskHtd2yWSwyeUsxr1P";
 	/*
 		Version String
 	*/
