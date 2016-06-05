@@ -17,18 +17,7 @@
 
 			while($set->next())
 			{
-				$questionGroup = new QuestionGroup;
-
-				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
-				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setLatitude( $set->get("latitude") );
-				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );
-				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));	
-				$questionGroup->setCreationDate( $set->get("creation_date") );
-
-				$questionGroups[] = $questionGroup;
+				$questionGroups[] = $this->_exportObject($set);
 			}
 
 			return $questionGroups;
@@ -62,18 +51,7 @@
 
 			while($set->next())
 			{
-				$questionGroup = new QuestionGroup;
-
-				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
-				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setLatitude( $set->get("latitude") );
-				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );
-				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));
-				$questionGroup->setCreationDate( $set->get("creation_date") );
-
-				$questionGroups[] = $questionGroup;
+				$questionGroups[] = $this->_exportObject($set);
 			}
 
 			return $questionGroups;
@@ -94,18 +72,7 @@
 
 			while($set->next())
 			{
-				$questionGroup = new QuestionGroup;
-
-				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
-				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setLatitude( $set->get("latitude") );
-				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );
-				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));
-				$questionGroup->setCreationDate( $set->get("creation_date") );
-
-				$questionGroups[] = $questionGroup;
+				$questionGroups[] = $this->_exportObject($set);
 			}
 
 			return $questionGroups;
@@ -121,20 +88,8 @@
 			$set = $statement->execute();
 
 			if($set->next())
-			{
-				$questionGroup = new QuestionGroup;
-
-				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
-				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setLatitude( $set->get("latitude") );
-				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );
-				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));			
-				$questionGroup->setCreationDate( $set->get("creation_date") );
-
-				return $questionGroup;
-			}else
+				return $this->_exportObject($set);
+			else
 				return null;
 		}
 
@@ -148,20 +103,8 @@
 			$set = $statement->execute();
 
 			if($set->next())
-			{
-				$questionGroup = new QuestionGroup;
-
-				$questionGroup->setId( $set->get("id") );
-				$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
-				$questionGroup->setName( $set->get("name") );
-				$questionGroup->setLatitude( $set->get("latitude") );
-				$questionGroup->setLongitude( $set->get("longitude") );
-				$questionGroup->setRadius( $set->get("radius") );
-				$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));		
-				$questionGroup->setCreationDate( $set->get("creation_date") );
-
-				return $questionGroup;
-			}else
+				return $this->_exportObject($set);
+			else
 				return null;
 		}
 
@@ -347,37 +290,59 @@
 
 		private function _create($questionGroup)
 		{
-			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`,`latitude`, `longitude`, `radius`, `creation_date` ,`allowed_repeats`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?)";
+			$query = "INSERT INTO `QuestionGroup`(`questionnaire_id`, `name`,`latitude`, `longitude`, `radius`, `creation_date` ,`allowed_repeats`,`time-to-complete`,`priority`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('isdddi' , 
+			$statement->setParameters('isdddiii' , 
 				$questionGroup->getQuestionnaireId(),
 				$questionGroup->getName(),
 				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
 				$questionGroup->getRadius() ,
-				$questionGroup->getAllowedRepeats());
+				$questionGroup->getAllowedRepeats(),
+				$questionGroup->getTimeToComplete(),
+				$questionGroup->getPriority());
 
 			$statement->executeUpdate();
 		}
 
 		private function _update($questionGroup)
 		{
-			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=?,`allowed_repeats`=? WHERE `id`=?";
+			$query = "UPDATE `QuestionGroup` SET `questionnaire_id`=?,`name`=?,`latitude`=?,`longitude`=?,`radius`=?,`allowed_repeats`=? ,`time-to-complete`=?,`priority`=?   WHERE `id`=?";
 
 			$statement = $this->getStatement($query);
 
-			$statement->setParameters('isdddii' , 
+			$statement->setParameters('isdddiiii' , 
 				$questionGroup->getQuestionnaireId(),
 				$questionGroup->getName(),
 				$questionGroup->getLatitude(),
 				$questionGroup->getLongitude(),
 				$questionGroup->getRadius(),
 				$questionGroup->getAllowedRepeats(),
+				$questionGroup->getTimeToComplete(),
+				$questionGroup->getPriority(),
 				$questionGroup->getId() );
 
 			$statement->executeUpdate();
 		}
 
+
+		private function _exportObject($set)
+		{
+			$questionGroup = new QuestionGroup;
+
+			$questionGroup->setId( $set->get("id") );
+			$questionGroup->setQuestionnaireId( $set->get("questionnaire_id") );
+			$questionGroup->setName( $set->get("name") );
+			$questionGroup->setLatitude( $set->get("latitude") );
+			$questionGroup->setLongitude( $set->get("longitude") );
+			$questionGroup->setRadius( $set->get("radius") );
+			$questionGroup->setAllowedRepeats( $set->get("allowed_repeats"));		
+			$questionGroup->setCreationDate( $set->get("creation_date") );
+			$questionGroup->setTimeToComplete( $set->get("time-to-complete"));
+			$questionGroup->setPriority( $set->get("priority"));  
+
+			return $questionGroup;
+		}
 	}

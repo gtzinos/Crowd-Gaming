@@ -11,7 +11,8 @@
 		private $radius; // number
 		private $creationDate; // string , timestamp in database
 		private $allowedRepeats;
-
+		private $timeToComplete;
+		private $priority;
 		private $questionCount;
 		/*
 			Array with objects of the type Question
@@ -54,6 +55,22 @@
 			return $this->id;
 		}
 
+		public function getTimeToComplete(){
+			return $this->timeToComplete;
+		}
+		
+		public function setTimeToComplete($timeToComplete){
+			$this->timeToComplete = $timeToComplete;
+		}
+
+		public function getPriority(){
+			return $this->priority;
+		}
+		
+		public function setPriority($priority){
+			$this->priority = $priority;
+		}
+
 		public function setId($id){
 			$this->id = $id;
 		}
@@ -93,7 +110,7 @@
 		public function getRadius(){
 			return $this->radius;
 		}
-		
+				
 		public function setRadius($radius){
 			$this->radius = $radius;
 		}

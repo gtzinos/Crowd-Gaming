@@ -96,6 +96,9 @@
 
 				$questionGroup->setName( $name );				
 				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
+				$questionGroup->setTimeToComplete( isset( $_POST["time-to-complete"])?$_POST["time-to-complete"]:-1);
+				$questionGroup->setPriority( isset( $_POST["priority"])?$_POST["priority"]:0);
+
 				
 				if(  !empty( $_POST["latitude"]) && !empty($_POST["longitude"]) && !empty($_POST["radius"]) )
 				{

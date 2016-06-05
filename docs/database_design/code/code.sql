@@ -111,6 +111,8 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionGroup` (
   `radius` INT NULL COMMENT 'Deviation longitude from location longitude ',
   `creation_date` TIMESTAMP NOT NULL COMMENT 'Category last updated time.',
   `allowed_repeats` INT NULL,
+  `time-to-complete` INT DEFAULT -1,
+  `priority` INT DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
   INDEX `qid_idx` (`questionnaire_id` ASC),

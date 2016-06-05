@@ -328,4 +328,9 @@
 			$statement->executeUpdate();
 		}
 
+
+		private function _exportObject( $resultSet )
+		{
+
+		}
 	}
