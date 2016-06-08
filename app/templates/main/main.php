@@ -9,10 +9,11 @@
 
 		<!-- Css files -->
 		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("res/foundation-icons/foundation-icons.css"); ?>" >
-		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/MainTemplateStyle.css"); ?>" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/MainTemplateStyle.css"); ?>" >
+
 		<script type="text/javascript">
 			var webRoot = '<?php print '/'.$_CONFIG["WEB_ROOT"]; ?>';
 			var googleApiKey = '<?php print $_CONFIG["GOOGLE_API_KEY"]; ?>';
@@ -23,13 +24,14 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<!-- Google Sign In -->
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<!-- Google recaptcha -->
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-formvalidator/gt-formvalidator.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/AjaxRequests.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/public/MainTemplate.js"); ?>"></script>
-
 		<title>
 			<?php show("PAGE_TITLE") ?>
 		</title>
