@@ -46,9 +46,10 @@
 												</span>
 										</div>
 									</div>
+									<!-- Google recaptcha -->
 									<div class="form-group">
 										<div class="col-xs-offset-1 col-xs-8 col-sm-offset-3 col-sm-4" >
-												<div style="transform: scale(0.80,0.85); transform-origin: left top;" class="g-recaptcha" data-sitekey="6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A"></div>
+												<div style="transform: scale(0.80,0.85); transform-origin: left top;" class="g-recaptcha"></div>
 										</div>
 									</div>
 									<!-- Login Button Field -->

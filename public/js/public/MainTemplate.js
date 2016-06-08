@@ -1,3 +1,10 @@
+$(window).load(function() {
+    $('.g-recaptcha').each(function(index,el){
+      grecaptcha.render(el,{'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A'});
+      //$(el).attr("data-sitekey","6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A");
+    })
+});
+
 /*
   Include javascript file from a javascript file
 */
