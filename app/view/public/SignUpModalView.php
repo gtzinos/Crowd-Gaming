@@ -145,7 +145,7 @@
                       </div>
                   </div>
             </form>
-            <div style="margin-left:auto;width:143px">
+            <div style="margin-left:auto;width:144px">
               <span style="font-size:12px">
                   Already a member? <a href="" onclick="return showModal('loginModal')">Log In</a>
               </span>
