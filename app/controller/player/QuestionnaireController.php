@@ -13,19 +13,22 @@
 		{
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','player/QuestionnaireView.php');
-			$this->defSection('JAVASCRIPT','player/QuestionnaireView.php');
-			$this->defSection('MAIN_CONTENT','player/QuestionnaireView.php');
-			$this->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsModalView.php");
-			$this->defSection("QUESTIONNAIRE_PLAYERS" , "player/QuestionnairePlayersModalView.php");
-			$this->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
-			$this->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditModalView.php");
-			$this->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersModalView.php");
-			$this->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsModalView.php");
-			$this->defSection("REQUIRED_MESSAGE", "examiner/RequiredPasswordModalView.php");
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
+			$view->defSection('CSS','player/QuestionnaireView.php');
+			$view->defSection('JAVASCRIPT','player/QuestionnaireView.php');
+			$view->defSection('MAIN_CONTENT','player/QuestionnaireView.php');
+			$view->defSection("QUESTIONNAIRE_OPTIONS" , "player/QuestionnaireOptionsModalView.php");
+			$view->defSection("QUESTIONNAIRE_PLAYERS" , "player/QuestionnairePlayersModalView.php");
+			$view->defSection("CONTACT_WITH_ONE_EMAIL" , "player/ContactModalView.php");
+			$view->defSection("EDIT_QUESTIONNAIRE", "examiner/QuestionnaireEditModalView.php");
+			$view->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersModalView.php");
+			$view->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsModalView.php");
+			$view->defSection("REQUIRED_MESSAGE", "examiner/RequiredPasswordModalView.php");
+
+			$this->setView( $view );
 		}
 
 		public function run()
@@ -47,7 +50,7 @@
 				$this->redirect("questionnaireslist");
 			}
 
-			$this->setArg("PAGE_TITLE",$questionnaire->getName());
+			$this->setOutput("PAGE_TITLE",$questionnaire->getName());
 			/*
 				User actions regarding the questionnaire
 				eg , ParticipationRequest, remove Participation etc.
@@ -120,7 +123,7 @@
 
 				$questionnaires[ $key ]["questionnaire"];
 			 */
-			$this->setArg("questionnaire" , $questionnaireInfo);
+			$this->setOutput("questionnaire" , $questionnaireInfo);
 		}
 
 
@@ -136,7 +139,7 @@
 			{
 				if( $_POST["message"]!="" && ( strlen($_POST["message"])<3 || strlen($_POST["message"])>255) )
 				{
-					$this->setArg("response-code" , 1); // Message validation error
+					$this->setOutput("response-code" , 1); // Message validation error
 					return;
 				}
 				else if( $_POST["message"] != "" )
@@ -162,17 +165,17 @@
 				 */
 				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 1 ) )
 				{
-					$this->setArg("response-code" , 3); // Player already participates
+					$this->setOutput("response-code" , 3); // Player already participates
 					return;
 				}
 				else if( $requestMapper->hasActivePlayerRequest($_SESSION["USER_ID"], $questionnaireId) )
 				{
-					$this->setArg("response-code" , 4); // Player has already an active request
+					$this->setOutput("response-code" , 4); // Player has already an active request
 					return;
 				}
 				else if( $messageRequired && $message===null)
 				{
-					$this->setArg("response-code" , 15); // Message is required
+					$this->setOutput("response-code" , 15); // Message is required
 					return;
 				}
 				else if( $messageRequired && $message==$questionnaireMessage)
@@ -200,7 +203,7 @@
 
 				if( $questionnaireRequest === null)
 				{
-					$this->setArg("response-code" , 5); // User has no active request to delete
+					$this->setOutput("response-code" , 5); // User has no active request to delete
 					return;
 				}
 
@@ -216,7 +219,7 @@
 
 				if($participation === null)
 				{
-					$this->setArg("response-code" , 6); // User didnt participate as player
+					$this->setOutput("response-code" , 6); // User didnt participate as player
 					return;
 				}
 
@@ -228,21 +231,21 @@
 				 */
 				if($_SESSION["USER_LEVEL"] <= 1)
 				{
-					$this->setArg("response-code" , 7); // Unauthorised action, user level is too low
+					$this->setOutput("response-code" , 7); // Unauthorised action, user level is too low
 					return;
 				}
 
 				if( $participationMapper->participates($_SESSION["USER_ID"] , $questionnaireId , 2 ) )
 				{
-					$this->setArg("response-code" , 8); // Examiner already participates
+					$this->setOutput("response-code" , 8); // Examiner already participates
 					return;
 				}else if( $requestMapper->hasActiveExaminerRequest($_SESSION["USER_ID"], $questionnaireId) )
 				{
-					$this->setArg("response-code" , 9); // Examiner already has an active request
+					$this->setOutput("response-code" , 9); // Examiner already has an active request
 					return;
 				}else if( $messageRequired && $message===null)
 				{
-					$this->setArg("response-code" , 15); // Message is required
+					$this->setOutput("response-code" , 15); // Message is required
 					return;
 				}
 
@@ -260,7 +263,7 @@
 				 */
 				if($_SESSION["USER_LEVEL"] <= 1)
 				{
-					$this->setArg("response-code" , 7); // Unauthorised action, user level is too low
+					$this->setOutput("response-code" , 7); // Unauthorised action, user level is too low
 					return;
 				}
 
@@ -268,7 +271,7 @@
 
 				if( $questionnaireRequest === null)
 				{
-					$this->setArg("response-code" , 10); // User has no active examiner request to delete
+					$this->setOutput("response-code" , 10); // User has no active examiner request to delete
 					return;
 				}
 
@@ -282,7 +285,7 @@
 				 */
 				if($_SESSION["USER_LEVEL"] <= 1)
 				{
-					$this->setArg("response-code" , 7); // Unauthorised action, user level is too low
+					$this->setOutput("response-code" , 7); // Unauthorised action, user level is too low
 					return;
 				}
 
@@ -290,14 +293,14 @@
 
 				if($participation === null)
 				{
-					$this->setArg("response-code" , 11); // User is not participating as examiner
+					$this->setOutput("response-code" , 11); // User is not participating as examiner
 					return;
 				}
 
 			}
 			else
 			{
-				$this->setArg("response-code" , 2); // Invalid option
+				$this->setOutput("response-code" , 2); // Invalid option
 				return;
 			}
 
@@ -322,13 +325,13 @@
 				}
 
 				DatabaseConnection::getInstance()->commit();
-				$this->setArg("response-code" , 0);
+				$this->setOutput("response-code" , 0);
 
 			}
 			catch(DatabaseException $ex)
 			{
 				DatabaseConnection::getInstance()->rollback();
-				$this->setArg("response-code" , 12); // General database error
+				$this->setOutput("response-code" , 12); // General database error
 			}
 		}
 
@@ -339,7 +342,7 @@
 
 			if( strlen($message) < 19 || strlen($message) > 255 )
 			{
-				$this->setArg("response-code" , 13); // Contact Message Validation Error
+				$this->setOutput("response-code" , 13); // Contact Message Validation Error
 				return;
 			}
 
@@ -387,11 +390,11 @@
 
 			if(!$mail->send())
 			{
-				$this->setArg("response-code" , 14); // Email Error
+				$this->setOutput("response-code" , 14); // Email Error
 			}else
 			{
 				// All went good
-				$this->setArg("response-code" , 0);
+				$this->setOutput("response-code" , 0);
 			}
 
 		}

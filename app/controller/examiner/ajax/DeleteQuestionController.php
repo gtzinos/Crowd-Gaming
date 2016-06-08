@@ -10,8 +10,7 @@
 		
 		public function init()
 		{
-			$this->setOutputType( OutputType::ResponseStatus );
-			
+			$this->setView( new CodeView );			
 		}
 
 		public function run()

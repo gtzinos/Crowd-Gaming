@@ -13,21 +13,17 @@
 				$this->redirect("home");
 			}
 
-			/*
-				Taken expired
-			*/
-			else if((new UserMapper)->verifyPasswordToken($this->params[1]) <= 0)
-			{
-				$this->setArg("response-code" , 3);
-			}
+			$view = new HtmlView;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->defSection('CSS','public/PasswordRecoveryView.php');
-			$this->defSection('JAVASCRIPT','public/PasswordRecoveryView.php');
-			$this->defSection('MAIN_CONTENT','public/PasswordRecoveryView.php');
+			$view->defSection('CSS','public/PasswordRecoveryView.php');
+			$view->defSection('JAVASCRIPT','public/PasswordRecoveryView.php');
+			$view->defSection('MAIN_CONTENT','public/PasswordRecoveryView.php');
+			
+			$view->setArg("PAGE_TITLE","Recover your Password");
 
-			$this->setArg("PAGE_TITLE","Recover your Password");
+			$this->setView($view);
 		}
 
 		public function run(){

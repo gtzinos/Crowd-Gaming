@@ -6,13 +6,17 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','public/PageNotFoundView.php');
-			$this->defSection('JAVASCRIPT','public/PageNotFoundView.php');
-			$this->defSection('MAIN_CONTENT','public/PageNotFoundView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->setArg("PAGE_TITLE","This page does not exist");
+			$view->defSection('CSS','public/PageNotFoundView.php');
+			$view->defSection('JAVASCRIPT','public/PageNotFoundView.php');
+			$view->defSection('MAIN_CONTENT','public/PageNotFoundView.php');
+
+			$view->setArg("PAGE_TITLE","This page does not exist");
+
+			$this->setView( $view);
 		}
 
 		public function run(){

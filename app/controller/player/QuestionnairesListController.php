@@ -7,12 +7,21 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','player/QuestionnairesListPageView.php');
-			$this->defSection('JAVASCRIPT','player/QuestionnairesListPageView.php');
-			$this->defSection('MAIN_CONTENT','player/QuestionnairesListPageView.php');
-			
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$view->defSection('CSS','player/QuestionnairesListPageView.php');
+			$view->defSection('JAVASCRIPT','player/QuestionnairesListPageView.php');
+			$view->defSection('MAIN_CONTENT','player/QuestionnairesListPageView.php');
+
+			$view->setArg("PAGE_TITLE","Questionnaires");
+
+			$this->setView( $view );
+		}
+
+		public function run(){
+
 			$page = null;
 
 			if( isset($_GET["sort"]) ){
@@ -36,11 +45,6 @@
 			if( $page !== null)
 				$this->redirect($page);
 
-			$this->setArg("PAGE_TITLE","Questionnaires");
-
-		}
-
-		public function run(){
 			$sorting = 'date';
 			$page = 1;
 
@@ -65,8 +69,8 @@
 				}
 			}
 
-			$this->setArg("sort" , $sorting);
-			$this->setArg("page" , $page);
+			$this->setOutput("sort" , $sorting);
+			$this->setOutput("page" , $page);
 			
 			$questionnaireMapper = new QuestionnaireMapper;
 
@@ -101,8 +105,8 @@
 
 			
 
-			$this->setArg("pages_count" , $pagesCount);
-			$this->setArg("questionnaires" , $questionnaires);
+			$this->setOutput("pages_count" , $pagesCount);
+			$this->setOutput("questionnaires" , $questionnaires);
 
 		}
 

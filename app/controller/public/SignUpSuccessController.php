@@ -5,13 +5,17 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','public/SignUpSuccessView.php');
-			$this->defSection('JAVASCRIPT','public/SignUpSuccessView.php');
-			$this->defSection('MAIN_CONTENT','public/SignUpSuccessView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->setArg("PAGE_TITLE","Account Successfuly Created!");
+			$view->defSection('CSS','public/SignUpSuccessView.php');
+			$view->defSection('JAVASCRIPT','public/SignUpSuccessView.php');
+			$view->defSection('MAIN_CONTENT','public/SignUpSuccessView.php');
+
+			$view->setArg("PAGE_TITLE","Account Successfuly Created!");
+
+			$this->setView( $view );
 		}
 
 		public function run(){

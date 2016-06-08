@@ -9,16 +9,19 @@
 
 		public function init()
 		{
-			//$this->setOutputType( OutputType::ResponseStatus );
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','examiner/CreateQuestionGroupsView.php');
-			$this->defSection('JAVASCRIPT','examiner/CreateQuestionGroupsView.php');
-			$this->defSection('MAIN_CONTENT','examiner/CreateQuestionGroupsView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->setArg("PAGE_TITLE","Create a new question group!");
+			$view->defSection('CSS','examiner/CreateQuestionGroupsView.php');
+			$view->defSection('JAVASCRIPT','examiner/CreateQuestionGroupsView.php');
+			$view->defSection('MAIN_CONTENT','examiner/CreateQuestionGroupsView.php');
+
+			$view->setArg("PAGE_TITLE","Create a new question group!");
+
+			$this->setView( $view );
 		}
 
 		public function run()

@@ -10,13 +10,18 @@
 			if( isset($this->params[1]) && $this->params[1]=="ajax"){
 				$this->setHeadless(true);
 			}else{
+
+				$view = new HtmlView;
+
 				global $_CONFIG;
 
-				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+				$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-				$this->defSection('CSS','player/ProfilePageView.php');
-				$this->defSection('JAVASCRIPT','player/ProfilePageView.php');
-				$this->defSection('MAIN_CONTENT','player/ProfilePageView.php');
+				$view->defSection('CSS','player/ProfilePageView.php');
+				$view->defSection('JAVASCRIPT','player/ProfilePageView.php');
+				$view->defSection('MAIN_CONTENT','player/ProfilePageView.php');
+
+				$this->setView( $view );
 			}
 
 		}
@@ -53,7 +58,7 @@
 			$mapper = new UserMapper();
 
 			$user = $mapper->findById( $_SESSION["USER_ID"] );
-			$this->setArg("PAGE_TITLE",'My Profile ,'.$user->getName() . ' '.$user->getSurname());
+			$this->setOutput("PAGE_TITLE",'My Profile ,'.$user->getName() . ' '.$user->getSurname());
 			if( $user ){
 
 				if( isset($this->params[1]) && $this->params[1]=="ajax"){
@@ -70,11 +75,11 @@
 					}
 				}
 
-				$this->setArg("user" , $user);
+				$this->setOutput("user" , $user);
 			}else{
 				// User with id SESSION["USER_ID"] does not exists
 				// This error should never happen
-				$this->setArg("response-code" , 1);
+				$this->setOutput("response-code" , 1);
 			}
 
 

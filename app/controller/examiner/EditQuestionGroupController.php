@@ -11,12 +11,16 @@
 		{
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('JAVASCRIPT','examiner/EditQuestionGroupView.php');
-			$this->defSection('MAIN_CONTENT','examiner/EditQuestionGroupView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->setArg("PAGE_TITLE","Modify a question group!");
+			$view->defSection('JAVASCRIPT','examiner/EditQuestionGroupView.php');
+			$view->defSection('MAIN_CONTENT','examiner/EditQuestionGroupView.php');
+
+			$view->setArg("PAGE_TITLE","Modify a question group!");
+
+			$this->setView($view);
 		}
 
 		public function run()
@@ -45,7 +49,7 @@
 				$this->redirect("questionnaireslist");
 			}
 
-			$this->setArg("question-group" , $questionGroup);
+			$this->setOutput("question-group" , $questionGroup);
 
 
 			/*

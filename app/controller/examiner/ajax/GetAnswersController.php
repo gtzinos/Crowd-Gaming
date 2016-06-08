@@ -5,7 +5,7 @@
 	class GetAnswersController extends Controller{
 
 		public function init(){
-			$this->setOutputType( OutputType::JsonView );
+			$this->setView( new JsonView );
 
 		}
 

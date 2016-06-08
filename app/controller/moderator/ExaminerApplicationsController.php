@@ -5,22 +5,17 @@
 
 		public function init()
 		{
-			if( isset($this->params[1]) && $this->params[1]=="ajax")
-			{
-				$this->setHeadless(true);
-			}
-			else
-			{
-				global $_CONFIG;
+			global $_CONFIG;
 
-				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
+			
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view->defSection('CSS','moderator/ExaminerApplicationsView.php');
+			$view->defSection('JAVASCRIPT','moderator/ExaminerApplicationsView.php');
+			$view->defSection('MAIN_CONTENT','moderator/ExaminerApplicationsView.php');
+			$view->setArg("PAGE_TITLE","Examiner applications");
 
-				$this->defSection('CSS','moderator/ExaminerApplicationsView.php');
-				$this->defSection('JAVASCRIPT','moderator/ExaminerApplicationsView.php');
-				$this->defSection('MAIN_CONTENT','moderator/ExaminerApplicationsView.php');
-			}
-
-			$this->setArg("PAGE_TITLE","Examiner applications");
+			$this->setView($view);
 		}
 
 		public function run()

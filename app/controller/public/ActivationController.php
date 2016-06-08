@@ -6,13 +6,17 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','public/ActivationView.php');
-			$this->defSection('JAVASCRIPT','public/ActivationView.php');
-			$this->defSection('MAIN_CONTENT','public/ActivationView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
-			$this->setArg("PAGE_TITLE","Verify your email.");
+			$view->defSection('CSS','public/ActivationView.php');
+			$view->defSection('JAVASCRIPT','public/ActivationView.php');
+			$view->defSection('MAIN_CONTENT','public/ActivationView.php');
+
+			$view->setArg("PAGE_TITLE","Verify your email.");
+
+			$this->setView($view);
 		}
 
 		public function run(){

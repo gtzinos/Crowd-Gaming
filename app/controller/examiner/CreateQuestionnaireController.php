@@ -17,14 +17,21 @@
 
 				global $_CONFIG;
 
-				$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+				$view = new HtmlView;
 
-				$this->defSection('CSS','examiner/CreateQuestionnaireView.php');
-				$this->defSection('JAVASCRIPT','examiner/CreateQuestionnaireView.php');
-				$this->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireView.php');
+				$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+				$view->defSection('CSS','examiner/CreateQuestionnaireView.php');
+				$view->defSection('JAVASCRIPT','examiner/CreateQuestionnaireView.php');
+				$view->defSection('MAIN_CONTENT','examiner/CreateQuestionnaireView.php');
+
+				$view->setArg("PAGE_TITLE","Create a new Questionnaire!");
+
+				$this->setView($view);
+
 			}
 
-			$this->setArg("PAGE_TITLE","Create a new Questionnaire!");
+			
 		}
 
 		public function run()

@@ -8,13 +8,17 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','player/ExaminerApplicationView.php');
-			$this->defSection('JAVASCRIPT','player/ExaminerApplicationView.php');
-			$this->defSection('MAIN_CONTENT','player/ExaminerApplicationView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$view->defSection('CSS','player/ExaminerApplicationView.php');
+			$view->defSection('JAVASCRIPT','player/ExaminerApplicationView.php');
+			$view->defSection('MAIN_CONTENT','player/ExaminerApplicationView.php');
 			
-			$this->setArg("PAGE_TITLE","Become an Examiner!");
+			$view->setArg("PAGE_TITLE","Become an Examiner!");
+
+			$this->setView($view);
 		}
 
 		public function run(){

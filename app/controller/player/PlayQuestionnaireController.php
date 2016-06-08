@@ -7,12 +7,16 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','player/PlayQuestionnaireView.php');
-			$this->defSection('JAVASCRIPT','player/PlayQuestionnaireView.php');
-			$this->defSection('MAIN_CONTENT','player/PlayQuestionnaireView.php');
-			$this->defSection('PLAY_GAME','player/PlayGameModal.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$view->defSection('CSS','player/PlayQuestionnaireView.php');
+			$view->defSection('JAVASCRIPT','player/PlayQuestionnaireView.php');
+			$view->defSection('MAIN_CONTENT','player/PlayQuestionnaireView.php');
+			$view->defSection('PLAY_GAME','player/PlayGameModal.php');
+
+			$this->setView($view);
 		}
 
 		public function run(){

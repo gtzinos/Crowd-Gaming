@@ -9,14 +9,18 @@
 	    {
 	      	global $_CONFIG;
 
-	      	$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
-			$this->defSection('CSS','examiner/QuestionGroupsView.php');
-			$this->defSection('JAVASCRIPT','examiner/QuestionGroupsView.php');
-	      	$this->defSection('MAIN_CONTENT','examiner/QuestionGroupsView.php');
-	      	$this->defSection("EDIT_QUESTION" , "examiner/EditQuestionModalView.php");
-	      	$this->defSection("QUESTION_LIST" , "examiner/QuestionListModalView.php");
-	      	$this->defSection("CREATE_QUESTION", "examiner/CreateQuestionModalView.php");
-			$this->defSection("QUESTION_GROUP_USERS", "examiner/QuestionGroupUsersModalView.php");
+	      	$view = new HtmlView;
+
+	      	$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view->defSection('CSS','examiner/QuestionGroupsView.php');
+			$view->defSection('JAVASCRIPT','examiner/QuestionGroupsView.php');
+	      	$view->defSection('MAIN_CONTENT','examiner/QuestionGroupsView.php');
+	      	$view->defSection("EDIT_QUESTION" , "examiner/EditQuestionModalView.php");
+	      	$view->defSection("QUESTION_LIST" , "examiner/QuestionListModalView.php");
+	      	$view->defSection("CREATE_QUESTION", "examiner/CreateQuestionModalView.php");
+			$view->defSection("QUESTION_GROUP_USERS", "examiner/QuestionGroupUsersModalView.php");
+
+			$this->setView($view);
 
 	    }
 
@@ -44,10 +48,10 @@
 			{
 				$this->redirect("questionnaireslist");
 			}
-			$this->setArg("PAGE_TITLE",$questionnaire->getName()." , Handle questionnaire content.");
+			$this->setOutput("PAGE_TITLE",$questionnaire->getName()." , Handle questionnaire content.");
 
-			$this->setArg( "questionnaire-id" , $questionnaire->getId() );
-			$this->setArg( "questionnaire" , $questionnaire );
+			$this->setOutput( "questionnaire-id" , $questionnaire->getId() );
+			$this->setOutput( "questionnaire" , $questionnaire );
 		}
 
 	}

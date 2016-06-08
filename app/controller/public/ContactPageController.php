@@ -6,13 +6,18 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','public/ContactPageView.php');
-			$this->defSection('JAVASCRIPT','public/ContactPageView.php');
-			$this->defSection('MAIN_CONTENT','public/ContactPageView.php');
 
-			$this->setArg("PAGE_TITLE","Contact with a Moderator");
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$view->defSection('CSS','public/ContactPageView.php');
+			$view->defSection('JAVASCRIPT','public/ContactPageView.php');
+			$view->defSection('MAIN_CONTENT','public/ContactPageView.php');
+
+			$view->setArg("PAGE_TITLE","Contact with a Moderator");
+			
+			$this->setView($view);
 		}
 
 		public function run(){

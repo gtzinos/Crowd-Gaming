@@ -6,7 +6,7 @@
 		
 		public function init()
 		{
-			$this->setOutputType( OutputType::JsonView );
+			$this->setView( new JsonView );
 		}
 
 		public function run()

@@ -6,13 +6,17 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','public/HomePageView.php');
-			$this->defSection('JAVASCRIPT','public/HomePageView.php');
-			$this->defSection('MAIN_CONTENT','public/HomePageView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$view->defSection('CSS','public/HomePageView.php');
+			$view->defSection('JAVASCRIPT','public/HomePageView.php');
+			$view->defSection('MAIN_CONTENT','public/HomePageView.php');
 			
-			$this->setArg("PAGE_TITLE","Crowd Gaming");
+			$view->setArg("PAGE_TITLE","Crowd Gaming");
+
+			$this->setView($view);
 		}
 
 		public function run(){

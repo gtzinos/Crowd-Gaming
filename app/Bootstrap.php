@@ -40,35 +40,33 @@
 	/*
 		Select the correct menus and define View sections that must be loaded for all controllers.
 	 */
-	if( isset($_SESSION["USER_ID"]))
+	if( isset($_SESSION["USER_ID"]) && $controller->getView() instanceof HtmlView )
 	{
 
-		$controller->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordModalView.php");
+		$controller->getView()->defSection("CONFIRM_PASSWORD" , "player/ConfirmPasswordModalView.php");
 
 
 		if( $_SESSION["USER_LEVEL"] == 1)
 		{
-			$controller->setArg("primary-menu" , "PlayerMenu");
+			$controller->setOutput("primary-menu" , "PlayerMenu");
 		}else if( $_SESSION["USER_LEVEL"] == 2)
 		{
-			$controller->setArg("primary-menu" , "ExaminerMenu");
+			$controller->setOutput("primary-menu" , "ExaminerMenu");
 		}else if( $_SESSION["USER_LEVEL"] == 3)
 		{
-			$controller->setArg("primary-menu" , "ModeratorMenu");
+			$controller->setOutput("primary-menu" , "ModeratorMenu");
 		}
 
-		$controller->setArg("secondary-menu" , "authorizedRightMenu");
+		$controller->setOutput("secondary-menu" , "authorizedRightMenu");
 	}
-	else
+	else if( $controller->getView() instanceof HtmlView  )
 	{
+		$controller->getView()->defSection("SIGN_IN" , "public/SignInModalView.php");
+		$controller->getView()->defSection("SIGN_UP" , "public/SignUpModalView.php");
+		$controller->getView()->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestModalView.php");
 
-		$controller->defSection("SIGN_IN" , "public/SignInModalView.php");
-		$controller->defSection("SIGN_UP" , "public/SignUpModalView.php");
-		$controller->defSection("PASSWORD_RECOVERY" , "public/PasswordRecoveryRequestModalView.php");
-
-
-		$controller->setArg("primary-menu"   , "GuestMenu");
-		$controller->setArg("secondary-menu" , "UnauthorizedRightMenu");
+		$controller->setOutput("primary-menu"   , "GuestMenu");
+		$controller->setOutput("secondary-menu" , "UnauthorizedRightMenu");
 	}
 
 

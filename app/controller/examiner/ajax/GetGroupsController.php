@@ -53,13 +53,16 @@
 				$questionGroup->setQuestionCount( $questionMapper->findCountByGroup($questionGroup->getId())  );
 			}
 
-			$this->setArg("questionnaire-id" , $questionnaireId);
-			$this->setArg("groups" , $questionGroups);
+
+			$htmlView = new HtmlView;
+
+			$htmlView->setArg("questionnaire-id" , $questionnaireId);
+			$htmlView->setArg("groups" , $questionGroups);
 			if(isset($this->params[2])){
-				$this->setArg("offset",$this->params[2]);
+				$htmlView->setArg("offset",$this->params[2]);
 			}
 
-			$groupHtmlOutput = $this->getViewOutput("examiner/QuestionGroupsView.php" , "QUESTION_GROUP_LIST");
+			$groupHtmlOutput = $htmlView->getViewOutput("examiner/QuestionGroupsView.php" , "QUESTION_GROUP_LIST");
 
 			print $groupHtmlOutput;
 		}

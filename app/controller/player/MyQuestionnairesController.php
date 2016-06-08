@@ -1,17 +1,24 @@
 <?php
-	class MyQuestionnairesController extends Controller{
+	class MyQuestionnairesController extends Controller
+	{
 
-		public function init(){
+		public function init()
+		{
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','player/MyQuestionnairesView.php');
-			$this->defSection('JAVASCRIPT','player/MyQuestionnairesView.php');
-			$this->defSection('MAIN_CONTENT','player/MyQuestionnairesView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+
+			$view->defSection('CSS','player/MyQuestionnairesView.php');
+			$view->defSection('JAVASCRIPT','player/MyQuestionnairesView.php');
+			$view->defSection('MAIN_CONTENT','player/MyQuestionnairesView.php');
+
+			$this->setView($view);
 		}
 
-		public function run(){
+		public function run()
+		{
 
 		}
 

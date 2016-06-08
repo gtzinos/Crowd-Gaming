@@ -6,12 +6,15 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			$this->defSection('CSS','player/UserView.php');
-			$this->defSection('JAVASCRIPT','player/UserView.php');
-			$this->defSection('MAIN_CONTENT','player/UserView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
 
+			$view->defSection('CSS','player/UserView.php');
+			$view->defSection('JAVASCRIPT','player/UserView.php');
+			$view->defSection('MAIN_CONTENT','player/UserView.php');
+
+			$this->setView( $view);
 		}
 
 		public function run(){

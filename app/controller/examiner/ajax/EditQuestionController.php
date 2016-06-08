@@ -10,7 +10,7 @@
 		
 		public function init()
 		{
-			$this->setOutputType( OutputType::ResponseStatus );
+			$this->setView( new CodeView );
 			
 		}
 
@@ -75,7 +75,7 @@
 					return;
 				}
 
-				if( !is_numeric($_POST["time-to-answer"]) || $_POST["time-to-answer"]<5 || $_POST["time-to-answer"] > 180 )
+				if( !is_numeric($_POST["time-to-answer"]) || $_POST["time-to-answer"]<-1 || $_POST["time-to-answer"] > 180 )
 				{
 					$this->setOutput('response-code' , 4);
 					return;

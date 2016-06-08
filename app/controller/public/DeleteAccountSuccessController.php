@@ -5,13 +5,14 @@
 		public function init(){
 			global $_CONFIG;
 
-			$this->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view = new HtmlView;
 
-			//$this->defSection('CSS','public/DeleteAccountSuccessView.php');
-			//$this->defSection('JAVASCRIPT','public/DeleteAccountSuccessView.php');
-			$this->defSection('MAIN_CONTENT','public/DeleteAccountSuccessView.php');
+			$view->setTemplate($_CONFIG["BASE_TEMPLATE"]);
+			$view->defSection('MAIN_CONTENT','public/DeleteAccountSuccessView.php');
 
-			$this->setArg("PAGE_TITLE","Your Account has been deleted");
+			$view->setArg("PAGE_TITLE","Your Account has been deleted");
+
+			$this->setView( $view);
 		}
 
 		public function run(){
