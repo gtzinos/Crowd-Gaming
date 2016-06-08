@@ -57,6 +57,12 @@
                                 <span class="gt-icon"></span>
                             </div>
                         </div>
+                        <!-- Google recaptcha -->
+                        <div class="form-group">
+      										<div class="col-xs-offset-1 col-xs-8 col-sm-offset-3 col-sm-4" >
+      												<div id="captcha1" style="transform: scale(0.80,0.85); transform-origin: left top;" class="g-recaptcha"></div>
+      										</div>
+      									</div>
                         <!-- Submit Button Field -->
                         <div class="form-group has-feedback">
                             <div class="col-xs-6 col-sm-offset-3 gt-input-group">
