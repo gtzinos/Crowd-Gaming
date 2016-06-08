@@ -1,6 +1,6 @@
 $(window).load(function() {
     $('.g-recaptcha').each(function(index,el){
-      grecaptcha.render(el,{'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A'});
+      grecaptcha.render(el,{'sitekey' : googleReCaptchaKey});
       //$(el).attr("data-sitekey","6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A");
     })
 });
