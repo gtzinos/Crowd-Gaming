@@ -86,6 +86,7 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`Questionnaire` (
   `message_required` INT NOT NULL DEFAULT 0,
   `creation_date` TIMESTAMP NOT NULL COMMENT 'Questionaire last updated time.',
   `message` VARCHAR(255) NULL,
+  `allow_multiple_groups` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `uid_idx` (`coordinator_id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
@@ -123,6 +124,30 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionGroup` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `quizapp`.`QuestionGroup`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quizapp`.`QuestionGroupStarted`;
+
+CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionGroupStarted` (
+  `question_group_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  `time_started` TIMESTAMP NOT NULL,
+  PRIMARY KEY (`question_group_id`, `user_id`),
+  INDEX `fk_QuestionGroupStarted_2_idx` (`user_id` ASC),
+  CONSTRAINT `fk_QuestionGroupStarted_1`
+    FOREIGN KEY (`question_group_id`)
+    REFERENCES `quizapp`.`QuestionGroup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_QuestionGroupStarted_2`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `quizapp`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+)
+ENGINE = InnoDB;
 
 -- -----------------------------------------------------
 -- Table `quizapp`.`Question`
