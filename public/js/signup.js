@@ -55,6 +55,7 @@
 		var dataToSend = getUserData();
 		if(dataToSend != null)
 		{
+			show_spinner("signup-spinner");
 			$.ajax(
 			{
 				method: "POST",
@@ -63,12 +64,7 @@
 			})
 			.done(function(data)
 			{
-				var target = document.getElementById('signup-spinner');
-				//target.removeChild(spinner.el);
-				/*
-					After spin loaded submit button must be enabled
-				*/
-				$(document).find('.submit').prop('disabled',false);
+				remove_spinner("signup-spinner");
 				/*
 					User can login
 				*/
