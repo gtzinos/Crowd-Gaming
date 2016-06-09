@@ -30,7 +30,7 @@ function signInFromForm() {
 						Remove spinner loader
 					*/
 					var target = document.getElementById('signin-spinner');
-				//	target.removeChild(spinner.el);
+				  //	target.removeChild(spinner.el);
 					/*
 						After spin loaded submit button must be enabled
 					*/
