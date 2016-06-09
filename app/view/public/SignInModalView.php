@@ -52,6 +52,15 @@
 												<div style="transform: scale(0.80,0.85); transform-origin: left top;" class="g-recaptcha"></div>
 										</div>
 									</div>
+									<!-- Spinner and Response Label Field -->
+									<div class="form-group">
+										<div class="col-xs-offset-3 col-xs-8 ">
+											<div id="signin-spinner">
+
+											</div>
+											<label id="signin-response" class="responseLabel"></label>
+										</div>
+									</div>
 									<!-- Login Button Field -->
 									<div class="form-group">
 										 <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8">
@@ -66,15 +75,7 @@
 								 </a>
 							</span>
 						</div>
-						<!-- Spinner and Response Label Field -->
-						<div class="form-group">
-							<div class="col-xs-offset-3 col-xs-8 ">
-								<div id="signin-spinner">
 
-								</div>
-								<label id="signin-response" class="responseLabel"></label>
-							</div>
-						</div>
 					</div>
 					<!-- Foot Fields
 					<!-- Footer container fluid ( Fluid is a container on a parent container.For this form parent=modal) -->
