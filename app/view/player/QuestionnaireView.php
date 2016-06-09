@@ -8,8 +8,6 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionnaire.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
-<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
-<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/coordinator/QuestionnaireSettings.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.js"); ?>"></script>
