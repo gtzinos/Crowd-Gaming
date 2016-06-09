@@ -1,40 +1,48 @@
-var xmlHttp;
+function getClientData()
+{
+	/*
+		Store user input to variables
+	*/
+	var userEmail = $(document).find("#signin-email").val();
+	var userPassword = $(document).find("#signin-password").val();
+	var userRememberMe = $(document).find("#signin-remember").prop('checked');
+
+	if(userEmail && userPassword)
+	{
+		let data = {
+			"email": userEmail,
+			"password": userPassword
+		};
+
+		if(userRememberMe)
+		{
+			data["remember"] = userRememberMe;
+		}
+		return data;
+	}
+	else {
+		return null;
+	}
+}
 /*
 	Try to Sign In Method
 */
 function signInFromForm() {
 		/*
-			Store user input to variables
-		*/
-		var userEmail = $(document).find("#signin-email").val();
-		var userPassword = $(document).find("#signin-password").val();
-		var userRememberMe = $(document).find("#signin-remember").prop('checked');
-		/*
 			Check the Variables before sending them
 		*/
-
-		if(userEmail && userPassword)
+		var dataToSend = getClientData();
+		if(dataToSend != null)
 		{
+			show_spinner("signin-spinner");
 			$.ajax(
 				{
 					method: "POST",
 					url: webRoot + "signin",
-					data:
-					{
-						"email": userEmail,
-						"password": userPassword
-					}
+					data: dataToSend
 				})
 				.done(function(data) {
-					/*
-						Remove spinner loader
-					*/
-					var target = document.getElementById('signin-spinner');
-				  //	target.removeChild(spinner.el);
-					/*
-						After spin loaded submit button must be enabled
-					*/
-					$(document).find('.submit').prop('disabled',false);
+					remove_spinner("signin-spinner");
 					/*
 						User can login
 					*/
@@ -92,8 +100,7 @@ function signInFromForm() {
 						}
 				})
 				.fail(function(data) {
-					$("#signin-response").show();
-					$("#signin-response").html("Server problems. Try again.");
+					show_notification("error","Server problems. Try again.",4000);
 				});
 		}
 		else
@@ -101,7 +108,6 @@ function signInFromForm() {
 			/*
 				Response failed login message
 			*/
-			$("#signin-response").show();
-			$("#signin-response").html("<div class='alert alert-danger'>Username or Password cannot be empty. </div>");
+			show_notification("error","Username or Password cannot be empty.",4000);
 		}
 }
