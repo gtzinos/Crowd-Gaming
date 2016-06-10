@@ -3,6 +3,11 @@
 */
 function resetPassword()
 {
+		if(notCompletedRequest == true || $("#recovery-button").is(":disabled"))
+		{
+			return;
+		}
+		notCompletedRequest = true;
 		/*
 			Store user input to variables
 		*/
