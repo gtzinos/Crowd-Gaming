@@ -28,6 +28,12 @@ function getClientData()
 	Try to Sign In Method
 */
 function signInFromForm() {
+	  if(notCompletedRequest == true || $("#signin-submit-button").is(':disabled'))
+		{
+			return;
+		}
+		notCompletedRequest = true;
+
 		/*
 			Check the Variables before sending them
 		*/
@@ -38,11 +44,10 @@ function signInFromForm() {
 			$.ajax(
 				{
 					method: "POST",
-					url: webRoot + "signin",
+					url: webRoot + "signi1n",
 					data: dataToSend
 				})
 				.done(function(data) {
-					remove_spinner("signin-spinner");
 					/*
 						User can login
 					*/
@@ -55,6 +60,7 @@ function signInFromForm() {
 					}
 					else
 					{
+						  remove_spinner("signin-spinner");
 							/*
 								Display an response message
 							*/
@@ -99,8 +105,12 @@ function signInFromForm() {
 							}
 						}
 				})
-				.fail(function(data) {
-					show_notification("error","Server problems. Try again.",4000);
+				.fail(function(xhr,error) {
+					displayServerResponseError(xhr,error);
+					remove_spinner("signin-spinner");
+				})
+				.always(function() {
+					notCompletedRequest = false;
 				});
 		}
 		else

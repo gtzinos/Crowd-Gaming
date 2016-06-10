@@ -64,7 +64,7 @@
 									<!-- Login Button Field -->
 									<div class="form-group">
 										 <div class="col-xs-offset-1 col-xs-10 col-sm-offset-3 col-sm-8">
-											 <button type="button" class="btn btn-primary btn-md btn-block gt-submit" form="signin-form" onclick="signInFromForm()" disabled>Sign In</button>
+											 <button id="signin-submit-button" type="button" class="btn btn-primary btn-md btn-block gt-submit" form="signin-form" onclick="signInFromForm()" disabled>Sign In</button>
 											</div>
 									</div>
 						</form>
