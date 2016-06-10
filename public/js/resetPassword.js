@@ -8,6 +8,7 @@ function resetPassword()
 			return;
 		}
 		notCompletedRequest = true;
+		$("#recovery-response").html("").hide();
 		/*
 			Store user input to variables
 		*/
