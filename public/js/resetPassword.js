@@ -10,107 +10,47 @@ function resetPassword()
 		/*
 			Check the Variables before sending them
 		*/
-
 		if(recoveryEmail)
 		{
-			var Required = {
-				  Url() { return webRoot + "forgot-my-password"; },
-					SendType() { return "POST"; },
-			    Parameters() {
-						return "email=" + recoveryEmail;
-					}
-			};
-			var Optional = {
-				ResponseMethod() { return "responseRecovery"; },
-				ResponseLabel() { return "recovery-response"; },
-				SubmitButton() { return ".submit"; }
-			};
-			/*
-				Send ajax request
-			*/
-			sendAjaxRequest(Required,Optional);
-
+			show_spinner("recovery-spinner");
+			$.ajax(
+			{
+				method: "POST",
+				url: webRoot + "forgot-my-password",
+				data: { "email": recoveryEmail }
+			})
+			.done(function(data) {
+				//User reset password successfully
+				if(data == "0")
+				{
+					$("#recovery-response").show();
+					$("#recovery-response").html("<div class='alert alert-success'>Your password has been reset successfully. An email has been sent to your email address. "
+							+ " Please click the link that has been sent to you and you will asked to type a new password.</div>");
+				}
+				//Not a valid email address
+				else if(data == "1")
+				{
+				  show_notification("error","This is not a valid email address.",4000);
+				}
+				//Something going wrong
+				else {
+					show_notification("error","Unknown error. Contact with one administrator!",4000);
+				}
+			})
+			.fail(function(xhr,error) {
+				displayServerResponseError(xhr,error);
+			})
+			.always(function() {
+				notCompletedRequest = false;
+				remove_spinner("recovery-spinner");
+			});
 		}
 		else
 		{
 			/*
 				Response failed recovery message
 			*/
-			$("#recovery-response").show();
-			$("#recovery-response").html("<div class='alert alert-danger'>Email address cannot be empty. </div>");
-		}
-}
-
-/*
-	Response called method
-*/
-function responseRecovery()
-{
-	/*
-		if Server responsed back successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
-			/*
-				Debug
-			*/
-
-			//console.log(xmlHttp.responseText);
-
-			/*
-				After server responsed submit button must be enabled
-			*/
-			$(document).find('.submit').prop('disabled',false);
-			/*
-				User reset password successfully
-			*/
-			if(xmlHttp.responseText.localeCompare("0") == 0)
-			{
-				$("#recovery-response").show();
-				$("#recovery-response").html("<div class='alert alert-success'>Your password reseted successfully. An email has been sent to your email address. "
-				  	+ " Please click the link that has been sent to you and you will asked to type a new password.</div>");
-			}
-			/*
-				Response message
-			*/
-			else
-			{
-					/*
-						Display an response message
-					*/
-
-					var response_message = "";
-					/*
-						 If response message == 1
-						 Invalid email address
-					*/
-					if(xmlHttp.responseText.localeCompare("1") == 0)
-					{
-					 response_message += "<div class='alert alert-danger'>This is not a valid email address.</div>";
-					}
-					/*
-							Something going wrong
-					*/
-					else {
-						response_message += "<div class='alert alert-danger'>Something going wrong. Contact with one administrator!</div>";
-					}
-
-
-
-				 $("#recovery-response").show();
-				 $("#recovery-response").html(response_message);
-			}
+			show_notification("error","Email address cannot be empty.",4000);
 		}
 
-	}
-	/*
-		Server Problem (Timeout probably)
-	*/
-	else {
-			/*
-				TODO Something like
-			*/
-			$("#signin-response").show();
-			$("#signin-response").html("<div class='alert alert-danger'>Server is offline</div>");
-	}
 }
