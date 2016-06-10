@@ -51,6 +51,12 @@
 	  Try to Sign Up Method
   */
 	function signUpFromForm() {
+		if(notCompletedRequest == true || $("#signup-submit-button").is(':disabled'))
+		{
+			return;
+		}
+		notCompletedRequest = true;
+
 		//get user data
 		var dataToSend = getUserData();
 		if(dataToSend != null)
@@ -64,7 +70,6 @@
 			})
 			.done(function(data)
 			{
-				remove_spinner("signup-spinner");
 				/*
 					User can login
 				*/
@@ -197,8 +202,12 @@
 			})
 			.fail(function(data)
 			{
-
+				displayServerResponseError(xhr,error);
 			})
+			.always(function() {
+				notCompletedRequest = false;
+				remove_spinner("signup-spinner");
+			});
 		}
 		else {
 			show_notification("error","You must fill all fields.",4000);

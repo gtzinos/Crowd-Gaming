@@ -146,7 +146,7 @@
                   <!-- Register Button Field -->
                   <div class="form-group">
                      <div class="col-xs-offset-3 col-xs-8 col-sm-offset-3">
-                       <button type="button" form="signup-form" class="btn btn-primary btn-md btn-block gt-submit" onclick="signUpFromForm()" disabled>Register Now</button>
+                       <button id="signup-submit-button" type="button" form="signup-form" class="btn btn-primary btn-md btn-block gt-submit" onclick="signUpFromForm()" disabled>Register Now</button>
                       </div>
                   </div>
             </form>
