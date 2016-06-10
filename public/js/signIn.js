@@ -44,7 +44,7 @@ function signInFromForm() {
 			$.ajax(
 				{
 					method: "POST",
-					url: webRoot + "signi1n",
+					url: webRoot + "signin",
 					data: dataToSend
 				})
 				.done(function(data) {
