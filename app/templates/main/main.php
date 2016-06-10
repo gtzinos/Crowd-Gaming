@@ -18,6 +18,7 @@
 			var webRoot = '<?php print '/'.$_CONFIG["WEB_ROOT"]; ?>';
 			var googleApiKey = '<?php print $_CONFIG["GOOGLE_API_KEY"]; ?>';
 			var googleReCaptchaKey = '<?php print $_CONFIG["CLIENT_GOOGLE_RECAPTCHA_KEY"]; ?>';
+			var notCompletedRequest = false;
 		</script>
 
 		<!-- Script files -->
