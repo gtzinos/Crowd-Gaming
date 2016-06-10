@@ -60,7 +60,6 @@ function signInFromForm() {
 					}
 					else
 					{
-						  remove_spinner("signin-spinner");
 							/*
 								Display an response message
 							*/
@@ -107,10 +106,10 @@ function signInFromForm() {
 				})
 				.fail(function(xhr,error) {
 					displayServerResponseError(xhr,error);
-					remove_spinner("signin-spinner");
 				})
 				.always(function() {
 					notCompletedRequest = false;
+					remove_spinner("signin-spinner");
 				});
 		}
 		else
