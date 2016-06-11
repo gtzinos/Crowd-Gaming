@@ -525,10 +525,8 @@ function update_question(question_id)
   }
 }
 
-/*
-  Create a new question
-*/
-function create_question(question_group_id)
+//get create question data
+function getCreateQuestionData(question_group_id)
 {
   /*
     Initialize variables
@@ -546,66 +544,45 @@ function create_question(question_group_id)
 
   if(name && time && multiplier && correct && answers.length == 2)
   {
-    var Required = {
-        Url() { return webRoot + "create-question"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "question-group-id=" + question_group_id + "&question-text=" +  name
-          + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
-          "&answer2=" + answers[1];
+    let data = {
+      "question-group-id": question_group_id,
+      "question-text": name,
+      "time-to-answer": time,
+      "multiplier": multiplier,
+      "correct": correct,
+      "answer1": answers[0],
+      "answer2": answers[1]
+    };
 
-          if($("#answer3").val().length > 0)
-          {
-            this.variables += "&answer3=" + $("#answer3").val();
-          }
-          if($("#answer4").val().length > 0)
-          {
-            this.variables += "&answer4=" + $("#answer4").val();
-          }
-
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "response_create_question(" + question_group_id + ")"; },
-        ResponseLabel() { return "create-question-response"; },
-        SubmitButton() { return "#create-question-confirm-button"; }
-      };
-
-      /*
-				Send ajax request
-			*/
-			sendAjaxRequest(Required,Optional);
-
+    if($("#answer3").val().length > 0)
+    {
+      data["answer3"] = $("#answer3").val();
     }
-
-  else {
-    /*
-      Cannot be empty
-    */
-    $("#create-question-response").show();
-    $("#create-question-response").html("<div class='alert alert-danger'>Please fill all fields. </div>");
-
+    if($("#answer4").val().length > 0)
+    {
+      data["answer4"] = $("#answer4").val();
+    }
+    return data;
   }
-
+  else {
+    return null;
+  }
 }
 
 /*
-  create question response
+  Create a new question
 */
-function response_create_question(question_group_id)
+function create_question(question_group_id)
 {
-
-  /*
-		if Server responsed back successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
+  var dataToSend = getCreateQuestionData(question_group_id);
+  if(dataToSend != null) {
+    $("#create-question-confirm-button").prop("disabled",true);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "create-question",
+      data: dataToSend
+    })
+    .done(function(data){
       /*
         0 All ok
         1 Invalid Access
@@ -619,18 +596,12 @@ function response_create_question(question_group_id)
         -1 No data
       */
 
-			/*
-				Debug
-			*/
-			//console.log(xmlHttp.responseText);
-
-      if(xmlHttp.responseText.localeCompare("0") == 0)
+      if(data == "0")
 			{
     			/*
     				Success message
           */
-          $("#create-question-response").show();
-          $("#create-question-response").html("<div class='alert alert-success'>Your question created successfully.</div>");
+          show_notification("success","Your question created successfully.",4000);
 
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) + 1);
 
@@ -658,98 +629,94 @@ function response_create_question(question_group_id)
           $("#answer4").val("");
           $("#answer4").focus();
       }
-
       /*
-        If server responsed with an error code
+         If response message == 1
+         Invalid Access
+      */
+      else if(data == "1")
+      {
+        show_notification("error","You dont have access to do it.",4000);
+      }
+      /*
+         If response message == 2
+         question-text validation error
+      */
+      else if(data == "2")
+      {
+        show_notification("error","This is not a valid question name.",4000);
+      }
+      /*
+         If response message == 3
+         time-to-answer validation error
+      */
+      else if(data == "3")
+      {
+        show_notification("error","This is not a valid time to answer value.",4000);
+      }
+      /*
+         If response message == 4
+         Multiplier validation error
+      */
+      else if(data == "4")
+      {
+        show_notification("error","This not a valid multiplier.",4000);
+      }
+      /*
+         If response message == 5
+         Database Error
+      */
+      else if(data == "5")
+      {
+        show_notification("error","General database error.",4000);
+      }
+      /*
+         If response message == 6
+         6 Answer Text validation error
+      */
+      else if(data == "6")
+      {
+        show_notification("error","Answers didnt valid.",4000);
+      }
+      /*
+         If response message == 7
+         7 Correct answer error
+      */
+      else if(data == "7")
+      {
+        show_notification("error","This is not a valid correct answer.",4000);
+      }
+      /*
+         If response message == 8
+         7 Correct answer error
+      */
+      else if(data == "8")
+      {
+        show_notification("error","Cant create a question when the questionnaire is public.",4000);
+      }
+      /*
+         If response message == -1
+         No data error
+      */
+      else if(data == "-1")
+      {
+        show_notification("error","No data error.",4000);
+      }
+      /*
+          Something going wrong
       */
       else {
-        /*
-          Display an response message
-        */
-        var response_message = "";
-        /*
-           If response message == 1
-           Invalid Access
-        */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You dont have access to do it.</div>";
-        }
-        /*
-           If response message == 2
-           question-text validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid question name.</div>";
-        }
-        /*
-           If response message == 3
-           time-to-answer validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid time to answer value.</div>";
-        }
-        /*
-           If response message == 4
-           Multiplier validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This not a valid multiplier.</div>";
-        }
-        /*
-           If response message == 5
-           Database Error
-        */
-        else if(xmlHttp.responseText.localeCompare("5") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>General database error.</div>";
-        }
-        /*
-           If response message == 6
-           6 Answer Text validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("6") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Answers didnt valid.</div>";
-        }
-        /*
-           If response message == 7
-           7 Correct answer error
-        */
-        else if(xmlHttp.responseText.localeCompare("7") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid correct answer.</div>";
-        }
-        /*
-           If response message == 8
-           7 Correct answer error
-        */
-        else if(xmlHttp.responseText.localeCompare("8") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Cant create a question when the questionnaire is public.</div>";
-        }
-        /*
-           If response message == -1
-           No data error
-        */
-        else if(xmlHttp.responseText.localeCompare("-1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>No data error.</div>";
-        }
-        /*
-            Something going wrong
-        */
-        else {
-          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
-        }
-
-       $("#create-question-response").show();
-       $("#create-question-response").html(response_message);
+        show_notification("error","Unknown error. Contact with one administrator!",4000);
       }
-    }
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
+    .always(function() {
+      $("#create-question-confirm-button").prop("disabled",false);
+    });
+  }
+  else {
+    show_notification("error","Please fill all fields.",4000);
   }
 }
 
