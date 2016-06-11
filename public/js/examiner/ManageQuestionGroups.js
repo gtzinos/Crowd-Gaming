@@ -905,53 +905,35 @@ function delete_question_group(question_group_id,ask_required)
   }
 }
 
-  //get_question_group_users(36);
+  //get question group users
   function get_question_group_users(question_group_id)
   {
-      var Required = {
-        Url() { return webRoot + "get-users-from-question-group"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          this.variables = "question-group-id=" + question_group_id;
-          return this.variables;
-        }
-      }
-      var Optional = {
-        ResponseMethod() { return "get_question_group_users_response()"; }
-      };
-      sendAjaxRequest(Required,Optional);
-  }
-  function get_question_group_users_response()
-  {
-    /*
-      if Server responsed back successfully
-    */
-    if (xmlHttp.readyState == 4) {
-      if (xmlHttp.status == 200) {
-        /*
-          0 All ok
-          1 Invalid Access
-          -1 No Post Data
-        */
-        /*
-          Debug
-        */
-        var array = JSON.parse(xmlHttp.responseText),
-            users = array.users;
-        //console.log(users.response_code);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "get-users-from-question-group",
+      data: { "question-group-id": question_group_id }
+    })
+    .done(function(data){
+      /*
+        0 All ok
+        1 Invalid Access
+        -1 No Post Data
+      */
+      var users = data.users;
 
-        var i=0,
-        out = "";
+      var i=0,
+      out = "";
 
-        for(i = 0;i<users.length;i++)
-        {
-          out += "<option value='" + users[i].id + "' data-tokens='" + users[i].email + " " + users[i].gender
-          + " " + users[i].country + " " + users[i].city + " " + users[i].address
-         + " " + users[i].phone + "'>" + " " + users[i].name
-         + " " + users[i].surname + "</option>";
-        }
-        $("#question-group-dropdown").html(out);
+      for(i = 0;i<users.length;i++)
+      {
+        out += "<option value='" + users[i].id + "' data-tokens='" + users[i].email + " " + users[i].gender
+        + " " + users[i].country + " " + users[i].city + " " + users[i].address
+       + " " + users[i].phone + "'>" + " " + users[i].name
+       + " " + users[i].surname + "</option>";
       }
-    }
+      $("#question-group-dropdown").html(out);
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
   }
