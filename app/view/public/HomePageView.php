@@ -4,13 +4,12 @@
 	<script src="<?php print LinkUtils::generatePublicLink("js/public/HomePageEvents.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
-		<center><h1> Welcome to Crowd Gaming </h1> </center>
+		<center><h1> Welcome to <?php global $_CONFIG; echo $_CONFIG["FULL-APP-NAME"] ?> </h1> </center>
 	  <br>
 		<div id="main-carousel" class="carousel slide" data-ride="carousel">
 				<!-- Carousel indicators -->
 
 				<?php
-					global $_CONFIG;
 					echo "<ol class='carousel-indicators'>";
 							$images = array_diff(scandir("./res/slider"), array('..', '.'));
 							$counter = 0;

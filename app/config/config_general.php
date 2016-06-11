@@ -13,11 +13,11 @@
 	/*
 		Short application name
 	*/
-	$_CONFIG["SHORT-APP-NAME"] = "Crowd game" ;
+	$_CONFIG["SHORT-APP-NAME"] = "Crowd Game" ;
 	/*
 		Full application name
 	*/
-	$_CONFIG["FULL-APP-NAME"] = "Crowd gaming" ;
+	$_CONFIG["FULL-APP-NAME"] = "Crowd Gaming" ;
 	/*
 		Version number
 	*/
