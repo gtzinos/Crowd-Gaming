@@ -1,11 +1,4 @@
 <?php if($section == "CSS") : ?>
-<style>
-.carousel-inner > .item > img,
-.carousel-inner > .item > a > img {
-		width: 60%;
-		margin: auto;
-}
-</style>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/HomePage.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>

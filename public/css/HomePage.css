@@ -1,53 +1,9 @@
-.main-block{
-	box-shadow: 0px 6px 20px 0 #777;
-	margin:50px 0px;
-	height:100%;
-	overflow: hidden;
-}
-
-
-.block img{
-	float:right;
-	width:70px;
-}
-
-
 .wrap-block{
 	padding: 0px;
 }
 
-.fill {
-    padding-bottom: 100%;
-    margin-bottom: -100%;
-}
-
-.block1{
-	background-color: #58D6FF;
-	-webkit-transition: background-color 1s; /* For Safari 3.1 to 6.0 */
-    transition: background-color 1s;
-}
-
-.block2{
-	background-color: #9DFF9C;
-	-webkit-transition: background-color 1s; /* For Safari 3.1 to 6.0 */
-    transition: background-color 1s;
-}
-.block3{
-	background-color: #FFC56B;
-	-webkit-transition: background-color 1s; /* For Safari 3.1 to 6.0 */
-	transition: background-color 1s;
-}
-
-.block1:hover{
-	background-color: #02BCFA;
-
-}
-
-.block2:hover{
-	background-color: #47FF45;
-
-}
-
-.block3:hover{
-	background-color: #FFA61B;
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+		width: 60%;
+		margin: auto;
 }
