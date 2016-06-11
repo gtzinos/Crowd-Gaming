@@ -239,7 +239,7 @@ function show_questions(question_group_id)
       /*
         Parse json object
       */
-      var questions = JSON.parse(data);
+      var questions = data;
       /*
         Initialize
       */
