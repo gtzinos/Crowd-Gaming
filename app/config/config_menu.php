@@ -31,41 +31,46 @@
 		Examiner Menu
 	 */
 	$examinerMenu = Menu::create("ExaminerMenu");
+	//Home
 	$examinerMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
+ 	//Questionnaires
+	$examinerMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
 
-	$examinerQuestionnaires = MenuItem::create("Questionnaires" , "DROPDOWN" , "");
-	$examinerQuestionnaires->addItem( MenuItem::create("Questionnaires list" , "LINK" , "questionnaireslist") );
-	$examinerQuestionnaires->addItem( MenuItem::create("Create Questionnaire" , "LINK" , "questionnaire-create") );
-
-	$examinerControlPanel = MenuItem::create("Control Panel" , "DROPDOWN" , "");
-	$examinerControlPanel->addItem( MenuItem::create("Participation requests" , "LINK" , "participation-requests") );
-
-  $examinerMenu->addItem($examinerQuestionnaires);
-	$examinerMenu->addItem($examinerControlPanel);
+	//Control panel
+	$examinerControlPanelDropdown = MenuItem::create("Control Panel" , "DROPDOWN" , "");
+	$examinerControlPanelDropdown->addItem( MenuItem::create("Create Questionnaire" , "LINK" , "questionnaire-create") );
+	$examinerMenu->addItem($examinerControlPanelDropdown);
+	//Requests
+	$examinerRequestsDropdown = MenuItem::create("Requests" , "DROPDOWN" , "");
+	$examinerRequestsDropdown->addItem(MenuItem::create("Participation requests" , "LINK" , "participation-requests"));
+	$examinerMenu->addItem($examinerRequestsDropdown);
+	//My questionnaires
 	$examinerMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
 	$examinerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
-
 
 
 	/*
 		Moderator Menu
 	 */
 	$moderatorMenu = Menu::create("ModeratorMenu");
-
-	$moderatorQuestionnaires = MenuItem::create("Questionnaires" , "DROPDOWN" , "");
-	$moderatorQuestionnaires->addItem( MenuItem::create("Questionnaires list" , "LINK" , "questionnaireslist") );
-	$moderatorQuestionnaires->addItem( MenuItem::create("Create Questionnaire" , "LINK" , "questionnaire-create") );
-
-	$moderatorControlPanel = MenuItem::create("Control Panel" , "DROPDOWN" , "");
-	$moderatorControlPanel->addItem( MenuItem::create("Manage Questionnaires" , "LINK" , "questionnaire-management") );
-	$moderatorControlPanel->addItem( MenuItem::create("Participation requests" , "LINK" , "participation-requests") );
-	$moderatorControlPanel->addItem( MenuItem::create("Publication requests" , "LINK" , "publication-requests") );
-	$moderatorControlPanel->addItem( MenuItem::create("Examiner applications" , "LINK" , "examiner-applications") );
-
+	//Home
 	$moderatorMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
-	$moderatorMenu->addItem( $moderatorQuestionnaires );
-	$moderatorMenu->addItem( $moderatorControlPanel );
+	//Questionnaires
+	$moderatorMenu->addItem(MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist"));
+	//Control panel
+	$moderatorControlPanelDropdown = MenuItem::create("Control Panel" , "DROPDOWN" , "");
+	$moderatorControlPanelDropdown->addItem( MenuItem::create("Create Questionnaire" , "LINK" , "questionnaire-create") );
+	$moderatorControlPanelDropdown->addItem( MenuItem::create("Manage Questionnaires" , "LINK" , "questionnaire-management") );
+	$moderatorMenu->addItem( $moderatorControlPanelDropdown );
+	//Requests
+	$moderatorRequestsDropdown = MenuItem::create("Requests" , "DROPDOWN" , "");
+	$moderatorRequestsDropdown->addItem( MenuItem::create("Participation requests" , "LINK" , "participation-requests") );
+	$moderatorRequestsDropdown->addItem( MenuItem::create("Publication requests" , "LINK" , "publication-requests") );
+	$moderatorRequestsDropdown->addItem( MenuItem::create("Examiner applications" , "LINK" , "examiner-applications") );
+	$moderatorMenu->addItem( $moderatorRequestsDropdown );
+	//My questionnaires
 	$moderatorMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
+	//Info
 	$moderatorMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 
 	/*
