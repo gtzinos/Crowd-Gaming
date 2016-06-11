@@ -1,6 +1,5 @@
 $(document).ready(function(e) {
 
-
 tinymce.init({
       selector: "textarea.mce-editor",
       theme: 'modern',
@@ -29,7 +28,6 @@ tinymce.init({
           }
       },
       setup : function(ed) {
-
         ed.on("change focus keyup", function(e){
             /*
               Initialize variables (Form, div(gt-input-group), button(submit form), span(icon error,success))
