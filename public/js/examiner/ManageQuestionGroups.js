@@ -191,55 +191,34 @@ var question_group_offset = 0, //offset
 */
 function show_question_groups()
 {
-  var Required = {
-      Url() { return webRoot + "get-question-groups/" + questionnaire_id + "/" + question_group_offset + "/" + question_group_count; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        return this.variables;
-      }
+  $.ajax(
+  {
+    method: "POST",
+    url: webRoot + "get-question-groups/" + questionnaire_id + "/" + question_group_offset + "/" + question_group_count,
+    data: { }
+  })
+  .done(function(data)
+  {
+    /*
+      Display data
+      (
+        an empty set of question groups
+        returns me 4 characters..
+      )
+    */
+    if(data.length > 4)
+    {
+      $("#question-group-list").append(data);
     }
-
-    var Optional = {
-      ResponseMethod() { return "show_question_groups_response"; }
-    };
-
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
-
-    /*
-      Increment the offset
-    */
     question_group_offset += question_group_count;
+  })
+  .fail(function(xhr,error)
+  {
+    displayServerResponseError(xhr,error);
+  })
+  .always(function() {
     processing = false;
-}
-
-/*
-  Function question group list response
-*/
-function show_question_groups_response()
-{
-  /*
-		if Server responsed successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
-
-  			/*
-  				Display data
-          (
-            an empty set of question groups
-            returns me 4 characters..
-          )
-        */
-        if(xmlHttp.responseText.length > 4)
-        {
-          $("#question-group-list").append(xmlHttp.responseText);
-        }
-		}
-  }
+  });
 }
 /*
   Initialize first 10 question groups
@@ -251,48 +230,16 @@ show_question_groups();
 */
 function show_questions(question_group_id)
 {
-  var Required = {
-      Url() { return webRoot + "get-questions/" + question_group_id; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        return this.variables;
-      }
-    }
-
-    var Optional = {
-      ResponseMethod() { return "show_questions_response(" + question_group_id + ")"; }
-    };
-
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
-}
-
-/*
-  Open question dialog
-*/
-function openQuestionDialog(question_group_id)
-{
-  $("#create-question").modal("show");
-  $("#create-question-confirm-butto").attr("onclick","create_question(" + question_group_id + ")");
-}
-
-/*
-  Show questions response
-*/
-function show_questions_response(question_group_id)
-{
-  /*
-		if Server responsed successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
+  $.ajax({
+    method: "POST",
+    url: webRoot + "get-questions/" + question_group_id,
+    data: { }
+  })
+  .done(function(data){
       /*
         Parse json object
       */
-      var questions = JSON.parse(xmlHttp.responseText);
+      var questions = JSON.parse(data);
       /*
         Initialize
       */
@@ -308,7 +255,6 @@ function show_questions_response(question_group_id)
                       "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "',false)\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
                   "</div>";
       }
-
       /*
         No members
       */
@@ -316,13 +262,25 @@ function show_questions_response(question_group_id)
       {
         out += "<label class='alert alert-danger text-center'>There are no questions on this questionnaire group</label>";
       }
-  			/*
-  				Display data
-        */
-         $("#question-list-group").html(out);
-		}
-  }
+      /*
+        Display data
+      */
+       $("#question-list-group").html(out);
+  })
+  .fail(function(xhr,error){
+    displayServerResponseError(xhr,error);
+  });
 }
+
+/*
+  Open question dialog
+*/
+function openQuestionDialog(question_group_id)
+{
+  $("#create-question").modal("show");
+  $("#create-question-confirm-butto").attr("onclick","create_question(" + question_group_id + ")");
+}
+
 /*
   On mouse over the edit or delete buttons
 */
@@ -336,11 +294,9 @@ $(document)
                .css('cursor', 'pointer');
   });
 
-
-
-$('#edit-question').on('edit.bs.modal', function () {
-    document.getElementById("edit-question-form").reset();
-})
+  $('#edit-question').on('edit.bs.modal', function () {
+      document.getElementById("edit-question-form").reset();
+  })
 /*
   Edit question modal box
 */
