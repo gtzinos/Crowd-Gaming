@@ -11,6 +11,14 @@
 	 */
 	$_CONFIG["WEB_ROOT"] = "./Treasure-Thess-Website/public/";
 	/*
+		Short application name
+	*/
+	$_CONFIG["SHORT-APP-NAME"] = "Crowd game" ;
+	/*
+		Full application name
+	*/
+	$_CONFIG["FULL-APP-NAME"] = "Crowd gaming" ;
+	/*
 		Version number
 	*/
 	$_CONFIG["VERSION"] = "0";
