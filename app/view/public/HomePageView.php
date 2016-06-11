@@ -1,11 +1,12 @@
 <?php if($section == "CSS") : ?>
 	<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/HomePage.css"); ?>">
 <?php elseif($section == "JAVASCRIPT") : ?>
+	<script src="<?php print LinkUtils::generatePublicLink("js/public/HomePageEvents.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
 		<center><h1> Welcome to Crowd Gaming </h1> </center>
 	  <br>
-		<div id = "myCarousel" class = "carousel slide">
+		<div id="main-carousel" class="carousel slide" data-ride="carousel">
 				<!-- Carousel indicators -->
 
 				<?php
@@ -17,7 +18,7 @@
 							{
 								if(!is_dir($image))
 								{
-										 echo "<li data-target='#myCarousel' data-slide-to='" . $counter . "' " . ($counter == 0 ? "class='active'" : "") . "></li>";
+										 echo "<li data-target='#main-carousel' data-slide-to='" . $counter . "' " . ($counter == 0 ? "class='active'" : "") . "></li>";
 					 			}
 								$counter++;
 							}
@@ -37,8 +38,8 @@
 					echo "</div>";
 				?>
 		   <!-- Carousel nav -->
-		   <a class = "carousel-control left" href = "#myCarousel" data-slide = "prev">&lsaquo;</a>
-		   <a class = "carousel-control right" href = "#myCarousel" data-slide = "next">&rsaquo;</a>
+		   <a class = "carousel-control left" href = "#main-carousel" data-slide = "prev">&lsaquo;</a>
+		   <a class = "carousel-control right" href = "#main-carousel" data-slide = "next">&rsaquo;</a>
 
 		</div>
 	</div>
