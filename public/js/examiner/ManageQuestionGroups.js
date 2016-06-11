@@ -325,7 +325,7 @@ function show_edit_question_data(question_id,question_text,time_to_answer,creati
       /*
         Parse json object
       */
-      var answers_array = JSON.parse(data);
+      var answers_array = data;
 
       //id, answer-text , is-correct , creation-date,
       var i=0;
