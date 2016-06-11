@@ -87,7 +87,7 @@
 	 */
 	$authorizedRightMenu = Menu::create("authorizedRightMenu");
 
-	//Requests
+	//My menu
 	$myRightDropdown = MenuItem::create("<i style='font-size:18px;color:#36A0FF' class='glyphicon glyphicon-user'></i> " , "DROPDOWN" , "");
 	$myRightDropdown->addItem( MenuItem::create("My Profile" , "LINK" , "profile") );
 	$myRightDropdown->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );

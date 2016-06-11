@@ -253,6 +253,7 @@ tinymce.init({
                         .removeAttr("data-original-title");
                 }
         				group.addClass('has-success');
+                group.children().css("background-color","#3c763d");
         				icon.addClass('glyphicon glyphicon-ok form-control-feedback');
         		}
             /*
@@ -287,6 +288,7 @@ tinymce.init({
                   Add error class (error-icon)
                 */
                 group.addClass('has-error');
+                group.children().css("background-color","#a94442");
                 /*
                   Add error icon
                 */
