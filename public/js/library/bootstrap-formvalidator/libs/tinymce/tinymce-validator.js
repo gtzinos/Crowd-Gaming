@@ -28,7 +28,7 @@ tinymce.init({
           }
       },
       setup : function(ed) {
-        ed.on("change focus keyup", function(e){
+        ed.on("change init focus keyup", function(e){
             /*
               Initialize variables (Form, div(gt-input-group), button(submit form), span(icon error,success))
             */
