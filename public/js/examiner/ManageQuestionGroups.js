@@ -302,77 +302,56 @@ $(document)
 */
 function show_edit_question_data(question_id,question_text,time_to_answer,creation_date,multiplier)
 {
-  document.getElementById("edit-question-form").reset();
-  $("#edit-question-response").html("");
-  $("#edit-question-response").hide();
-  $("#save-question-confirm-button").unbind("click");
-  $("#save-question-confirm-button").on("click",function() {
-    update_question(question_id);
-  });
-  /*
-    Set question array values
-  */
-  $("#edit-qname").val(question_text);
-  $("#edit-qtime").val(time_to_answer);
-  $("#edit-qmultiplier").val(multiplier);
-
-  var Required = {
-      Url() { return webRoot + "get-answers/" + question_id; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        return this.variables;
-      }
-    }
-
-    var Optional = {
-      ResponseMethod() { return "show_edit_question_data_response"; }
-    };
+    document.getElementById("edit-question-form").reset();
+    $("#edit-question-response").html("");
+    $("#edit-question-response").hide();
+    $("#save-question-confirm-button").unbind("click");
+    $("#save-question-confirm-button").on("click",function() {
+      update_question(question_id);
+    });
     /*
-      Send ajax request
+      Set question array values
     */
-    sendAjaxRequest(Required,Optional);
-  }
+    $("#edit-qname").val(question_text);
+    $("#edit-qtime").val(time_to_answer);
+    $("#edit-qmultiplier").val(multiplier);
 
-  /*
-  Show questions response
-  */
-  function show_edit_question_data_response()
-  {
-    /*
-      if Server responsed successfully
-    */
-    if (xmlHttp.readyState == 4) {
+    $.ajax({
+      method: "POST",
+      url: webRoot + "get-answers/" + question_id,
+      data: { }
+    })
+    .done(function(data) {
+      /*
+        Parse json object
+      */
+      var answers_array = JSON.parse(data);
 
-        if (xmlHttp.status == 200) {
-          /*
-            Parse json object
-          */
-          var answers_array = JSON.parse(xmlHttp.responseText);
-
-          //id, answer-text , is-correct , creation-date,
-          var i=0;
-          for(i=0; i < answers_array.answers.length; i++)
-          {
-            if(answers_array.answers[i].is_correct)
-            {
-              $("#edit-correct").val(i + 1);
-            }
-            $("#edit-checkbox" + (i+1)).prop("checked",true);
-            $("#edit-answer" + (i+1)).val(answers_array.answers[i].answer_text);
-          }
-          /*
-            No answers
-          */
-          if(i == 0)
-          {
-            $("#question-edit-response").show();
-            $("#question-edit-response").html("<div class='alert alert-danger'>There are no answers in this question. </div>");
-          }
-
+      //id, answer-text , is-correct , creation-date,
+      var i=0;
+      for(i=0; i < answers_array.answers.length; i++)
+      {
+        if(answers_array.answers[i].is_correct)
+        {
+          $("#edit-correct").val(i + 1);
         }
-    }
+        $("#edit-checkbox" + (i+1)).prop("checked",true);
+        $("#edit-answer" + (i+1)).val(answers_array.answers[i].answer_text);
+      }
+      /*
+        No answers
+      */
+      if(i == 0)
+      {
+        $("#question-edit-response").show();
+        $("#question-edit-response").html("<div class='alert alert-danger'>There are no answers in this question. </div>");
+      }
+    })
+    .fail(function (xhr,error) {
+        displayServerResponseError(xhr,error);
+    });
 }
+
 
 function update_question(question_id)
 {
