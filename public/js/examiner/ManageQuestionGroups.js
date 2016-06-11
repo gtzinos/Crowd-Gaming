@@ -820,40 +820,12 @@ function delete_question_group(question_group_id,ask_required)
     display_confirm_dialog("Confirm","Are you sure to delete it ?","btn-default","btn-default","black","delete_question_group(" + question_group_id + ",true)","");
   }
   else {
-    var Required = {
-        Url() { return webRoot + "delete-question-group"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "question-group-id=" + question_group_id;
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "delete_question_group_response(" + question_group_id + ")"; }
-      };
-
-      /*
-        Send ajax request
-      */
-      sendAjaxRequest(Required,Optional);
-  }
-}
-
-/*
-  Delete question group (Server response)
-*/
-function delete_question_group_response(question_group_id)
-{
-  /*
-    if Server responsed back successfully
-  */
-  if (xmlHttp.readyState == 4) {
-    if (xmlHttp.status == 200) {
+    $.ajax({
+      method: "POST",
+      url: webRoot + "delete-question-group",
+      data: { "question-group-id": question_group_id }
+    })
+    .done(function(data) {
       /*
         0 All ok
         1 Authentication failed
@@ -862,12 +834,8 @@ function delete_question_group_response(question_group_id)
         4 Questionnaire is public , you cant delete this.
         -1 No Data
       */
-      /*
-        Debug
-      */
-      //console.log(xmlHttp.responseText);
 
-      if(xmlHttp.responseText.localeCompare("0") == 0)
+      if(data == "0")
       {
           /*
             Success message
@@ -883,69 +851,59 @@ function delete_question_group_response(question_group_id)
           }
           show_notification("success","Question group " + question_group_id + " deleted successfully.",5000);
       }
-
       /*
-        If server responsed with an error code
+         If response message == 1
+          Authentication failed
+      */
+      else if(data == "1")
+      {
+        show_notification("error","Authentication failed.",4000);
+      }
+      /*
+         If response message == 2
+         Access error
+      */
+      else if(data == "2")
+      {
+        show_notification("error","You dont have permission to delete this question group.",4000);
+      }
+      /*
+         If response message == 3
+         Database error
+      */
+      else if(data == "3")
+      {
+        show_notification("error","General database error.",4000);
+      }
+      /*
+         If response message == 4
+         Questionnaire is public, you cant delete this.
+      */
+      else if(data == "4")
+      {
+        show_notification("error","Questionnaire is public, you cant delete this.",4000);
+      }
+      /*
+         If response message == -1
+         No data error
+      */
+      else if(data == "-1")
+      {
+        show_notification("error","You didn't send the required data.",4000);
+      }
+      /*
+          Something going wrong
       */
       else {
-
-        /*
-          Display an response message
-        */
-        var response_message = "";
-        /*
-           If response message == 1
-            Authentication failed
-        */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Authentication failed.</div>";
-        }
-        /*
-           If response message == 2
-           Access error
-        */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You dont have permission to delete this question group.</div>";
-        }
-        /*
-           If response message == 3
-           Database error
-        */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>General database error.</div>";
-        }
-        /*
-           If response message == 4
-           Questionnaire is public, you cant delete this.
-        */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Questionnaire is public, you cant delete this.</div>";
-        }
-        /*
-           If response message == -1
-           No data error
-        */
-        else if(xmlHttp.responseText.localeCompare("-1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You didn't send the required data.</div>";
-        }
-        /*
-            Something going wrong
-        */
-        else {
-          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
-        }
-
-        show_notification("error",response_message,6000);
+        show_notification("error","Unknown error. Contact with one administrator!",4000);
       }
-    }
+    })
+    .fail(function(xhr,error)
+    {
+      displayServerResponseError(xhr,error);
+    })
   }
 }
-
 
   //get_question_group_users(36);
   function get_question_group_users(question_group_id)
