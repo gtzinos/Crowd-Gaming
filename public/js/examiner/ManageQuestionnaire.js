@@ -184,10 +184,7 @@ function sendPublicRequest()
   });
 }
 
-/*
-  Create questionnaire
-*/
-function createQuestionnaire()
+function getQuestionnaireData()
 {
   /*
     Initialize variables
@@ -200,158 +197,127 @@ function createQuestionnaire()
 
   if(name && descriptionClearText.length >= 31)
   {
-    var Required = {
-        Url() { return webRoot + "questionnaire-create/ajax"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "name=" + name + "&description=" +  descriptionHTML;
-
-          if(message_required == "-") {
-              message_required = "no";
-          }
-
-          this.variables += "&message_required=" + message_required;
-
-          if(message_required == "yes")
-          {
-            this.variables += "&message" + password;
-          }
-
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "responseCreateQuestionnaire"; },
-        ResponseLabel() { return "questionnaire-create-response"; },
-        SubmitButton() { return ".submit"; }
-      };
-
-      /*
-				Send ajax request
-			*/
-			sendAjaxRequest(Required,Optional);
+    /*
+      Variables we will send
+    */
+    let data = {
+      "name": name,
+      "description": descriptionHTML,
+      "message_required": message_required == "yes" ? "yes" : "no"
     }
 
-  else {
-    /*
-      Cannot be empty
-    */
-    $("#questionnaire-create-response").show();
-    $("#questionnaire-create-response").html("<div class='alert alert-danger'>Questionnaire name and description cannot be empty. </div>");
+    if(message_required == "yes")
+    {
+      data["message"] = password;
+    }
 
+    return data;
   }
-
+  else
+  {
+    return null;
+  }
 }
-
 /*
-  Response method Create Questionnaire
+  Create questionnaire
 */
-function responseCreateQuestionnaire()
+function createQuestionnaire()
 {
-  /*
-		if Server responsed back successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
-      /*
-        0			: Created successfully
-        1			: Name Validation error
-        2			: Description Validation error
-        3			: Password Required Error
-        4			: Database Error
-      */
+    var dataToSend = getQuestionnaireData();
 
-			/*
-				Debug
-			*/
-			//console.log(xmlHttp.responseText);
-
-      if(xmlHttp.responseText.localeCompare("0") == 0)
-			{
-  			/*
-  				After response submit button must be enabled
-  			*/
-  			$(document).find('.submit').prop('disabled',false);
-  			/*
-  				Success message
-        */
-         $("#questionnaire-create-response").show();
-         $("#questionnaire-create-response").html("<div class='alert alert-success'>Your questionnaire created successfully.</div>");
-         $("#questionnaire-name").val("");
-         tinymce.activeEditor.setContent('<p></p>');
-         $("#editor").focus();
-         $("#message-required").val("-");
-         $("#message-required").focus();
-         $("#questionnaire-name").focus();
-         $("#message-required").focus();
-      }
-
-      /*
-        If server responsed with an error code
-      */
-      else {
+    if(dataToSend != null)
+    {
+      $('.submit').prop('disabled',true);
+      $.ajax({
+        method: "POST",
+        url: webRoot + "questionnaire-create/ajax",
+        data: dataToSend
+      })
+      .done(function(data){
         /*
-          Display an response message
+          0			: Created successfully
+          1			: Name Validation error
+          2			: Description Validation error
+          3			: Password Required Error
+          4			: Database Error
         */
-        var response_message = "";
+
+        if(data == "0")
+        {
+          /*
+            Success message
+          */
+           show_notification("success","Your questionnaire created successfully.",4000);
+           $("#questionnaire-name").val("");
+           tinymce.activeEditor.setContent('<p></p>');
+           $("#editor").focus();
+           $("#message-required").val("-");
+           $("#message-required").focus();
+           $("#questionnaire-name").focus();
+           $("#message-required").focus();
+        }
         /*
            If response message == 1
            Name Validation error
         */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
+        else if(data == "1")
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid questionnaire name.</div>";
+          show_notification("error","This is not a valid questionnaire name.",4000);
         }
         /*
            If response message == 2
            Description Validation error
         */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
+        else if(data == "2")
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid questionnaire description.</div>";
+          show_notification("error","This is not a valid questionnaire description.",4000);
         }
         /*
            If response message == 3
            Password Required Error
         */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
+        else if(data == "3")
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid password required option.</div>";
+          show_notification("error","This is not a valid password required option.",4000);
         }
         /*
            If response message == 4
            Database Error
         */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
+        else if(data == "4")
         {
-         response_message += "<div class='alert alert-danger'>General database error. Please try later!</div>";
+          show_notification("error","General database error. Please try later!",4000);
         }
         /*
            If response message == 5
            Name already exists
         */
-        else if(xmlHttp.responseText.localeCompare("5") == 0)
+        else if(data == "5")
         {
-         response_message += "<div class='alert alert-danger'>This questionnaire name already exists.</div>";
+          show_notification("error","This questionnaire name already exists.",4000);
         }
         /*
             Something going wrong
         */
         else {
-          response_message += "<div class='alert alert-danger'>Something going wrong. Contact with one administrator!</div>";
+          show_notification("error","Something going wrong. Contact with one administrator!",4000);
         }
-
-
-
-       $("#questionnaire-create-response").show();
-       $("#questionnaire-create-response").html(response_message);
-      }
-    }
+      })
+      .fail(function(xhr,error){
+        displayServerResponseError(xhr,error);
+      })
+      .always(function() {
+        /*
+          After response submit button must be enabled
+        */
+        $('.submit').prop('disabled',false);
+      });
+  }
+  else {
+    /*
+      Cannot be empty
+    */
+    show_notification("error","Questionnaire name and description cannot be empty.",4000);
   }
 }
 
