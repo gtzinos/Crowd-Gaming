@@ -23,9 +23,10 @@
 
 	$playerMenu->addItem( MenuItem::create("Home" , "LINK" , "home") );
 	$playerMenu->addItem( MenuItem::create("Questionnaires" , "LINK" , "questionnaireslist") );
-	$playerMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
 	$playerMenu->addItem( MenuItem::create("Become an Examiner" , "LINK" , "become-examiner") );
 	$playerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
+	$playerMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
+
 
 	/*
 		Examiner Menu
@@ -44,9 +45,10 @@
 	$examinerRequestsDropdown = MenuItem::create("Requests" , "DROPDOWN" , "");
 	$examinerRequestsDropdown->addItem(MenuItem::create("Participation requests" , "LINK" , "participation-requests"));
 	$examinerMenu->addItem($examinerRequestsDropdown);
-	//My questionnaires
-	$examinerMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
+	//Contact
 	$examinerMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
+	//Info
+	$examinerMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 
 
 	/*
@@ -68,8 +70,6 @@
 	$moderatorRequestsDropdown->addItem( MenuItem::create("Publication requests" , "LINK" , "publication-requests") );
 	$moderatorRequestsDropdown->addItem( MenuItem::create("Examiner applications" , "LINK" , "examiner-applications") );
 	$moderatorMenu->addItem( $moderatorRequestsDropdown );
-	//My questionnaires
-	$moderatorMenu->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
 	//Info
 	$moderatorMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 
@@ -87,7 +87,12 @@
 	 */
 	$authorizedRightMenu = Menu::create("authorizedRightMenu");
 
-	$authorizedRightMenu->addItem( MenuItem::create("Profile" , "LINK" , "profile") );
+	//Requests
+	$myRightDropdown = MenuItem::create("<i style='font-size:18px;color:#36A0FF' class='glyphicon glyphicon-user'></i> " , "DROPDOWN" , "");
+	$myRightDropdown->addItem( MenuItem::create("My Profile" , "LINK" , "profile") );
+	$myRightDropdown->addItem( MenuItem::create("My Questionnaires" , "LINK" , "my-questionnaires") );
+	$authorizedRightMenu->addItem( $myRightDropdown );
+
 	$authorizedRightMenu->addItem( MenuItem::create("Sign Out" , "LINK" , "signout") );
 
 	Menus::add($examinerMenu);
