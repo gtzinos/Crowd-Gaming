@@ -241,7 +241,6 @@ function createQuestionnaire()
           3			: Password Required Error
           4			: Database Error
         */
-
         if(data == "0")
         {
           /*
@@ -321,11 +320,8 @@ function createQuestionnaire()
   }
 }
 
-/*
-  Update one questionnaire
-*/
-function updateQuestionnaire(id)
-{
+//get update questionnaire data
+function getUpdateQuestionnaireData(id) {
   /*
     Initialize the variables
   */
@@ -338,166 +334,133 @@ function updateQuestionnaire(id)
   */
   if(name && description && required)
   {
-    var Required = {
-        Url() { return webRoot + "questionnaire-edit/"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          this.variables = "questionnaire-id=" + id + "&name=" + name + "&description=" + description + "&message_required=" + required;
-          if($("#message-required").val() == "yes")
-          {
-            this.variables += "&message=" + $("#questionnaire-password").val();
-          }
+    let data = {
+      "questionnaire-id": id,
+      "name": name,
+      "description": description,
+      "message_required": required == "yes" ? "yes" : "no"
+    };
+    if(required == "yes")
+    {
+      data["message"] = $("#questionnaire-password").val();
+    }
+    return data;
+  }
+  else
+  {
+    return null;
+  }
+}
+/*
+  Update one questionnaire
+*/
+function updateQuestionnaire(id)
+{
+  var dataToSend = getUpdateQuestionnaireData(id);
+  if(dataToSend != null)
+  {
+    $("#edit-questionnaire").prop("disabled",true);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "questionnaire-edit/",
+      data: dataToSend
+    })
+    .done(function(data){
+        /*
+          Response code values
+          0			: Edited successfully
+          1			: Name Validation error
+          2			: Description Validation error
+          3			: Password Required Error
+          4			: Database Error
+         */
+         /*
+          if Server responsed successfully
+        */
+        $('#edit-questionnaire').unbind("hidden.bs.modal");
+        /*
+          User can login
+        */
+        if(data == "0")
+        {
+          /*
+            Redirect to home page
+          */
+          show_notification("error","Questionnaire updated successfully.",4000);
+          $('#edit-questionnaire').on('hidden.bs.modal', function () {
+            location.reload();
+          });
         }
-    };
-    var Optional = {
-      ResponseMethod() { return "responseUpdateQuestionnaire"; },
-      ResponseLabel() { return "questionnaire-edit-response"; },
-      SubmitButton() { return "edit-questionnaire"; }
-    };
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
-
+        /*
+           If response message == -1
+           Cant found questionnaire
+        */
+        else if(data == "-1")
+        {
+          show_notification("error","We can't found this questionnaire.",4000);
+        }
+        /*
+           If response message == 1
+           Not a valid Questionnaire Name.
+        */
+        else if(data == "1")
+        {
+         response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Name.</div>";
+        }
+        /*
+           If response message == 2
+           Not a valid Questionnaire Description
+        */
+        else if(data == "2")
+        {
+          show_notification("error","Not a valid Questionnaire Description.",4000);
+        }
+        /*
+           If response message == 3
+           Not a valid Password Required value
+        */
+        else if(data == "3")
+        {
+          show_notification("error","Not a valid password required value",4000);
+        }
+        /*
+           If response message == 4
+           General Database Error.
+        */
+        else if(data == "4")
+        {
+          show_notification("error","General Database Error.",4000);
+        }
+        /*
+           If response message == 4
+           Questionnaire name already exists
+        */
+        else if(data == "5")
+        {
+          show_notification("error","Questionnaire name already exists.",4000);
+        }
+        /*
+            Something going wrong
+        */
+        else {
+          show_notification("error","Unknown error message. Contact with one administrator!",4000);
+        }
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
+    .always(function() {
+      $("#edit-questionnaire").prop("disabled",false);
+    })
   }
   else
   {
     /*
       Response failed recovery message
     */
-    $("#questionnaire-edit-response").show();
-    $("#questionnaire-edit-response").html("<div class='alert alert-danger'>Empty fields !!!</div>");
+    show_notification("error","Please fill all required fields.",4000);
   }
 }
-
-/*
-  Responsed method (Update Questionnaire)
-*/
-function responseUpdateQuestionnaire()
-{
-  /*
-    Response code values
-    0			: Edited successfully
-    1			: Name Validation error
-    2			: Description Validation error
-    3			: Password Required Error
-    4			: Database Error
-   */
-   /*
- 		if Server responsed successfully
- 	*/
- 	if (xmlHttp.readyState == 4) {
- 		if (xmlHttp.status == 200) {
- 			/*
- 				Debug
- 			*/
-
- 			//console.log(xmlHttp.responseText);
-
- 			/*
- 			  Enable submit button
- 			*/
-
- 			$(document).find('#edit-questionnaire').prop('disabled',false);
-      $('#edit-questionnaire').unbind("hidden.bs.modal");
- 			/*
- 				User can login
- 			*/
- 			if(xmlHttp.responseText.localeCompare("0") == 0)
- 			{
- 				/*
- 					Redirect to home page
- 				*/
-        $("#questionnaire-edit-response").show();
-        $("#questionnaire-edit-response").html("<div class='alert alert-success'>Questionnaire updated successfully.</div>");
-        $('#edit-questionnaire').on('hidden.bs.modal', function () {
-   				location.reload();
-        });
- 			}
- 			/*
- 				Wrong username or password
- 			*/
- 			else
- 			{
- 					/*
- 						Display an response message
- 					*/
-
- 					var response_message = "";
-          /*
- 						 If response message == -1
- 						 Cant found questionnaire
- 					*/
- 					if(xmlHttp.responseText.localeCompare("-1") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>We can't found this questionnaire.</div>";
- 					}
- 					/*
- 						 If response message == 1
- 						 Not a valid Questionnaire Name.
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("1") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Name.</div>";
- 					}
- 					/*
- 						 If response message == 2
- 						 Not a valid Questionnaire Description
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("2") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Description.</div>";
- 					}
- 					/*
- 						 If response message == 3
- 						 Not a valid Password Required value
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("3") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid password required value.</div>";
- 					}
- 					/*
- 						 If response message == 4
- 						 General Database Error.
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("4") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>General Database Error.</div>";
- 					}
-          /*
- 						 If response message == 4
- 						 Questionnaire name already exists
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("5") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Questionnaire name already exists.</div>";
- 					}
- 					/*
- 							Something going wrong
- 					*/
- 					else {
- 						response_message += "<div class='alert alert-danger'>Unknown error message. Contact with one administrator!</div>";
- 					}
-
- 			 	 $("#questionnaire-edit-response").show();
- 				 $("#questionnaire-edit-response").html(response_message);
- 			}
- 		}
-
- 	}
- 	/*
- 		Server Problem (Timeout probably)
- 	*/
- 	else {
- 			/*
- 				TODO Something like
- 			*/
- 			$("#questionnaire-edit-response").show();
- 			$("#questionnaire-edit-response").html("<div class='alert alert-danger'>Server is offline</div>");
- 	}
-}
-
 
 /*
   On mouse over on delete user buttons
