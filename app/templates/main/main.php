@@ -29,6 +29,8 @@
 		<!-- Google recaptcha -->
 		<script src='https://www.google.com/recaptcha/api.js'></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
+		<!-- Tinymce editor -->
+		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-formvalidator/gt-formvalidator.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/AjaxRequests.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/common/spinner-call.js"); ?>"></script>

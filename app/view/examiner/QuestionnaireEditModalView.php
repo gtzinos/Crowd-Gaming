@@ -1,6 +1,4 @@
 <? if($section == "EDIT_QUESTIONNAIRE") : ?>
-<!-- Tinymce editor -->
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionnaire.js"); ?>"></script>
 <?php
   /*
