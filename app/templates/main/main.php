@@ -6,7 +6,7 @@
 		<!-- Google Sign In -->
 		<meta name="google-signin-scope" content="profile email">
 		<meta name="google-signin-client_id" content="286669463790-ovcpq7noleth347mivsdd5s4vj8k90ah.apps.googleusercontent.com">
-
+		<link rel="icon" href="./res/images/favicon.ico" type="image/x-icon" />
 		<!-- Css files -->
 		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("res/foundation-icons/foundation-icons.css"); ?>" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
