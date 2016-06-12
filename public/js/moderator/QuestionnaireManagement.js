@@ -37,9 +37,7 @@ function initialize()
           getQuestionnaireMembers();
           getAvailableCoordinators();
   });
-
 }
-
 
 $(window).on('load',function(){
   initialize();
@@ -51,11 +49,8 @@ $(window).on('load',function(){
 var iScrollPos = 0,
     processing = false;
 $(window).scroll(function () {
-
     var iCurScrollPos = $(this).scrollTop();
-
     if (iCurScrollPos > iScrollPos) {
-
       if (processing)
       {
         return false;
@@ -491,8 +486,14 @@ function delete_questionnaire()
   $("#confirm-password-text").focus();
 }
 
-function ban_all_examiners_from_questionnaire()
+function ban_all_examiners_from_questionnaire(confirmed)
 {
+  if(!confirmed)
+  {
+    display_confirm_dialog("Confirm","Are you sure to ban all examiners of this questionnaire ?","btn-default","btn-default","black","ban_all_examiners_from_questionnaire(true)","");
+    return;
+  }
+
   $.post(webRoot + "ban-examiners-from-questionnaire",
   {
     'questionnaire-id' : questionnaire_id
