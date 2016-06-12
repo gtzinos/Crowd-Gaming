@@ -71,7 +71,7 @@
                   <div class="col-xs-12 col-sm-offset-3 col-sm-9">
                     <label for="email">Questionnaire password</label>
                   </div>
-                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
+                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="length" data-length="1">
                     <?php
                       if($questionnaire->getMessage() != "" || $questionnaire->getMessageRequired())
                       {
