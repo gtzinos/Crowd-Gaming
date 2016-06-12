@@ -71,6 +71,8 @@
 	$moderatorRequestsDropdown->addItem( MenuItem::create("Examiner applications" , "LINK" , "examiner-applications") );
 	$moderatorMenu->addItem( $moderatorRequestsDropdown );
 	//Info
+	$moderatorMenu->addItem( MenuItem::create("Contact" , "LINK" , "contact") );
+	//Info
 	$moderatorMenu->addItem( MenuItem::create("Info" , "LINK" , "info") );
 
 	/*
