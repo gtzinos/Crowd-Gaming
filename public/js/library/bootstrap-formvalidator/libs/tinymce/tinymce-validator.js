@@ -238,7 +238,7 @@ tinymce.init({
               If state was true
               then add a success class icon
             */
-        		else if (state && !first_time)
+        		else if (state)
             {
         				group.removeClass('has-error');
                 icon.removeClass('glyphicon glyphicon-remove form-control-feedback');
@@ -269,19 +269,9 @@ tinymce.init({
                 */
                 if(input.attr("data-toggle") && input.attr("data-toggle") == "tooltip")
                 {
-                  /*
-                    If attr gt-error-message not initialized
-                  */
-                  if(!input.attr("gt-error-message")) input.attr("gt-error-message","Wrong input value.");
-                  /*
-                    Else gt-error-message initialized
-                  */
-                  else input.attr("data-original-title",input.attr("gt-error-message"));
+                  input.tooltip('destroy')
+                        .removeAttr("data-original-title");
                 }
-                /*
-                  If tooltip is hidden
-                */
-                input.tooltip('show');
                 /*
                   Add error class (error-icon)
                 */
