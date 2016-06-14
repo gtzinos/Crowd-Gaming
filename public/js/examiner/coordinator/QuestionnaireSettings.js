@@ -193,14 +193,13 @@ function updateSchedulePlan()
     });
   }
   else if($('#multiple-day-dropdown').val() != null){
-    days['1'] = {
+    days[$('#multiple-day-dropdown').val()] = {
       'start-time' : $("#start_time_timer" + $('#multiple-day-dropdown').val()).val().length == 5 ? convertToDecimal($("#start_time_timer" + $('#multiple-day-dropdown').val()).val()) : 0,
       'end-time' : $("#stop_time_timer" + $('#multiple-day-dropdown').val()).val().length == 5 ? convertToDecimal($("#stop_time_timer" + $('#multiple-day-dropdown').val()).val()) : 1440
     };
   }
 
   data['days'] = days;
-
   $.post(webRoot + "update-questionnaire-schedule",
   {
     'questionnaire-id' : questionnaire_id,

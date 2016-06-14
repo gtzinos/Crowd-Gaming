@@ -3,8 +3,6 @@
   <!-- Google Maps -->
 <?php global $_CONFIG;
 echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOOGLE_API_KEY"] . "' type='text/javascript'></script>"; ?>
-<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
-<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 <div class="container-fluid">
 

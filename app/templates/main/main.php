@@ -6,16 +6,19 @@
 		<!-- Google Sign In -->
 		<meta name="google-signin-scope" content="profile email">
 		<meta name="google-signin-client_id" content="286669463790-ovcpq7noleth347mivsdd5s4vj8k90ah.apps.googleusercontent.com">
-
+		<link rel="icon" href="./res/images/favicon.ico" type="image/x-icon" />
 		<!-- Css files -->
 		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("res/foundation-icons/foundation-icons.css"); ?>" >
-		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/MainTemplateStyle.css"); ?>" >
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/MainTemplateStyle.css"); ?>" >
+
 		<script type="text/javascript">
 			var webRoot = '<?php print '/'.$_CONFIG["WEB_ROOT"]; ?>';
 			var googleApiKey = '<?php print $_CONFIG["GOOGLE_API_KEY"]; ?>';
+			var googleReCaptchaKey = '<?php print $_CONFIG["CLIENT_GOOGLE_RECAPTCHA_KEY"]; ?>';
+			var notCompletedRequest = false;
 		</script>
 
 		<!-- Script files -->
@@ -23,13 +26,19 @@
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<!-- Google Sign In -->
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<!-- Google recaptcha -->
+		<script src='https://www.google.com/recaptcha/api.js'></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
+		<!-- Tinymce editor -->
+		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-formvalidator/gt-formvalidator.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/AjaxRequests.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/common/spinner-call.js"); ?>"></script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
+		<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/public/MainTemplate.js"); ?>"></script>
-
 		<title>
 			<?php show("PAGE_TITLE") ?>
 		</title>
@@ -50,7 +59,7 @@
 		        		<span class="icon-bar"></span>
 		        		<span class="icon-bar"></span>
 		      		</button>
-		      		<a class="navbar-brand" href="./">Crowd Game</a>
+		      		<a class="navbar-brand" href="./"><?php global $_CONFIG; echo $_CONFIG["SHORT-APP-NAME"] ?></a>
 		    	</div>
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav">

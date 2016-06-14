@@ -1,6 +1,4 @@
 <? if($section == "EDIT_QUESTIONNAIRE") : ?>
-<!-- Tinymce editor -->
-<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionnaire.js"); ?>"></script>
 <?php
   /*
@@ -34,7 +32,7 @@
                     <label for="email">Description</label>
                   </div>
                   <div class="col-xs-12 col-sm-8 gt-input-group" data-validate="length" data-length="30">
-                     <textarea class="form-control mce-editor" style="height:150px" id="qeditor" data-toggle="tooltip" gt-error-message="Must contain at least 30 characters" id="editor" id="questionnaire-description" placeholder="Questionnaire Description (Required) *Length >= 20" required ><?php echo $questionnaire->getDescription() ?></textarea>
+                     <textarea class="form-control mce-editor" style="height:150px" id="qeditor" data-toggle="tooltip" id="editor" id="questionnaire-description" required ><?php echo $questionnaire->getDescription() ?></textarea>
                       <span class="gt-icon"></span>
                   </div>
               </div>
@@ -73,7 +71,7 @@
                   <div class="col-xs-12 col-sm-offset-3 col-sm-9">
                     <label for="email">Questionnaire password</label>
                   </div>
-                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
+                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="length" data-length="1">
                     <?php
                       if($questionnaire->getMessage() != "" || $questionnaire->getMessageRequired())
                       {

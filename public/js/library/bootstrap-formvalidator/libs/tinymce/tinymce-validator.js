@@ -1,6 +1,5 @@
 $(document).ready(function(e) {
 
-
 tinymce.init({
       selector: "textarea.mce-editor",
       theme: 'modern',
@@ -29,8 +28,7 @@ tinymce.init({
           }
       },
       setup : function(ed) {
-
-        ed.on("change focus keyup", function(e){
+        ed.on("change init focus keyup", function(e){
             /*
               Initialize variables (Form, div(gt-input-group), button(submit form), span(icon error,success))
             */
@@ -79,7 +77,6 @@ tinymce.init({
             }
 
             var text = tinymce.activeEditor.getContent({format : 'text'});
-
             /*
               If is a list
               and selected index was the default one
@@ -94,7 +91,7 @@ tinymce.init({
               This is for first time
             */
 
-            else if(text.length == 0)
+            else if(text.length == 1)
             {
               first_time = true;
             }
@@ -233,6 +230,7 @@ tinymce.init({
             {
               group.removeClass('has-error');
               group.removeClass('has-success');
+              group.children().css("background-color","");
               icon.removeClass('glyphicon glyphicon-ok form-control-feedback');
               icon.removeClass('glyphicon glyphicon-remove form-control-feedback');
             }
@@ -253,6 +251,7 @@ tinymce.init({
                         .removeAttr("data-original-title");
                 }
         				group.addClass('has-success');
+                group.children().css("background-color","#3c763d");
         				icon.addClass('glyphicon glyphicon-ok form-control-feedback');
         		}
             /*
@@ -270,23 +269,14 @@ tinymce.init({
                 */
                 if(input.attr("data-toggle") && input.attr("data-toggle") == "tooltip")
                 {
-                  /*
-                    If attr gt-error-message not initialized
-                  */
-                  if(!input.attr("gt-error-message")) input.attr("gt-error-message","Wrong input value.");
-                  /*
-                    Else gt-error-message initialized
-                  */
-                  else input.attr("data-original-title",input.attr("gt-error-message"));
+                  input.tooltip('destroy')
+                        .removeAttr("data-original-title");
                 }
-                /*
-                  If tooltip is hidden
-                */
-                input.tooltip('show');
                 /*
                   Add error class (error-icon)
                 */
                 group.addClass('has-error');
+                group.children().css("background-color","#a94442");
                 /*
                   Add error icon
                 */

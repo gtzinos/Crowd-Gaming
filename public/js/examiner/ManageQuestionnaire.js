@@ -184,10 +184,7 @@ function sendPublicRequest()
   });
 }
 
-/*
-  Create questionnaire
-*/
-function createQuestionnaire()
+function getQuestionnaireData()
 {
   /*
     Initialize variables
@@ -200,166 +197,131 @@ function createQuestionnaire()
 
   if(name && descriptionClearText.length >= 31)
   {
-    var Required = {
-        Url() { return webRoot + "questionnaire-create/ajax"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "name=" + name + "&description=" +  descriptionHTML;
-
-          if(message_required == "-") {
-              message_required = "no";
-          }
-
-          this.variables += "&message_required=" + message_required;
-
-          if(message_required == "yes")
-          {
-            this.variables += "&message" + password;
-          }
-
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "responseCreateQuestionnaire"; },
-        ResponseLabel() { return "questionnaire-create-response"; },
-        SubmitButton() { return ".submit"; }
-      };
-
-      /*
-				Send ajax request
-			*/
-			sendAjaxRequest(Required,Optional);
+    /*
+      Variables we will send
+    */
+    let data = {
+      "name": name,
+      "description": descriptionHTML,
+      "message_required": message_required == "yes" ? "yes" : "no"
     }
 
-  else {
-    /*
-      Cannot be empty
-    */
-    $("#questionnaire-create-response").show();
-    $("#questionnaire-create-response").html("<div class='alert alert-danger'>Questionnaire name and description cannot be empty. </div>");
+    if(message_required == "yes")
+    {
+      data["message"] = password;
+    }
 
+    return data;
   }
-
+  else
+  {
+    return null;
+  }
 }
-
 /*
-  Response method Create Questionnaire
+  Create questionnaire
 */
-function responseCreateQuestionnaire()
+function createQuestionnaire()
 {
-  /*
-		if Server responsed back successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
-      /*
-        0			: Created successfully
-        1			: Name Validation error
-        2			: Description Validation error
-        3			: Password Required Error
-        4			: Database Error
-      */
+    var dataToSend = getQuestionnaireData();
 
-			/*
-				Debug
-			*/
-			//console.log(xmlHttp.responseText);
-
-      if(xmlHttp.responseText.localeCompare("0") == 0)
-			{
-  			/*
-  				After response submit button must be enabled
-  			*/
-  			$(document).find('.submit').prop('disabled',false);
-  			/*
-  				Success message
-        */
-         $("#questionnaire-create-response").show();
-         $("#questionnaire-create-response").html("<div class='alert alert-success'>Your questionnaire created successfully.</div>");
-         $("#questionnaire-name").val("");
-         tinymce.activeEditor.setContent('<p></p>');
-         $("#editor").focus();
-         $("#message-required").val("-");
-         $("#message-required").focus();
-         $("#questionnaire-name").focus();
-         $("#message-required").focus();
-      }
-
-      /*
-        If server responsed with an error code
-      */
-      else {
+    if(dataToSend != null)
+    {
+      $('.submit').prop('disabled',true);
+      $.ajax({
+        method: "POST",
+        url: webRoot + "questionnaire-create/ajax",
+        data: dataToSend
+      })
+      .done(function(data){
         /*
-          Display an response message
+          0			: Created successfully
+          1			: Name Validation error
+          2			: Description Validation error
+          3			: Password Required Error
+          4			: Database Error
         */
-        var response_message = "";
+        if(data == "0")
+        {
+          /*
+            Success message
+          */
+           show_notification("success","Your questionnaire created successfully.",4000);
+           $("#questionnaire-name").val("");
+           tinymce.activeEditor.setContent('<p></p>');
+           $("#editor").focus();
+           $("#message-required").val("-");
+           $("#message-required").focus();
+           $("#questionnaire-name").focus();
+           $("#message-required").focus();
+        }
         /*
            If response message == 1
            Name Validation error
         */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
+        else if(data == "1")
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid questionnaire name.</div>";
+          show_notification("error","This is not a valid questionnaire name.",4000);
         }
         /*
            If response message == 2
            Description Validation error
         */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
+        else if(data == "2")
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid questionnaire description.</div>";
+          show_notification("error","This is not a valid questionnaire description.",4000);
         }
         /*
            If response message == 3
            Password Required Error
         */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
+        else if(data == "3")
         {
-         response_message += "<div class='alert alert-danger'>This is not a valid password required option.</div>";
+          show_notification("error","This is not a valid password required option.",4000);
         }
         /*
            If response message == 4
            Database Error
         */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
+        else if(data == "4")
         {
-         response_message += "<div class='alert alert-danger'>General database error. Please try later!</div>";
+          show_notification("error","General database error. Please try later!",4000);
         }
         /*
            If response message == 5
            Name already exists
         */
-        else if(xmlHttp.responseText.localeCompare("5") == 0)
+        else if(data == "5")
         {
-         response_message += "<div class='alert alert-danger'>This questionnaire name already exists.</div>";
+          show_notification("error","This questionnaire name already exists.",4000);
         }
         /*
             Something going wrong
         */
         else {
-          response_message += "<div class='alert alert-danger'>Something going wrong. Contact with one administrator!</div>";
+          show_notification("error","Something going wrong. Contact with one administrator!",4000);
         }
-
-
-
-       $("#questionnaire-create-response").show();
-       $("#questionnaire-create-response").html(response_message);
-      }
-    }
+      })
+      .fail(function(xhr,error){
+        displayServerResponseError(xhr,error);
+      })
+      .always(function() {
+        /*
+          After response submit button must be enabled
+        */
+        $('.submit').prop('disabled',false);
+      });
+  }
+  else {
+    /*
+      Cannot be empty
+    */
+    show_notification("error","Questionnaire name and description cannot be empty.",4000);
   }
 }
 
-/*
-  Update one questionnaire
-*/
-function updateQuestionnaire(id)
-{
+//get update questionnaire data
+function getUpdateQuestionnaireData(id) {
   /*
     Initialize the variables
   */
@@ -372,166 +334,133 @@ function updateQuestionnaire(id)
   */
   if(name && description && required)
   {
-    var Required = {
-        Url() { return webRoot + "questionnaire-edit/"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          this.variables = "questionnaire-id=" + id + "&name=" + name + "&description=" + description + "&message_required=" + required;
-          if($("#message-required").val() == "yes")
-          {
-            this.variables += "&message=" + $("#questionnaire-password").val();
-          }
+    let data = {
+      "questionnaire-id": id,
+      "name": name,
+      "description": description,
+      "message_required": required == "yes" ? "yes" : "no"
+    };
+    if(required == "yes")
+    {
+      data["message"] = $("#questionnaire-password").val();
+    }
+    return data;
+  }
+  else
+  {
+    return null;
+  }
+}
+/*
+  Update one questionnaire
+*/
+function updateQuestionnaire(id)
+{
+  var dataToSend = getUpdateQuestionnaireData(id);
+  if(dataToSend != null)
+  {
+    $("#edit-questionnaire").prop("disabled",true);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "questionnaire-edit/",
+      data: dataToSend
+    })
+    .done(function(data){
+        /*
+          Response code values
+          0			: Edited successfully
+          1			: Name Validation error
+          2			: Description Validation error
+          3			: Password Required Error
+          4			: Database Error
+         */
+         /*
+          if Server responsed successfully
+        */
+        $('#edit-questionnaire').unbind("hidden.bs.modal");
+        /*
+          User can login
+        */
+        if(data == "0")
+        {
+          /*
+            Redirect to home page
+          */
+          show_notification("error","Questionnaire updated successfully.",4000);
+          $('#edit-questionnaire').on('hidden.bs.modal', function () {
+            location.reload();
+          });
         }
-    };
-    var Optional = {
-      ResponseMethod() { return "responseUpdateQuestionnaire"; },
-      ResponseLabel() { return "questionnaire-edit-response"; },
-      SubmitButton() { return "edit-questionnaire"; }
-    };
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
-
+        /*
+           If response message == -1
+           Cant found questionnaire
+        */
+        else if(data == "-1")
+        {
+          show_notification("error","We can't found this questionnaire.",4000);
+        }
+        /*
+           If response message == 1
+           Not a valid Questionnaire Name.
+        */
+        else if(data == "1")
+        {
+         response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Name.</div>";
+        }
+        /*
+           If response message == 2
+           Not a valid Questionnaire Description
+        */
+        else if(data == "2")
+        {
+          show_notification("error","Not a valid Questionnaire Description.",4000);
+        }
+        /*
+           If response message == 3
+           Not a valid Password Required value
+        */
+        else if(data == "3")
+        {
+          show_notification("error","Not a valid password required value",4000);
+        }
+        /*
+           If response message == 4
+           General Database Error.
+        */
+        else if(data == "4")
+        {
+          show_notification("error","General Database Error.",4000);
+        }
+        /*
+           If response message == 4
+           Questionnaire name already exists
+        */
+        else if(data == "5")
+        {
+          show_notification("error","Questionnaire name already exists.",4000);
+        }
+        /*
+            Something going wrong
+        */
+        else {
+          show_notification("error","Unknown error message. Contact with one administrator!",4000);
+        }
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
+    .always(function() {
+      $("#edit-questionnaire").prop("disabled",false);
+    })
   }
   else
   {
     /*
       Response failed recovery message
     */
-    $("#questionnaire-edit-response").show();
-    $("#questionnaire-edit-response").html("<div class='alert alert-danger'>Empty fields !!!</div>");
+    show_notification("error","Please fill all required fields.",4000);
   }
 }
-
-/*
-  Responsed method (Update Questionnaire)
-*/
-function responseUpdateQuestionnaire()
-{
-  /*
-    Response code values
-    0			: Edited successfully
-    1			: Name Validation error
-    2			: Description Validation error
-    3			: Password Required Error
-    4			: Database Error
-   */
-   /*
- 		if Server responsed successfully
- 	*/
- 	if (xmlHttp.readyState == 4) {
- 		if (xmlHttp.status == 200) {
- 			/*
- 				Debug
- 			*/
-
- 			//console.log(xmlHttp.responseText);
-
- 			/*
- 			  Enable submit button
- 			*/
-
- 			$(document).find('#edit-questionnaire').prop('disabled',false);
-      $('#edit-questionnaire').unbind("hidden.bs.modal");
- 			/*
- 				User can login
- 			*/
- 			if(xmlHttp.responseText.localeCompare("0") == 0)
- 			{
- 				/*
- 					Redirect to home page
- 				*/
-        $("#questionnaire-edit-response").show();
-        $("#questionnaire-edit-response").html("<div class='alert alert-success'>Questionnaire updated successfully.</div>");
-        $('#edit-questionnaire').on('hidden.bs.modal', function () {
-   				location.reload();
-        });
- 			}
- 			/*
- 				Wrong username or password
- 			*/
- 			else
- 			{
- 					/*
- 						Display an response message
- 					*/
-
- 					var response_message = "";
-          /*
- 						 If response message == -1
- 						 Cant found questionnaire
- 					*/
- 					if(xmlHttp.responseText.localeCompare("-1") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>We can't found this questionnaire.</div>";
- 					}
- 					/*
- 						 If response message == 1
- 						 Not a valid Questionnaire Name.
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("1") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Name.</div>";
- 					}
- 					/*
- 						 If response message == 2
- 						 Not a valid Questionnaire Description
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("2") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Description.</div>";
- 					}
- 					/*
- 						 If response message == 3
- 						 Not a valid Password Required value
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("3") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Not a valid password required value.</div>";
- 					}
- 					/*
- 						 If response message == 4
- 						 General Database Error.
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("4") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>General Database Error.</div>";
- 					}
-          /*
- 						 If response message == 4
- 						 Questionnaire name already exists
- 					*/
- 					else if(xmlHttp.responseText.localeCompare("5") == 0)
- 					{
- 					 response_message += "<div class='alert alert-danger'>Questionnaire name already exists.</div>";
- 					}
- 					/*
- 							Something going wrong
- 					*/
- 					else {
- 						response_message += "<div class='alert alert-danger'>Unknown error message. Contact with one administrator!</div>";
- 					}
-
- 			 	 $("#questionnaire-edit-response").show();
- 				 $("#questionnaire-edit-response").html(response_message);
- 			}
- 		}
-
- 	}
- 	/*
- 		Server Problem (Timeout probably)
- 	*/
- 	else {
- 			/*
- 				TODO Something like
- 			*/
- 			$("#questionnaire-edit-response").show();
- 			$("#questionnaire-edit-response").html("<div class='alert alert-danger'>Server is offline</div>");
- 	}
-}
-
 
 /*
   On mouse over on delete user buttons
@@ -547,7 +476,7 @@ $(document)
   });
 
   /*
-    Ask to remove a specific participant
+    remove a specific participant
   */
   function remove_participant(user_id,ask_required)
   {
@@ -556,40 +485,16 @@ $(document)
       display_confirm_dialog("Confirm","Are you sure to remove player access of this user ?","btn-default","btn-default","black","remove_participant("+ user_id + ",false)","");
     }
     else {
-      var Required = {
-          Url() { return webRoot + "delete-questionnaire-participation"; },
-          SendType() { return "POST"; },
-          variables : "",
-          Parameters() {
-            /*
-              Variables we will send
-            */
-            this.variables = "questionnaire-id=" + questionnaire_id + "&user-id=" + user_id + "&participation-type=1";
-            return this.variables;
-          }
+      $.ajax({
+        method: "POST",
+        url: webRoot + "delete-questionnaire-participation",
+        data: {
+          "questionnaire-id": questionnaire_id,
+          "user-id": user_id,
+          "participation-type": "1"
         }
-
-        var Optional = {
-          ResponseMethod() { return "remove_participant_response(" + user_id + ")"; }
-        };
-
-        /*
-          Send ajax request
-        */
-        sendAjaxRequest(Required,Optional);
-    }
-  }
-
-  /*
-    Ask to remove a specific participant
-  */
-  function remove_participant_response(user_id)
-  {
-    /*
-      if Server responsed back successfully
-    */
-    if (xmlHttp.readyState == 4) {
-      if (xmlHttp.status == 200) {
+      })
+      .done(function(data){
         /*
           0 : All ok
           1 : Questionnaire doesnt exists
@@ -602,7 +507,7 @@ $(document)
         */
         $('#questionnaire-modal').unbind("hidden.bs.modal");
 
-        if(xmlHttp.responseText.localeCompare("0") == 0)
+        if(data == "0")
         {
             /*
               Success message
@@ -620,78 +525,70 @@ $(document)
             });
         }
         /*
-          If server responsed with an error code
+           If response message == 1
+            Questionnaire doesnt exists
+        */
+        if(data == "1")
+        {
+          show_notification("error","Questionnaire doesnt exists.",4000);
+        }
+        /*
+           If response message == 2
+           Access error
+        */
+        else if(data == "2")
+        {
+          show_notification("error","You must be coordinator.",4000);
+        }
+        /*
+           If response message == 3
+           participation-type must be 1 or 2
+        */
+        else if(data == "3")
+        {
+          show_notification("error","Participation type must be 1 or 2.",4000);
+        }
+        /*
+           If response message == 4
+           The participation doesnt exist
+        */
+        else if(data == "4")
+        {
+          show_notification("error","This user doesn't have a player access.",4000);
+        }
+        /*
+           If response message == 5
+           You cant remove the coordinator
+        */
+        else if(data == "5")
+        {
+          show_notification("error","You cant remove the coordinator.",4000);
+        }
+        /*
+           If response message == 6
+           Database Error
+        */
+        else if(data == "6")
+        {
+          show_notification("error","General Database Error.",4000);
+        }
+        /*
+           If response message == -1
+           No post data.
+        */
+        else if(data == "-1")
+        {
+          show_notification("error","You didn't send data.",4000);
+        }
+        /*
+            Something going wrong
         */
         else {
-          /*
-            Display an response message
-          */
-          var response_message = "";
-          /*
-             If response message == 1
-              Questionnaire doesnt exists
-          */
-          if(xmlHttp.responseText.localeCompare("1") == 0)
-          {
-           response_message += "Questionnaire doesnt exists.";
-          }
-          /*
-             If response message == 2
-             Access error
-          */
-          else if(xmlHttp.responseText.localeCompare("2") == 0)
-          {
-           response_message += "You must be coordinator.";
-          }
-          /*
-             If response message == 3
-             participation-type must be 1 or 2
-          */
-          else if(xmlHttp.responseText.localeCompare("3") == 0)
-          {
-           response_message += "Participation type must be 1 or 2.";
-          }
-          /*
-             If response message == 4
-             The participation doesnt exist
-          */
-          else if(xmlHttp.responseText.localeCompare("4") == 0)
-          {
-           response_message += "This user doesn't have a player access.";
-          }
-          /*
-             If response message == 5
-             You cant remove the coordinator
-          */
-          else if(xmlHttp.responseText.localeCompare("5") == 0)
-          {
-           response_message += "You cant remove the coordinator.";
-          }
-          /*
-             If response message == 6
-             Database Error
-          */
-          else if(xmlHttp.responseText.localeCompare("6") == 0)
-          {
-           response_message += "General Database Error.";
-          }
-          /*
-             If response message == -1
-             No post data.
-          */
-          else if(xmlHttp.responseText.localeCompare("-1") == 0)
-          {
-           response_message += "You didn't send data.";
-          }
-          /*
-              Something going wrong
-          */
-          else {
-            response_message += "Unknown error. Contact with one administrator!";
-          }
-
-          show_notification("error",response_message,5000);
+          show_notification("error","Unknown error. Contact with one administrator!",4000);
         }
-      }
+      })
+      .fail(function(xhr,error){
+        displayServerResponseError(xhr,error);
+      });
     }
   }

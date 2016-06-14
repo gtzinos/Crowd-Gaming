@@ -1,3 +1,10 @@
+$(window).load(function() {
+    $('.g-recaptcha').each(function(index,el){
+      grecaptcha.render(el,{'sitekey' : googleReCaptchaKey});
+      //$(el).attr("data-sitekey","6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A");
+    })
+});
+
 /*
   Include javascript file from a javascript file
 */
@@ -11,6 +18,39 @@ var include =
    script.src = path;
    head.appendChild(script);
  };
+
+/*
+  Display error message
+  #Parameter 1 : xhr
+  #Parameter 2 : error
+*/
+function displayServerResponseError(xhr,error)
+{
+    if(xhr.status==0)
+    {
+    	show_notification("error","Please check your internet connection.",4000);
+  	}
+    else if(xhr.status==404)
+    {
+  	   show_notification("error","Requested URL not found.",4000);
+  	}
+    else if(xhr.status==500)
+    {
+  	   show_notification("error","Internel Server Error.",4000);
+  	}
+    else if(error == 'parsererror')
+    {
+      show_notification("error","Error.Parsing JSON Request failed.",4000);
+  	}
+    else if(error == 'timeout')
+    {
+  	   show_notification("error","Request Time out.",4000);
+  	}
+    else
+    {
+  	   show_notification("error","Unknown Error. Message: " + xhr.responseText,4000);
+  	}
+}
 
 /*
   Bind a Method on an element

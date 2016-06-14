@@ -191,55 +191,34 @@ var question_group_offset = 0, //offset
 */
 function show_question_groups()
 {
-  var Required = {
-      Url() { return webRoot + "get-question-groups/" + questionnaire_id + "/" + question_group_offset + "/" + question_group_count; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        return this.variables;
-      }
+  $.ajax(
+  {
+    method: "POST",
+    url: webRoot + "get-question-groups/" + questionnaire_id + "/" + question_group_offset + "/" + question_group_count,
+    data: { }
+  })
+  .done(function(data)
+  {
+    /*
+      Display data
+      (
+        an empty set of question groups
+        returns me 4 characters..
+      )
+    */
+    if(data.length > 4)
+    {
+      $("#question-group-list").append(data);
     }
-
-    var Optional = {
-      ResponseMethod() { return "show_question_groups_response"; }
-    };
-
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
-
-    /*
-      Increment the offset
-    */
     question_group_offset += question_group_count;
+  })
+  .fail(function(xhr,error)
+  {
+    displayServerResponseError(xhr,error);
+  })
+  .always(function() {
     processing = false;
-}
-
-/*
-  Function question group list response
-*/
-function show_question_groups_response()
-{
-  /*
-		if Server responsed successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
-
-  			/*
-  				Display data
-          (
-            an empty set of question groups
-            returns me 4 characters..
-          )
-        */
-        if(xmlHttp.responseText.length > 4)
-        {
-          $("#question-group-list").append(xmlHttp.responseText);
-        }
-		}
-  }
+  });
 }
 /*
   Initialize first 10 question groups
@@ -251,48 +230,16 @@ show_question_groups();
 */
 function show_questions(question_group_id)
 {
-  var Required = {
-      Url() { return webRoot + "get-questions/" + question_group_id; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        return this.variables;
-      }
-    }
-
-    var Optional = {
-      ResponseMethod() { return "show_questions_response(" + question_group_id + ")"; }
-    };
-
-    /*
-      Send ajax request
-    */
-    sendAjaxRequest(Required,Optional);
-}
-
-/*
-  Open question dialog
-*/
-function openQuestionDialog(question_group_id)
-{
-  $("#create-question").modal("show");
-  $("#create-question-confirm-butto").attr("onclick","create_question(" + question_group_id + ")");
-}
-
-/*
-  Show questions response
-*/
-function show_questions_response(question_group_id)
-{
-  /*
-		if Server responsed successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
+  $.ajax({
+    method: "POST",
+    url: webRoot + "get-questions/" + question_group_id,
+    data: { }
+  })
+  .done(function(data){
       /*
         Parse json object
       */
-      var questions = JSON.parse(xmlHttp.responseText);
+      var questions = data;
       /*
         Initialize
       */
@@ -308,7 +255,6 @@ function show_questions_response(question_group_id)
                       "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "',false)\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
                   "</div>";
       }
-
       /*
         No members
       */
@@ -316,13 +262,25 @@ function show_questions_response(question_group_id)
       {
         out += "<label class='alert alert-danger text-center'>There are no questions on this questionnaire group</label>";
       }
-  			/*
-  				Display data
-        */
-         $("#question-list-group").html(out);
-		}
-  }
+      /*
+        Display data
+      */
+       $("#question-list-group").html(out);
+  })
+  .fail(function(xhr,error){
+    displayServerResponseError(xhr,error);
+  });
 }
+
+/*
+  Open question dialog
+*/
+function openQuestionDialog(question_group_id)
+{
+  $("#create-question").modal("show");
+  $("#create-question-confirm-butto").attr("onclick","create_question(" + question_group_id + ")");
+}
+
 /*
   On mouse over the edit or delete buttons
 */
@@ -336,94 +294,68 @@ $(document)
                .css('cursor', 'pointer');
   });
 
-
-
-$('#edit-question').on('edit.bs.modal', function () {
-    document.getElementById("edit-question-form").reset();
-})
+  $('#edit-question').on('edit.bs.modal', function () {
+      document.getElementById("edit-question-form").reset();
+  })
 /*
   Edit question modal box
 */
 function show_edit_question_data(question_id,question_text,time_to_answer,creation_date,multiplier)
 {
-  document.getElementById("edit-question-form").reset();
-  $("#edit-question-response").html("");
-  $("#edit-question-response").hide();
-  $("#save-question-confirm-button").unbind("click");
-  $("#save-question-confirm-button").on("click",function() {
-    update_question(question_id);
-  });
-  /*
-    Set question array values
-  */
-  $("#edit-qname").val(question_text);
-  $("#edit-qtime").val(time_to_answer);
-  $("#edit-qmultiplier").val(multiplier);
-
-  var Required = {
-      Url() { return webRoot + "get-answers/" + question_id; },
-      SendType() { return "POST"; },
-      variables : "",
-      Parameters() {
-        return this.variables;
-      }
-    }
-
-    var Optional = {
-      ResponseMethod() { return "show_edit_question_data_response"; }
-    };
+    document.getElementById("edit-question-form").reset();
+    $("#edit-question-response").html("");
+    $("#edit-question-response").hide();
+    $("#save-question-confirm-button").unbind("click");
+    $("#save-question-confirm-button").on("click",function() {
+      update_question(question_id);
+    });
     /*
-      Send ajax request
+      Set question array values
     */
-    sendAjaxRequest(Required,Optional);
-  }
+    $("#edit-qname").val(question_text);
+    $("#edit-qtime").val(time_to_answer);
+    $("#edit-qmultiplier").val(multiplier);
 
-  /*
-  Show questions response
-  */
-  function show_edit_question_data_response()
-  {
-    /*
-      if Server responsed successfully
-    */
-    if (xmlHttp.readyState == 4) {
+    $.ajax({
+      method: "POST",
+      url: webRoot + "get-answers/" + question_id,
+      data: { }
+    })
+    .done(function(data) {
+      /*
+        Parse json object
+      */
+      var answers_array = data;
 
-        if (xmlHttp.status == 200) {
-          /*
-            Parse json object
-          */
-          var answers_array = JSON.parse(xmlHttp.responseText);
-
-          //id, answer-text , is-correct , creation-date,
-          var i=0;
-          for(i=0; i < answers_array.answers.length; i++)
-          {
-            if(answers_array.answers[i].is_correct)
-            {
-              $("#edit-correct").val(i + 1);
-            }
-            $("#edit-checkbox" + (i+1)).prop("checked",true);
-            $("#edit-answer" + (i+1)).val(answers_array.answers[i].answer_text);
-          }
-          /*
-            No answers
-          */
-          if(i == 0)
-          {
-            $("#question-edit-response").show();
-            $("#question-edit-response").html("<div class='alert alert-danger'>There are no answers in this question. </div>");
-          }
-
+      //id, answer-text , is-correct , creation-date,
+      var i=0;
+      for(i=0; i < answers_array.answers.length; i++)
+      {
+        if(answers_array.answers[i].is_correct)
+        {
+          $("#edit-correct").val(i + 1);
         }
-    }
+        $("#edit-checkbox" + (i+1)).prop("checked",true);
+        $("#edit-answer" + (i+1)).val(answers_array.answers[i].answer_text);
+      }
+      /*
+        No answers
+      */
+      if(i == 0)
+      {
+        $("#question-edit-response").show();
+        $("#question-edit-response").html("<div class='alert alert-danger'>There are no answers in this question. </div>");
+      }
+    })
+    .fail(function (xhr,error) {
+        displayServerResponseError(xhr,error);
+    });
 }
 
-function update_question(question_id)
+//Get update question data
+function getUpdateQuestionData(question_id)
 {
-  /*
-    Initialize variables
-  */
-
+  //Initialize variables
   var name = $("#edit-qname").val();
   var time = $("#edit-qtime").val();
   var multiplier = $("#edit-qmultiplier").val();
@@ -437,63 +369,46 @@ function update_question(question_id)
 
   if(name && time && multiplier && correct && answers.length == 2)
   {
-    var Required = {
-        Url() { return webRoot + "edit-question"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "question-id=" + question_id + "&question-text=" +  name
-          + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
-          "&answer2=" + answers[1];
+    let data = {
+      "question-id": question_id,
+      "question-text": name,
+      "time-to-answer": time,
+      "multiplier": multiplier,
+      "correct": correct,
+      "answer1": answers[0],
+      "answer2": answers[1]
+    };
 
-          if($("#edit-answer3").val().length > 0 && $("#edit-checkbox3").is(':checked'))
-          {
-            this.variables += "&answer3=" + $("#edit-answer3").val();
-          }
-          if($("#edit-answer4").val().length > 0 && $("#edit-checkbox4").is(':checked'))
-          {
-            this.variables += "&answer4=" + $("#edit-answer4").val();
-          }
-
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "update_question_response('" + question_id + "','" + name + "')"; },
-        SubmitButton() { return "#save-question-confirm-button"; }
-      };
-
-      /*
-        Send ajax request
-      */
-      sendAjaxRequest(Required,Optional);
+    if($("#edit-answer3").val().length > 0 && $("#edit-checkbox3").is(':checked'))
+    {
+      data["answer3"] = $("#edit-answer3").val();
+    }
+    if($("#edit-answer4").val().length > 0 && $("#edit-checkbox4").is(':checked'))
+    {
+      data["answer4"] = $("#edit-answer4").val();
     }
 
+    return data;
+  }
   else {
-    /*
-      Cannot be empty
-    */
-    $("#edit-question-response").show();
-    $("#edit-question-response").html("<div class='alert alert-danger'>Fill all fields before save. </div>");
-
+    return null;
   }
+}
 
-  }
+//Update a question
+function update_question(question_id)
+{
+  var dataToSend = getUpdateQuestionData(question_id);
 
-  /*
-  Update question response
-  */
-  function update_question_response(id,text)
+  if(dataToSend != null)
   {
-  /*
-    if Server responsed back successfully
-  */
-  if (xmlHttp.readyState == 4) {
-    if (xmlHttp.status == 200) {
+    $("#save-question-confirm-button").prop("disabled",true);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "edit-question",
+      data: dataToSend
+    })
+    .done(function(data){
       /*
         0 All ok
         1 Question does not exists
@@ -507,123 +422,111 @@ function update_question(question_id)
         -1 No data
       */
 
-      /*
-        Debug
-      */
-      //console.log(xmlHttp.responseText);
-
-      if(xmlHttp.responseText.localeCompare("0") == 0)
+      if(data == "0")
       {
           /*
             Success message
           */
-          $("#edit-question-response").show();
-          $("#edit-question-response").html("<div class='alert alert-success'>Question updated successfully.</div>");
-          $("#question"+id).html(text);
+          show_notification("success","Question updated successfully.",4000);
+          $("#question"+question_id).html(data["question-text"]);
       }
-
       /*
-        If server responsed with an error code
+          If response message == 1
+          Question does not exists
+      */
+      else if(data == "1")
+      {
+        show_notification("error","Question does not exists.",4000);
+      }
+      /*
+         If response message == 2
+         You dont have permission
+      */
+      else if(data == "2")
+      {
+        show_notification("error","You dont have permission to update this question.",4000);
+      }
+      /*
+         If response message == 3
+         question-text validation error
+      */
+      else if(data == "3")
+      {
+        show_notification("error","This is not a valid time to question text.",4000);
+      }
+      /*
+         If response message == 4
+         time-to-answer validation error
+      */
+      else if(data == "4")
+      {
+        show_notification("error","This not a valid time to answer. Must be >= 5 seconds.",4000);
+      }
+      /*
+         If response message == 5
+         Multiplier validation error
+      */
+      else if(data == "5")
+      {
+        show_notification("error","This not a valid multiplier.",4000);
+      }
+      /*
+         If response message == 6
+         Database Error
+      */
+      else if(data == "6")
+      {
+        show_notification("error","General Database Error.",4000);
+      }
+      /*
+         If response message == 7
+         Invalid Correct Answer
+      */
+      else if(data == "7")
+      {
+        show_notification("error","Invalid Correct Answer.",4000);
+      }
+      /*
+         If response message == 8
+         You can't edit a public questionnaire
+      */
+      else if(data == "8")
+      {
+        show_notification("error","You can't edit a public questionnaire.",4000);
+      }
+      /*
+         If response message == -1
+         No data error
+      */
+      else if(data == "-1")
+      {
+        show_notification("error","You didnt send something.",4000);
+      }
+      /*
+          Something going wrong
       */
       else {
-
-        /*
-          Display an response message
-        */
-        var response_message = "";
-        /*
-           If response message == 1
-            Question does not exists
-        */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'> Question does not exists.</div>";
-        }
-        /*
-           If response message == 2
-           You dont have permission
-        */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You dont have permission to update this question.</div>";
-        }
-        /*
-           If response message == 3
-           question-text validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid time to question text.</div>";
-        }
-        /*
-           If response message == 4
-           time-to-answer validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This not a valid time to answer. Must be >= 5 seconds.</div>";
-        }
-        /*
-           If response message == 5
-           Multiplier validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("5") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This not a valid multiplier.</div>";
-        }
-        /*
-           If response message == 6
-           Database Error
-        */
-        else if(xmlHttp.responseText.localeCompare("6") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>General Database Error.</div>";
-        }
-        /*
-           If response message == 7
-           Invalid Correct Answer
-        */
-        else if(xmlHttp.responseText.localeCompare("7") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Invalid Correct Answer.</div>";
-        }
-        /*
-           If response message == 8
-           You can't edit a public questionnaire
-        */
-        else if(xmlHttp.responseText.localeCompare("8") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You can't edit a public questionnaire.</div>";
-        }
-        /*
-           If response message == -1
-           No data error
-        */
-        else if(xmlHttp.responseText.localeCompare("-1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You didnt send something.</div>";
-        }
-        /*
-            Something going wrong
-        */
-        else {
-          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
-        }
-
-
-
-       $("#edit-question-response").show();
-       $("#edit-question-response").html(response_message);
+        show_notification("error","Unknown error. Contact with one administrator!",4000);
       }
-    }
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
+    .always(function() {
+      $("#save-question-confirm-button").prop("disabled",false);
+    });
   }
- }
 
+  else {
+    /*
+      Cannot be empty
+    */
+    show_notification("error","Fill all fields before save.",4000);
+  }
+}
 
-/*
-  Create a new question
-*/
-function create_question(question_group_id)
+//get create question data
+function getCreateQuestionData(question_group_id)
 {
   /*
     Initialize variables
@@ -641,66 +544,45 @@ function create_question(question_group_id)
 
   if(name && time && multiplier && correct && answers.length == 2)
   {
-    var Required = {
-        Url() { return webRoot + "create-question"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "question-group-id=" + question_group_id + "&question-text=" +  name
-          + "&time-to-answer=" + time + "&multiplier=" + multiplier + "&correct=" + correct + "&answer1=" + answers[0] +
-          "&answer2=" + answers[1];
+    let data = {
+      "question-group-id": question_group_id,
+      "question-text": name,
+      "time-to-answer": time,
+      "multiplier": multiplier,
+      "correct": correct,
+      "answer1": answers[0],
+      "answer2": answers[1]
+    };
 
-          if($("#answer3").val().length > 0)
-          {
-            this.variables += "&answer3=" + $("#answer3").val();
-          }
-          if($("#answer4").val().length > 0)
-          {
-            this.variables += "&answer4=" + $("#answer4").val();
-          }
-
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "response_create_question(" + question_group_id + ")"; },
-        ResponseLabel() { return "create-question-response"; },
-        SubmitButton() { return "#create-question-confirm-button"; }
-      };
-
-      /*
-				Send ajax request
-			*/
-			sendAjaxRequest(Required,Optional);
-
+    if($("#answer3").val().length > 0)
+    {
+      data["answer3"] = $("#answer3").val();
     }
-
-  else {
-    /*
-      Cannot be empty
-    */
-    $("#create-question-response").show();
-    $("#create-question-response").html("<div class='alert alert-danger'>Please fill all fields. </div>");
-
+    if($("#answer4").val().length > 0)
+    {
+      data["answer4"] = $("#answer4").val();
+    }
+    return data;
   }
-
+  else {
+    return null;
+  }
 }
 
 /*
-  create question response
+  Create a new question
 */
-function response_create_question(question_group_id)
+function create_question(question_group_id)
 {
-
-  /*
-		if Server responsed back successfully
-	*/
-	if (xmlHttp.readyState == 4) {
-		if (xmlHttp.status == 200) {
+  var dataToSend = getCreateQuestionData(question_group_id);
+  if(dataToSend != null) {
+    $("#create-question-confirm-button").prop("disabled",true);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "create-question",
+      data: dataToSend
+    })
+    .done(function(data){
       /*
         0 All ok
         1 Invalid Access
@@ -714,18 +596,12 @@ function response_create_question(question_group_id)
         -1 No data
       */
 
-			/*
-				Debug
-			*/
-			//console.log(xmlHttp.responseText);
-
-      if(xmlHttp.responseText.localeCompare("0") == 0)
+      if(data == "0")
 			{
     			/*
     				Success message
           */
-          $("#create-question-response").show();
-          $("#create-question-response").html("<div class='alert alert-success'>Your question created successfully.</div>");
+          show_notification("success","Your question created successfully.",4000);
 
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) + 1);
 
@@ -753,98 +629,94 @@ function response_create_question(question_group_id)
           $("#answer4").val("");
           $("#answer4").focus();
       }
-
       /*
-        If server responsed with an error code
+         If response message == 1
+         Invalid Access
+      */
+      else if(data == "1")
+      {
+        show_notification("error","You dont have access to do it.",4000);
+      }
+      /*
+         If response message == 2
+         question-text validation error
+      */
+      else if(data == "2")
+      {
+        show_notification("error","This is not a valid question name.",4000);
+      }
+      /*
+         If response message == 3
+         time-to-answer validation error
+      */
+      else if(data == "3")
+      {
+        show_notification("error","This is not a valid time to answer value.",4000);
+      }
+      /*
+         If response message == 4
+         Multiplier validation error
+      */
+      else if(data == "4")
+      {
+        show_notification("error","This not a valid multiplier.",4000);
+      }
+      /*
+         If response message == 5
+         Database Error
+      */
+      else if(data == "5")
+      {
+        show_notification("error","General database error.",4000);
+      }
+      /*
+         If response message == 6
+         6 Answer Text validation error
+      */
+      else if(data == "6")
+      {
+        show_notification("error","Answers didnt valid.",4000);
+      }
+      /*
+         If response message == 7
+         7 Correct answer error
+      */
+      else if(data == "7")
+      {
+        show_notification("error","This is not a valid correct answer.",4000);
+      }
+      /*
+         If response message == 8
+         7 Correct answer error
+      */
+      else if(data == "8")
+      {
+        show_notification("error","Cant create a question when the questionnaire is public.",4000);
+      }
+      /*
+         If response message == -1
+         No data error
+      */
+      else if(data == "-1")
+      {
+        show_notification("error","No data error.",4000);
+      }
+      /*
+          Something going wrong
       */
       else {
-        /*
-          Display an response message
-        */
-        var response_message = "";
-        /*
-           If response message == 1
-           Invalid Access
-        */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You dont have access to do it.</div>";
-        }
-        /*
-           If response message == 2
-           question-text validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid question name.</div>";
-        }
-        /*
-           If response message == 3
-           time-to-answer validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid time to answer value.</div>";
-        }
-        /*
-           If response message == 4
-           Multiplier validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This not a valid multiplier.</div>";
-        }
-        /*
-           If response message == 5
-           Database Error
-        */
-        else if(xmlHttp.responseText.localeCompare("5") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>General database error.</div>";
-        }
-        /*
-           If response message == 6
-           6 Answer Text validation error
-        */
-        else if(xmlHttp.responseText.localeCompare("6") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Answers didnt valid.</div>";
-        }
-        /*
-           If response message == 7
-           7 Correct answer error
-        */
-        else if(xmlHttp.responseText.localeCompare("7") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>This is not a valid correct answer.</div>";
-        }
-        /*
-           If response message == 8
-           7 Correct answer error
-        */
-        else if(xmlHttp.responseText.localeCompare("8") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Cant create a question when the questionnaire is public.</div>";
-        }
-        /*
-           If response message == -1
-           No data error
-        */
-        else if(xmlHttp.responseText.localeCompare("-1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>No data error.</div>";
-        }
-        /*
-            Something going wrong
-        */
-        else {
-          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
-        }
-
-       $("#create-question-response").show();
-       $("#create-question-response").html(response_message);
+        show_notification("error","Unknown error. Contact with one administrator!",4000);
       }
-    }
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
+    .always(function() {
+      $("#create-question-confirm-button").prop("disabled",false);
+    });
+  }
+  else {
+    show_notification("error","Please fill all fields.",4000);
   }
 }
 
@@ -858,40 +730,12 @@ function delete_question(question_group_id,question_id,ask_required)
     display_confirm_dialog("Confirm","Are you sure to delete it ?","btn-default","btn-default","black","delete_question(" + question_group_id + "," + question_id + ",true)","");
   }
   else {
-    var Required = {
-        Url() { return webRoot + "delete-question"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "question-id=" + question_id;
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "delete_question_response(" + question_group_id + "," + question_id + ")"; }
-      };
-
-      /*
-        Send ajax request
-      */
-      sendAjaxRequest(Required,Optional);
-  }
-}
-
-/*
-  Delete question (Server response)
-*/
-function delete_question_response(question_group_id,question_id)
-{
-  /*
-    if Server responsed back successfully
-  */
-  if (xmlHttp.readyState == 4) {
-    if (xmlHttp.status == 200) {
+    $.ajax({
+      method: "POST",
+      url: webRoot + "delete-question",
+      data: { "question-id": question_id }
+    })
+    .done(function(data){
       /*
         0 All ok
         1 Authentication failed
@@ -901,12 +745,7 @@ function delete_question_response(question_group_id,question_id)
         -1 No Data
       */
 
-      /*
-        Debug
-      */
-      //console.log(xmlHttp.responseText);
-
-      if(xmlHttp.responseText.localeCompare("0") == 0)
+      if(data == "0")
       {
           /*
             Success message
@@ -918,82 +757,57 @@ function delete_question_response(question_group_id,question_id)
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) - 1);
           show_notification("success","Question " + question_id + " deleted successfully.",4000);
       }
-
       /*
-        If server responsed with an error code
+         If response message == 1
+          Authentication failed
+      */
+      if(data == "1")
+      {
+        show_notification("error","Authentication failed.",4000);
+      }
+      /*
+         If response message == 2
+         Access error
+      */
+      else if(data == "2")
+      {
+        show_notification("error","You dont have permission to delete this question.",4000);
+      }
+      /*
+         If response message == 3
+         Database error
+      */
+      else if(data == "3")
+      {
+        show_notification("error","General database error.",4000);
+      }
+      /*
+         If response message == 4
+         Database error
+      */
+      else if(data == "4")
+      {
+        show_notification("error","Questionnaire is public , you can't delete it.",4000);
+      }
+      /*
+         If response message == -1
+         No data error
+      */
+      else if(data == "-1")
+      {
+        show_notification("error","You didnt send something.",4000);
+      }
+      /*
+          Something going wrong
       */
       else {
-
-        /*
-          Display an response message
-        */
-        var response_message = "";
-        /*
-           If response message == 1
-            Authentication failed
-        */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Authentication failed.</div>";
-        }
-        /*
-           If response message == 2
-           Access error
-        */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You dont have permission to delete this question.</div>";
-        }
-        /*
-           If response message == 3
-           Database error
-        */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>General database error.</div>";
-        }
-        /*
-           If response message == 4
-           Database error
-        */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Questionnaire is public , you can't delete it.</div>";
-        }
-        /*
-           If response message == -1
-           No data error
-        */
-        else if(xmlHttp.responseText.localeCompare("-1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You didnt send something.</div>";
-        }
-        /*
-            Something going wrong
-        */
-        else {
-          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
-        }
-
-        show_notification("error",response_message,5000);
+        show_notification("error","Unknown error. Contact with one administrator!",4000);
       }
-    }
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
   }
-}
-
-/*
-  edit question group
-*/
-function edit_question_group()
-{
-
-}
-/*
-  response edit question group
-*/
-function response_edit_question_group()
-{
-
 }
 
 /*
@@ -1006,40 +820,12 @@ function delete_question_group(question_group_id,ask_required)
     display_confirm_dialog("Confirm","Are you sure to delete it ?","btn-default","btn-default","black","delete_question_group(" + question_group_id + ",true)","");
   }
   else {
-    var Required = {
-        Url() { return webRoot + "delete-question-group"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          /*
-            Variables we will send
-          */
-          this.variables = "question-group-id=" + question_group_id;
-          return this.variables;
-        }
-      }
-
-      var Optional = {
-        ResponseMethod() { return "delete_question_group_response(" + question_group_id + ")"; }
-      };
-
-      /*
-        Send ajax request
-      */
-      sendAjaxRequest(Required,Optional);
-  }
-}
-
-/*
-  Delete question group (Server response)
-*/
-function delete_question_group_response(question_group_id)
-{
-  /*
-    if Server responsed back successfully
-  */
-  if (xmlHttp.readyState == 4) {
-    if (xmlHttp.status == 200) {
+    $.ajax({
+      method: "POST",
+      url: webRoot + "delete-question-group",
+      data: { "question-group-id": question_group_id }
+    })
+    .done(function(data) {
       /*
         0 All ok
         1 Authentication failed
@@ -1048,12 +834,8 @@ function delete_question_group_response(question_group_id)
         4 Questionnaire is public , you cant delete this.
         -1 No Data
       */
-      /*
-        Debug
-      */
-      //console.log(xmlHttp.responseText);
 
-      if(xmlHttp.responseText.localeCompare("0") == 0)
+      if(data == "0")
       {
           /*
             Success message
@@ -1069,117 +851,89 @@ function delete_question_group_response(question_group_id)
           }
           show_notification("success","Question group " + question_group_id + " deleted successfully.",5000);
       }
-
       /*
-        If server responsed with an error code
+         If response message == 1
+          Authentication failed
+      */
+      else if(data == "1")
+      {
+        show_notification("error","Authentication failed.",4000);
+      }
+      /*
+         If response message == 2
+         Access error
+      */
+      else if(data == "2")
+      {
+        show_notification("error","You dont have permission to delete this question group.",4000);
+      }
+      /*
+         If response message == 3
+         Database error
+      */
+      else if(data == "3")
+      {
+        show_notification("error","General database error.",4000);
+      }
+      /*
+         If response message == 4
+         Questionnaire is public, you cant delete this.
+      */
+      else if(data == "4")
+      {
+        show_notification("error","Questionnaire is public, you cant delete this.",4000);
+      }
+      /*
+         If response message == -1
+         No data error
+      */
+      else if(data == "-1")
+      {
+        show_notification("error","You didn't send the required data.",4000);
+      }
+      /*
+          Something going wrong
       */
       else {
-
-        /*
-          Display an response message
-        */
-        var response_message = "";
-        /*
-           If response message == 1
-            Authentication failed
-        */
-        if(xmlHttp.responseText.localeCompare("1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Authentication failed.</div>";
-        }
-        /*
-           If response message == 2
-           Access error
-        */
-        else if(xmlHttp.responseText.localeCompare("2") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You dont have permission to delete this question group.</div>";
-        }
-        /*
-           If response message == 3
-           Database error
-        */
-        else if(xmlHttp.responseText.localeCompare("3") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>General database error.</div>";
-        }
-        /*
-           If response message == 4
-           Questionnaire is public, you cant delete this.
-        */
-        else if(xmlHttp.responseText.localeCompare("4") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>Questionnaire is public, you cant delete this.</div>";
-        }
-        /*
-           If response message == -1
-           No data error
-        */
-        else if(xmlHttp.responseText.localeCompare("-1") == 0)
-        {
-         response_message += "<div class='alert alert-danger'>You didn't send the required data.</div>";
-        }
-        /*
-            Something going wrong
-        */
-        else {
-          response_message += "<div class='alert alert-danger'>Unknown error. Contact with one administrator!</div>";
-        }
-
-        show_notification("error",response_message,6000);
+        show_notification("error","Unknown error. Contact with one administrator!",4000);
       }
-    }
+    })
+    .fail(function(xhr,error)
+    {
+      displayServerResponseError(xhr,error);
+    })
   }
 }
 
-
-  //get_question_group_users(36);
+  //get question group users
   function get_question_group_users(question_group_id)
   {
-      var Required = {
-        Url() { return webRoot + "get-users-from-question-group"; },
-        SendType() { return "POST"; },
-        variables : "",
-        Parameters() {
-          this.variables = "question-group-id=" + question_group_id;
-          return this.variables;
-        }
-      }
-      var Optional = {
-        ResponseMethod() { return "get_question_group_users_response()"; }
-      };
-      sendAjaxRequest(Required,Optional);
-  }
-  function get_question_group_users_response()
-  {
-    /*
-      if Server responsed back successfully
-    */
-    if (xmlHttp.readyState == 4) {
-      if (xmlHttp.status == 200) {
-        /*
-          0 All ok
-          1 Invalid Access
-          -1 No Post Data
-        */
-        /*
-          Debug
-        */
-        var array = JSON.parse(xmlHttp.responseText),
-            users = array.users;
-        //console.log(users.response_code);
+    $.ajax({
+      method: "POST",
+      url: webRoot + "get-users-from-question-group",
+      data: { "question-group-id": question_group_id }
+    })
+    .done(function(data){
+      /*
+        0 All ok
+        1 Invalid Access
+        -1 No Post Data
+      */
+      var users = data.users;
 
-        var i=0,
-        out = "";
+      var i=0,
+      out = "";
 
-        for(i = 0;i<users.length;i++)
-        {
-          out += "<option value='" + users[i].id + "' data-tokens='" + users[i].email + " " + users[i].gender
-          + " " + users[i].country + " " + users[i].city + " " + users[i].address
-         + " " + users[i].phone + "'>" + " " + users[i].name
-         + " " + users[i].surname + "</option>";
-        }
-        $("#question-group-dropdown").html(out);
+      for(i = 0;i<users.length;i++)
+      {
+        out += "<option value='" + users[i].id + "' data-tokens='" + users[i].email + " " + users[i].gender
+        + " " + users[i].country + " " + users[i].city + " " + users[i].address
+       + " " + users[i].phone + "'>" + " " + users[i].name
+       + " " + users[i].surname + "</option>";
       }
-    }
+      $("#question-group-dropdown").html(out);
+    })
+    .fail(function(xhr,error){
+      displayServerResponseError(xhr,error);
+    })
   }
