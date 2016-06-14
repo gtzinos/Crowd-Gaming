@@ -29,13 +29,29 @@
 			$statement->executeUpdate();
 		}
 
+		public function groupLeftWithPriority( $user_id , $questionnaire_id , $priority )
+		{
+			$query = "SELECT * FROM `QuestionGroup` 
+					  INNER JOIN `Playthrough` on `Playthrough`.`question_group_id`=`QuestionGroup`.`id`
+					  WHERE `Playthrough`.`completed`=0 AND `Playthrough`.`user_id`=? AND `QuestionGroup`.`questionnaire_id`=?
+					  AND `QuestionGroup`.`priority`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("iii", $user_id , $questionnaire_id , $priority);
+			
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return true;
+			return false;
+		}
+
 		public function findTimeLeft($user_id , $question_group_id)
 		{
 			$query =   "SELECT (`QuestionGroup`.`time-to-complete` - TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, Playthrough.time_started)) ) as time_left
 						FROM Playthrough
 						INNER JOIN QuestionGroup ON QuestionGroup.id=Playthrough.question_group_id
 						WHERE Playthrough.user_id=? AND Playthrough.question_group_id=? AND QuestionGroup.`time-to-complete`>0";
-
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $user_id , $question_group_id);
 

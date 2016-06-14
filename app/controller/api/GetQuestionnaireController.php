@@ -51,6 +51,7 @@
 						$questionnaireArrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
 						$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
 						$questionnaireArrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId(), $userId);
+						$questionnaireArrayItem["allow-multiple-groups-playthrough"] = $questionnaire->getAllowMultipleGroups();
 						$questionnaireArray[] = $questionnaireArrayItem;
 					}	
 				}
@@ -78,7 +79,7 @@
 					$jsonObject["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
 					$jsonObject["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
 					$jsonObject["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId() , $userId);
-
+					$jsonObject["allow-multiple-groups-playthrough"] = $questionnaire->getAllowMultipleGroups();
 					$this->setOutput("questionnaire" , $jsonObject);
 				}
 				else

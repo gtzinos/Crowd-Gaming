@@ -193,8 +193,8 @@
 		{
 			$query = "SELECT * FROM `QuestionShown`
 					  INNER JOIN `Question` on `Question`.`id`=`QuestionShown`.`question_id`
-					  WHERE `QuestionShown`.`user_id`=? AND `Question`.`id`=? AND
-					  TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP , `QuestionShown`.`timestamp` ) )<=`Question`.`time_to_answer`";
+					  WHERE (`QuestionShown`.`user_id`=? AND `Question`.`id`=? AND
+					  TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP , `QuestionShown`.`timestamp` ) )<=`Question`.`time_to_answer`) OR `Question`.`time_to_answer`=-1";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii',$userId, $questionId);
