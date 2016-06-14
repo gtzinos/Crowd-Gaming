@@ -1,5 +1,6 @@
 <?php
 	include_once 'AuthenticatedController.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
@@ -13,6 +14,7 @@
 		
 		public function init()
 		{
+			$this->setView( new JsonView );
 		}
 
 		public function run()
@@ -26,9 +28,8 @@
 			$questionGroupMapper = new QuestionGroupMapper;
 			$questionGroupParticipationMapper = new QuestionGroupParticipationMapper;
 			$userAnswerMapper = new UserAnswerMapper;
-			$response = array();
+			$playthroughMapper = new PlaythroughMapper;
 
-		
 
 			/*
 				User participates to questionnaire
@@ -38,11 +39,10 @@
 				/*
 					User doesnt participate to this questionnaire.
 				 */
-				$response["code"] = "604";
-				$response["message"] = "Forbidden, You dont have access to that questionnaire";
+				$this->setOutput("code" ,  "604");
+				$this->setOutput("message" ,  "Forbidden, You dont have access to that questionnaire");
 
 				http_response_code(403);
-				print json_encode($response);
 				return;
 			}
 
@@ -55,50 +55,65 @@
 				/*
 					Question Group does not belong to questionnaire
 				 */
-				$response["code"] = "608";
-				$response["message"] = "Not Found, Group doesnt not exist or doesnt belong to questionnaire";
+				$this->setOutput("code" ,  "608");
+				$this->setOutput("message" ,  "Not Found, Group doesnt not exist or doesnt belong to questionnaire");
 
 				http_response_code(404);
-				print json_encode($response);
 				return;
 			}
 
 			$questionGroup = $questionGroupMapper->findById($groupId);
 
-			$repeats = $questionGroupMapper->findRepeatCount($groupId,$userId);
-			if( $repeats >= $questionGroup->getAllowedRepeats() )
+
+			$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionGroup->getQuestionnaireId() );
+
+
+			if( $playthroughMapper->findActiveGroupCount($userId, $questionGroup->getQuestionnaireId())==0 )
+				$currentPriority++;
+
+			if( $currentPriority != $questionGroup->getPriority() )
 			{
-				$response["code"] = "611";
-				$response["message"] = "Maximum times of question group replays reached.";
+				$this->setOutput("code", "607");
+				$this->setOutput("message", "Forbidden , you cant reset this question group.");
 
 				http_response_code(403);
-				print json_encode($response);
 				return;
 			}
+
+
+			$repeats = $playthroughMapper->findRepeatCount($userId,$groupId);
+			if( $repeats >= $questionGroup->getAllowedRepeats() )
+			{
+				$this->setOutput("code" ,  "611");
+				$this->setOutput("message" ,  "Maximum times of question group replays reached.");
+
+				http_response_code(403);
+				return;
+			}
+
+
 			
 			try
 			{
 				DatabaseConnection::getInstance()->startTransaction();
 				
 				$repeats++;
-				$questionGroupMapper->persistRepeats($groupId , $userId , $repeats);
+				$playthroughMapper->persistRepeatCount($userId , $groupId , $repeats);
 				$userAnswerMapper->deleteByGroupAndUser($groupId , $userId);
+				$playthroughMapper->resetQuestionGroup($userId , $groupId );
 
 
 				DatabaseConnection::getInstance()->commit();
-				$response["code"] = "200";
-				$response["message"] = "Completed";
+				$this->setOutput("code" ,  "200");
+				$this->setOutput("message" ,  "Completed");
 			}
 			catch( DatabaseException $e)
 			{
 				DatabaseConnection::getInstance()->rollback();
-				$response["code"] = "500";
-				$response["message"] = "Internal server error.";
+				$this->setOutput("code" ,  "500");
+				$this->setOutput("message" ,  "Internal server error.");
 			}
 			
-
-
-			print json_encode($response);
 		}
 
 	}

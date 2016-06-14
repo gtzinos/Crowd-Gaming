@@ -3,12 +3,14 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/user/UserAnswerMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class GetQuestionGroupController extends AuthenticatedController
 	{
 		
 		public function init()
 		{
+			$this->setView( new JsonView );
 		}
 
 		public function run()
@@ -26,16 +28,16 @@
 			$participationMapper = new ParticipationMapper;
 			$questionGroupMapper = new QuestionGroupMapper;
 			$userAnswerMapper = new UserAnswerMapper;
+			$playthroughMapper = new PlaythroughMapper;
 
-			$response = array();
 
 			if( !$participationMapper->participates($userId , $questionnaireId , 1 , 1)  )
 			{
 				/*
 					User doesnt participate to this questionnaire.
 				 */
-				$response["code"] = "604";
-				$response["message"] = "Forbidden, You dont have access to that questionnaire";
+				$this->setOutput("code" , "604");
+				$this->setOutput("message" , "Forbidden, You dont have access to that questionnaire");
 
 				http_response_code(403);
 
@@ -47,10 +49,11 @@
 				 */
 				$questionGroups = $questionGroupMapper->findByQuestionnaire($questionnaireId);
 
-				$response["code"] = "200";
-				$response["message"] = "Success";
+				$this->setOutput("code" ,"200");
+				$this->setOutput("message","Success");
 
-				$response["question-group"] = array();
+
+				$groupJsonArray = array();
 
 				foreach ($questionGroups as $questionGroup) 
 				{
@@ -63,10 +66,16 @@
 					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
 					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
 					$arrayItem["allowed-repeats"] = $questionGroup->getAllowedRepeats();
-					$arrayItem["current-repeats"] = $questionGroupMapper->findRepeatCount($questionGroup->getId() , $userId);
-					$response["question-group"][] = $arrayItem;
+					$arrayItem["current-repeats"] = $playthroughMapper->findRepeatCount($questionGroup->getId() , $userId);
+					$arrayItem["time-left"] = $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
+					$arrayItem["time-to-complete"] = $questionGroup->getTimeToComplete();
+					$arrayItem["priority"] = $questionGroup->getPriority();
+					$arrayItem["is-completed"] = $playthroughMapper->isCompleted($userId , $questionGroup->getId());
+
+					$groupJsonArray[] = $arrayItem;
 				}
 
+				$this->setOutput("question-group",$groupJsonArray);
 
 			}
 			else
@@ -79,32 +88,36 @@
 				if($questionGroup !== null)
 				{
 
-					$response["code"] = "200";
-					$response["message"] = "Success";
+					$this->setOutput("code" , "200");
+					$this->setOutput("message" ,"Success");
 
-					$response["question-group"]["name"] = $questionGroup->getName();
-					$response["question-group"]["latitude"] = $questionGroup->getLatitude();
-					$response["question-group"]["longitude"] = $questionGroup->getLongitude();
-					$response["question-group"]["radius"] = $questionGroup->getRadius();
-					$response["question-group"]["creation_date"] = $questionGroup->getCreationDate();
-					$response["question-group"]["id"] = $questionGroup->getId();
-					$response["question-group"]["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
-					$response["question-group"]["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
-					$response["question-group"]["allowed-repeats"] = $questionGroup->getAllowedRepeats();
-					$response["question-group"]["current-repeats"] = $questionGroupMapper->findRepeatCount($groupId , $userId);
-
+					$arrayItem["name"] = $questionGroup->getName();
+					$arrayItem["latitude"] = $questionGroup->getLatitude();
+					$arrayItem["longitude"] = $questionGroup->getLongitude();
+					$arrayItem["radius"] = $questionGroup->getRadius();
+					$arrayItem["creation_date"] = $questionGroup->getCreationDate();
+					$arrayItem["id"] = $questionGroup->getId();
+					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
+					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
+					$arrayItem["allowed-repeats"] = $questionGroup->getAllowedRepeats();
+					$arrayItem["current-repeats"] = $playthroughMapper->findRepeatCount($questionGroup->getId() , $userId);
+					$arrayItem["time-left"] = $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
+					$arrayItem["time-to-complete"] = $questionGroup->getTimeToComplete();
+					$arrayItem["priority"] = $questionGroup->getPriority();
+					$arrayItem["is-completed"] = $playthroughMapper->isCompleted($userId , $questionGroup->getId());
+					
+					$this->setOutput("question-group",$arrayItem);
 				}
 				else
 				{
 
 					http_response_code(404);
-					$response["code"] = "404";
-					$response["message"] = "Not Found";
+					$this->setOutput("code","404");
+					$this->setOutput("message","Not Found");
 				}
 
 			}
 
-			print json_encode($response);
 		}
 
 	}

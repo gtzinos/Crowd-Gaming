@@ -48,7 +48,7 @@
 				5			: Name already exists
 			 */
 
-			if( isset($this->params[1], $_POST["name"] ,  $_POST["description"] , $_POST["message_required"] ) && $this->params[1]=="ajax" )
+			if( isset($this->params[1], $_POST["name"] ,  $_POST["description"] , $_POST["message_required"] , $_POST["allow-multiple-groups-playthrough"]) && $this->params[1]=="ajax" )
 			{
 
 				$questionnaireMapper = new QuestionnaireMapper;
@@ -102,7 +102,7 @@
 					$questionnaire->setPublic( false );
 					$questionnaire->setMessage( $message);
 					$questionnaire->setCoordinatorId( $_SESSION["USER_ID"] );
-
+					$questionnaire->setAllowMultipleGroups( $_POST["allow-multiple-groups-playthrough"]=="1"?1:0);
 
 					$examinerParticipation = new Participation;
 					$examinerParticipation->setUserId( $_SESSION["USER_ID"]);
@@ -140,7 +140,7 @@
 					}
 					catch(DatabaseException $ex)
 					{
-
+						
 						DatabaseConnection::getInstance()->rollback();
 						print 4; // Database Error
 					}

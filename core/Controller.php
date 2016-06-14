@@ -58,6 +58,11 @@
             return $this->output[$key];
         }
 
+        public function setArg( $key , $value)
+        {
+            $this->setOutput($key , $value);
+        }
+
         public function isHeadless()
         {
             return $this->headless;

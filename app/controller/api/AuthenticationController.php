@@ -6,7 +6,7 @@
 		
 		public function init()
 		{
-			
+			$this->setView( new JsonView );
 		}
 
 		public function run()
@@ -15,14 +15,13 @@
 			$parameters = json_decode($httpBody,true);
 
 
-			$response = array();
 			
 			if( !isset( $parameters["email"]  ,$parameters["password"])  )
 			{
-				$response["code"] = "602";
-				$response["message"] = "Username or password or both were not given.";
+				$this->setOutput("code", "602");
+				$this->setOutput("message", "Username or password or both were not given.");
 				http_response_code(400);
-				print json_encode($response);
+
 				return;
 			}
 
@@ -33,23 +32,22 @@
 			if( is_object( $user ) )
 			{
 
-				$response["code"] = "200";
-				$response["message"] = "Authorization Succeeded.";
+				$this->setOutput("code" , "200" );
+				$this->setOutput("message" , "Authorization Succeeded.");
 
-				$response["user"]["name"] = $user->getName();
-				$response["user"]["surname"] = $user->getSurname();
-				$response["user"]["api-token"] = $user->getApiToken();
+				$jsonObject["name"] = $user->getName();
+				$jsonObject["surname"] = $user->getSurname();
+				$jsonObject["api-token"] = $user->getApiToken();
 
-				
+				$this->setOutput("user" , $jsonObject);
 			}
 			else
 			{
 				http_response_code(400);
-				$response["code"] = "601";
-				$response["message"] = "Username or password are wrong.";
+				$this->setOutput("code" , "601");
+				$this->setOutput("message" , "Username or password are wrong.");
 			}
 
-			print json_encode($response);
 		}
 
 	}

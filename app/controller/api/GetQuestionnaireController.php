@@ -8,7 +8,7 @@
 		
 		public function init()
 		{
-		
+			$this->setView( new JsonView );
 		}
 
 		public function run()
@@ -25,8 +25,8 @@
 			$scheduleMapper = new QuestionnaireScheduleMapper;
 			$userAnswerMapper = new UserAnswerMapper;
 
-			$response = array();
-
+			
+			
 			if( $questionnaireId === null )
 			{
 				/*
@@ -34,8 +34,8 @@
 				 */
 				$questionnaires = $questionnaireMapper->findQuestionnairesByParticipation($userId,1);
 
-				$response["code"] = "200";
-				$response["message"] = "Completed";
+				$this->setOutput("code" , "200");
+				$this->setOutput("message" , "Completed");
 
 				$questionnaireArray = array();
 				foreach ($questionnaires as $questionnaire) 
@@ -55,7 +55,7 @@
 					}	
 				}
 
-				$response["questionnaire"] = $questionnaireArray;
+				$this->setOutput("questionnaire" , $questionnaireArray);
 
 			}
 			else
@@ -67,28 +67,28 @@
 
 				if($questionnaire !=null && $questionnaire->getPublic() )
 				{
-					$response["code"] = "200";
-					$response["message"] = "Completed";
+					$this->setOutput("code", "200");
+					$this->setOutput("message", "Completed");
 
-					$response["questionnaire"]["id"] = $questionnaire->getId();
-					$response["questionnaire"]["name"] = $questionnaire->getName();
-					$response["questionnaire"]["description"] = $questionnaire->getDescription();
-					$response["questionnaire"]["creation-date"] = $questionnaire->getCreationDate();
-					$response["questionnaire"]["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
-					$response["questionnaire"]["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
-					$response["questionnaire"]["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
-					$response["questionnaire"]["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId() , $userId);
+					$jsonObject["id"] = $questionnaire->getId();
+					$jsonObject["name"] = $questionnaire->getName();
+					$jsonObject["description"] = $questionnaire->getDescription();
+					$jsonObject["creation-date"] = $questionnaire->getCreationDate();
+					$jsonObject["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
+					$jsonObject["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
+					$jsonObject["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
+					$jsonObject["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId() , $userId);
 
+					$this->setOutput("questionnaire" , $jsonObject);
 				}
 				else
 				{
 					http_response_code(404);
-					$response["code"] = "404";
-					$response["message"] = "Not Found";
+					$this->setOutput("code","404");
+					$this->setOutput("message","Not Found");
 				}
 			}
 
-			print json_encode($response);
 		}
 
 	}

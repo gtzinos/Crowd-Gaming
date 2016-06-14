@@ -13,6 +13,7 @@
 		private $creationDate;
 		private $coordinatorId;
 		private $message;
+		private $allowMultipleGroups;
 
 		/*
 			An array of objects of the type QuestionGroup
@@ -59,6 +60,14 @@
 		/*
 			Get and Set methods bellow
 		 */
+		public function getAllowMultipleGroups(){
+			return $this->allowMultipleGroups;
+		}
+		
+		public function setAllowMultipleGroups($allowMultipleGroups){
+			$this->allowMultipleGroups = $allowMultipleGroups;
+		}
+
 		public function getId(){
 			return $this->id;
 		}

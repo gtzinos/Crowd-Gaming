@@ -307,6 +307,32 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `quizapp`.`QuestionnaireParticipation`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `quizapp`.`Playthrough` ;
+
+CREATE TABLE IF NOT EXISTS `quizapp`.`Playthrough` (
+  `user_id` INT NOT NULL,
+  `question_group_id` INT NOT NULL,
+  `time_started` TIMESTAMP NULL,
+  `completed` TINYINT(1) NOT NULL DEFAULT 0,
+  `repeats` TINYINT(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`user_id` , `question_group_id`),
+  INDEX `fk_Playthrough_2_idx` (`user_id` ASC),
+  CONSTRAINT `fk_Playthrough_1`
+    FOREIGN KEY (`question_group_id`)
+    REFERENCES `quizapp`.`QuestionGroup` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Playthrough_2`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `quizapp`.`User` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `quizapp`.`QuestionnaireParticipation`
+-- -----------------------------------------------------
 DROP TABLE IF EXISTS `quizapp`.`QuestionnaireParticipation` ;
 
 CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionnaireParticipation` (
@@ -398,25 +424,6 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionShown` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS `quizapp`.`QuestionGroupRepeats` ;
-
-CREATE TABLE IF NOT EXISTS `quizapp`.`QuestionGroupRepeats` (
-  `question_group_id` INT NOT NULL,
-  `user_id` INT NOT NULL,
-  `repeat_count` INT NOT NULL,
-  PRIMARY KEY (`question_group_id`, `user_id`),
-  INDEX `fk_QuestionGroupRepeats_2_idx` (`user_id` ASC),
-  CONSTRAINT `fk_QuestionGroupRepeats_1`
-    FOREIGN KEY (`question_group_id`)
-    REFERENCES `quizapp`.`QuestionGroup` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_QuestionGroupRepeats_2`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `quizapp`.`User` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 

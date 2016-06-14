@@ -181,62 +181,6 @@
 			return false;
 		}
 
-		public function findRepeatCount($groupId , $userId)
-		{
-			$query ="SELECT `repeat_count` FROM `QuestionGroupRepeats` 
-					 WHERE `user_id`=? AND `question_group_id`=?";
-
-			$statement = $this->getStatement($query);
-			$statement->setParameters('ii', $userId , $groupId);
-
-			$set = $statement->execute();
-
-			if( $set->next() )
-				return $set->get("repeat_count");
-			return 1;
-		}
-
-		public function persistRepeats($groupId , $userId , $repeatCounter)
-		{
-			if ( $repeatCounter==2)
-			{
-				$query = "INSERT INTO `QuestionGroupRepeats` (`repeat_count`,`user_id`,`question_group_id`) VALUES (?,?,?)";
-			}
-			else
-			{
-				$query = "UPDATE `QuestionGroupRepeats` SET `repeat_count`=? WHERE `user_id`=? AND `question_group_id`=?";
-			}
-
-			
-			
-			$statement = $this->getStatement($query);
-			$statement->setParameters('iii',$repeatCounter , $userId , $groupId);
-
-			$set = $statement->executeUpdate();
-		}
-
-		public function deleteRepeats($groupId)
-		{
-			$query = "DELETE FROM `QuestionGroupRepeats` WHERE `question_group_id`=?";
-			
-			$statement = $this->getStatement($query);
-			$statement->setParameters('i',$groupId);
-
-			$set = $statement->executeUpdate();
-		}
-
-		public function deleteRepeatsByQuestionnaire($questionnaireId)
-		{
-			$query = "DELETE `QuestionGroupRepeats`.* FROM `QuestionGroupRepeats`
-			          INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`QuestionGroupRepeats`.`question_group_id`
-			          WHERE `QuestionGroup`.`questionnaire_id`=?";
-			
-			$statement = $this->getStatement($query);
-			$statement->setParameters('i',$questionnaireId);
-
-			$set = $statement->executeUpdate();
-		}
-
 		public function groupBelongsTo($groupId , $questionnaireId)
 		{
 			$query  = "SELECT `Questionnaire`.`id` FROM `QuestionGroup` INNER JOIN `Questionnaire` ON `Questionnaire`.`id`=`QuestionGroup`.`questionnaire_id` WHERE `QuestionGroup`.`id`=? AND `QuestionGroup`.`questionnaire_id`=? ";

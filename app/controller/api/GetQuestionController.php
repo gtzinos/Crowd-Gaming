@@ -6,41 +6,56 @@
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 
 	class GetQuestionController extends AuthenticatedController
 	{
 		
 		public function init()
 		{
+			$this->setView( new JsonView );
 		}
 
 		public function run()
 		{
+
+			// get ids
 			$userId = $this->authenticateToken();
-			
 			$questionnaireId = $this->params[1];
 			$groupId = $this->params[3];
 			$questionId = null;
 
 
+			// init mappers
 			$participationMapper = new ParticipationMapper;
 			$questionGroupMapper = new QuestionGroupMapper;
 			$questionGroupParticipationMapper = new QuestionGroupParticipationMapper;
 			$questionMapper = new QuestionMapper;
 			$scheduleMapper = new QuestionnaireScheduleMapper;
+			$playthroughMapper = new PlaythroughMapper;
+			$questionnaireMapper = new QuestionnaireMapper;
 
-			$response = array();
 
-			if($scheduleMapper->findMinutesToStart($questionnaireId) !== 0)
+			// Variables
+			$groupHasStarted = $playthroughMapper->hasStarted($userId ,$groupId);
+			$timeLeftToStart = $scheduleMapper->findMinutesToStart($questionnaireId);
+			$participates = $participationMapper->participates($userId , $questionnaireId , 1 ,1);
+			$groupBelongsToQuestionnaire = $questionGroupMapper->groupBelongsTo($groupId , $questionnaireId);
+			$currentRepeats = $playthroughMapper->findRepeatCount($userId , $groupId);
+			$groupCompleted = $playthroughMapper->isCompleted($userId ,$groupId);
+			$activeGroups = $playthroughMapper->findActiveGroupCount($userId, $questionnaireId);
+
+			if( $timeLeftToStart!== 0)
 			{
 				/*
 					Questionnaire Offline
 				 */
-				$response["code"] = "603";
-				$response["message"] = "Forbidden, Questionnaire offline";
+				$this->setOutput("code", "603");
+				$this->setOutput("message", "Forbidden, Questionnaire offline");
 
 				http_response_code(403);
-				print json_encode($response);
+
 				return;
 			}
 		
@@ -48,16 +63,16 @@
 			/*
 				User participates to questionnaire
 			 */
-			if( !$participationMapper->participates($userId , $questionnaireId , 1 ,1)  )
+			if( !$participates )
 			{
 				/*
 					User doesnt participate to this questionnaire.
 				 */
-				$response["code"] = "604";
-				$response["message"] = "Forbidden, You dont have access to that questionnaire";
+				$this->setOutput("code", "604");
+				$this->setOutput("message", "Forbidden, You dont have access to that questionnaire");
 
 				http_response_code(403);
-				print json_encode($response);
+
 				return;
 			}
 
@@ -65,31 +80,42 @@
 			/*
 				Question Group belongs to Questionnaire
 			 */
-			if( !$questionGroupMapper->groupBelongsTo($groupId , $questionnaireId) )
+			if( !$groupBelongsToQuestionnaire )
 			{
 				/*
 					Question Group does not belong to questionnaire
 				 */
-				$response["code"] = "608";
-				$response["message"] = "Not Found, Group doesnt not exist or doesnt belong to questionnaire";
+				$this->setOutput("code", "608");
+				$this->setOutput("message", "Not Found, Group doesnt not exist or doesnt belong to questionnaire");
 
 				http_response_code(404);
-				print json_encode($response);
+
 				return;
 			}
 
 			$questionGroup = $questionGroupMapper->findById($groupId);
 
-			if( $questionGroupMapper->findRepeatCount($groupId,$userId) > $questionGroup->getAllowedRepeats() )
+
+			
+			if( $currentRepeats > $questionGroup->getAllowedRepeats() )
 			{
-				$response["code"] = "611";
-				$response["message"] = "Maximum times of question group replays reached.";
+				$this->setOutput("code", "611");
+				$this->setOutput("message", "Maximum times of question group replays reached.");
 
 				http_response_code(403);
-				print json_encode($response);
+
 				return;
 			}
 			
+			if( $groupCompleted )
+			{
+				$this->setOutput("code", "607");
+				$this->setOutput("message", "Forbidden, Group has been completed");
+
+				http_response_code(403);
+				return;
+			}
+
 
 			/*
 				Check question group constraints
@@ -99,22 +125,22 @@
 				$coordinates = $this->getCoordinates();	
 				if( $coordinates == null)
 				{
-					$response["code"] = "606";
-					$response["message"] = "Forbidden, Coordinates not provided.";
+					$this->setOutput("code", "606");
+					$this->setOutput("message", "Forbidden, Coordinates not provided.");
 
 					http_response_code(403);
-					print json_encode($response);
+	
 					return;
 				}
 				else if( ! ( $questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"]) &&
 						     $questionGroupParticipationMapper->participates($userId , $groupId) ) )
 				{
 
-					$response["code"] = "607";
-					$response["message"] = "Forbidden, Invalid location or user not in participation group.";
+					$this->setOutput("code", "607");
+					$this->setOutput("message", "Forbidden, Invalid location or user not in participation group.");
 
 					http_response_code(403);
-					print json_encode($response);
+	
 					return;
 				}
 			}
@@ -123,21 +149,21 @@
 				$coordinates = $this->getCoordinates();	
 				if( $coordinates == null)
 				{
-					$response["code"] = "606";
-					$response["message"] = "Forbidden, Coordinates not provided.";
+					$this->setOutput("code", "606");
+					$this->setOutput("message", "Forbidden, Coordinates not provided.");
 
 					http_response_code(403);
-					print json_encode($response);
+	
 					return;
 				}
 				else if( !$questionGroupMapper->verifyLocation($groupId , $coordinates["latitude"] , $coordinates["longitude"] ) )
 				{
 
-					$response["code"] = "607";
-					$response["message"] = "Forbidden, Invalid location.";
+					$this->setOutput("code", "607");
+					$this->setOutput("message", "Forbidden, Invalid location.");
 
 					http_response_code(403);
-					print json_encode($response);
+	
 					return;
 				}
 			}
@@ -146,13 +172,61 @@
 				if( !$questionGroupParticipationMapper->participates($userId , $groupId) )
 				{
 
-					$response["code"] = "607";
-					$response["message"] = "Forbidden, User not in participation group.";
+					$this->setOutput("code", "607");
+					$this->setOutput("message", "Forbidden, User not in participation group.");
 
 					http_response_code(403);
-					print json_encode($response);
+	
 					return;
 				}
+			}
+
+			$questionnaire = $questionnaireMapper->findById($questionnaireId);
+
+
+			if( !$groupHasStarted &&
+				 $activeGroups >= 1 &&
+				!$questionnaire->getAllowMultipleGroups() )
+			{
+				$this->setOutput("code", "607");
+				$this->setOutput("message", "Forbidden, This questionnaire doesnt allow multiple question group participations");
+
+				http_response_code(403);
+				return;
+			}			
+
+
+			if( !$groupHasStarted )
+			{
+				$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionnaireId);
+
+
+				if( $activeGroups==0 )
+					$currentPriority++;
+
+				if( $currentPriority != $questionGroup->getPriority() )
+				{
+					$this->setOutput("code", "607");
+					$this->setOutput("message", "Forbidden, You must complete other question groups first");
+
+					http_response_code(403);
+					return;
+				}
+
+			}
+			else if( $questionGroup->getTimeToComplete()>0 && 
+				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null && 
+				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())<0 )
+			{
+				print $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
+				print "Here";
+				$playthroughMapper->setCompleted($userId , $groupId);
+
+				$this->setOutput("code", "607");
+				$this->setOutput("message", "Forbidden, Group has been completed now");
+
+				http_response_code(403);
+				return;		
 			}
 
 
@@ -160,8 +234,9 @@
 				Get the next question
 			 */	
 			$question = $questionMapper->findNextQuestion($userId , $groupId);
-				
-			if($question !== null)
+
+
+			if($question !== null )
 			{
 				$answerMapper = new AnswerMapper;
 
@@ -170,17 +245,19 @@
 				// Random order
 				shuffle($answers);
 				
-				$response["code"] = "200";
-				$response["message"] = "Success";
+				$this->setOutput("code", "200");
+				$this->setOutput("message", "Success");
 
-				$response["question"]["id"] = $question->getId();
-				$response["question"]["question-text"] = $question->getQuestionText();
-				$response["question"]["multiplier"] = $question->getMultiplier();
-				$response["question"]["creation_date"] = $question->getCreationDate();
-				$response["question"]["time-to-answer"] = $question->getTimeToAnswer();
+
+				$questionJsonObject["id"] = $question->getId();
+				$questionJsonObject["question-text"] = $question->getQuestionText();
+				$questionJsonObject["multiplier"] = $question->getMultiplier();
+				$questionJsonObject["creation_date"] = $question->getCreationDate();
+				$questionJsonObject["time-to-answer"] = $question->getTimeToAnswer();
 					
-				$response["answer"] = array();
+				$this->setOutput("question" , $questionJsonObject);
 
+				$answersJsonArray = array();
 				foreach ($answers as $answer) 
 				{
 
@@ -188,16 +265,24 @@
 					$arrayItem["answer-text"] = $answer->getAnswerText();
 					$arrayItem["creation_date"] = $answer->getCreationDate();
 						
-					$response["answer"][] = $arrayItem;
+					$answersJsonArray[] = $arrayItem;
 				}
+
+				$this->setOutput("answer" , $answersJsonArray);
 
 				try
 				{
-					$questionMapper->addShownRecord($question->getId() , $userId);
+
+					if( !$playthroughMapper->hasStarted($userId , $groupId) )
+						$playthroughMapper->startQuestionGroup($userId , $groupId);
+
+					if( $question->getTimeToAnswer() > 0)
+						$questionMapper->addShownRecord($question->getId() , $userId);
+
 				}
 				catch(DatabaseException $ex)
 				{
-					// Ingore , just means this question has been shown recently show , just.
+					// Ingore , just means this question has been shown recently shown
 				}
 				
 			}
@@ -205,12 +290,11 @@
 			{
 
 				http_response_code(404);
-				$response["code"] = "609";
-				$response["message"] = "Question Group doesnt have any more questions";
+				$this->setOutput("code" , "609");
+				$this->setOutput("message" , "Question Group doesnt have any more questions");
 			}
 
 
-			print json_encode($response);
 		}
 
 	}

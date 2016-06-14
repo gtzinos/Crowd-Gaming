@@ -20,7 +20,7 @@
 				5			: Name already in use
 				6			: User must be coordinator
 			 */
-			if( isset( $_POST["questionnaire-id"] ,$_POST["name"] , $_POST["description"] , $_POST["message_required"] ) ){
+			if( isset( $_POST["questionnaire-id"] ,$_POST["name"] , $_POST["allow-multiple-groups-playthrough"] , $_POST["description"] , $_POST["message_required"] ) ){
 				$questionnaireMapper = new QuestionnaireMapper;
 
 				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
@@ -75,7 +75,7 @@
 				$questionnaire->setDescription( $description );
 				$questionnaire->setMessage( $message);
 				$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
-
+				$questionnaire->setAllowMultipleGroups( $_POST["allow-multiple-groups-playthrough"]=="1"?1:0);
 
 				try{
 					DatabaseConnection::getInstance()->startTransaction();

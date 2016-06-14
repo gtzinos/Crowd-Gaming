@@ -64,7 +64,7 @@
 			{
 				$question = $questionMapper->findNextQuestion($userId,$groupId);
 
-				if($question !== null && $question->getId() == $questionId)
+				if( $question !== null && $question->getId() == $questionId)
 					return true;
 				else
 					return false;

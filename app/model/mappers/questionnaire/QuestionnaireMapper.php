@@ -336,7 +336,7 @@ WHERE `Questionnaire`.`id`=? ";
 			false if the questionnaire does not exist
 		 */
 		public function findById($questionnaireId){
-			$statement = $this->getStatement("SELECT `coordinator_id`,`message`, `name`, `description`,`public`, `message_required`, `creation_date` FROM `Questionnaire` WHERE id=?");
+			$statement = $this->getStatement("SELECT * FROM `Questionnaire` WHERE id=?");
 			$statement->setParameters('i' , $questionnaireId);
 
 			$resultSet = $statement->execute();
@@ -352,7 +352,8 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
-
+				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
+				
 				return $questionnaire;
 			}
 
@@ -392,6 +393,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+				//$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
 
 				$questionnaires[] =  $questionnaire;
 			}
@@ -429,6 +431,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $set->get("public") );
 				$questionnaire->setMessageRequired( $set->get("message_required") );
 				$questionnaire->setCreationDate( $set->get("creation_date") );
+				$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -465,7 +468,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $set->get("public") );
 				$questionnaire->setMessageRequired( $set->get("message_required") );
 				$questionnaire->setCreationDate( $set->get("creation_date") );
-
+				$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
 				return $questionnaire;
 			}
 			
@@ -530,15 +533,16 @@ WHERE `Questionnaire`.`id`=? ";
 			Inserts the questionnaire to the database
 		 */
 		private function _create($questionnaire){
-			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`,`message`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?)");
+			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`,`message`,`allow_multiple_groups`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?,?)");
 
-			$statement->setParameters( 'issiis' ,
+			$statement->setParameters( 'issiisi' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
 				$questionnaire->getPublic(),
 				$questionnaire->getMessageRequired(),
-				$questionnaire->getMessage() );
+				$questionnaire->getMessage(),
+				$questionnaire->getAllowMultipleGroups() );
 
 			$statement->executeUpdate();
 
@@ -548,15 +552,16 @@ WHERE `Questionnaire`.`id`=? ";
 			Updates a questionnaire in the databae
 		 */
 		private function _update($questionnaire){
-			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=?,`message`=? WHERE `id`=?");
+			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=?,`message`=? , `allow_multiple_groups`=? WHERE `id`=?");
 
-			$statement->setParameters( 'issiiis' ,
+			$statement->setParameters( 'issiiiis' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
 				$questionnaire->getPublic(),
 				$questionnaire->getMessageRequired(),
 				$questionnaire->getMessage(),
+				$questionnaire->getAllowMultipleGroups(),
 				$questionnaire->getId()
 			 	);
 

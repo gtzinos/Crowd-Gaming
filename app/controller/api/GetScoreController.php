@@ -7,6 +7,7 @@
 	class GetScoreController extends AuthenticatedController{
 		
 		public function init(){
+			$this->setView( new JsonView );
 		}
 
 		public function run(){
@@ -47,9 +48,6 @@
 				$response["message"] = "ok";
 				$response["score"] = $scoreJson;
 			}
-
-
-			print json_encode($response);
 		}
 
 	}
