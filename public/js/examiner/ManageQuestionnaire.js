@@ -192,10 +192,11 @@ function getQuestionnaireData()
   var name = $("#questionnaire-name").val();
   var descriptionHTML = tinymce.activeEditor.getContent();
   var descriptionClearText = tinymce.activeEditor.getContent({format : 'text'});
+  var allow_multiple_groups_playthrough = $("#allow_multiple_groups_playthrough").val();
   var message_required = $("#message-required").val();
   var password = $("#questionnaire-password").val();
 
-  if(name && descriptionClearText.length >= 31)
+  if(name && descriptionClearText.length >= 31 && allow_multiple_groups_playthrough != "-")
   {
     /*
       Variables we will send
@@ -203,6 +204,7 @@ function getQuestionnaireData()
     let data = {
       "name": name,
       "description": descriptionHTML,
+      "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "0" ? "0" : "1",
       "message_required": message_required == "yes" ? "yes" : "no"
     }
 
