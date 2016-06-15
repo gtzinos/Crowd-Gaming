@@ -15,15 +15,28 @@ echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOO
   <!-- Title -->
   <legend class="text-center header">Create Question Group</legend>
   <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
-    <!-- Question Group Name -->
+
     <div class="form-group has-feedback">
+      <!-- Question Group Name -->
       <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="length" data-length="10">
-        <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["name"]; } ?>" id="name" name="name" type="text" placeholder="Group Name" data-toggle="tooltip" gt-error-message="Not a valid question group name" maxlength="50" required>
+        <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["name"]; } ?>" id="name" name="name" type="text" placeholder="*Group Name" data-toggle="tooltip" gt-error-message="Not a valid question group name" maxlength="50" required>
         <span class="gt-icon"></span>
       </div>
       <!-- Repeated answers -->
       <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
-        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["allowed-repeats"]; } ?>" name="allowed_repeats" gt-error-message="Must be integer > 0" value="" placeholder="Allowed repeats" required/>
+        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["allowed-repeats"]; } ?>" name="allowed_repeats" data-toggle="tooltip" gt-error-message="Must be integer > 0" value="" placeholder="*Allowed repeats" required/>
+        <span class="gt-icon"> </span>
+      </div>
+    </div>
+    <div class="form-group has-feedback">
+      <!-- Priority -->
+      <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group"  data-validate="number" data-type="integer" data-min-number="0">
+        <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["priority"]; } ?>" id="priority" name="priority" type="text" placeholder="Priority" data-toggle="tooltip" gt-error-message="Not a valid priority number">
+        <span class="gt-icon"></span>
+      </div>
+      <!-- Time to complete -->
+      <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="0">
+        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["time-to-complete"]; } ?>" name="time-to-complete" data-toggle="tooltip" gt-error-message="Must be a positive integer >= 5" value="" placeholder="Time to complete"/>
         <span class="gt-icon"> </span>
       </div>
     </div>
@@ -46,7 +59,7 @@ echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOO
 
         <!-- Radius -->
         <div style="margin-top:1%" class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number">
-          <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["radius"]; } ?>" id="radius" name="radius" type="text" style="text-align:center" maxlength="10" placeholder="Radius" value="0"/>
+          <input class="form-control" data-toggle="tooltip" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["radius"]; } ?>" id="radius" name="radius" type="text" style="text-align:center" maxlength="10" placeholder="Radius" value="0"/>
           <span class="gt-icon"> </span>
         </div>
         <!-- Search button -->
