@@ -34,8 +34,8 @@
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="select">
 								<select id="allow-multiple-groups-playthrough" class="form-control" required>
 									<option value="-" disabled selected>Allow ?</option>
-									<option value="1">No</option>
-									<option value="0">Yes</option>
+									<option value="0">No</option>
+									<option value="1">Yes</option>
 								</select>
 								<span class="gt-icon"></span>
 							</div>
