@@ -102,14 +102,14 @@ function signInFromForm() {
 							else {
 								show_notification("error","Something going wrong. Please try later!",4000);
 							}
+							remove_spinner("signin-spinner");
+							notCompletedRequest = false;
 						}
 				})
 				.fail(function(xhr,error) {
 					displayServerResponseError(xhr,error);
-				})
-				.always(function() {
-					notCompletedRequest = false;
 					remove_spinner("signin-spinner");
+					notCompletedRequest = false;
 				});
 		}
 		else
