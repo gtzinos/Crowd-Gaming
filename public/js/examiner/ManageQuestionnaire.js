@@ -249,13 +249,9 @@ function createQuestionnaire()
             Success message
           */
            show_notification("success","Your questionnaire created successfully.",4000);
-           $("#questionnaire-name").val("");
-           tinymce.activeEditor.setContent('<p></p>');
-           $("#editor").focus();
-           $("#message-required").val("-");
-           $("#message-required").focus();
-           $("#questionnaire-name").focus();
-           $("#message-required").focus();
+           setTimeout(function() {
+             location.reload();
+           },3000);
         }
         /*
            If response message == 1

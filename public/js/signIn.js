@@ -32,7 +32,6 @@ function signInFromForm() {
 		{
 			return;
 		}
-		notCompletedRequest = true;
 
 		/*
 			Check the Variables before sending them
@@ -40,6 +39,7 @@ function signInFromForm() {
 		var dataToSend = getClientData();
 		if(dataToSend != null)
 		{
+			notCompletedRequest = true;
 			show_spinner("signin-spinner");
 			$.ajax(
 				{
