@@ -47,18 +47,18 @@
                         /*
                           Allow multiple groups playthrough
                         */
-                        if($questionnaire->getAllowMultipleGroups())
+                        if($questionnaire->getAllowMultipleGroups() == "0")
                         {
-                          echo "<option value='0'>No</option>";
-                          echo "<option value='1' selected>Yes</option>";
+                          echo "<option value='0' selected>No</option>";
+                          echo "<option value='1'>Yes</option>";
                         }
                         /*
                           Not allow multiple groups playthrough
                         */
                         else
                         {
-                          echo "<option value='0' selected>No</option>";
-                          echo "<option value='1'>Yes</option>";
+                          echo "<option value='0' >No</option>";
+                          echo "<option value='1' selected>Yes</option>";
                         }
                       ?>
     								</select>
@@ -123,7 +123,7 @@
               <!-- Update questionnaire submit button -->
               <div class="form-group has-feedback">
                 <div class="col-xs-4 col-sm-offset-3 col-sm-2">
-                  <button type="button" id="edit-questionnaire" class="btn btn-primary gt-submit" form="edit-questionnaire-form" onclick="updateQuestionnaire(<?php echo $questionnaire->getId(); ?>)" disabled="disabled">Save</button>
+                  <button type="button" id="edit-questionnaire-submit" class="btn btn-primary gt-submit" form="edit-questionnaire-form" onclick="updateQuestionnaire(<?php echo $questionnaire->getId(); ?>)" disabled="disabled">Save</button>
                 </div>
                 <div class="col-xs-3 col-sm-3" style="padding:0px">
                   <button type="button" class="btn btn-primary" onclick="location.href='<?php echo LinkUtils::generatePageLink('question-groups') . "/" . $questionnaire->getId(); ?>';" >Edit Groups</button>
