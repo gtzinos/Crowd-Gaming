@@ -26,6 +26,7 @@
 								 	<span class="gt-icon"></span>
 							</div>
 					</div>
+					<!-- Allow multiple groups playthrough ? -->
 					<div class="form-group has-feedback">
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
 								<label for="allow-multiple-groups-playthrough">Allow multiple groups playthrough ?</label>
@@ -58,8 +59,8 @@
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
 								<label for="password">Questionnaire password</label>
 							</div>
-							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="1">
-								<input disabled id="questionnaire-password" type="text" class="form-control" maxlength="255" gt-error-message="Must contain at least 1 character">
+							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="3">
+								<input disabled id="questionnaire-password" type="text" class="form-control" maxlength="255" gt-error-message="Must contain at least 3 character">
 								 <span class="gt-icon"></span>
 							</div>
 					</div>
