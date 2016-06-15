@@ -198,18 +198,19 @@
 						else {
 							 show_notification("error","Something going wrong. Please try later!",4000);
 						}
+						notCompletedRequest = false;
+						remove_spinner("signup-spinner");
 				}
 			})
 			.fail(function(data)
 			{
 				displayServerResponseError(xhr,error);
-			})
-			.always(function() {
 				notCompletedRequest = false;
 				remove_spinner("signup-spinner");
 			});
 		}
 		else {
 			show_notification("error","You must fill all fields.",4000);
+			notCompletedRequest = false;
 		}
 	}
