@@ -65,24 +65,20 @@
 							</div>
 					</div>
 					<br>
+					<!-- Response Label Field -->
+					<div class="form-group">
+						<div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
+							<div id="create-questionnaire-spinner"></div>
+							<label id="questionnaire-create-response" class="responseLabel">
+							</label>
+						</div>
+					</div>
 					<!-- Create questionnaire submit button -->
 					<div class="form-group has-feedback">
 						<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6">
-							<button type="button" class="btn btn-primary gt-submit" onclick="createQuestionnaire()">Create questionnaire</button>
+							<button id="create-questionnaire-submit" type="button" class="btn btn-primary gt-submit" onclick="createQuestionnaire()">Create questionnaire</button>
 						</div>
 					</div>
-					<!-- Response Label Field -->
-          <div class="form-group" style="margin-top:5%">
-            <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
-              <label id="questionnaire-create-response" class="responseLabel">
-                <?php
-                   /*
-                     Display errors
-                   */
-                ?>
-              </label>
-            </div>
-          </div>
 		</form>
 		<!-- fa fa-pencil-square-o -->
 
