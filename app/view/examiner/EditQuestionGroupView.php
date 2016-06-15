@@ -17,8 +17,8 @@
     <!-- Title -->
     <legend class="text-center header">Edit Question Group</legend>
     <form method="POST" onsubmit="return checkOptionals();" class="form-horizontal">
-      <!-- Question Group Name -->
       <div class="form-group has-feedback">
+				<!-- Question Group Name -->
         <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="length" data-length="10">
           <?php
 						$value = "";
@@ -33,6 +33,7 @@
 					 ?>
 					<span class="gt-icon"></span>
         </div>
+				<!-- Allowed repeats -->
 				<div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="1" >
 					<?php
 						$value = "";
@@ -47,8 +48,42 @@
 					 ?>
 					<span class="gt-icon"></span>
 				</div>
+      </div>
+
+			<div class="form-group has-feedback">
+				<!-- Priority -->
+        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="0">
+          <?php
+						$value = "";
+						if(exists("response-code") && get("response-code") != 0)
+						{
+							$value .= $_POST["priority"];
+						}
+						else if(get("question-group")->getPriority() != "-1") {
+							$value .= get("question-group")->getPriority();
+						}
+						echo "<input class='form-control' value='" . $value . "' id='priority' name='priority' type='text' placeholder='Priority' data-toggle='tooltip' gt-error-message='Must be a positive integer value'>";
+					 ?>
+					<span class="gt-icon"></span>
+        </div>
+				<!-- Time to complete -->
+				<div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="0" >
+					<?php
+						$value = "";
+						if(exists("response-code") && get("response-code") != 0)
+						{
+							$value .= $_POST["time-to-complete"];
+						}
+						else if(get("question-group")->getTimeToComplete() != "-1") {
+							$value .= get("question-group")->getTimeToComplete();
+						}
+						echo "<input class='form-control' value='" . $value . "' id='time-to-complete' name='time-to-complete' type='text' placeholder='Time to complete' data-toggle='tooltip' gt-error-message='Must be a positive integer'>";
+					 ?>
+					<span class="gt-icon"></span>
+				</div>
 
       </div>
+
         <!-- Google Map -->
         <div class="form-group has-feedback" >
           <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-8">
@@ -97,7 +132,7 @@
 								else if(get("question-group")->getRadius() != "") {
 									$value .= get("question-group")->getRadius();
 								}
-								echo "<input class='form-control' value='" . $value . "' id='radius' name='radius' type='text' style='text-align:center' maxlength='10' placeholder='Radius' value='0'/>";
+								echo "<input class='form-control' value='" . $value . "' id='radius' data-toggle='tooltip' gt-error-message='Wrong radius value' name='radius' type='text' style='text-align:center' maxlength='10' placeholder='Radius' value='0'/>";
 						?>
 						<span class="gt-icon"> </span>
           </div>
