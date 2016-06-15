@@ -331,16 +331,18 @@ function getUpdateQuestionnaireData(id) {
   var name = $(document).find("#qname").val();
   var description = $(document).find("#qeditor").val();
   var required = $(document).find("#message-required").val();
+  var allow_multiple_groups_playthrough = $("#allow_multiple_groups_playthrough").val();
 
   /*
     Check the Variables before sending them
   */
-  if(name && description && required)
+  if(name && description && required && allow_multiple_groups_playthrough != "-")
   {
     let data = {
       "questionnaire-id": id,
       "name": name,
       "description": description,
+      "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "0" ? "0" : "1",
       "message_required": required == "yes" ? "yes" : "no"
     };
     if(required == "yes")
@@ -389,7 +391,7 @@ function updateQuestionnaire(id)
           /*
             Redirect to home page
           */
-          show_notification("error","Questionnaire updated successfully.",4000);
+          show_notification("success","Questionnaire updated successfully.",4000);
           $('#edit-questionnaire').on('hidden.bs.modal', function () {
             location.reload();
           });
