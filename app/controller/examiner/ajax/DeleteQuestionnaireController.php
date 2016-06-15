@@ -1,4 +1,5 @@
 <?php
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionMapper.php';
@@ -49,6 +50,7 @@
 				$participationMapper = new ParticipationMapper;
 				$requestMapper = new RequestMapper;
 				$scheduleMapper = new QuestionnaireScheduleMapper;
+				$playthroughMapper = new PlaythroughMapper;
 
 				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
 
@@ -74,7 +76,7 @@
 					$questionMapper->deleteQuestionShownRecordsByQuestionnaire( $_POST["questionnaire-id"]);
 					$questionMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$groupParticipationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"] );
-					$questionGroupMapper->deleteRepeatsByQuestionnaire( $_POST["questionnaire-id"]);
+					$playthroughMapper->deleteAllPlaythroughs( $_POST["questionnaire-id"]);
 					$questionGroupMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$requestMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$participationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
