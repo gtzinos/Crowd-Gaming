@@ -57,6 +57,6 @@ function resetPassword()
 				Response failed recovery message
 			*/
 			show_notification("error","Email address cannot be empty.",4000);
+			notCompletedRequest = false;
 		}
-
 }
