@@ -22,8 +22,21 @@
 								<label for="email">Description</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="30">
-								 <textarea class="form-control mce-editor" style="height:150px" id="editor" data-toggle="tooltip" id="editor" id="questionnaire-description" required ></textarea>
+								 <textarea class="form-control mce-editor" style="height:150px" id="editor" data-toggle="tooltip" id="editor" id="questionnaire-description" required></textarea>
 								 	<span class="gt-icon"></span>
+							</div>
+					</div>
+					<div class="form-group has-feedback">
+							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
+								<label for="allow-multiple-groups-playthrough">Allow multiple groups playthrough ?</label>
+							</div>
+							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="select">
+								<select id="allow-multiple-groups-playthrough" class="form-control" required>
+									<option value="-" disabled selected>Allow ?</option>
+									<option value="0">No</option>
+									<option value="1">Yes</option>
+								</select>
+								<span class="gt-icon"></span>
 							</div>
 					</div>
 					<!-- Password Required -->
@@ -31,8 +44,8 @@
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
 								<label for="email">Would you like users send a password ?</label>
 							</div>
-							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="length" data-length="2">
-								<select id="message-required" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
+							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="select">
+								<select id="message-required" class="form-control" required>
 									<option value="-" disabled selected>Password Required</option>
 									<option value="no">No</option>
 									<option value="yes">Yes</option>
@@ -52,8 +65,10 @@
 					</div>
 					<br>
 					<!-- Create questionnaire submit button -->
-					<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6">
-						<button type="button" class="btn btn-primary gt-submit" onclick="createQuestionnaire()">Create questionnaire</button>
+					<div class="form-group has-feedback">
+						<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6">
+							<button type="button" class="btn btn-primary gt-submit" onclick="createQuestionnaire()">Create questionnaire</button>
+						</div>
 					</div>
 					<!-- Response Label Field -->
           <div class="form-group" style="margin-top:5%">
