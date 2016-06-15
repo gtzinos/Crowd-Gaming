@@ -204,7 +204,7 @@ function getQuestionnaireData()
     let data = {
       "name": name,
       "description": descriptionHTML,
-      "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "0" ? "0" : "1",
+      "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "1" ? "1" : "0",
       "message_required": message_required == "yes" ? "yes" : "no"
     }
 
@@ -225,7 +225,7 @@ function getQuestionnaireData()
 */
 function createQuestionnaire()
 {
-    if(notCompletedRequest == true || $("#signin-submit-button").is(':disabled'))
+    if(notCompletedRequest == true || $("#create-questionnaire-submit").is(':disabled'))
     {
       return;
     }
@@ -331,8 +331,7 @@ function getUpdateQuestionnaireData(id) {
   var name = $(document).find("#qname").val();
   var description = $(document).find("#qeditor").val();
   var required = $(document).find("#message-required").val();
-  var allow_multiple_groups_playthrough = $("#allow_multiple_groups_playthrough").val();
-
+  var allow_multiple_groups_playthrough = $("#allow-multiple-groups-playthrough").val();
   /*
     Check the Variables before sending them
   */
@@ -342,7 +341,7 @@ function getUpdateQuestionnaireData(id) {
       "questionnaire-id": id,
       "name": name,
       "description": description,
-      "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "0" ? "0" : "1",
+      "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "1" ? "1" : "0",
       "message_required": required == "yes" ? "yes" : "no"
     };
     if(required == "yes")
@@ -361,10 +360,17 @@ function getUpdateQuestionnaireData(id) {
 */
 function updateQuestionnaire(id)
 {
+  if(notCompletedRequest == true || $("#edit-questionnaire-submit").is(':disabled'))
+  {
+    return;
+  }
+
   var dataToSend = getUpdateQuestionnaireData(id);
   if(dataToSend != null)
   {
-    $("#edit-questionnaire").prop("disabled",true);
+    notCompletedRequest = true;
+    show_spinner("edit-questionnaire-spinner");
+    $("#edit-questionnaire-submit").prop("disabled",true);
     $.ajax({
       method: "POST",
       url: webRoot + "questionnaire-edit/",
@@ -391,7 +397,12 @@ function updateQuestionnaire(id)
           /*
             Redirect to home page
           */
-          show_notification("success","Questionnaire updated successfully.",4000);
+          show_notification("success","Questionnaire updated successfully.",6000);
+
+          setTimeout(function() {
+            location.reload();
+          },3000);
+
           $('#edit-questionnaire').on('hidden.bs.modal', function () {
             location.reload();
           });
@@ -410,7 +421,7 @@ function updateQuestionnaire(id)
         */
         else if(data == "1")
         {
-         response_message += "<div class='alert alert-danger'>Not a valid Questionnaire Name.</div>";
+         show_notification("error","Not a valid Questionnaire Name.",4000);
         }
         /*
            If response message == 2
@@ -453,10 +464,9 @@ function updateQuestionnaire(id)
     })
     .fail(function(xhr,error){
       displayServerResponseError(xhr,error);
-    })
-    .always(function() {
       $("#edit-questionnaire").prop("disabled",false);
-    })
+      remove_spinner("edit-questionnaire-spinner");
+    });
   }
   else
   {
