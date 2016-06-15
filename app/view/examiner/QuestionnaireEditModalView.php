@@ -19,7 +19,7 @@
               <!-- Questionnaire Name -->
               <div class="form-group has-feedback">
                   <div class="col-xs-12 col-sm-offset-1 col-sm-2">
-                    <label for="email">Name</label>
+                    <label for="qname">Name</label>
                   </div>
                   <div class="col-xs-12 col-sm-8 gt-input-group" data-validate="length" data-length="2">
                      <input class="form-control" value="<?php echo $questionnaire->getName() ?>" data-toggle="tooltip" gt-error-message="Must contain at least 2 characters" id="qname" type="text" maxlength="255" placeholder="Questionnaire name (Required)" required>
@@ -29,20 +29,48 @@
               <!-- Questionnaire Description -->
               <div class="form-group has-feedback">
                   <div class="col-xs-12 col-sm-offset-1 col-sm-2">
-                    <label for="email">Description</label>
+                    <label for="qeditor">Description</label>
                   </div>
                   <div class="col-xs-12 col-sm-8 gt-input-group" data-validate="length" data-length="30">
                      <textarea class="form-control mce-editor" style="height:150px" id="qeditor" data-toggle="tooltip" id="editor" id="questionnaire-description" required ><?php echo $questionnaire->getDescription() ?></textarea>
                       <span class="gt-icon"></span>
                   </div>
               </div>
-
+              <!-- Allow multiple groups playthrough ? -->
+    					<div class="form-group has-feedback">
+    							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
+    								<label for="allow-multiple-groups-playthrough">Allow multiple groups playthrough ?</label>
+    							</div>
+    							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="select">
+    								<select id="allow-multiple-groups-playthrough" class="form-control" required>
+                      <?php
+                        /*
+                          Allow multiple groups playthrough
+                        */
+                        if($questionnaire->getAllowMultipleGroups())
+                        {
+                          echo "<option value='0'>No</option>";
+                          echo "<option value='1' selected>Yes</option>";
+                        }
+                        /*
+                          Not allow multiple groups playthrough
+                        */
+                        else
+                        {
+                          echo "<option value='0' selected>No</option>";
+                          echo "<option value='1'>Yes</option>";
+                        }
+                      ?>
+    								</select>
+    								<span class="gt-icon"></span>
+    							</div>
+    					</div>
               <!-- Password Required -->
               <div class="form-group has-feedback">
                   <div class="col-xs-12 col-sm-offset-3 col-sm-9">
-                    <label for="email">Would you like users send a password ?</label>
+                    <label for="message-required">Would you like users send a password ?</label>
                   </div>
-                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="length" data-length="2">
+                  <div class="col-xs-12 col-sm-offset-3 col-sm-6 gt-input-group" data-validate="select">
                     <select id="message-required" class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" required>
                       <?php
                         /*
@@ -84,6 +112,14 @@
                      <span class="gt-icon"></span>
                   </div>
               </div>
+              <!-- Response Label Field -->
+              <div class="form-group">
+                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-6">
+                  <div id="edit-questionnaire-spinner"></div>
+                  <label id="questionnaire-edit-response" class="responseLabel">
+                  </label>
+                </div>
+              </div>
               <!-- Update questionnaire submit button -->
               <div class="form-group has-feedback">
                 <div class="col-xs-4 col-sm-offset-3 col-sm-2">
@@ -91,18 +127,6 @@
                 </div>
                 <div class="col-xs-3 col-sm-3" style="padding:0px">
                   <button type="button" class="btn btn-primary" onclick="location.href='<?php echo LinkUtils::generatePageLink('question-groups') . "/" . $questionnaire->getId(); ?>';" >Edit Groups</button>
-                </div>
-              </div>
-              <!-- Response Label Field -->
-              <div class="form-group" style="margin-top:5%">
-                <div class="col-xs-offset-0 col-xs-12 col-sm-offset-3 col-sm-8">
-                  <label id="questionnaire-edit-response" class="responseLabel">
-                    <?php
-                       /*
-                         Display errors
-                       */
-                    ?>
-                  </label>
                 </div>
               </div>
           </form>
