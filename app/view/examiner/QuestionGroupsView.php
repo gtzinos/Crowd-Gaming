@@ -33,7 +33,7 @@
     </br>
     </div>
     <div class="col-xs-4 col-sm-1">
-      <button class="btn" onclick="$('#question-group-users').modal('show')"><i class="fa fa-users bigicon"></i></buton>
+      <button class="btn" onclick="$('#question-group-users').modal('show')"><i class="fa fa-users smallicon"></i></buton>
     </div>
   </div>
   <?php
