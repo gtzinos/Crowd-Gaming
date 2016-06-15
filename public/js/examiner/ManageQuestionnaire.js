@@ -225,11 +225,17 @@ function getQuestionnaireData()
 */
 function createQuestionnaire()
 {
+    if(notCompletedRequest == true || $("#signin-submit-button").is(':disabled'))
+    {
+      return;
+    }
     var dataToSend = getQuestionnaireData();
 
     if(dataToSend != null)
     {
-      $('.submit').prop('disabled',true);
+      notCompletedRequest = true;
+      $('#create-questionnaire-submit').prop('disabled',true);
+      show_spinner("create-questionnaire-spinner");
       $.ajax({
         method: "POST",
         url: webRoot + "questionnaire-create/ajax",
@@ -302,13 +308,12 @@ function createQuestionnaire()
       })
       .fail(function(xhr,error){
         displayServerResponseError(xhr,error);
-      })
-      .always(function() {
         /*
           After response submit button must be enabled
         */
-        $('.submit').prop('disabled',false);
-      });
+        $('#create-questionnaire-submit').prop('disabled',false);
+        remove_spinner("create-questionnaire-spinner");
+      })
   }
   else {
     /*
