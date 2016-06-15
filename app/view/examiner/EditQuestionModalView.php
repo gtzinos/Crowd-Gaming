@@ -23,8 +23,8 @@
                <div class="col-xs-offset-0 col-xs-2 col-sm-offset-1 col-sm-2">
                  <span class="text-center"><i class="fa fa-hourglass-half mediumicon"></i></span>
                </div>
-               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="number" data-type="integer" data-min-number="5" data-max-number="180">
-                   <input id="edit-qtime" class="form-control" data-toggle="tooltip" gt-error-message="Only numbers ( 5 - \infty )" type="text" placeholder="Time to answer (sec)" required >
+               <div class="col-xs-10 col-sm-8 col-md-7 gt-input-group" data-validate="number" data-type="integer" data-min-number="-1" data-max-number="180">
+                   <input id="edit-qtime" class="form-control" data-toggle="tooltip" gt-error-message="Only numbers ( -1 - 180 )" type="text" placeholder="Time to answer (sec)" required >
                    <span class="gt-icon"></span>
                </div>
            </div>
