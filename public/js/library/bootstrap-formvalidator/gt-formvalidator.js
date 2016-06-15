@@ -72,8 +72,10 @@ $(document).ready(function() {
       */
       if(group.data('validate') == "select")
       {
-        if($(this).prop('selectedIndex') == 0)
+        if($(this).prop('disabled'))
+        {
           first_time = true;
+        }
       }
       /*
         If no value then return
@@ -177,7 +179,7 @@ $(document).ready(function() {
       */
       else if(group.data('validate') == "select" && !first_time)
       {
-  			state = $(this).prop('selectedIndex') > 0 ? true : false;
+  			state = $(this).prop('disabled') == false ? true : false;
   		}
       /*
         Else If group div have attribute validate-date="number"
@@ -205,7 +207,6 @@ $(document).ready(function() {
           If data-max-number is setted then we must check if
           the number is greater that minimum value
         */
-        //alert(group.data('number-greater-than'));
         if(group.data('max-number') != undefined && state)
         {
           state = $(this).val() <= group.data('max-number') ? true : false;
