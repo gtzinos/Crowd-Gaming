@@ -69,9 +69,9 @@
                         else
                         {
                           echo "
-                              <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
+                              <input id='publish-request-reason' type='text' class='form-control' value='' placeholder='*Tell us the reason'>
                               <span class='input-group-btn'>
-                                   <button class='btn btn-success' type='button' onclick=\"$('#required-message-modal').modal('show');\">Request for public</button>
+                                   <button class='btn btn-success' type='button' onclick='sendPublicRequest()'>Request for public</button>
                               </span>
                           ";
                         }

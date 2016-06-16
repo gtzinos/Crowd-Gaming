@@ -123,7 +123,7 @@ function delete_public_request(confirmed)
 */
 function sendPublicRequest()
 {
-  var text = $("#required-message").val();
+  var text = $("#publish-request-reason").val();
   $.post(webRoot + "publish-questionnaire-request",
   {
     "questionnaire-id" : questionnaire_id,
