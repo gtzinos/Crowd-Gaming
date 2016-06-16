@@ -52,7 +52,7 @@
 
 			<div class="form-group has-feedback">
 				<!-- Priority -->
-        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="0">
+        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="-1">
           <?php
 						$value = "";
 						if(exists("response-code") && get("response-code") != 0)
@@ -67,7 +67,7 @@
 					<span class="gt-icon"></span>
         </div>
 				<!-- Time to complete -->
-				<div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="0" >
+				<div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="-1" >
 					<?php
 						$value = "";
 						if(exists("response-code") && get("response-code") != 0)
