@@ -22,10 +22,31 @@
 			$query =   "DELETE Playthrough.* 
 						FROM Playthrough
 						INNER JOIN QuestionGroup ON QuestionGroup.id=Playthrough.question_group_id
-						WHERE QuestionGroup.questionnaire_id=1 AND Playthrough.user_id=1";
+						WHERE QuestionGroup.questionnaire_id=? AND Playthrough.user_id=?";
 			
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $questionnaire_id , $user_id);
+			$statement->executeUpdate();
+		}
+
+		public function deleteAllPlaythroughs($questionnaire_id)
+		{
+			$query = "DELETE `Playthrough`.* 
+					  FROM `Playthrough`
+					  INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Playthrough`.`question_group_id`
+					  WHERE `QuestionGroup`.`questionnaire_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaire_id);
+			$statement->executeUpdate();
+		}
+
+		public function deletePlaythroughByGroup($question_group_id)
+		{
+			$query = "DELETE FROM `Playthrough` WHERE `question_group_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i', $question_group_id);
 			$statement->executeUpdate();
 		}
 

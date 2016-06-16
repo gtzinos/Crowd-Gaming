@@ -19,7 +19,7 @@
 		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfo($sorting , $limit , $offset , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 AND `QuestionnaireParticipation`.`participation_type`=1 ";
@@ -59,6 +59,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$questionnaire->setMessage( $resultSet->get("message") ); 
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
 
 				$arrayItem["questionnaire"] = $questionnaire;
 				$arrayItem["participations"] = $resultSet->get("participations");
@@ -82,7 +83,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfoById($questionnaireId , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` AND `QuestionnaireParticipation`.`participation_type`=1
 WHERE `Questionnaire`.`id`=? ";
@@ -112,6 +113,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
 
 				$questionnaireInfo["questionnaire"] = $questionnaire;
 				$questionnaireInfo["participations"] = $resultSet->get("participations");
@@ -264,7 +266,7 @@ WHERE `Questionnaire`.`id`=? ";
 			Returns a list of all questionnaires
 		 */
 		public function findAll($sort , $offset , $limit){
-			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
 				FROM `Questionnaire`
 				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 				AND `QuestionnaireParticipation`.`participation_type`=1
@@ -295,6 +297,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -307,7 +310,7 @@ WHERE `Questionnaire`.`id`=? ";
 		 */
 		public function findPublic(){
 
-			$statement = $this->getStatement("SELECT `id`, `message`,`coordinator_id`, `name`, `description`, `public`, `message_required`, `creation_date` FROM `Questionnaire` WHERE `public`=1");
+			$statement = $this->getStatement("SELECT * FROM `Questionnaire` WHERE `public`=1");
 
 			$resultSet = $statement->execute();
 
@@ -324,6 +327,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
+				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -361,7 +365,7 @@ WHERE `Questionnaire`.`id`=? ";
 		}
 
 		public function findByCoordinator($coordinatorId , $sort = "date" , $offset = 0 , $limit = 10){
-			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations
+			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
 				FROM `Questionnaire`
 				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 				AND `QuestionnaireParticipation`.`participation_type`=1
@@ -393,7 +397,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setPublic( $resultSet->get("public") );
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
-				//$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
+				$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
 
 				$questionnaires[] =  $questionnaire;
 			}
