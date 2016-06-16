@@ -230,7 +230,7 @@ function updateSchedulePlan()
           show_notification("success","Questionnaire schedule updated successfully.",5000);
           setTimeout(function() {
             location.reload();
-          },3000);
+          },2000);
         }
         else
         {
