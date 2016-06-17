@@ -65,7 +65,7 @@
                                 <div class='input-group'>
                                   <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
                                   <span class='input-group-btn'>
-                                       <button class='btn btn-danger' type='button' onclick=\"delete_public_request()\">Delete request</button>
+                                       <button class='btn btn-danger' id='delete-publish-request-submit' type='button' onclick=\"delete_public_request()\">Delete request</button>
                                   </span>
                                 </div>
                               </div>
