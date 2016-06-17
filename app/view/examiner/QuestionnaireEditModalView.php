@@ -47,7 +47,7 @@
                         /*
                           Allow multiple groups playthrough
                         */
-                        if($questionnaire->getAllowMultipleGroups() == "0")
+                        if($questionnaire->getAllowMultipleGroups() == 0)
                         {
                           echo "<option value='0' selected>No</option>";
                           echo "<option value='1'>Yes</option>";
