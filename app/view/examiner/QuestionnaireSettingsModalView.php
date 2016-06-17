@@ -100,7 +100,7 @@
                                   <span class='gt-icon'></span>
                                 </div>
                                 <div style='margin-top:2%' class='col-sm-offset-3 col-xs-4'>
-                                  <button class='btn btn-success' type='button' onclick='sendPublicRequest()'>Request for public</button>
+                                  <button id='publish-request-submit' class='btn btn-success' type='button' onclick='sendPublicRequest()'>Request for public</button>
                                 </div>
                               </div>
                             </form>
@@ -108,6 +108,7 @@
                         }
                       }
                     ?>
+                    <span id="publish-request-spinner"></span>
             </div>
 
             <!-- Schedule menu started -->
