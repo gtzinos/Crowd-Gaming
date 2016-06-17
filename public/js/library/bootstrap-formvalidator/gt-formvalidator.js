@@ -72,7 +72,7 @@ $(document).ready(function() {
       */
       if(group.data('validate') == "select")
       {
-        if($(this).prop('disabled'))
+        if($(this).find("option:selected").prop('disabled'))
         {
           first_time = true;
         }
@@ -179,7 +179,7 @@ $(document).ready(function() {
       */
       else if(group.data('validate') == "select" && !first_time)
       {
-  			state = $(this).prop('disabled') == false ? true : false;
+  			state = $(this).find("option:selected").prop('disabled') ? false : true;
   		}
       /*
         Else If group div have attribute validate-date="number"
