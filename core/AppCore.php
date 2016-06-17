@@ -30,13 +30,6 @@
     */
     session_start();   
 
-    /*
-        Init user level
-    */
-    if(!isset($_SESSION["USER_LEVEL"]))
-    {
-        $_SESSION["USER_LEVEL"] = 0;
-    }
 
     /*
         Check Session Timeout
@@ -49,4 +42,12 @@
             session_destroy();   // destroy session data in storage
         }
         $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+    }
+
+    /*
+        Init user level
+    */
+    if(!isset($_SESSION["USER_LEVEL"]))
+    {
+        $_SESSION["USER_LEVEL"] = 0;
     }
