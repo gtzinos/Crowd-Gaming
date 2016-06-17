@@ -23,7 +23,6 @@ function getPublicationRequests()
           var i = 0,
               out = "";
           requests_array = data.requests;
-
           for(i = 0; i < requests_array.length; i++)
           {
             out += "<div style='margin-top:1.5%;border : 1.7px solid #008080' class='list-group-item col-xs-offset-0 col-xs-12 col-sm-offset-1 col-sm-10' id='ritem" + requests_array[i]['request-id'] + "'>" +
@@ -37,6 +36,11 @@ function getPublicationRequests()
                           "<div class='hidden-xs col-sm-offset-1 col-sm-3 col-md-2'>" +
                               "<div style='font-size:15px' class='list-group-item-heading'>" + requests_array[i]['request-date'].split(" ")[0] + "</div>" +
                           "</div>" +
+                      "</div>" +
+                      "<div class='row'>" +
+                        "<div class='col-xs-12 col-sm-5 col-md-6'>" +
+                            "<h5 class='list-group-item-heading'>Reason: " + requests_array[i]['request-text'] + "</h5>" +
+                        "</div>" +
                       "</div>" +
                       "<div class='row'>" +
                         "<div class='col-xs-12 col-sm-5 col-md-6'>" +
