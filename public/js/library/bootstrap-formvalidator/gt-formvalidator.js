@@ -193,7 +193,7 @@ $(document).ready(function() {
         */
 
         if((group.data('type') == "integer" || group.data('type') == "int") && !first_time && state) {
-          state = /^0$|^[1-9]+[0-9]*$/.test($(this).val());
+          state = /^(0[1-9]*)|(-?[1-9]+[0-9]*)$/.test($(this).val());
         }
         /*
           If data-min-number is setted then we must check if

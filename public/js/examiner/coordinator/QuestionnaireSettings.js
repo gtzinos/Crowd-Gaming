@@ -177,6 +177,13 @@ function removeSchedulePlan(selector)
 
 function updateSchedulePlan()
 {
+  if(notCompletedRequest == true)
+  {
+      return;
+  }
+  notCompletedRequest = true;
+  show_spinner("update-schedule-spinner");
+
   let data = {
     'start-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[0] : null,
     'end-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[2] : null
@@ -200,47 +207,61 @@ function updateSchedulePlan()
   }
 
   data['days'] = days;
-  $.post(webRoot + "update-questionnaire-schedule",
-  {
-    'questionnaire-id' : questionnaire_id,
-    'data' : JSON.stringify(data)
-  },
-  function(data,status)
-  {
-    if(status == "success")
+  $.ajax(
     {
-      /*
-        0 : all ok
-        1 : Invalid Access
-        2 : Data Validation error
-        3 : Database Error
-        -1: No data
-      */
-      if(data == "0")
+      method: "POST",
+      url: webRoot + "update-questionnaire-schedule",
+      data:
       {
-        show_notification("success","Questionnaire schedule updated successfully.",3000);
+        'questionnaire-id' : questionnaire_id,
+        'data' : JSON.stringify(data)
       }
-      else if(data == "1")
-      {
-        show_notification("error","Invalid access.",4000);
-      }
-      else if(data == "2")
-      {
-        show_notification("error","Data validation error.",4000);
-      }
-      else if(data == "3")
-      {
-        show_notification("error","General Database error.",4000);
-      }
-      else if(data == "-1")
-      {
-        show_notification("error","You didn't send data.",4000);
-      }
-      else {
-        show_notification("error","Unknown error. Please contact with us.",4000);
-      }
-    }
-  });
+    })
+    .done(function(data) {
+        /*
+          0 : all ok
+          1 : Invalid Access
+          2 : Data Validation error
+          3 : Database Error
+          -1: No data
+        */
+        if(data == "0")
+        {
+          show_notification("success","Questionnaire schedule updated successfully.",5000);
+          setTimeout(function() {
+            location.reload();
+          },2000);
+        }
+        else
+        {
+          if(data == "1")
+          {
+            show_notification("error","Invalid access.",4000);
+          }
+          else if(data == "2")
+          {
+            show_notification("error","Data validation error.",4000);
+          }
+          else if(data == "3")
+          {
+            show_notification("error","General Database error.",4000);
+          }
+          else if(data == "-1")
+          {
+            show_notification("error","You didn't send data.",4000);
+          }
+          else {
+            show_notification("error","Unknown error. Please contact with us.",4000);
+          }
+          notCompletedRequest = false;
+          remove_spinner("update-schedule-spinner");
+        }
+    })
+    .fail(function(xhr,error) {
+        displayServerResponseError(xhr,error);
+        notCompletedRequest = false;
+        remove_spinner("update-schedule-spinner");
+    });
 }
 
 function convertToDecimal(value)

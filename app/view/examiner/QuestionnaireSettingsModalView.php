@@ -19,17 +19,23 @@
             <!-- Request menu started -->
             <div id="requests" class="tab-pane fade in active">
               <br><br>
-              <div class="form-group">
-                <div class="col-xs-112 col-xs-offset-0 col-sm-offset-2 col-sm-8">
-                  <div class="input-group">
+
+
+
                     <?php
                       if($questionnaire->getPublic())
                       {
                         echo "
-                            <input type='text' class='form-control' placeholder='Status' style='color:green' value='Public (All users)' readonly>
-                            <span class='input-group-btn'>
-                                 <button class='btn btn-error' type='button' disabled>Published</button>
-                            </span>
+                          <div class='form-group'>
+                            <div class='col-xs-12 col-xs-offset-0 col-sm-offset-2 col-sm-8'>
+                              <div class='input-group'>
+                                <input type='text' class='form-control' placeholder='Status' style='color:green' value='Public (All users)' readonly>
+                                <span class='input-group-btn'>
+                                  <button class='btn btn-error' type='button' disabled>Published</button>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         ";
 
                       }
@@ -39,19 +45,31 @@
                         if($_SESSION["USER_LEVEL"] == 3)
                         {
                           echo "
-                              <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
-                              <span class='input-group-btn'>
-                                   <button class='btn btn-danger' type='button' disabled>Delete request</button>
-                              </span>
+                            <div class='form-group'>
+                              <div class='col-xs-12 col-xs-offset-0 col-sm-offset-2 col-sm-8'>
+                                <div class='input-group'>
+                                  <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
+                                  <span class='input-group-btn'>
+                                       <button class='btn btn-danger' type='button' disabled>Delete request</button>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           ";
                         }
                         else
                         {
                           echo "
-                              <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
-                              <span class='input-group-btn'>
-                                   <button class='btn btn-danger' type='button' onclick=\"delete_public_request()\">Delete request</button>
-                              </span>
+                            <div class='form-group'>
+                              <div class='col-xs-12 col-xs-offset-0 col-sm-offset-2 col-sm-8'>
+                                <div class='input-group'>
+                                  <input type='text' class='form-control' placeholder='Status' style='color:black' value='Request submitted..' readonly>
+                                  <span class='input-group-btn'>
+                                       <button class='btn btn-danger' type='button' onclick=\"delete_public_request()\">Delete request</button>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           ";
                         }
                       }
@@ -60,27 +78,37 @@
                         if($_SESSION["USER_LEVEL"] == 3)
                         {
                           echo "
-                              <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
-                              <span class='input-group-btn'>
-                                   <button class='btn btn-success' type='button' disabled>Request for public</button>
-                              </span>
+                            <div class='form-group'>
+                              <div class='col-xs-12 col-xs-offset-0 col-sm-offset-2 col-sm-8'>
+                                <div class='input-group'>
+                                  <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
+                                  <span class='input-group-btn'>
+                                       <button class='btn btn-success' type='button' disabled>Request for public</button>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           ";
                         }
                         else
                         {
                           echo "
-                              <input type='text' class='form-control' placeholder='Status' style='color:red' value='Private (Only examiners)' readonly>
-                              <span class='input-group-btn'>
-                                   <button class='btn btn-success' type='button' onclick=\"$('#required-message-modal').modal('show');\">Request for public</button>
-                              </span>
+                            <form class='form-horizontal'>
+                              <div class='form-group has-feedback'>
+                                <div class='col-xs-12 col-sm-offset-3 col-sm-7 gt-input-group' data-validate='length' data-length='5'>
+                                  <textarea id='publish-request-reason' class='form-control' placeholder='*Tell us the reason' required></textarea>
+                                  <span class='gt-icon'></span>
+                                </div>
+                                <div style='margin-top:2%' class='col-sm-offset-3 col-xs-4'>
+                                  <button id='publish-request-submit' class='btn btn-success' type='button' onclick='sendPublicRequest()'>Request for public</button>
+                                </div>
+                              </div>
+                            </form>
                           ";
                         }
-
                       }
                     ?>
-                  </div>
-                </div>
-              </div>
+                    <span id="publish-request-spinner"></span>
             </div>
 
             <!-- Schedule menu started -->
@@ -117,8 +145,11 @@
                 </div>
                 <br>
                 <div class="form-group">
+                  <div id="update-schedule-spinner"></div>
+                </div>
+                <div class="form-group">
                   <div class="col-xs-4 col-xs-offset-0 col-sm-offset-3 col-sm-4">
-                    	<input type="button" class="btn btn-primary" value="Save Changes" onclick="updateSchedulePlan()">
+                    	<input id="update-schedule-submit-button" type="button" class="btn btn-primary" value="Save Changes" onclick="updateSchedulePlan()">
                   </div>
                 </div>
               </form>
