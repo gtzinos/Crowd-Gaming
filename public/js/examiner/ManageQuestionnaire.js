@@ -123,15 +123,27 @@ function delete_public_request(confirmed)
 */
 function sendPublicRequest()
 {
-  var text = $("#publish-request-reason").val();
-  $.post(webRoot + "publish-questionnaire-request",
+  if(notCompletedRequest == true || $("#publish-request-submit").prop("disabled"))
   {
-    "questionnaire-id" : questionnaire_id,
-    "request-text" : text
-  },
-  function(data,status){
-    if(status == "success")
-    {
+    return;
+  }
+  notCompletedRequest = true;
+  $("#publish-request-submit").prop("disabled",true);
+
+  var text = $("#publish-request-reason").val();
+  show_spinner("publish-request-spinner");
+
+  $.ajax(
+  {
+      method: "POST",
+      url: webRoot + "publish-questionnaire-request",
+      data:
+      {
+        "questionnaire-id" : questionnaire_id,
+        "request-text" : text
+      }
+  })
+  .done(function(data){
       /*
         1 : Questionnaire doesnt work.
         2 : You must be coordinator to make the request.
@@ -148,39 +160,49 @@ function sendPublicRequest()
           location.reload();
         },3000);
       }
-      else if (data == "1")
-      {
-        show_notification("error","Questionnaire doesnt work.",4000);
+      else {
+        if (data == "1")
+        {
+          show_notification("error","Questionnaire doesnt work.",4000);
+        }
+        else if (data == "2")
+        {
+          show_notification("error","You must be coordinator to make the request.",4000);
+        }
+        else if (data == "3")
+        {
+          show_notification("error","This is not a valid message.",4000);
+        }
+        else if (data == "4")
+        {
+          show_notification("error","Questionnaire is already public.",4000);
+        }
+        else if (data == "5")
+        {
+          show_notification("error","Active application already exists.",4000);
+        }
+        else if (data == "6")
+        {
+          show_notification("error","General Database Error.",4000);
+        }
+        else if (data == "7")
+        {
+          show_notification("error","There is no active publish application.",4000);
+        }
+        else if (data == "-1")
+        {
+          show_notification("error","You didnt send data.",4000);
+        }
+        remove_spinner("publish-request-spinner");
+        notCompletedRequest = false;
+        $("#publish-request-submit").prop("disabled",false);
       }
-      else if (data == "2")
-      {
-        show_notification("error","You must be coordinator to make the request.",4000);
-      }
-      else if (data == "3")
-      {
-        show_notification("error","This is not a valid message.",4000);
-      }
-      else if (data == "4")
-      {
-        show_notification("error","Questionnaire is already public.",4000);
-      }
-      else if (data == "5")
-      {
-        show_notification("error","Active application already exists.",4000);
-      }
-      else if (data == "6")
-      {
-        show_notification("error","General Database Error.",4000);
-      }
-      else if (data == "7")
-      {
-        show_notification("error","There is no active publish application.",4000);
-      }
-      else if (data == "-1")
-      {
-        show_notification("error","You didnt send data.",4000);
-      }
-    }
+  })
+  .fail(function(xhr,error){
+    displayServerResponseError(xhr,error);
+    remove_spinner("publish-request-spinner");
+    $("#publish-request-submit").prop("disabled",false);
+    notCompletedRequest = false;
   });
 }
 
