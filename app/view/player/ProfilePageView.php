@@ -64,7 +64,7 @@
              </div>
              <div class="col-xs-12 col-sm-offset-1 col-sm-9 col-md-offset-0 col-md-6 gt-input-group" data-validate="select">
                <select class="form-control" data-toggle="tooltip" gt-error-message="Not a valid gender type" id="profile-gender" required>
-                 <option value='-' selected>Gender (Required)</option>
+                 <option value='-' selected disabled>Gender (Required)</option>
                <?php
                /*
                    If user parameter exists
