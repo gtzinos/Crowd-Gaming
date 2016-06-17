@@ -183,6 +183,7 @@ function updateSchedulePlan()
   }
   notCompletedRequest = true;
   show_spinner("update-schedule-spinner");
+  $("#update-schedule-submit-button").prop("disabled",true);
 
   let data = {
     'start-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[0] : null,
@@ -255,12 +256,14 @@ function updateSchedulePlan()
           }
           notCompletedRequest = false;
           remove_spinner("update-schedule-spinner");
+          $("#update-schedule-submit-button").prop("disabled",false);
         }
     })
     .fail(function(xhr,error) {
         displayServerResponseError(xhr,error);
         notCompletedRequest = false;
         remove_spinner("update-schedule-spinner");
+        $("#update-schedule-submit-button").prop("disabled",false);
     });
 }
 
