@@ -101,8 +101,10 @@ function validate(item)
   */
   if(group.data('validate') == "select")
   {
-    if($(item).prop('selectedIndex') == 0)
+    if($(item).prop('disabled'))
+    {
       first_time = true;
+    }
   }
   /*
     If no value then return
@@ -207,7 +209,7 @@ function validate(item)
   */
   else if(group.data('validate') == "select" && !first_time)
   {
-    state = $(item).prop('selectedIndex') > 0 ? true : false;
+    state = $(item).prop('disabled') ? false : true;
   }
   /*
     Else If group div have attribute validate-date="number"
