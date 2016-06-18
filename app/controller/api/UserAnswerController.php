@@ -12,7 +12,7 @@
 
 	class UserAnswerController extends AuthenticatedController
 	{
-		
+
 		public function init()
 		{
 			$this->setView( new JsonView );
@@ -20,7 +20,7 @@
 
 		public function run()
 		{
-			
+
 			$userId = $this->authenticateToken();
 
 			$httpBody = file_get_contents('php://input');
@@ -52,7 +52,7 @@
 				return;
 			}
 
-			
+
 
 			if( !$participationMapper->participatesInQuestion($userId , $parameters["question-id"] , 1 , 1))
 			{
@@ -65,10 +65,10 @@
 				http_response_code(403);
 				return;
 			}
-			
-		
-			
-			
+
+
+
+
 			if($scheduleMapper->findMinutesToStart($questionnaireMapper->findIdByQuestion($parameters["question-id"])) !== 0)
 			{
 				/*
@@ -85,14 +85,14 @@
 
 			$question = $questionMapper->findById( $parameters["question-id"] );
 			$groupId = $question->getQuestionGroupId();
-			
+
 			$coordinates = null;
 			/*
 				Check question group constraints
 			 */
 			if( $questionGroupMapper->requiresLocation($groupId) && $questionGroupParticipationMapper->findCount($groupId)>0 )
 			{
-				$coordinates = $this->getCoordinates();	
+				$coordinates = $this->getCoordinates();
 				if( $coordinates == null)
 				{
 					$this->setOutput("code", "606" );
@@ -114,7 +114,7 @@
 			}
 			else if( $questionGroupMapper->requiresLocation($groupId) && $questionGroupParticipationMapper->findCount($groupId)==0 )
 			{
-				$coordinates = $this->getCoordinates();	
+				$coordinates = $this->getCoordinates();
 				if( $coordinates == null)
 				{
 					$this->setOutput("code", "606" );
@@ -172,12 +172,12 @@
 
 				http_response_code(403);
 				return;
-			}			
+			}
 
 
 			if( !$groupHasStarted )
 			{
-				$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionnaireId);
+				$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionnaire->getId());
 
 
 				if( $activeGroups==0 &&
@@ -194,8 +194,8 @@
 				}
 
 			}
-			else if( $questionGroup->getTimeToComplete()>0 && 
-				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null && 
+			else if( $questionGroup->getTimeToComplete()>0 &&
+				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null &&
 				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())<0 )
 			{
 				print $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
@@ -206,14 +206,14 @@
 				$this->setOutput("message", "Forbidden, Group has been completed now");
 
 				http_response_code(403);
-				return;		
+				return;
 			}
 
 			/*
 				Check if the user can answer this question and if the answer he choose belongs to that question
 			 */
 
-			if( $userAnswerMapper->canAnswer($parameters[ "question-id"] , $userId ,$groupId) && 
+			if( $userAnswerMapper->canAnswer($parameters[ "question-id"] , $userId ,$groupId) &&
 				( $parameters["answer-id"] =="null" ||
 					$answerMapper->answerBelongsToQuestion($parameters["answer-id"] , $parameters["question-id"]) ) )
 			{
@@ -229,7 +229,7 @@
 				$userAnswer->setAnsweredTime(0); // Whatever , who cares
 				$userAnswer->setLatitude( $coordinates !== null ? $coordinates["latitude"] : null );
 				$userAnswer->setLongitude( $coordinates !== null ? $coordinates["longitude"] : null);
-				$userAnswer->setCorrect( $answerMapper->isCorrect( $parameters["answer-id"]) 
+				$userAnswer->setCorrect( $answerMapper->isCorrect( $parameters["answer-id"])
 										 && $questionMapper->isAnsweredInTime( $parameters[ "question-id"] , $userId ) );
 
 				/*
@@ -245,7 +245,7 @@
 					if ( $questionMapper->findNextQuestion($userId,$groupId) === null )
 					{
 						$playthroughMapper->setCompleted( $userId , $groupId);
-						
+
 						$this->setOutput("code", "201" );
 						$this->setOutput("message", "All ok , Answer was registered. Question Group Completed" );
 
