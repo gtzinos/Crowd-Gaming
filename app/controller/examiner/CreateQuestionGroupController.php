@@ -99,7 +99,7 @@
 				$questionGroup->setPriority( isset( $_POST["priority"])?$_POST["priority"]:1);
 
 
-				if( isset( $_POST["time-to-complete"] ) && $_POST["time_to_complete"]>=0 )
+				if( isset( $_POST["time-to-complete"] ) && $_POST["time-to-complete"]>=0 )
 				{
 					$questionGroup->setTimeToComplete( $_POST["time-to-complete"]);
 				}
