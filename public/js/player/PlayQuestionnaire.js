@@ -11,7 +11,10 @@ $(window).on("load",function()
      }
      else
      {
-       window.location.replace(webRoot);
+       show_notification("error","You browser doesn't support geolocation.",4000);
+       setTimeout(function() {
+         window.location.replace(webRoot);
+       },3000);
      }
  });
  //try to access on client geolocation
