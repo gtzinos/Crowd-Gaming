@@ -54,7 +54,7 @@
 
 			/*
 				Post Request Handling , Edit Question
-				
+
 				Response Code
 				0 All ok
 				1 Group name already exists
@@ -79,7 +79,7 @@
 				$name = htmlspecialchars($_POST["name"] ,ENT_QUOTES);
 
 
-				if( $questionGroup->getName()!=$name && $questionGroupMapper->nameExists( $name ) ) 
+				if( $questionGroup->getName()!=$name && $questionGroupMapper->nameExists( $name ) )
 				{
 					$this->setOutput('response-code' , 1);
 					return;
@@ -98,11 +98,11 @@
 					return;
 				}
 
-				$questionGroup->setName( $name );				
+				$questionGroup->setName( $name );
 				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
 				$questionGroup->setPriority( isset( $_POST["priority"])?$_POST["priority"]:1);
 
-				if( isset( $_POST["time-to-complete"] ) && $_POST["time_to_complete"]>=0 )
+				if( isset( $_POST["time-to-complete"] ) && $_POST["time-to-complete"]>=0 )
 				{
 					$questionGroup->setTimeToComplete( $_POST["time-to-complete"]);
 				}
@@ -110,20 +110,20 @@
 				{
 					$questionGroup->setTimeToComplete(-1);
 				}
-				
+
 				if(  !empty( $_POST["latitude"]) && !empty($_POST["longitude"]) && !empty($_POST["radius"]) )
 				{
 					if( !is_numeric($_POST["latitude"]) || $_POST["latitude"]< -90 || $_POST["latitude"] > 90 )
 					{
 						$this->setOutput('response-code' , 3);
 						return;
-					} 
+					}
 
 					if( !is_numeric($_POST["longitude"]) || $_POST["longitude"]< -180 || $_POST["longitude"] > 180 )
 					{
 						$this->setOutput('response-code' , 4);
 						return;
-					} 
+					}
 
 					if( !is_numeric($_POST["radius"]) || $_POST["radius"]< 5 )
 					{
@@ -133,7 +133,7 @@
 
 					$questionGroup->setLatitude( $_POST["latitude"] );
 					$questionGroup->setLongitude( $_POST["longitude"] );
-					$questionGroup->setRadius( $_POST["radius"] ); 
+					$questionGroup->setRadius( $_POST["radius"] );
 				}else{
 					$questionGroup->setLatitude( null );
 					$questionGroup->setLongitude( null  );
