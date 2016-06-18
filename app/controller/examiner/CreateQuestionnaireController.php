@@ -10,7 +10,7 @@
 		{
 			if( isset($this->params[1]) && $this->params[1]=="ajax")
 			{
-				$this->setHeadless(true);
+				$this->setView( new JsonView);
 			}
 			else
 			{
@@ -50,7 +50,7 @@
 
 			if( isset($this->params[1], $_POST["name"] ,  $_POST["description"] , $_POST["message_required"] , $_POST["allow-multiple-groups-playthrough"]) && $this->params[1]=="ajax" )
 			{
-
+				$this->setOutput("response-code" , -1);
 				$questionnaireMapper = new QuestionnaireMapper;
 
 				$name = htmlspecialchars($_POST["name"] , ENT_QUOTES);
@@ -72,23 +72,23 @@
 				if( strlen($name) < 3 )
 				{
 
-					print 1; // Name Validation error
+					$this->setOutput("response-code" , 1); // Name Validation error
 
 				}
 				else if(  $questionnaireMapper->nameExists( $name ) )
 				{
-					print 5; // Name already exists
+					$this->setOutput("response-code" , 5); // Name already exists
 				}
 				else if( strlen($description) < 30 )
 				{
 
-					print 2; // Descriptin validation error
+					$this->setOutput("response-code" , 2); // Descriptin validation error
 
 				}
 				else if( $messageRequired != "no" && $messageRequired != "yes")
 				{
 
-					print 3; // Password required error
+					$this->setOutput("response-code" , 3); // Password required error
 
 				}
 				else
@@ -135,14 +135,15 @@
 						$participationMapper->persist($playerParticipation);
 
 						DatabaseConnection::getInstance()->commit();
-						print 0; // All ok
+						$this->setOutput("response-code" , 0); // All ok
+						$this->setOutput("questionnaire-id" , $questionnaireId);
 
 					}
 					catch(DatabaseException $ex)
 					{
 						
 						DatabaseConnection::getInstance()->rollback();
-						print 4; // Database Error
+						$this->setOutput("response-code" , 4); // Database Error
 					}
 				}
 			}

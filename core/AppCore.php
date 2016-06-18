@@ -18,12 +18,8 @@
     require '../core/router/RouteDispatcher.php';
     require '../core/router/Routes.php';
     require '../core/navigation/Menus.php';
-    require '../core/validation/Validator.php';
-
     require '../app/config/config_general.php';
     require '../app/config/config_menu.php';
-    require '../app/config/config_validations.php';
-
 
     /*
         start session

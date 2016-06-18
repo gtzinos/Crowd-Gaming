@@ -49,7 +49,7 @@
 			$query = "SELECT `ExaminerApplication`.* , `User`.name , `User`.`surname`
 					  FROM `ExaminerApplication`
 					  INNER JOIN `User` on `User`.`id`=`ExaminerApplication`.`user_id`
-					  WHERE `ExaminerApplication`.`accepted` = 0";
+					  WHERE `ExaminerApplication`.`accepted` IS NULL";
 
 			$statement = $this->getStatement($query);
 
