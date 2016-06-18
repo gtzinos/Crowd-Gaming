@@ -10,30 +10,29 @@
 		const EMAIL_VALIDATION  = 2;
 		const LIST_VALIDATION	= 3;
 
-
-		private $validation;
 		private $validations;
 
 		public function __construct()
 		{
-			$validation = new Validation;
+			$this->validations = array();
 		}
 
 		public function validate( $key , $value)
 		{
-			switch ( $validations[$key]["type"] ) 
+			$validation = new Validation;
+			switch ( $this->validations[$key]["type"] ) 
 			{
-				case LENGTH_VALIDATION:
-					return $validation->checkStringLength( $value , $validations[$key]["low"] ,$validations[$key]["high"] );
+				case self::LENGTH_VALIDATION:
+					return $validation->checkStringLength( $value , $this->validations[$key]["low"] ,$this->validations[$key]["high"] );
 					break;
-				case RANGE_VALIDATION:
-					return $validation->checkNumericRange( $value , $validations[$key]["low"] ,$validations[$key]["high"] );
+				case self::RANGE_VALIDATION:
+					return $validation->checkNumericRange( $value , $this->validations[$key]["low"] ,$this->validations[$key]["high"] );
 					break;
-				case EMAIL_VALIDATION:
+				case self::EMAIL_VALIDATION:
 					return $validation->checkEmailFormat( $value );
 					break;
-				case LIST_VALIDATION:
-					return $validation->checkStringLength( $value , $validations[$key]["list"] );
+				case self::LIST_VALIDATION:
+					return $validation->checkStringLength( $value , $this->validations[$key]["list"] );
 					break;
 			}
 		}
