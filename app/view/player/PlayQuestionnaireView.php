@@ -11,6 +11,7 @@
     $questionnaire = get("questionnaire")["questionnaire"];
     echo "<script>
             var questionnaire_id = " . $questionnaire->getId() . ";
+            var allow_multiple_groups = ". $questionnaire->getAllowMultipleGroups() . ";
             var time_left = " . intval(get("questionnaire")["time-left-to-end"]) . ";
             var my_questionnaires_page = '" . LinkUtils::generatePageLink("my-questionnaires") . "';
           </script>";
