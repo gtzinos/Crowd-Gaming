@@ -285,6 +285,7 @@ function createQuestionnaire()
         data: dataToSend
       })
       .done(function(data){
+        var code = data["response-code"];
         /*
           0			: Created successfully
           1			: Name Validation error
@@ -292,21 +293,21 @@ function createQuestionnaire()
           3			: Password Required Error
           4			: Database Error
         */
-        if(data == "0")
+        if(code == "0")
         {
           /*
             Success message
           */
            show_notification("success","Your questionnaire created successfully.",4000);
            setTimeout(function() {
-             location.reload();
+             window.location.replace(questionnaire_view_page + "/" + data["questionnaire-id"]);
            },3000);
         }
         /*
            If response message == 1
            Name Validation error
         */
-        else if(data == "1")
+        else if(code == "1")
         {
           show_notification("error","This is not a valid questionnaire name.",4000);
         }
@@ -314,7 +315,7 @@ function createQuestionnaire()
            If response message == 2
            Description Validation error
         */
-        else if(data == "2")
+        else if(code == "2")
         {
           show_notification("error","This is not a valid questionnaire description.",4000);
         }
@@ -322,7 +323,7 @@ function createQuestionnaire()
            If response message == 3
            Password Required Error
         */
-        else if(data == "3")
+        else if(code == "3")
         {
           show_notification("error","This is not a valid password required option.",4000);
         }
@@ -330,7 +331,7 @@ function createQuestionnaire()
            If response message == 4
            Database Error
         */
-        else if(data == "4")
+        else if(code == "4")
         {
           show_notification("error","General database error. Please try later!",4000);
         }
@@ -338,7 +339,7 @@ function createQuestionnaire()
            If response message == 5
            Name already exists
         */
-        else if(data == "5")
+        else if(code == "5")
         {
           show_notification("error","This questionnaire name already exists.",4000);
         }

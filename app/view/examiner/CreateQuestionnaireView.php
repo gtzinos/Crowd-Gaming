@@ -4,6 +4,11 @@
 		<script src="<?php print LinkUtils::generatePublicLink("js/examiner/ManageQuestionnaire.js"); ?>"></script>
 <?php elseif($section == "MAIN_CONTENT" ) : ?>
 	<div class="container-fluid">
+			<?php
+					echo "  <script>
+										var questionnaire_view_page = '" . LinkUtils::generatePageLink('questionnaire') . "';
+									</script>";
+			?>
 			<legend class="text-center header">Create a new questionnaire</legend>
 			<form method="POST" class="form-horizontal" onsubmit="return false">
 					<!-- Questionnaire Name -->
@@ -81,8 +86,6 @@
 					</div>
 		</form>
 		<!-- fa fa-pencil-square-o -->
-
-
 	</div>
 
 <?php endif; ?>
