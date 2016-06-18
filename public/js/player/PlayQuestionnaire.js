@@ -39,21 +39,21 @@ $(window).on("load",function()
  function showError(error) {
      switch(error.code) {
          case error.PERMISSION_DENIED:
-             show_notification("error","User denied the request for Geolocation.",2000);
+             show_notification("error","User denied the request for Geolocation.",4000);
              break;
          case error.POSITION_UNAVAILABLE:
-             show_notification("error","Location information is unavailable.",2000);
+             show_notification("error","Location information is unavailable.",4000);
              break;
          case error.TIMEOUT:
-             show_notification("error","The request to get user location timed out.",2000);
+             show_notification("error","The request to get user location timed out.",4000);
              break;
          case error.UNKNOWN_ERROR:
-             show_notification("error","An unknown error occurred.",2000);
+             show_notification("error","An unknown error occurred.",4000);
              break;
      }
      setTimeout(function() {
       window.location.replace(webRoot);
-    },2000);
+    },3000);
  }
  //change auto refresh status
  function changeAutoRefreshStatus()
@@ -77,7 +77,13 @@ $(window).on("load",function()
    var i,distance;
    for(i=0;i<groups.length;i++)
    {
-     distance = calculateDistance(i);
+     if(groups[i]["address"])
+     {
+       distance = calculateDistance(i);
+     }
+     else {
+       distance = 0;
+     }
      $("#distance" + groups[i].id).html("Distance: " + distance + "m ");
      if(groups[i]["total-questions"] != groups[i]["answered-questions"])
      {
@@ -149,11 +155,12 @@ function getAddresses()
 {
   var i = 0;
   var out = "";
-
+  var counter = 0;
   //get addresses from google api
   for(i=0; i<groups.length; i++)
   {
     if(groups[i]["latitude"] == null || groups[i]["longitude"] == null) {
+      counter++;
       continue;
     }
     (function(i)
@@ -175,7 +182,8 @@ function getAddresses()
           if(status == "success")
           {
             groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
-            if(groups[groups.length-1]["address"] != undefined)
+            counter++;
+            if(counter == groups.length)
             {
               displayData();
             }
@@ -223,19 +231,27 @@ function displayData()
                             out += "<span style='color:red'>No address<span>";
                           }
                           out += "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>";
-                          //Questio group completed
+                          //Question group completed
                           if(groups[i]["answered-questions"] == groups[i]["total-questions"])
                           {
                             out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' disabled value='Completed'> ";
                           }
                           //Question group not completed
                           else {
-                            if(calculateDistance(i) == 0)
+                            //With address
+                            if(groups[i]["address"])
                             {
-                              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
+                              if(calculateDistance(i) == 0)
+                              {
+                                out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
+                              }
+                              else {
+                                out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' disabled>";
+                              }
                             }
+                            //No address
                             else {
-                              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' disabled>";
+                              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
                             }
                           }
                           out += "</div>" +
