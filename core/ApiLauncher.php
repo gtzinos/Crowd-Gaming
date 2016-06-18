@@ -18,4 +18,3 @@
 
     $controllerName = basename($route["controller"] , ".php" );
     $controller = new $controllerName($route["parameters"]);
-    $controller->setValidator($validator);
