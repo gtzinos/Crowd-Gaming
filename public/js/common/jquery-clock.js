@@ -7,7 +7,7 @@ var default_clock_options = {
 };
 var flag = 0;
 // Countdown initialization
-function show_clock(element,finalDate,strftime="%m months %-d days %-H h %M min %S sec",onFinishMessage = "Your time expired.",reloadOnFinish=true)
+function show_clock(element,finalDate,onFinishMessage = "Your time expired.",onFinishMethod)
 {
   $(element).countdown(finalDate)
   //for each update
@@ -28,11 +28,9 @@ function show_clock(element,finalDate,strftime="%m months %-d days %-H h %M min 
       show_notification("error",onFinishMessage,5000);
     }
     $(this).html(event.strftime("%H:%M:%S"));
-    if(reloadOnFinish)
+    if(onFinishMethod != "")
     {
-      setTimeout(function() {
-        location.reload(); //back to my questionnaires
-      },5000);
+      eval(onFinishMethod);
     }
   });
 }
