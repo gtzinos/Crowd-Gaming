@@ -427,7 +427,7 @@ function getNextQuestionWithoutCoordinates()
                 "</div>";
         $("#play-questionnaire-form").html(out);
         //var answer_countdown = parseInt(data.question['time-to-answer']);
-        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired.","questionTimeExpired");
+        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired.","questionTimeExpired()");
       }
     },
     error: function(xhr, status, error) {
