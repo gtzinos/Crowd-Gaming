@@ -34,6 +34,9 @@ case $1 in
 	
 		curl --header "Authorization: $TOKEN" --data '{ "question-id":"'$2'" , "answer-id":"'$3'" }' $URL/rest_api/answer | python -m json.tool;;
 
+	"post-report" )
+
+		curl --header "Authorization: $TOKEN" --data '{ "questionnaire-id":"'$2'" , "report-comment":"'$3'" }' $URL/rest_api/report  ;; #| python -m json.tool ;;
 esac
 
 echo

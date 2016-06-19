@@ -50,4 +50,13 @@
 			return $output;
 		}
 
+		public function deleteByQuestionnaire($questionnaireId)
+		{
+			$query = "DELETE FROM `UserReport` WHERE `questionnaire_id`=?";
+			$statement = $this->getStatement($query);
+			$statement->setParameters("i" , $questionnaireId);
+
+			$statement->executeUpdate();
+		}
+
 	}

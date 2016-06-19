@@ -15,7 +15,7 @@
 	Routes::add( 'questionnaire\/[0-9]+\/score' , 'api/GetScoreController.php' , 0);
 	Routes::add( 'questionnaire' , 'api/GetQuestionnaireController.php' , 0);
 	Routes::add( 'answer' , 'api/UserAnswerController.php' , 0);
-
+	Routes::add( 'report' , 'api/PostUserReportController.php' , 0);
 	
 	/*
 		The Page to load when the page parameter is not defined

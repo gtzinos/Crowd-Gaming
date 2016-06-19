@@ -171,16 +171,20 @@ WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=? AND `ti
 
 		public function isQuestionnaireCompleted($user_id , $questionnaire_id)
 		{
-			$query = "SELECT `completed` FROM Playthrough WHERE user_id=? AND question_group_id=?";
+			$query = "SELECT sum(`Playthrough`.`completed`) as completed , count(*) as total_groups FROM `Playthrough`
+INNER JOIN `QuestionGroup` ON `Playthrough`.`question_group_id`=`QuestionGroup`.`id`
+WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=?";
 
 			$statement = $this->getStatement($query);
-			$statement->setParameters('ii' , $user_id , $questionnaire_id);
+			$statement->setParameters('ii' , $questionnaire_id , $user_id);
 
 			$set = $statement->execute();
 
-			if($set->next())
-				return $set->get("completed");
-			return null;
+			if( $set->next() && $set->get("completed") == $set->get("total_groups") )
+			{
+				return true;
+			}
+			return false;			
 		}
 
 

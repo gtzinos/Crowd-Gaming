@@ -9,6 +9,7 @@
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/RequestMapper.php';
+	include_once '../app/model/mappers/user/UserReportMapper.php';
 	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class DeleteQuestionnaireController extends Controller
@@ -51,6 +52,7 @@
 				$requestMapper = new RequestMapper;
 				$scheduleMapper = new QuestionnaireScheduleMapper;
 				$playthroughMapper = new PlaythroughMapper;
+				$userReportMapper = new UserReportMapper;
 
 				$questionnaire = $questionnaireMapper->findById( $_POST["questionnaire-id"] );
 
@@ -81,6 +83,7 @@
 					$requestMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$participationMapper->deleteByQuestionnaire( $_POST["questionnaire-id"]);
 					$scheduleMapper->deleteByQuestionnaire($_POST["questionnaire-id"]);
+					$userReportMapper->deleteByQuestionnaire($_POST["questionnaire-id"]);
 					$questionnaireMapper->deleteById( $_POST["questionnaire-id"]);
 
 
