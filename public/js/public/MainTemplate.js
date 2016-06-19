@@ -218,3 +218,14 @@ function keyPressForm(e) {
   }
 
 }
+
+/*
+  Reload page after #Parameter1 seconds
+  #Parameter 1 : X seconds
+*/
+function reloadPage(afterSeconds)
+{
+  setTimeout(function() {
+        location.reload();
+  },afterSeconds);
+}
