@@ -2,6 +2,16 @@ var groups = [];
 var current_client_position;
 var auto_refresh; //auto refresh time out refference
 var target_group_index;
+/*
+  On mouse over the edit or delete buttons
+*/
+$(document)
+  .on("mouseover","span.glyphicon-erase",function(e) {
+    $(e.target).css('cursor', 'hand');
+  })
+  .on("mouseleave","span.glyphicon-erase",function(e) {
+    $(e.target).css('cursor', 'pointer');
+  });
 //initialize page
 $(window).on("load",function()
  {
@@ -226,6 +236,7 @@ function displayData()
                     "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
                     "/" +
                     "<span id='total-questions" + groups[i].id + "'>" + groups[i]["total-questions"] + "</span>" +
+                    " <span style='color:#36A0FF' title='Reset your answers' class='glyphicon glyphicon-erase' onclick='target_group_index = " + i + ";resetQuestionGroupAnswers(" + i + ");'></span>" +
                   "</div>";
           if(groups[i]["priority"] != "-1")
           {
@@ -687,6 +698,56 @@ function refreshAnswers()
 //return true if game completed
 function completed() {
   return $("input[id^=play][disabled]").length == $("input[id^=play]").length;
+}
+
+function resetQuestionGroupAnswers(target)
+{
+  var id = groups[target].id;
+  /*
+    200 : Everything ok.
+    604 : Forbidden, You dont have access to that questionnaire
+    607 : Forbidden , you cant reset this question group.
+    608 : Not Found, Group doesnt not exist or doesnt belong to questionnaire
+    609 : Question Group doesnt have any more questions
+    611 : Maximum times of question group replays reached.
+  */
+  $.ajax({
+    method: "POST",
+    url: webRoot + "rest_api/questionnaire/" + questionnaire_id + "/group/" + id + "/reset",
+    data: { }
+  })
+  .done(function(data) {
+    if(data.code == "200")
+    {
+      show_notification("success",data.message,4000);
+      groups[target]["answered-questions"] = 0;
+      groups[target]["is-completed"] = null;
+
+      //update answered-questions
+      $("#answered"+id).html(groups[target]["answered-questions"]);
+      //check if question group completed
+      if(answered == total_questions || (groups[target_group_index]["is-completed"] != null && groups[target_group_index]["is-completed"] == true))
+      {
+        $("#play" + id).val("Play");
+      }
+    }
+  })
+  .fail(function(xhr, status, error) {
+    var response = JSON.parse(xhr.responseText);
+    switch(response.code)
+    {
+      case "604":
+      case "607":
+      case "608":
+      case "609":
+      case "611":
+        show_notification("error",response.message,4000);
+        break;
+      default:
+        show_notification("error","Unknow error. Please contact with us.",4000);
+        break;
+    }
+  });
 }
 
 function questionnaireTimeCompleted() {
