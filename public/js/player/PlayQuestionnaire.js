@@ -455,12 +455,12 @@ function getNextQuestionWithoutCoordinates()
           var response = JSON.parse(xhr.responseText);
           switch(response.code)
           {
-            case 603:
-            case 604:
-            case 605:
-            case 606:
-            case 607:
-            case 608:
+            case "603":
+            case "604":
+            case "605":
+            case "606":
+            case "607":
+            case "608":
               show_notification("error",response.message,4000);
               break;
             default:
@@ -562,11 +562,11 @@ function getNextQuestionUsingCoordinates(position)
           var response = JSON.parse(xhr.responseText);
           switch(response.code)
           {
-            case 603:
-            case 604:
-            case 606:
-            case 607:
-            case 608:
+            case "603":
+            case "604":
+            case "606":
+            case "607":
+            case "608":
               show_notification("error",response.message,4000);
               break;
             default:
@@ -648,12 +648,12 @@ function confirmAnwser(question_id,usingCoordinates)
       var response = JSON.parse(xhr.responseText);
       switch(response.code)
       {
-        case 603:
-        case 605:
-        case 606:
-        case 607:
-        case 500:
-        case 610:
+        case "603":
+        case "605":
+        case "606":
+        case "607":
+        case "500":
+        case "610":
           show_notification("error",response.message,4000);
           break;
         default:
