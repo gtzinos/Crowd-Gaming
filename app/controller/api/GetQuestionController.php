@@ -132,6 +132,37 @@
 			}			
 
 
+			if( !$groupHasStarted )
+			{
+				$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionnaireId);
+
+
+				if( $activeGroups==0 && !$playthroughMapper->groupLeftWithPriority($userId , $questionnaireId , $currentPriority) )
+					$currentPriority++;
+
+				if( $currentPriority != $questionGroup->getPriority() )
+				{
+					$this->setOutput("code", "616");
+					$this->setOutput("message", "Forbidden, You must complete other question groups first");
+
+					http_response_code(403);
+					return;
+				}
+
+			}
+			else if( $questionGroup->getTimeToComplete()>0 && 
+				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null && 
+				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())<0 )
+			{
+				$playthroughMapper->setCompleted($userId , $groupId);
+
+				$this->setOutput("code", "617");
+				$this->setOutput("message", "Forbidden, Group has been completed");
+
+				http_response_code(403);
+				return;		
+			}
+
 			/*
 				Check question group constraints
 			 */
@@ -197,36 +228,7 @@
 			}
 
 
-			if( !$groupHasStarted )
-			{
-				$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionnaireId);
-
-
-				if( $activeGroups==0 && !$playthroughMapper->groupLeftWithPriority($userId , $questionnaireId , $currentPriority) )
-					$currentPriority++;
-
-				if( $currentPriority != $questionGroup->getPriority() )
-				{
-					$this->setOutput("code", "616");
-					$this->setOutput("message", "Forbidden, You must complete other question groups first");
-
-					http_response_code(403);
-					return;
-				}
-
-			}
-			else if( $questionGroup->getTimeToComplete()>0 && 
-				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null && 
-				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())<0 )
-			{
-				$playthroughMapper->setCompleted($userId , $groupId);
-
-				$this->setOutput("code", "617");
-				$this->setOutput("message", "Forbidden, Group has been completed");
-
-				http_response_code(403);
-				return;		
-			}
+			
 
 			try
 			{
