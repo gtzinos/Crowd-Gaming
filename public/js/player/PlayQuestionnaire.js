@@ -391,7 +391,7 @@ function getNextQuestionWithoutCoordinates()
           608 : Not Found, Group doesnt not exist or doesnt belong to questionnaire
           609 : Question Group doesnt have any more questions
       */
-      if(data.code == "201")
+      if(data.code == "200")
       {
         if(!$("#play-questionnaire").hasClass('in'))
         {
