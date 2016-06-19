@@ -32,8 +32,9 @@
 				4		: Messsage validation error
 				5		: Phone validation error
 				6		: Could not send email
+				7		: Captcha Failed
 			 */
-			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"] , $_POST["phone"]) ){
+			if( isset( $_POST["name"] , $_POST["surname"] , $_POST["email"] , $_POST["message"] , $_POST["phone"] , $_POST["g-recaptcha-response"])  ){
 				$this->sendContactMail();
 			}
 
@@ -46,6 +47,29 @@
 			$email = htmlspecialchars( $_POST["email"] , ENT_QUOTES);
 			$message = htmlspecialchars($_POST["message"] , ENT_QUOTES);
 			$phone = htmlspecialchars($_POST["phone"] , ENT_QUOTES);
+			$captchaResponse = $_POST["g-recaptcha-response"];
+
+
+			global $_CONFIG;
+			/*
+				Captcha Check
+			 */
+			$curl = curl_init();
+
+			curl_setopt( $curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+			curl_setopt( $curl, CURLOPT_POST ,1);
+			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['g-recaptcha-response'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);			
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+
+			$responseJson = curl_exec($curl);
+
+			$response = json_decode($responseJson , true);
+
+			if( $response["success"] != true )
+			{
+				$this->setArg("response-code" , 7);
+				return;
+			}
 
 			/*
 				Validation
