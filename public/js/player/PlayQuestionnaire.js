@@ -700,5 +700,8 @@ function questionnaireTimeCompleted() {
 
 function questionTimeExpired()
 {
-  alert("Time expired callback");
+  if($("#play-questionnaire").hasClass('in') && $("input[name='optradio']:checked").length == 1)
+  {
+    $("#confirm-answer-button").trigger("click");
+  }
 }
