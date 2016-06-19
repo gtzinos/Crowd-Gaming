@@ -110,12 +110,26 @@
 			
 			if( $groupCompleted )
 			{
-				$this->setOutput("code", "607");
+				$this->setOutput("code", "617");
 				$this->setOutput("message", "Forbidden, Group has been completed");
 
 				http_response_code(403);
 				return;
 			}
+
+			$questionnaire = $questionnaireMapper->findById($questionnaireId);
+
+
+			if( !$groupHasStarted &&
+				 $activeGroups >= 1 &&
+				!$questionnaire->getAllowMultipleGroups() )
+			{
+				$this->setOutput("code", "618");
+				$this->setOutput("message", "Forbidden, This questionnaire doesnt allow multiple question group participations");
+
+				http_response_code(403);
+				return;
+			}			
 
 
 			/*
@@ -182,20 +196,6 @@
 				}
 			}
 
-			$questionnaire = $questionnaireMapper->findById($questionnaireId);
-
-
-			if( !$groupHasStarted &&
-				 $activeGroups >= 1 &&
-				!$questionnaire->getAllowMultipleGroups() )
-			{
-				$this->setOutput("code", "607");
-				$this->setOutput("message", "Forbidden, This questionnaire doesnt allow multiple question group participations");
-
-				http_response_code(403);
-				return;
-			}			
-
 
 			if( !$groupHasStarted )
 			{
@@ -207,7 +207,7 @@
 
 				if( $currentPriority != $questionGroup->getPriority() )
 				{
-					$this->setOutput("code", "607");
+					$this->setOutput("code", "616");
 					$this->setOutput("message", "Forbidden, You must complete other question groups first");
 
 					http_response_code(403);
@@ -219,12 +219,10 @@
 				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null && 
 				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())<0 )
 			{
-				print $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
-				print "Here";
 				$playthroughMapper->setCompleted($userId , $groupId);
 
-				$this->setOutput("code", "607");
-				$this->setOutput("message", "Forbidden, Group has been completed now");
+				$this->setOutput("code", "617");
+				$this->setOutput("message", "Forbidden, Group has been completed");
 
 				http_response_code(403);
 				return;		
