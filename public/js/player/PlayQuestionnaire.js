@@ -155,7 +155,6 @@ function getQuestionGroups()
     if(status == "success")
     {
       groups = sortJsonByKey(data["question-group"],"priority");
-      alert(JSON.stringify(data));
       getAddresses();
     }
   });
@@ -614,7 +613,8 @@ function confirmAnwser(question_id,usingCoordinates)
   .done(function(data)
   {
       /*
-        200 : Everything ok.
+        200 : Everything ok. Question answered successfully
+        201 : Everything ok. Question answered, Question group completed
         603 : Forbidden, Questionnaire offline
         605 : Forbidden, You cant answer this question
         606 : Forbidden, Coordinates not provided.
@@ -622,10 +622,16 @@ function confirmAnwser(question_id,usingCoordinates)
         500 : Internal server error.
         610 : Invalid Request, question-id and/or answer-id were not given
       */
-      if(data.code == "200")
-      {
+        if(data.code == "200")
+        {
+          show_notification("success",data.message,3000);
+        }
+        else if(data.code == "201")
+        {
+          show_notification("success",data.message,3000);
+          $("#play-questionnaire").modal("toggle");
+        }
         $('#question-count-down').countdown('stop');
-        show_notification("success","Question anwsered successfully.",3000);
         $.when(refreshAnswers()).done(function() {
           if(!completed())
           {
@@ -643,7 +649,6 @@ function confirmAnwser(question_id,usingCoordinates)
             },10000);
           }
         });
-      }
     })
     .fail(function(xhr, status, error) {
       var code = JSON.parse(xhr.responseText).code;
@@ -691,6 +696,7 @@ function refreshAnswers()
 
   //update answered-questions
   $("#answered"+id).html(answered);
+  groups[target_group_index]["answered-questions"] = answered;
   //check if question group completed
   if(answered == total_questions)
   {
