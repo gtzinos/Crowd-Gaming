@@ -169,6 +169,21 @@ WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=? AND `ti
 			return 0;
 		}
 
+		public function isQuestionnaireCompleted($user_id , $questionnaire_id)
+		{
+			$query = "SELECT `completed` FROM Playthrough WHERE user_id=? AND question_group_id=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $user_id , $questionnaire_id);
+
+			$set = $statement->execute();
+
+			if($set->next())
+				return $set->get("completed");
+			return null;
+		}
+
+
 		public function isCompleted($user_id , $question_group_id)
 		{
 			$query = "SELECT `completed` FROM Playthrough WHERE user_id=? AND question_group_id=?";
