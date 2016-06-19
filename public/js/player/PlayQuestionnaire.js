@@ -37,7 +37,7 @@ $(window).on("load",function()
  //save client location
  function initializePosition(position) {
      savePlayerLocation(position);
-     show_clock("#count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD HH:mm:00"),"","");
+     show_clock("#count-down",moment().add(time_left,'minutes').format("YYYY/MM/DD HH:mm:00"),"","questionnaireTimeCompleted()");
      //change visibility of elements
      $("#questionnaire-name").css("display","block");
      $("#count-down").css("display","block");
@@ -427,7 +427,7 @@ function getNextQuestionWithoutCoordinates()
                 "</div>";
         $("#play-questionnaire-form").html(out);
         //var answer_countdown = parseInt(data.question['time-to-answer']);
-        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired.","");
+        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired.","questionTimeExpired");
       }
     },
     error: function(xhr, status, error) {
@@ -535,7 +535,7 @@ function getNextQuestionUsingCoordinates(position)
                   "</div>";
           $("#play-questionnaire-form").html(out);
           //var answer_countdown = parseInt(data.question['time-to-answer']);
-          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired","");
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired","questionTimeExpired()");
         }
       },
       error: function(xhr, status, error) {
@@ -685,4 +685,20 @@ function refreshAnswers()
 //return true if game completed
 function completed() {
   return $("input[id^=play][disabled]").length == $("input[id^=play]").length;
+}
+
+function questionnaireTimeCompleted() {
+  $("#play-questionnaire").modal("toggle");
+  HoldOn.open({
+     theme:"sk-cube-grid",
+     message: "<br><div class='col-xs-12' style='font-size:16px'>Questionnaire time expired. We will redirect you, to your questionnaires page."
+  });
+  setTimeout(function() {
+    window.location.replace(my_questionnaires_page);
+  },10000);
+}
+
+function questionTimeExpired()
+{
+  alert("Time expired callback");
 }
