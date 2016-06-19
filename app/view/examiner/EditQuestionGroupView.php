@@ -52,7 +52,7 @@
 
 			<div class="form-group has-feedback">
 				<!-- Priority -->
-        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="-1">
+        <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
           <?php
 						$value = "";
 						if(exists("response-code") && get("response-code") != 0)
@@ -62,7 +62,7 @@
 						else if(get("question-group")->getPriority() != "-1") {
 							$value .= get("question-group")->getPriority();
 						}
-						echo "<input class='form-control' value='" . $value . "' id='priority' name='priority' type='text' placeholder='Priority' data-toggle='tooltip' gt-error-message='Must be a positive integer value'>";
+						echo "<input class='form-control' value='" . $value . "' id='priority' name='priority' type='text' placeholder='Priority (Default=1)' data-toggle='tooltip' gt-error-message='Must be integer >= 1' required>";
 					 ?>
 					<span class="gt-icon"></span>
         </div>
@@ -77,7 +77,7 @@
 						else if(get("question-group")->getTimeToComplete() != "-1") {
 							$value .= get("question-group")->getTimeToComplete();
 						}
-						echo "<input class='form-control' value='" . $value . "' id='time-to-complete' name='time-to-complete' type='text' placeholder='Time to complete' data-toggle='tooltip' gt-error-message='Must be a positive integer'>";
+						echo "<input class='form-control' value='" . $value . "' id='time-to-complete' name='time-to-complete' type='text' placeholder='Time to complete (Default=-1)' data-toggle='tooltip' gt-error-message='Must be a positive integer'>";
 					 ?>
 					<span class="gt-icon"></span>
 				</div>

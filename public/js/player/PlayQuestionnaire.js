@@ -17,6 +17,14 @@ $(window).on("load",function()
        },3000);
      }
  });
+
+ function sortJsonByKey(array, key) {
+    return array.sort(function(a, b) {
+        var x = a[key];
+        var y = b[key];
+        return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+ }
  //try to access on client geolocation
  function getBrowserCompatibility() {
      if (navigator.geolocation) {
@@ -145,7 +153,8 @@ function getQuestionGroups()
   {
     if(status == "success")
     {
-      groups = data["question-group"];
+      groups = sortJsonByKey(data["question-group"],"priority");
+      alert(JSON.stringify(data));
       getAddresses();
     }
   });
@@ -211,11 +220,18 @@ function displayData()
                       "</div>" +
                       "<div id='collapse" + groups[i].id + "' class='panel-collapse collapse'>" +
                         "<div class='panel-body'>" +
-                          "<div>Answered " +
+                          "<div>Answered: " +
                             "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
                             "/" +
                             "<span id='total-questions" + groups[i].id + "'>" + groups[i]["total-questions"] + "</span>" +
                           "</div>";
+                          if(groups[i]["priority"] != "-1")
+                          {
+                            out += "<div>Priority: " + groups[i]["priority"] + "</div>";
+                          }
+                          else {
+                            out += "<div>Priority: <span style='color:red'> Without</span></div>";
+                          }
                           //if true (groups[i]["address"] != undefined
                           if(groups[i]["address"])
                           {
@@ -228,7 +244,7 @@ function displayData()
                           }
                           //No address
                           else {
-                            out += "<span style='color:red'>No address<span>";
+                            out += "<div style='color:red'>Available everywhere</div>";
                           }
                           out += "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>";
                           //Question group completed

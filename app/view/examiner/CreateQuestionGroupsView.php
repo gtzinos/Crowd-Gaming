@@ -30,13 +30,13 @@ echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOO
     </div>
     <div class="form-group has-feedback">
       <!-- Priority -->
-      <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group"  data-validate="number" data-type="integer" data-min-number="-1">
-        <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["priority"]; } ?>" id="priority" name="priority" type="text" placeholder="Priority" data-toggle="tooltip" gt-error-message="Not a valid priority number">
+      <div class="col-xs-offset-0 col-xs-12 col-sm-offset-2 col-sm-4 gt-input-group"  data-validate="number" data-type="integer" data-min-number="1">
+        <input class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["priority"]; } ?>" id="priority" name="priority" type="text" placeholder="*Priority (Default=1)" data-toggle="tooltip" gt-error-message="Must be integer >= 1" required>
         <span class="gt-icon"></span>
       </div>
       <!-- Time to complete -->
       <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="-1">
-        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["time-to-complete"]; } ?>" name="time-to-complete" data-toggle="tooltip" gt-error-message="Must be a positive integer >= 5" value="" placeholder="Time to complete"/>
+        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["time-to-complete"]; } ?>" name="time-to-complete" data-toggle="tooltip" gt-error-message="Must be a positive integer >= 5" placeholder="Time to complete (Default=-1)"/>
         <span class="gt-icon"> </span>
       </div>
     </div>

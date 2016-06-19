@@ -123,8 +123,7 @@ function get_questionnaire_i_manage()
           }
           for(i = 0; i < data.questionnaires.length; i++)
           {
-
-            $("#qcheck" + data.questionnaires[i].id).bootstrapSwitch('state',questionnaires[i].public);
+            $("#qcheck" + data.questionnaires[i].id).bootstrapSwitch('state',data.questionnaires[i].public);
 
             $("#qcheck" + data.questionnaires[i].id).on('switchChange.bootstrapSwitch', function(event, state) {
               questionnaire_id = $(this).attr('id').replace("qcheck","");
