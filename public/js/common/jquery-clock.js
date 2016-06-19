@@ -7,7 +7,7 @@ var default_clock_options = {
 };
 var flag = 0;
 // Countdown initialization
-function show_clock(element,finalDate,onFinishMessage = "Your time expired.",onFinishMethod)
+function show_clock(element,finalDate,onFinishMessage = "Your time expired.",onFinishMethod = "")
 {
   $(element).countdown(finalDate)
   //for each update
@@ -22,16 +22,17 @@ function show_clock(element,finalDate,onFinishMessage = "Your time expired.",onF
   })
   //when will finish
   .on('finish.countdown', function(event) {
+    if(onFinishMethod != "")
+    {
+      eval(onFinishMethod);
+    }
+
     if(flag != 1 && onFinishMessage != "")
     {
       flag = 1;
       show_notification("error",onFinishMessage,5000);
     }
     $(this).html(event.strftime("%H:%M:%S"));
-    if(onFinishMethod != "")
-    {
-      eval(onFinishMethod);
-    }
   });
 }
 /*
