@@ -4,7 +4,7 @@
 			<div class="modal-content">
 				 <div class="modal-header">
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
-					 <h4 class="gt-modal-header"><span class="fa fa-hourglass-half"></span> Anwer questions</h4>
+					 <h4 class="gt-modal-header"><span class="fa fa-hourglass-half"></span> Anwser questions</h4>
 				 </div>
 				 <div class="modal-body container-fluid">
 						<form id="play-questionnaire-form" onsubmit="return false" method="POST" class="form-horizontal">

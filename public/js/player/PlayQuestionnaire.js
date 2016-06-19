@@ -250,7 +250,7 @@ function displayData()
           }
           out += "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>";
           //Question group completed
-          if(groups[i]["answered-questions"] == groups[i]["total-questions"])
+          if(groups[i]["answered-questions"] == groups[i]["total-questions"] || (groups[i]["is-completed"] != null && groups[i]["is-completed"] == true))
           {
             out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' disabled value='Completed'> ";
           }
@@ -333,14 +333,16 @@ function playQuestionGroup(target)
   for(j=0;j<groups.length;j++)
   {
     if(j != target_group_index && groups[j]["priority"] < groups[target_group_index]
-    && groups[j]["answered-questions"] != groups[j]["total-questions"])
+        && groups[j]["answered-questions"] != groups[j]["total-questions"]
+        && groups[j]["is-completed"] == null)
     {
       priorityInfraction = true;
     }
 
     if(j != target_group_index && groups[j]["time-left"] != null
       && groups[j]["time-left"] > 0
-      && groups[j]["answered-questions"] != groups[j]["total-questions"])
+      && groups[j]["answered-questions"] != groups[j]["total-questions"]
+      && groups[j]["is-completed"] == null)
     {
       notCompletedFoundPosition = j;
     }
@@ -675,7 +677,7 @@ function refreshAnswers()
   $("#answered"+id).html(answered);
   groups[target_group_index]["answered-questions"] = answered;
   //check if question group completed
-  if(answered == total_questions)
+  if(answered == total_questions || (groups[target_group_index]["is-completed"] != null && groups[target_group_index]["is-completed"] == true))
   {
     $("#play" + id).val("Completed")
                    .prop('disabled',true);
