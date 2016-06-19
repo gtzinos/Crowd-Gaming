@@ -235,7 +235,7 @@ DROP TABLE IF EXISTS `quizapp`.`UserReport` ;
 
 CREATE TABLE IF NOT EXISTS `quizapp`.`UserReport` (
   `user_id` INT NOT NULL COMMENT 'user id (Users:id)',
-  `question_id` INT NOT NULL COMMENT 'Questionaires id (Questionaires:id)',
+  `questionnaire_id` INT NOT NULL COMMENT 'Questionaires id (Questionaires:id)',
   `comment` VARCHAR(255) NOT NULL COMMENT 'Report comment from a user for a question id',
   `report_date` TIMESTAMP NOT NULL COMMENT 'Report date time',
   INDEX `uid_idx` (`user_id` ASC),

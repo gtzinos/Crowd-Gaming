@@ -3,8 +3,9 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/mappers/user/UserReportMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 
-	class UserAnswerController extends AuthenticatedController
+	class PostUserReportController extends AuthenticatedController
 	{
 
 		public function init()
@@ -36,8 +37,8 @@
 
 			$participationMapper = new ParticipationMapper;
 			$userReportMapper = new UserReportMapper;
-			$PlaythroughMapper = new PlaythroughMapper;
-
+			$playthroughMapper = new PlaythroughMapper;
+			$questionnaireMapper = new QuestionnaireMapper;
 
 
 			if( !$participationMapper->participates($userId , $parameters["questionnaire-id"] , 1) )
@@ -47,8 +48,35 @@
 				return;
 			}
 
+			if( !$questionnaireMapper->isPublic($parameters["questionnaire-id"]) )
+			{
+				$this->setOutput("code" , "603");
+				$this->setOutput("message" , "Forbidden, Questionnaire offline");
+				return;
+			}
+
+			if( !$playthroughMapper->isQuestionnaireCompleted($userId , $parameters["questionnaire-id"]))
+			{
+				$this->setOutput("code" , "614");
+				$this->setOutput("message" , "You cant complete this action because Questionnaire is not completed.");
+				return;
+			}
+
+			$reportComment = htmlspecialchars($parameters["report-comment"]);
 			
-			
+			try
+			{
+				
+				$userReportMapper->insert($userId , $parameters["questionnaire-id"] , $reportComment);
+
+				$this->setOutput("code" , "200");
+				$this->setOutput("message" , "Completed!");
+			}
+			catch(DatabaseException $ex)
+			{
+				$this->setOutput("code" , "615");
+				$this->setOutput("message" , "You cant post a report for this questionnaire.");
+			}
 
 		}
 
