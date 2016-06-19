@@ -327,6 +327,38 @@ function calculateDistance(i)
 function playQuestionGroup(target)
 {
   target_group_index = target;
+
+  var notCompletedFoundPosition = null,
+      priorityInfraction = false;
+
+  for(j=0;j<groups.length;j++)
+  {
+    if(j != target_group_index && groups[j]["priority"] < groups[target_group_index]
+    && groups[j]["answered-questions"] != groups[j]["total-questions"])
+    {
+      priorityInfraction = true;
+    }
+
+    if(j != target_group_index && groups[j]["time-left"] != null
+      && groups[j]["time-left"] > 0
+      && groups[j]["answered-questions"] != groups[j]["total-questions"])
+    {
+      notCompletedFoundPosition = j;
+    }
+  }
+
+  if(priorityInfraction) { return; }
+  if(notCompletedFoundPosition != null)
+  {
+    //Questionnaire doesnt allow multiple playthrough
+    if(!allow_multiple_groups)
+    {
+      show_notification("error","You must complete: " + groups[notCompletedFoundPosition]["name"],4000);
+      return;
+    }
+    //else continue get questions
+  }
+
   if(groups[target_group_index].latitude != null && groups[target_group_index].longitude != null)
   {
     getNextQuestionUsingCoordinates(current_client_position);
@@ -577,9 +609,10 @@ function confirmAnwser(question_id,usingCoordinates)
     method: "POST",
     url: webRoot + "rest_api/answer",
     headers: headersData,
-    data: JSON.stringify(data),
-    success: function(data)
-    {
+    data: JSON.stringify(data)
+  })
+  .done(function(data)
+  {
       /*
         200 : Everything ok.
         603 : Forbidden, Questionnaire offline
@@ -611,8 +644,8 @@ function confirmAnwser(question_id,usingCoordinates)
           }
         });
       }
-    },
-    error: function(xhr, status, error) {
+    })
+    .fail(function(xhr, status, error) {
       var code = JSON.parse(xhr.responseText).code;
       if(data.code == "603")
       {
@@ -642,7 +675,9 @@ function confirmAnwser(question_id,usingCoordinates)
       {
         show_notification("error","Unknow error. Please contact with us.",3000);
       }
-    }
+  })
+  .always(function() {
+
   });
 }
 
