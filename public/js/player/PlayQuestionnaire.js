@@ -18,6 +18,7 @@ $(window).on("load",function()
      }
  });
 
+ //Sort json by key
  function sortJsonByKey(array, key) {
     return array.sort(function(a, b) {
         var x = a[key];
@@ -174,14 +175,12 @@ function getAddresses()
     }
     (function(i)
     {
-
         /*
           Get real address name
           #URL : https://maps.googleapis.com/maps/api/geocode/json?address={*latitude,*longitude}
 
           #No Parameters
         */
-
         $.post("https://maps.googleapis.com/maps/api/geocode/json?address="+ (groups[i]["latitude"] != null ? groups[i]["latitude"] + ","  : "")  + (groups[i]["longitude"] != null ? groups[i]["longitude"] : "") + "&key=" + googleApiKey,
         {
 
@@ -219,61 +218,65 @@ function displayData()
                         "</p>" +
                       "</div>" +
                       "<div id='collapse" + groups[i].id + "' class='panel-collapse collapse'>" +
-                        "<div class='panel-body'>" +
-                          "<div>Answered: " +
-                            "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
-                            "/" +
-                            "<span id='total-questions" + groups[i].id + "'>" + groups[i]["total-questions"] + "</span>" +
-                          "</div>";
-                          if(groups[i]["priority"] != "-1")
-                          {
-                            out += "<div>Priority: " + groups[i]["priority"] + "</div>";
-                          }
-                          else {
-                            out += "<div>Priority: <span style='color:red'> Without</span></div>";
-                          }
-                          //if true (groups[i]["address"] != undefined
-                          if(groups[i]["address"])
-                          {
-                            out += "<div id='location'>" +
-                                    "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" +
-                                  "</div>" +
-                                  "<div>" +
-                                        "<span id='distance" + groups[i].id + "'>Distance: " + calculateDistance(i) + "m </span><span style='color:#36A0FF' class='fa fa-refresh' onclick='target_group_index = " + i + "; navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);'></span>" +
-                                  "</div>";
-                          }
-                          //No address
-                          else {
-                            out += "<div style='color:red'>Available everywhere</div>";
-                          }
-                          out += "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>";
-                          //Question group completed
-                          if(groups[i]["answered-questions"] == groups[i]["total-questions"])
-                          {
-                            out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' disabled value='Completed'> ";
-                          }
-                          //Question group not completed
-                          else {
-                            //With address
-                            if(groups[i]["address"])
-                            {
-                              if(calculateDistance(i) == 0)
-                              {
-                                out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
-                              }
-                              else {
-                                out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' disabled>";
-                              }
-                            }
-                            //No address
-                            else {
-                              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
-                            }
-                          }
-                          out += "</div>" +
-                            "</div>" +
-                        "</div>" +
-                      "</div>";
+                        "<div class='panel-body'>";
+          if(groups[i]["time-to-complete"] > -1)
+          {
+            out += "<div id='question-group-count-down' class='col-xs-offset-10'>" + groups[i]["time-to-complete"] + " seconds</div>";
+          }
+          out += "<div>Answered: " +
+                    "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
+                    "/" +
+                    "<span id='total-questions" + groups[i].id + "'>" + groups[i]["total-questions"] + "</span>" +
+                  "</div>";
+          if(groups[i]["priority"] != "-1")
+          {
+            out += "<div>Priority: " + groups[i]["priority"] + "</div>";
+          }
+          else {
+            out += "<div>Priority: <span style='color:red'> Without</span></div>";
+          }
+          //if true (groups[i]["address"] != undefined
+          if(groups[i]["address"])
+          {
+            out += "<div id='location'>" +
+                    "<a href='https://www.google.com/maps/dir//" + groups[i]["latitude"] + "," + groups[i]["longitude"] + "' target='_blank'><span class='fi-map' style='font-size:20px'></span> " + groups[i]["address"] + "</a>" +
+                  "</div>" +
+                  "<div>" +
+                        "<span id='distance" + groups[i].id + "'>Distance: " + calculateDistance(i) + "m </span><span style='color:#36A0FF' class='fa fa-refresh' onclick='target_group_index = " + i + "; navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);'></span>" +
+                  "</div>";
+          }
+          //No address
+          else {
+            out += "<div style='color:red'>Available everywhere</div>";
+          }
+          out += "<div class='col-xs-offset-6 col-xs-4 col-sm-offset-9 col-sm-3'>";
+          //Question group completed
+          if(groups[i]["answered-questions"] == groups[i]["total-questions"])
+          {
+            out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' disabled value='Completed'> ";
+          }
+          //Question group not completed
+          else {
+            //With address
+            if(groups[i]["address"])
+            {
+              if(calculateDistance(i) == 0)
+              {
+                out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
+              }
+              else {
+                out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' disabled>";
+              }
+            }
+            //No address
+            else {
+              out += "<input id='play" + groups[i].id + "' class='btn btn-primary round' type='button' value='Play now' onclick='playQuestionGroup(" + i + ")'>";
+            }
+          }
+          out += "</div>" +
+            "</div>" +
+        "</div>" +
+      "</div>";
     })(i);
   }
     $("#accordion").html(out);
