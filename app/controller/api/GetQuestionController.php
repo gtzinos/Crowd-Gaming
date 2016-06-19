@@ -77,6 +77,7 @@
 			}
 
 
+
 			/*
 				Question Group belongs to Questionnaire
 			 */
@@ -229,6 +230,14 @@
 				return;		
 			}
 
+			try
+			{
+				$playthroughMapper->initPlaythrough($userId, $questionnaire->getId());
+			}
+			catch( DatabaseException $ex)
+			{
+				// Ignore, the above should run only once
+			}
 
 			/*
 				Get the next question
