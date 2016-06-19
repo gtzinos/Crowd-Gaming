@@ -431,30 +431,11 @@ function getNextQuestionWithoutCoordinates()
       }
     },
     error: function(xhr, status, error) {
-        var code = JSON.parse(xhr.responseText).code;
-        if(code == "603")
+        var response = JSON.parse(xhr.responseText);
+
+        if(response.code == "609")
         {
-          show_notification("error","Forbidden. Questionnaire is offline.",3000);
-        }
-        else if(code == "604")
-        {
-          show_notification("error","Forbidden. You dont have access to that questionnaire.",3000);
-        }
-        else if(code == "606")
-        {
-          show_notification("error","Forbidden. Coordinates not provided.",3000);
-        }
-        else if(code == "607")
-        {
-          show_notification("error","Forbidden. Invalid location or user not in participation group.",3000);
-        }
-        else if(code == "608")
-        {
-          show_notification("error","Forbidden. Group doesnt exist or doesnt belong to questionnaire.",3000);
-        }
-        else if(code == "609")
-        {
-          show_notification("warning","Question Group doesnt have any questions.",3000);
+          show_notification("warning",response.message,3000);
           $("#play-questionnaire").modal("toggle");
           $("#play"+groups[target_group_index].id).val("Completed")
                                        .prop("disabled",true);
@@ -468,6 +449,23 @@ function getNextQuestionWithoutCoordinates()
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
               },10000);
+          }
+        }
+        else {
+          var response = JSON.parse(xhr.responseText);
+          switch(response.code)
+          {
+            case 603:
+            case 604:
+            case 605:
+            case 606:
+            case 607:
+            case 608:
+              show_notification("error",response.message,4000);
+              break;
+            default:
+              show_notification("error","Unknow error. Please contact with us.",4000);
+              break;
           }
         }
     }
@@ -541,30 +539,10 @@ function getNextQuestionUsingCoordinates(position)
         }
       },
       error: function(xhr, status, error) {
-        var code = JSON.parse(xhr.responseText).code;
-        if(code == "603")
+        var response = JSON.parse(xhr.responseText);
+        if(response.code == "609")
         {
-          show_notification("error","Forbidden. Questionnaire is offline.",3000);
-        }
-        else if(code == "604")
-        {
-          show_notification("error","Forbidden. You dont have access to that questionnaire.",3000);
-        }
-        else if(code == "606")
-        {
-          show_notification("error","Forbidden. Coordinates not provided.",3000);
-        }
-        else if(code == "607")
-        {
-          show_notification("error","Forbidden. Invalid location or user not in participation group.",3000);
-        }
-        else if(code == "608")
-        {
-          show_notification("error","Forbidden. Group doesnt exist or doesnt belong to questionnaire.",3000);
-        }
-        else if(code == "609")
-        {
-          show_notification("warning","Question Group doesnt have any questions.",3000);
+          show_notification("warning",response.message,3000);
           $("#play-questionnaire").modal("toggle");
           $("#play"+groups[target_group_index].id).val("Completed")
                                        .prop("disabled",true);
@@ -578,6 +556,22 @@ function getNextQuestionUsingCoordinates(position)
               setTimeout(function() {
                 window.location.replace(my_questionnaires_page);
               },10000);
+          }
+        }
+        else {
+          var response = JSON.parse(xhr.responseText);
+          switch(response.code)
+          {
+            case 603:
+            case 604:
+            case 606:
+            case 607:
+            case 608:
+              show_notification("error",response.message,4000);
+              break;
+            default:
+              show_notification("error","Unknow error. Please contact with us.",4000);
+              break;
           }
         }
       }
@@ -651,38 +645,21 @@ function confirmAnwser(question_id,usingCoordinates)
         });
     })
     .fail(function(xhr, status, error) {
-      var code = JSON.parse(xhr.responseText).code;
-      if(data.code == "603")
+      var response = JSON.parse(xhr.responseText);
+      switch(response.code)
       {
-        show_notification("error","Forbidden, Questionnaire is offline",3000);
+        case 603:
+        case 605:
+        case 606:
+        case 607:
+        case 500:
+        case 610:
+          show_notification("error",response.message,4000);
+          break;
+        default:
+          show_notification("error","Unknow error. Please contact with us.",4000);
+          break;
       }
-      else if(data.code == "605")
-      {
-        show_notification("error","Forbidden, You cant answer this question",3000);
-      }
-      else if(data.code == "606")
-      {
-        show_notification("error","Forbidden, Coordinates not provided.",3000);
-      }
-      else if(data.code == "607")
-      {
-        show_notification("error","Forbidden, Invalid location or user not in participation group.",3000);
-      }
-      else if(data.code == "500")
-      {
-        show_notification("error","Internal server error.",3000);
-      }
-      else if(data.code == "610")
-      {
-        show_notification("error","Invalid Request, question-id and/or answer-id were not given.",3000);
-      }
-      else
-      {
-        show_notification("error","Unknow error. Please contact with us.",3000);
-      }
-  })
-  .always(function() {
-
   });
 }
 
