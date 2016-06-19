@@ -15,17 +15,18 @@
 			$statement->executeUpdate();
 		}
 
-		public function getReportByUser( $userId )
+		public function findReportByUser( $userId )
 		{
 			// Not implemented , I dont think this is needed.
 		}
 
-		public function getReportByQuestionnaire( $questionnaireId )
+		public function findReportByQuestionnaire( $questionnaireId )
 		{
 			$query = "SELECT `Questionnaire`.`name` as qname , User.*, `UserReport`.* 
 					  FROM `UserReport`
 					  INNER JOIN `User` on `User`.`id`=`UserReport`.`user_id`
-					  WHERE `UserReport`.`questionnaire_id=?";
+       				  INNER JOIN `Questionnaire` on `Questionnaire`.`id`=`UserReport`.`questionnaire_id`
+					  WHERE `UserReport`.`questionnaire_id`=?";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters("i" , $questionnaireId);
@@ -36,10 +37,11 @@
 
 			while($set->next())
 			{
+				$item["questionnaire-id"] = $questionnaireId;
 				$item["questionnaire-name"] = $set->get("qname");
 				$item["user-name"] = $set->get("name");
 				$item["user-surname"] = $set->get("surname");
-				$item["user-id"] = $set->get("user-id");
+				$item["user-id"] = $set->get("user_id");
 				$item["user-email"] = $set->get("email");
 				$item["report-comment"] = $set->get("comment");
 				$item["report-date"] = $set->get("report_date");

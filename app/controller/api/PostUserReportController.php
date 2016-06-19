@@ -41,7 +41,6 @@
 			$questionnaireMapper = new QuestionnaireMapper;
 
 
-
 			if( !$participationMapper->participates($userId , $parameters["questionnaire-id"] , 1) )
 			{
 				$this->setOutput("code" , "604");
