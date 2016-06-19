@@ -704,4 +704,8 @@ function questionTimeExpired()
   {
     $("#confirm-answer-button").trigger("click");
   }
+  else if($("#play-questionnaire").hasClass('in')){
+    $("#confirm-answer-button").html("Continue")
+                               .attr("onclick","playQuestionGroup(" + target_group_index + ")");
+  }
 }
