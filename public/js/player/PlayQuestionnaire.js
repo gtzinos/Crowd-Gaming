@@ -689,6 +689,7 @@ function confirmAnwser(question_id,usingCoordinates)
           show_notification("error","Unknow error. Please contact with us.",4000);
           break;
       }
+      $("#confirm-answer-button").prop("disabled",false);
   });
 }
 
