@@ -729,6 +729,7 @@ function resetQuestionGroupAnswers(target)
       if(answered == total_questions || (groups[target_group_index]["is-completed"] != null && groups[target_group_index]["is-completed"] == true))
       {
         $("#play" + id).val("Play");
+        navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
       }
     }
   })
