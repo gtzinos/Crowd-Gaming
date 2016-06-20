@@ -174,12 +174,10 @@ function getAddresses()
 {
   var i = 0;
   var out = "";
-  var counter = 0;
   //get addresses from google api
   for(i=0; i<groups.length; i++)
   {
     if(groups[i]["latitude"] == null || groups[i]["longitude"] == null) {
-      counter++;
       continue;
     }
     (function(i)
@@ -199,8 +197,6 @@ function getAddresses()
           if(status == "success")
           {
             groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
-            counter++;
-
           }
         });
      })(i);
