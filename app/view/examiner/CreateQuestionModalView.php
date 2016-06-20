@@ -97,10 +97,10 @@
             <div class="form-group">
                <div class="col-xs-offset-0 col-xs-4 col-sm-offset-3 col-sm-2">
                  <!-- A Script will add on click method -->
-                 <button id="create-question-confirm-butto" form="create-question-form" type="button" class="btn btn-primary round gt-submit" disabled>Create</button>
+                 <button id="create-question-confirm-butto" form="create-question-form" type="button" class="btn btn-primary gt-submit" disabled>Create</button>
                </div>
                <div class="col-xs-4 col-sm-2">
-                 <button type="button" class="btn btn-primary round" data-dismiss="modal" >
+                 <button type="button" class="btn btn-primary" data-dismiss="modal" >
                    Cancel
                  </button>
                </div>
