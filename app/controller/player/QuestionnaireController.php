@@ -27,7 +27,7 @@
 			$view->defSection("QUESTIONNAIRE_MEMBERS", "examiner/QuestionnaireMembersModalView.php");
 			$view->defSection("QUESTIONNAIRE_SETTINGS", "examiner/QuestionnaireSettingsModalView.php");
 			$view->defSection("REQUIRED_MESSAGE", "examiner/RequiredPasswordModalView.php");
-
+			$view->defSection("QUESTIONNAIRE_RESULTS", "player/QuestionnaireScoresModalView.php");
 			$this->setView( $view );
 		}
 
