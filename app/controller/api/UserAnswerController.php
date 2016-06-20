@@ -1,4 +1,4 @@
-<?php
+<?phpgai
 	include_once 'AuthenticatedController.php';
 	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 	include_once '../app/model/mappers/questionnaire/AnswerMapper.php';

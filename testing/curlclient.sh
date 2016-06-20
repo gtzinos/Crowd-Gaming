@@ -1,8 +1,7 @@
 #!/bin/bash
 
-echo "==================================="
-echo "Crowd Gaming Console Client"
-echo "==================================="
+echo "Crowd Gaming Console Client . Version 0.1"
+echo
 
 TOKEN="d8f2fe1b831977bec8aea8a73b6a4bd23a701099"
 URL="crowd-gaming.local"
@@ -37,9 +36,16 @@ case $1 in
 	"post-report" )
 
 		curl --header "Authorization: $TOKEN" --data '{ "questionnaire-id":"'$2'" , "report-comment":"'$3'" }' $URL/rest_api/report  ;; #| python -m json.tool ;;
+	"help" )
+		
+		echo Valid parameters
+		echo 
+		echo authenticate 	:email 				:password
+		echo questionnaire 	:id
+		echo question-group :questionnaire-id 	:group-id
+		echo question 		:questionnaire-id 	:group-id
+		echo answer 		:question-id 		:answer-id
+		echo reset-group 	:questionnaire-id 	:group-id
+		echo post-report 	:questionnaire-id 	:report-comment
+		;;
 esac
-
-echo
-echo "==================================="
-echo "Request End"
-echo "==================================="

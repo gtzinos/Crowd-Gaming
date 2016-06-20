@@ -19,6 +19,10 @@
 	*/
 	$_CONFIG["FULL-APP-NAME"] = "Crowd Gaming" ;
 	/*
+		Default timezone
+	 */
+	$_CONFIG["SERVER_TIMEZONE"] = "Europe/Athens";
+	/*
 		Version number
 	*/
 	$_CONFIG["VERSION"] = "0";

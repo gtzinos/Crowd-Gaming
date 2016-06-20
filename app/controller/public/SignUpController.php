@@ -31,6 +31,29 @@
 				die();
 			}
 
+			global $_CONFIG;
+			
+			/*
+				Captcha Check
+			 
+			$curl = curl_init();
+
+			curl_setopt( $curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+			curl_setopt( $curl, CURLOPT_POST ,1);
+			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['g-recaptcha-response'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);			
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+
+			$responseJson = curl_exec($curl);
+
+			$response = json_decode($responseJson , true);
+
+			if( $response["success"] != true )
+			{
+				print 14;
+				return;
+			}
+			*/
+
 			/*
 				Sanitizing
 			 */
