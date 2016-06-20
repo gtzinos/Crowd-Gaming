@@ -56,7 +56,7 @@ function delete_public_request(confirmed)
   {
     return;
   }
-  notCompletedRequest == true
+  notCompletedRequest = true;
 
   if(!confirmed)
   {
