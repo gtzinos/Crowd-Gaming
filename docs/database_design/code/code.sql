@@ -239,15 +239,15 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`UserReport` (
   `comment` VARCHAR(255) NOT NULL COMMENT 'Report comment from a user for a question id',
   `report_date` TIMESTAMP NOT NULL COMMENT 'Report date time',
   INDEX `uid_idx` (`user_id` ASC),
-  INDEX `qid_idx` (`question_id` ASC),
-  PRIMARY KEY (`user_id`, `question_id`),
+  INDEX `qid_idx` (`questionnaire_id` ASC),
+  PRIMARY KEY (`user_id`, `questionnaire_id`),
   CONSTRAINT `user_who_send_the_report`
     FOREIGN KEY (`user_id`)
     REFERENCES `quizapp`.`User` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `questionaire_reported`
-    FOREIGN KEY (`question_id`)
+    FOREIGN KEY (`questionnaire_id`)
     REFERENCES `quizapp`.`Questionnaire` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
