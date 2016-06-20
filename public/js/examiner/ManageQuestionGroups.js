@@ -768,7 +768,7 @@ function delete_question(question_group_id,question_id,ask_required)
          If response message == 1
           Authentication failed
       */
-      if(data == "1")
+      else if(data == "1")
       {
         show_notification("error","Authentication failed.",4000);
       }
