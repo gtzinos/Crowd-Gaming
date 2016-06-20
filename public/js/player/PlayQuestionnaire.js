@@ -204,12 +204,8 @@ function getAddresses()
           }
         });
      })(i);
-
   }
-  if(counter == groups.length)
-  {
-    displayData();
-  }
+  displayData();
 }
 //display data on page
 function displayData()
