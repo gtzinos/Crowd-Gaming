@@ -76,6 +76,7 @@
 					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
 								<!-- <li class='divider'></li> --> ";
 		 						echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
+								echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-results'); return false;\"><i class='glyphicon glyphicon-stats'></i> Get results</a></li>";
 							if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() || $_SESSION["USER_LEVEL"] == 3)
 							{
 								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
@@ -511,6 +512,7 @@
 	load("QUESTIONNAIRE_OPTIONS");
 	load("QUESTIONNAIRE_PLAYERS");
 	load("CONTACT_WITH_ONE_EMAIL");
+	load("QUESTIONNAIRE_RESULTS");
 	/*
 		Illegal actions
 	*/
