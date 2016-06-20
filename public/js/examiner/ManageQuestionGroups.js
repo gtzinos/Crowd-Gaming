@@ -574,9 +574,15 @@ function getCreateQuestionData(question_group_id)
 */
 function create_question(question_group_id)
 {
+  if(notCompletedRequest == true || $("#create-question-confirm-butto").prop("disabled"))
+  {
+    return;
+  }
+
   var dataToSend = getCreateQuestionData(question_group_id);
   if(dataToSend != null) {
-    $("#create-question-confirm-button").prop("disabled",true);
+    notCompletedRequest = true;
+    //$("#create-question-confirm-butto").prop("disabled",true);
     $.ajax({
       method: "POST",
       url: webRoot + "create-question",
@@ -712,7 +718,8 @@ function create_question(question_group_id)
       displayServerResponseError(xhr,error);
     })
     .always(function() {
-      $("#create-question-confirm-button").prop("disabled",false);
+      $("#create-question-confirm-butto").prop("disabled",false);
+      notCompletedRequest = false;
     });
   }
   else {
