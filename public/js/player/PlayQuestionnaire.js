@@ -200,13 +200,15 @@ function getAddresses()
           {
             groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
             counter++;
-            if(counter == groups.length)
-            {
-              displayData();
-            }
+
           }
         });
      })(i);
+
+  }
+  if(counter == groups.length)
+  {
+    displayData();
   }
 }
 //display data on page
