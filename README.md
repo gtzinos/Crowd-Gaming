@@ -1,3 +1,3 @@
-# Treasure - Thess
+# Crowd - Gaming
 
-This is a treasure - hunter game for Thessaloniki - Greece !!!
+A special web platform to test your students
