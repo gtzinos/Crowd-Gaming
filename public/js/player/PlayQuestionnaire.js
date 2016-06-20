@@ -230,7 +230,7 @@ function displayData()
                         "<div class='panel-body'>";
           if(groups[i]["time-to-complete"] > -1)
           {
-            out += "<div id='question-group-count-down' class='col-xs-offset-10'>" + groups[i]["time-to-complete"] + " seconds</div>";
+            out += "<div id='group-count-down" + groups[i].id + "' class='col-xs-offset-10'>" + groups[i]["time-to-complete"] + " seconds</div>";
           }
           out += "<div>Answered: " +
                     "<span id='answered" + groups[i].id + "'>" + groups[i]["answered-questions"] + "</span>" +
@@ -394,6 +394,12 @@ function getNextQuestionWithoutCoordinates()
     dataType: 'json',
     success: function(data)
     {
+      if(groups[target_group_index]["time-left"] == null)
+      {
+        groups[target_group_index]["time-left"] = groups[target_group_index]["time-to-complete"];
+        show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired()");
+      }
+
       var out = "";
       /*
           200 : Everything ok.
@@ -429,14 +435,14 @@ function getNextQuestionWithoutCoordinates()
                        "</div>";
               }
         out += "<br><br><div class='form-group'>" +
-                       "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
-                         "<button id='confirm-answer-button' type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false)'>Confirm</button>" +
-                       "</div>" +
-                       "<div class='col-xs-3 col-sm-2'>" +
-                         "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
-                           "Cancel" +
-                         "</button>" +
-                       "</div>" +
+                   "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
+                     "<button id='confirm-answer-button' type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false)'>Confirm</button>" +
+                   "</div>" +
+                   "<div class='col-xs-3 col-sm-2'>" +
+                     "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
+                       "Cancel" +
+                     "</button>" +
+                   "</div>" +
                 "</div>";
         $("#play-questionnaire-form").html(out);
         //var answer_countdown = parseInt(data.question['time-to-answer']);
@@ -502,6 +508,12 @@ function getNextQuestionUsingCoordinates(position)
       dataType: 'json',
       success: function(data)
       {
+        if(groups[target_group_index]["time-left"] == null)
+        {
+          groups[target_group_index]["time-left"] = groups[target_group_index]["time-to-complete"];
+          show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired()");
+        }
+        
         var out = "";
         /*
             200 : Everything ok.
@@ -722,11 +734,18 @@ function resetQuestionGroupAnswers(target)
       show_notification("success",data.message,4000);
       groups[target]["answered-questions"] = 0;
       groups[target]["is-completed"] = null;
+      groups[target]["time-left"] = null;
+
+      if(groups[target]["time-left"] == null)
+      {
+        $("#group-count-down"+ groups[target].id).countdown('stop');
+        $("#group-count-down"+ groups[target].id).html(groups[target]["time-to-complete"] + " seconds");
+      }
 
       //update answered-questions
       $("#answered"+id).html(groups[target]["answered-questions"]);
       //check if question group completed
-      if(answered == total_questions || (groups[target_group_index]["is-completed"] != null && groups[target_group_index]["is-completed"] == true))
+      if(answered == total_questions || (groups[target]["is-completed"] != null && groups[target]["is-completed"] == true))
       {
         $("#play" + id).val("Play");
         navigator.geolocation.getCurrentPosition(refreshASpecificGroup, showError);
