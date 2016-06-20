@@ -397,7 +397,7 @@ function getNextQuestionWithoutCoordinates()
       if(groups[target_group_index]["time-left"] == null && groups[target_group_index]["time-to-complete"] >= 0)
       {
         groups[target_group_index]["time-left"] = groups[target_group_index]["time-to-complete"];
-        show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired()");
+        show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired(" + target_group_index + ")");
       }
 
       var out = "";
@@ -511,7 +511,7 @@ function getNextQuestionUsingCoordinates(position)
         if(groups[target_group_index]["time-left"] == null && groups[target_group_index]["time-to-complete"] >= 0)
         {
           groups[target_group_index]["time-left"] = groups[target_group_index]["time-to-complete"];
-          show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired()");
+          show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired(" + target_group_index + ")");
         }
 
         var out = "";
@@ -780,6 +780,21 @@ function questionnaireTimeCompleted() {
   setTimeout(function() {
     window.location.replace(my_questionnaires_page);
   },10000);
+}
+
+function questionGroupTimeExpired(target)
+{
+  $("#play-questionnaire").modal("toggle");
+  groups[target]["is-completed"] = 1;
+  groups[target]["time-left"] = 0;
+
+  var id = groups[target].id;
+  //check if question group completed
+  if(groups[target]["is-completed"] == true)
+  {
+    $("#play" + id).val("Completed")
+                   .prop('disabled',true);
+  }
 }
 
 function questionTimeExpired()
