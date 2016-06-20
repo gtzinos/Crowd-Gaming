@@ -394,7 +394,7 @@ function getNextQuestionWithoutCoordinates()
     dataType: 'json',
     success: function(data)
     {
-      if(groups[target_group_index]["time-left"] == null)
+      if(groups[target_group_index]["time-left"] == null && groups[target_group_index]["time-to-complete"] >= 0)
       {
         groups[target_group_index]["time-left"] = groups[target_group_index]["time-to-complete"];
         show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired()");
@@ -508,12 +508,12 @@ function getNextQuestionUsingCoordinates(position)
       dataType: 'json',
       success: function(data)
       {
-        if(groups[target_group_index]["time-left"] == null)
+        if(groups[target_group_index]["time-left"] == null && groups[target_group_index]["time-to-complete"] >= 0)
         {
           groups[target_group_index]["time-left"] = groups[target_group_index]["time-to-complete"];
           show_clock("#group-count-down"+ groups[target_group_index].id,moment().add(groups[target_group_index]["time-left"],'second').format("YYYY/MM/DD HH:mm:ss"),groups[target_group_index]["name"] + " time expired.","questionGroupTimeExpired()");
         }
-        
+
         var out = "";
         /*
             200 : Everything ok.
