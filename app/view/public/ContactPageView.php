@@ -137,6 +137,14 @@
                                     $response_message .= "We are under maintenance. Please try later!";
                                   }
                                   /*
+                                    Else If response-code = 7
+                                    then Captcha Failed!
+                                  */
+                                  else if(get("response-code") == 7)
+                                  {
+                                    $response_message .= "Captcha Failed! Please try again!";
+                                  }
+                                  /*
                                     Else one new error occur
                                   */
                                   else {
