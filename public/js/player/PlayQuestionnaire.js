@@ -476,10 +476,14 @@ function getNextQuestionWithoutCoordinates()
           {
             case "603":
             case "604":
-            case "605":
             case "606":
             case "607":
             case "608":
+            case "609":
+            case "611":
+            case "616":
+            case "617":
+            case "618":
               show_notification("error",response.message,4000);
               break;
             default:
@@ -592,6 +596,11 @@ function getNextQuestionUsingCoordinates(position)
             case "606":
             case "607":
             case "608":
+            case "609":
+            case "611":
+            case "616":
+            case "617":
+            case "618":
               show_notification("error",response.message,4000);
               break;
             default:
