@@ -647,6 +647,7 @@ function confirmAnwser(question_id,usingCoordinates)
         }
         else if(data.code == "201")
         {
+          groups[target_group_index]["is-completed"] = 1;
           show_notification("success",data.message,3000);
           $("#play-questionnaire").modal("toggle");
         }
