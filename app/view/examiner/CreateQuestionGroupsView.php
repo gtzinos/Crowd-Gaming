@@ -24,7 +24,7 @@ echo "<script src='https://maps.googleapis.com/maps/api/js?key=" . $_CONFIG["GOO
       </div>
       <!-- Repeated answers -->
       <div class="col-xs-offset-0 col-xs-12 col-sm-4 gt-input-group" data-validate="number" data-type="integer" data-min-number="1">
-        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["allowed-repeats"]; } ?>" name="allowed_repeats" data-toggle="tooltip" gt-error-message="Must be integer > 0" value="" placeholder="*Allowed repeats" required/>
+        <input type="text" class="form-control" value="<?php if(exists("response-code") && get("response-code") != 0) { echo $_POST["allowed_repeats"]; } ?>" name="allowed_repeats" data-toggle="tooltip" gt-error-message="Must be integer > 0" value="" placeholder="*Allowed repeats" required/>
         <span class="gt-icon"> </span>
       </div>
     </div>
