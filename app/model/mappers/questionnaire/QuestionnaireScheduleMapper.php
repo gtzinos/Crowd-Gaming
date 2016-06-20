@@ -379,7 +379,7 @@
 			
 			if( $minMinutes == PHP_INT_MAX)
 				return -1;
-			return (int)$minMinutes;
+			return ceil($minMinutes);
 		}
 
 		public function findById($scheduleId){
