@@ -481,7 +481,7 @@ function getNextQuestionWithoutCoordinates()
               show_notification("error",response.message,4000);
               break;
             default:
-              show_notification("error","Unknow error. Please contact with us.",4000);
+              displayServerResponseError(xhr,error);
               break;
           }
         }
@@ -598,7 +598,7 @@ function getNextQuestionUsingCoordinates(position)
               show_notification("error",response.message,4000);
               break;
             default:
-              show_notification("error","Unknow error. Please contact with us.",4000);
+              displayServerResponseError(xhr,error);
               break;
           }
         }
@@ -686,7 +686,7 @@ function confirmAnwser(question_id,usingCoordinates)
           show_notification("error",response.message,4000);
           break;
         default:
-          show_notification("error","Unknow error. Please contact with us.",4000);
+          displayServerResponseError(xhr,error);
           break;
       }
       $("#confirm-answer-button").prop("disabled",false);
@@ -769,7 +769,7 @@ function resetQuestionGroupAnswers(target)
         show_notification("error",response.message,4000);
         break;
       default:
-        show_notification("error","Unknow error. Please contact with us.",4000);
+        displayServerResponseError(xhr,error);
         break;
     }
   });
