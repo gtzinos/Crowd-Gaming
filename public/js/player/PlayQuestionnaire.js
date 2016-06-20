@@ -174,12 +174,10 @@ function getAddresses()
 {
   var i = 0;
   var out = "";
-  var counter = 0;
   //get addresses from google api
   for(i=0; i<groups.length; i++)
   {
     if(groups[i]["latitude"] == null || groups[i]["longitude"] == null) {
-      counter++;
       continue;
     }
     (function(i)
@@ -199,17 +197,11 @@ function getAddresses()
           if(status == "success")
           {
             groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
-            counter++;
-
           }
         });
      })(i);
-
   }
-  if(counter == groups.length)
-  {
-    displayData();
-  }
+  displayData();
 }
 //display data on page
 function displayData()
@@ -697,6 +689,7 @@ function confirmAnwser(question_id,usingCoordinates)
           show_notification("error","Unknow error. Please contact with us.",4000);
           break;
       }
+      $("#confirm-answer-button").prop("disabled",false);
   });
 }
 
