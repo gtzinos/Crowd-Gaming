@@ -1,6 +1,5 @@
 var scores_array = [];
 google.charts.load("current", {packages:["corechart"]});
-google.charts.setOnLoadCallback(drawChart);
 
 $(window).on("load",function() {
   $('#questionnaire-results').on('shown.bs.modal', function (e) {
@@ -31,30 +30,6 @@ function getAllScores()
                         "</tr>" +
                       "</thead>" +
                       "<tbody>";
-      data = {
-            "code":"200",
-            "message":"ok",
-            "score":{
-                    "Question Group 4":[
-                          {
-                           "user-name":"Stavros",
-                           "user-surname":"Skourtis",
-                           "score":100}
-                         ,{
-                           "user-name":"123",
-                           "user-surname":"123",
-                           "score":40
-                          }
-                     ],
-                    "Group Name":[
-                          {
-                          "user-name":"Stavros",
-                          "user-surname":"Skourtis",
-                          "score":100
-                          }
-                     ]
-                 }
-        }
       if(data.scores != null && data.scores.length > 0)
       {
         $.each(data.scores, function(i,group) {
