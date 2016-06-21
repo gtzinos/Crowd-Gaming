@@ -1,4 +1,5 @@
 <? if($section == "QUESTIONNAIRE_SCORES") : ?>
+  <script src="<?php print LinkUtils::generatePublicLink("js/library/jsPDF/dist/jspdf.min.js"); ?>"></script>
   <script src="<?php print LinkUtils::generatePublicLink("js/player/QuestionnaireResults.js"); ?>"></script>
 	<div class="modal fade" id="questionnaire-results" role="dialog">
 		<div class="modal-dialog modal-md">
@@ -7,7 +8,7 @@
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
 					 <h4 class="gt-modal-header"><i class='glyphicon glyphicon-stats'></i> Questionnaire results </h4>
 				 </div>
-				 <div class="modal-body container-fluid">
+				 <div id="results-place" class="modal-body container-fluid">
 
 				 </div>
 				<!-- Footer fields -->
