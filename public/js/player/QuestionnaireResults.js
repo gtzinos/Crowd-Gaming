@@ -104,11 +104,11 @@ function getAllScores()
       chart.draw(data, options);
   }
 
-   function demoFromHTML() {
+   function downloadAsPdf() {
        var pdf = new jsPDF('p', 'pt', 'letter');
        // source can be HTML-formatted string, or a reference
        // to an actual DOM element from which the text will be scraped.
-       source = $('#content').html();
+       source = $('#results-place').html() + "<br><br>" + $('#charts-place').html();
 
        // we support special element handlers. Register them with jQuery-style
        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
