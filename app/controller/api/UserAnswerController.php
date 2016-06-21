@@ -69,7 +69,7 @@
 
 
 
-			if($scheduleMapper->findMinutesToStart($questionnaireMapper->findIdByQuestion($parameters["question-id"])) !== 0)
+			if($scheduleMapper->findMinutesToStart($questionnaireMapper->findIdByQuestion($parameters["question-id"])) != 0)
 			{
 				/*
 					Questionnaire Offline
@@ -198,8 +198,6 @@
 				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())!== null &&
 				$playthroughMapper->findTimeLeft($userId , $questionGroup->getId())<0 )
 			{
-				print $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
-				print "Here";
 				$playthroughMapper->setCompleted($userId , $groupId);
 
 				$this->setOutput("code", "607");
