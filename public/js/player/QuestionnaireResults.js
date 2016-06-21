@@ -1,4 +1,6 @@
 var scores_array = [];
+google.charts.load("current", {packages:["corechart"]});
+google.charts.setOnLoadCallback(drawChart);
 
 $(window).on("load",function() {
   $('#questionnaire-results').on('shown.bs.modal', function (e) {
@@ -29,13 +31,37 @@ function getAllScores()
                         "</tr>" +
                       "</thead>" +
                       "<tbody>";
+      data = {
+            "code":"200",
+            "message":"ok",
+            "score":{
+                    "Question Group 4":[
+                          {
+                           "user-name":"Stavros",
+                           "user-surname":"Skourtis",
+                           "score":100}
+                         ,{
+                           "user-name":"123",
+                           "user-surname":"123",
+                           "score":40
+                          }
+                     ],
+                    "Group Name":[
+                          {
+                          "user-name":"Stavros",
+                          "user-surname":"Skourtis",
+                          "score":100
+                          }
+                     ]
+                 }
+        }
       if(data.scores != null && data.scores.length > 0)
       {
         $.each(data.scores, function(i,group) {
             $.each(group, function(j, userstats) {
               if(scores_array[userstats.email] != undefined)
               {
-                scores_array[userstats.email] = intval(scores_array[userstats.email].score) + intval(userstats.score);
+                scores_array[userstats.email] = scores_array[userstats.email].score + userstats.score;
               }
               else {
                 scores_array[userstats.email] = { userstats };
@@ -70,6 +96,38 @@ function getAllScores()
     }
   });
 }
+
+  function drawChart()
+  {
+    var pieChartData = [];
+    var oneToFive = 0,
+        fiveToSix = 0,
+        SixToEight = 0,
+        EightToNine = 0,
+        NineToTen = 0;
+    $.each(scores_array,function(i,user){
+      if(user.score >= 0 && user.score < 50) { oneToFive++; }
+      else if(user.score >= 50 && user.score < 60) { fiveToSix++; }
+      else if(user.score >= 60 && user.score < 80) { SixToEight++; }
+      else if(user.score >= 80 && user.score <= 100) { NineToTen++; }
+    });
+      var data = google.visualization.arrayToDataTable([
+        ['Degree', 'Number of players'],
+        ['0 - 50', oneToFive],
+        ['50 - 60', fiveToSix],
+        ['60 - 80', SixToEight],
+        ['80 - 90', EightToNine],
+        ['90 - 100', NineToTen]
+      ]);
+
+      var options = {
+        title: 'Questionnaire results',
+        pieHole: 0.4,
+      };
+
+      var chart = new google.visualization.PieChart(document.getElementById('charts-place'));
+      chart.draw(data, options);
+  }
 
    function demoFromHTML() {
        var pdf = new jsPDF('p', 'pt', 'letter');
