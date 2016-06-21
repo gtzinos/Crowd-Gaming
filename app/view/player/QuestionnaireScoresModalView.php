@@ -8,23 +8,22 @@
 					 <button type="button" class="close" data-dismiss="modal">&times;</button>
 					 <h4 class="gt-modal-header"><i class='glyphicon glyphicon-stats'></i> Questionnaire results </h4>
 				 </div>
-				 <div id="results-place" class="modal-body container-fluid">
-
-				 </div>
-				<!-- Footer fields -->
-				<div class="modal-footer container-fluid">
-						<!-- Send Email / Cancel Button Field -->
-						<div class="form-group">
-							 <div class="col-xs-offset-2 col-xs-5 col-sm-offset-2 col-sm-4">
-								 <!-- A Script will add on click method -->
-								 <button id="contact-coordinator" form="contact-form" type="button" class="btn btn-primary btn-md gt-submit" onclick="$('#contact-form').submit()" disabled>Options</button>
-							 </div>
-							 <div class="col-xs-3 col-sm-2">
-								 <button type="button" class="btn btn-primary btn-md" data-dismiss="modal" >
-									 Cancel
-								 </button>
-							 </div>
-						</div>
+				 <div class="modal-body container-fluid">
+           <div id="results-place"></div>
+           <br><br>
+           <div id="buttons-place">
+              <div class="col-xs-12 col-sm-4 col-sm-offset-1">
+                <button id="download-submit" class="form-control" onclick="downloadAsPdf()">Download PDF</button>
+              </div>
+              <div class="visible-xs"><br><br></div>
+              <div class="col-xs-12 col-sm-4">
+                <button id="get-charts-submit" class="form-control" onclick="getCharts()">Get charts</button>
+              </div>
+              <div class="visible-xs"><br><br></div>
+              <div class="col-xs-12 col-sm-2">
+                <button id="refresh-results-submit" class="form-control" onclick="refreshTable()">Refresh</button>
+              </div>
+           </div>
 				 </div>
 			 </div>
 		 </div>
