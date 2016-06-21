@@ -46,7 +46,7 @@
 			$groupCompleted = $playthroughMapper->isCompleted($userId ,$groupId);
 			$activeGroups = $playthroughMapper->findActiveGroupCount($userId, $questionnaireId);
 
-			if( $timeLeftToStart!== 0)
+			if( $timeLeftToStart != 0)
 			{
 				/*
 					Questionnaire Offline
