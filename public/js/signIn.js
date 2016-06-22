@@ -7,7 +7,19 @@ function getClientData()
 	var userPassword = $(document).find("#signin-password").val();
 	var userRememberMe = $(document).find("#signin-remember").prop('checked');
 	var verify = grecaptcha.getResponse(loginCaptcha);
-	if(userEmail && userPassword && verify != "")
+	if(!userEmail)
+	{
+		return -1;
+	}
+	else if(!userPassword)
+	{
+		return -2;
+	}
+	else if(verify == "")
+	{
+		return -3;
+	}
+	else
 	{
 		let data = {
 			"email": userEmail,
@@ -20,9 +32,6 @@ function getClientData()
 			data["remember"] = userRememberMe;
 		}
 		return data;
-	}
-	else {
-		return null;
 	}
 }
 /*
@@ -38,8 +47,19 @@ function signInFromForm() {
 			Check the Variables before sending them
 		*/
 		var dataToSend = getClientData();
-		if(dataToSend != null)
+		if(dataToSend == -1)
 		{
+			show_notification("error","Please fill your email address.",3000);
+		}
+		else if(dataToSend == -2)
+		{
+			show_notification("error","Please fill your password.",3000);
+		}
+		else if(dataToSend == -3)
+		{
+			show_notification("error","Please verify the google captcha.",3000);
+		}
+		else {
 			notCompletedRequest = true;
 			show_spinner("signin-spinner");
 			$.ajax(
@@ -61,6 +81,7 @@ function signInFromForm() {
 					}
 					else
 					{
+							grecaptcha.reset(loginCaptcha);
 							/*
 								 If response message == 1
 								 Wrong username or password
@@ -107,13 +128,7 @@ function signInFromForm() {
 					displayServerResponseError(xhr,error);
 					remove_spinner("signin-spinner");
 					notCompletedRequest = false;
+					grecaptcha.reset(loginCaptcha);
 				});
-		}
-		else
-		{
-			/*
-				Response failed login message
-			*/
-			show_notification("error","Username or Password cannot be empty.",4000);
 		}
 }
