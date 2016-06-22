@@ -1,8 +1,24 @@
+var loginCaptcha,
+    registerCaptcha,
+    contactCaptcha;
 $(window).load(function() {
     $('.g-recaptcha').each(function(index,el){
-      grecaptcha.render(el,{'sitekey' : googleReCaptchaKey});
+      //grecaptcha.render(el,{'sitekey' : googleReCaptchaKey});
       //$(el).attr("data-sitekey","6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A");
-    })
+    });
+
+    if($("#login-recaptcha").length == 1)
+    {
+      loginCaptcha = grecaptcha.render('login-recaptcha', { 'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A' });
+    }
+    if($("#register-recaptcha").length == 1)
+    {
+      registerCaptcha = grecaptcha.render('register-recaptcha', { 'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A' });
+    }
+    if($("#contact-recaptcha").length == 1)
+    {
+      contactCaptcha = grecaptcha.render('contact-recaptcha', { 'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A' });
+    }
 });
 
 /*
@@ -121,7 +137,6 @@ function keyPressForm(e) {
 
     if(($("#registerModal").data('bs.modal') || {}).isShown)
     {
-
       /*
         If submit button is activated
       */
