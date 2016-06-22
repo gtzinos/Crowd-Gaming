@@ -49,7 +49,7 @@
 									<!-- Google recaptcha -->
 									<div class="form-group">
 										<div class="col-xs-offset-1 col-xs-8 col-sm-offset-3 col-sm-4" >
-												<div style="transform: scale(0.80,0.85); transform-origin: left top;" class="g-recaptcha"></div>
+												<div style="transform: scale(0.80,0.85); transform-origin: left top;" id="login-recaptcha"></div>
 										</div>
 									</div>
 									<!-- Spinner and Response Label Field -->
