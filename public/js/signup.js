@@ -14,9 +14,15 @@
 
 			var userAddress = $("#signup-address").val();
 			var userPhone =  $("#signup-phone").val();
+			var verify = grecaptcha.getResponse(registerCaptcha);
 
 			if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity && userAcceptLicence)
 			{
+				if(verify == "")
+				{
+					return -1;
+				}
+
 				let dataToSend = {
 					"email": userEmail,
 					"password": userPassword,
@@ -25,7 +31,8 @@
 					"country": userCountry,
 					"city": userCity,
 					"gender": userGender,
-					"licence": "accepted"
+					"licence": "accepted",
+					"recaptcha": verify
 				};
 
 				/*
@@ -43,7 +50,7 @@
 			}
 			else
 			{
-				return null;
+				return -2;
 			}
 	}
 
@@ -59,7 +66,18 @@
 
 		//get user data
 		var dataToSend = getUserData();
-		if(dataToSend != null)
+
+		if(dataToSend == -1)
+		{
+			show_notification("error","Please verify google recaptcha.",4000);
+			notCompletedRequest = false;
+		}
+		else if(dataToSend == -2)
+		{
+			show_notification("error","Please fill all required fields.",4000);
+			notCompletedRequest = false;
+		}
+		else
 		{
 			show_spinner("signup-spinner");
 			$.ajax(
@@ -208,9 +226,5 @@
 				notCompletedRequest = false;
 				remove_spinner("signup-spinner");
 			});
-		}
-		else {
-			show_notification("error","You must fill all fields.",4000);
-			notCompletedRequest = false;
 		}
 	}
