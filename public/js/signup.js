@@ -3,17 +3,17 @@
 			/*
 				Store user input to variables
 			*/
-			var userEmail = $(document).find("#signup-email").val();
-			var userPassword = $(document).find("#signup-password").val();
-			var userFName = $(document).find("#signup-fname").val();
-			var userLName = $(document).find("#signup-lname").val();
-			var userGender = $(document).find("#signup-gender").val();
-			var userCountry = $(document).find("#signup-country").val();
-			var userCity = $(document).find("#signup-city").val();
-			var userAcceptLicence = $(document).find("#signup-licence").prop('checked');
+			var userEmail = $("#signup-email").val();
+			var userPassword = $("#signup-password").val();
+			var userFName = $("signup-fname").val();
+			var userLName = $("#signup-lname").val();
+			var userGender = $("#signup-gender").val();
+			var userCountry = $("#signup-country").val();
+			var userCity = $("#signup-city").val();
+			var userAcceptLicence = $("#signup-licence").prop('checked');
 
-			var userAddress = $(document).find("#signup-address").val();
-			var userPhone =  $(document).find("#signup-phone").val();
+			var userAddress = $("#signup-address").val();
+			var userPhone =  $("#signup-phone").val();
 
 			if(userEmail && userPassword && userFName &&  userLName && userGender && userCountry && userCity && userAcceptLicence)
 			{
