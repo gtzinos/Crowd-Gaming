@@ -170,6 +170,30 @@ WHERE `Questionnaire`.`id`=? ";
 			return false;
 		}
 
+		public function findMaxScore( $questionnaireId )
+		{
+			$query = "SELECT sum(`Question`.`multiplier`) as max_score , `QuestionGroup`.`id` ,`QuestionGroup`.`name`
+						FROM `Question`
+						INNER JOIN `QuestionGroup` ON `Question`.`question_group_id`=`QuestionGroup`.`id`
+						WHERE `QuestionGroup`.`questionnaire_id`=?
+						GROUP BY `QuestionGroup`.`id`";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' , $questionnaireId);
+
+			$set = $statement->execute();
+
+			$maxScores = array();
+
+			while( $set->next() )
+			{
+				$maxScores[ $set->get("id") ]["max-score"] = $set->get("max_score");
+				$maxScores[ $set->get("id") ]["name"] = $set->get("name");
+			}
+
+			return $maxScores;
+		}
+
 		public function isPublic( $questionnaireId )
 		{
 			$query = "SELECT `public` from `Questionnaire` WHERE `id`=?";

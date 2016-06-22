@@ -38,6 +38,7 @@
 			return 0;
 		}
 
+
 		public function findByQuestionnaire($questionnaireId)
 		{
 			$query = "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?";

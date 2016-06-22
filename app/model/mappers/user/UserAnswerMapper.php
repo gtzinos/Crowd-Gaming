@@ -163,20 +163,39 @@
 			return $score;
 		}
 
+		public function findUserScore($userId , $questionnaireId )
+		{
+			$query = "SELECT sum(`Question`.`multiplier` * `UserAnswer`.`is_correct`) as score , `QuestionGroup`.`id`
+						FROM `Question`
+						INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id`
+						INNER JOin `Playthrough` On `Playthrough`.`question_group_id`=`QuestionGroup`.`id`
+						INNER JOIN `UserAnswer` on `UserAnswer`.`question_id`=`Question`.`id`
+						WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`completed`=1 AND `UserAnswer`.`user_id`=?
+						GROUP BY `QuestionGroup`.`id`";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $questionnaireId , $userId);
+			$set = $statement->execute();
+
+			$userScore = array();
+
+			while( $set->next() )
+			{
+				$userScore[ $set->get("id") ] = $set->get("score");
+			}
+
+			return $userScore;
+		}
+
 		public function findScore($questionnaireId)
 		{
-			$query =   "SELECT	
-							`Question`.`question_group_id`,`QuestionGroup`.`name` as gname, `User`.`name` ,`User`.`surname`,
-							sum(`UserAnswer`.`is_correct`) as correct_answers,
-							count(`UserAnswer`.`question_id`) as total_answers,
-							sum(`Question`.`multiplier` * `UserAnswer`.`is_correct`) as score,
-							sum(`Question`.`multiplier`) as max_score
-						FROM `Question`
+			$query =   "SELECT sum(`Question`.`multiplier` * `UserAnswer`.`is_correct`) as score , `QuestionGroup`.`id` , `UserAnswer`.`user_id`,`User`.`name`,`User`.`surname`
+						FROM `UserAnswer`
+						INNER JOIN `Question` on `UserAnswer`.`question_id`=`Question`.`id`
 						INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` AND `QuestionGroup`.`questionnaire_id`=?
-						LEFT JOIN `UserAnswer` ON `Question`.`id`=`UserAnswer`.`question_id`
-						LEFT JOIN `User` on `User`.`id`=`UserAnswer`.`user_id`
-						INNER JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`user_id`=`User`.`id` AND `QuestionnaireParticipation`.`participation_type`=1
-						GROUP BY `Question`.`question_group_id`,`User`.`id`";
+						INNER JOIN `User` ON `User`.`id`=`UserAnswer`.`user_id`
+						INNER JOIN `Playthrough` On `Playthrough`.`question_group_id`=`QuestionGroup`.`id` AND `Playthrough`.`completed`=1 AND `Playthrough`.`user_id`=`User`.`id`
+						GROUP BY `QuestionGroup`.`id`,`UserAnswer`.`user_id`";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i',$questionnaireId);
@@ -187,14 +206,11 @@
 
 			while( $set->next() )
 			{
-				$arrayItem["group-id"] = $set->get("question_group_id");
-				$arrayItem["group-name"] = $set->get("gname");
+				$arrayItem["group-id"] = $set->get("id");
+				$arrayItem["user-id"] = $set->get('user_id');
 				$arrayItem["user-name"] = $set->get("name");
 				$arrayItem["user-surname"] = $set->get("surname");
-				$arrayItem["correct-answers"] = $set->get("correct_answers");
-				$arrayItem["total-answers"] = $set->get("total_answers");
 				$arrayItem["score"] = $set->get("score");
-				$arrayItem["max-score"] = $set->get("max_score");
 
 				$scoreArray[] = $arrayItem;
 			}

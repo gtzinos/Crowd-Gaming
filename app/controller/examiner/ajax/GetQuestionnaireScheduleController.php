@@ -18,7 +18,7 @@
 
 				$participationMapper = new ParticipationMapper;
 
-				if( !( $participationMapper->participates($_SESSION["USER_ID"] , $_POST["questionnaire-id"] , 2) || $_SESSION["USER_LEVEl"]==3 ) )
+				if( !( $participationMapper->participates($_SESSION["USER_ID"] , $_POST["questionnaire-id"] , 2) || $_SESSION["USER_LEVEL"]==3 ) )
 				{
 					$this->setOutput("response-code" , 1);
 					return;

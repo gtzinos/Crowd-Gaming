@@ -3,7 +3,7 @@
 echo "Crowd Gaming Console Client . Version 0.1"
 echo
 
-TOKEN="d8f2fe1b831977bec8aea8a73b6a4bd23a701099"
+TOKEN="58aac496041d8a2814dc9eaef6716900bec90e71"
 URL="crowd-gaming.local"
 
 #curl --header "Authorization: $TOKEN" crowd-gaming.local/rest_api/questionnaire
@@ -23,7 +23,7 @@ case $1 in
 
 	"question" )
 
-		curl --header "Authorization: $TOKEN" $URL/rest_api/questionnaire/$2/group/$3/question | python -m json.tool;;
+		curl --header "Authorization: $TOKEN" $URL/rest_api/questionnaire/$2/group/$3/question  | python -m json.tool;;
 	
 	"reset-group" )
 
@@ -36,6 +36,10 @@ case $1 in
 	"post-report" )
 
 		curl --header "Authorization: $TOKEN" --data '{ "questionnaire-id":"'$2'" , "report-comment":"'$3'" }' $URL/rest_api/report  ;; #| python -m json.tool ;;
+	"score" )
+
+		curl --header "Authorization: $TOKEN" $URL/rest_api/questionnaire/$2/score | python -m json.tool ;;
+
 	"help" )
 		
 		echo Valid parameters
@@ -49,3 +53,5 @@ case $1 in
 		echo post-report 	:questionnaire-id 	:report-comment
 		;;
 esac
+
+echo
