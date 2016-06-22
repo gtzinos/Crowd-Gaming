@@ -6,12 +6,13 @@ function getClientData()
 	var userEmail = $(document).find("#signin-email").val();
 	var userPassword = $(document).find("#signin-password").val();
 	var userRememberMe = $(document).find("#signin-remember").prop('checked');
-
-	if(userEmail && userPassword)
+	var verify = grecaptcha.getResponse(loginCaptcha);
+	if(userEmail && userPassword && verify != "")
 	{
 		let data = {
 			"email": userEmail,
-			"password": userPassword
+			"password": userPassword,
+			"recaptcha": verify
 		};
 
 		if(userRememberMe)
@@ -60,10 +61,6 @@ function signInFromForm() {
 					}
 					else
 					{
-							/*
-								Display an response message
-							*/
-							var response_message = "";
 							/*
 								 If response message == 1
 								 Wrong username or password
