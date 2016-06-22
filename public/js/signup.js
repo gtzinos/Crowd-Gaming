@@ -5,7 +5,7 @@
 			*/
 			var userEmail = $("#signup-email").val();
 			var userPassword = $("#signup-password").val();
-			var userFName = $("signup-fname").val();
+			var userFName = $("#signup-fname").val();
 			var userLName = $("#signup-lname").val();
 			var userGender = $("#signup-gender").val();
 			var userCountry = $("#signup-country").val();
