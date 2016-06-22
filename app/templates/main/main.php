@@ -24,10 +24,8 @@
 		<!-- Script files -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<!-- Google Sign In -->
-		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<!-- Google recaptcha -->
-		<script src='https://www.google.com/recaptcha/api.js'></script>
+		<script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/spin.js"); ?>"></script>
 		<!-- Tinymce editor -->
 		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
