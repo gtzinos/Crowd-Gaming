@@ -114,6 +114,7 @@
 				//Something going wrong
 				else
 				{
+					grecaptcha.reset(registerCaptcha);
 					 /*
 							If response message == 1
 							Email address length problem
@@ -225,6 +226,7 @@
 				displayServerResponseError(xhr,error);
 				notCompletedRequest = false;
 				remove_spinner("signup-spinner");
+				grecaptcha.reset(registerCaptcha);
 			});
 		}
 	}
