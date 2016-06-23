@@ -212,6 +212,13 @@
 						show_notification("error","You must accept our licence.",4000);
 					 }
 					 /*
+						If response message == 14
+					 */
+					 else if(data == "14")
+					 {
+						show_notification("error","You must verify recaptcha.",4000);
+					 }
+					 /*
 							 Something going wrong
 					 */
 						else {
