@@ -24,33 +24,35 @@ function getAllScores()
                     "<table class='table'>" +
                       "<thead>" +
                         "<tr>" +
-                          "<th>Full Name</th>" +
-                          "<th>Email</th>" +
+                          "<th>First Name</th>" +
+                          "<th>Surname</th>" +
                           "<th>Degree</th>" +
                         "</tr>" +
                       "</thead>" +
                       "<tbody>";
-      if(data.scores != null && data.scores.length > 0)
+
+      if(data["group-scores"] != null)
       {
-        $.each(data.scores, function(i,group) {
+        scores_array = [];
+        $.each(data["group-scores"], function(i,group) {
             $.each(group, function(j, userstats) {
-              if(scores_array[userstats.email] != undefined)
+              if(scores_array[userstats["user-name"] + " " + userstats["user-surname"]] != undefined)
               {
-                scores_array[userstats.email] = scores_array[userstats.email].score + userstats.score;
+                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = scores_array[userstats["user-name"] + " " + userstats["user-surname"]].score + userstats.score;
               }
               else {
-                scores_array[userstats.email] = { userstats };
+                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = { userstats };
               }
             });
         });
-
-        $.each(scores_array, function(i, user) {
+        for(var score in scores_array)
+        {
           out += "<tr>" +
-                      "<td>" + user["user-surname"] + " " + user["user-email"] + "</td>" +
-                      "<td>" + user["user-email"] + "</td>" +
-                      "<td>" + user["score"] + "</td>" +
+                      "<td>" + scores_array[score]["userstats"]["user-name"] + "</td>" +
+                      "<td>" + scores_array[score]["userstats"]["user-surname"] + "</td>" +
+                      "<td>" + scores_array[score]["userstats"]["score"] + "</td>" +
                   "</tr>";
-        });
+        }
       }
       out += "</tbody>" +
             "</table>" +
@@ -80,12 +82,14 @@ function getAllScores()
         SixToEight = 0,
         EightToNine = 0,
         NineToTen = 0;
-    $.each(scores_array,function(i,user){
-      if(user.score >= 0 && user.score < 50) { oneToFive++; }
-      else if(user.score >= 50 && user.score < 60) { fiveToSix++; }
-      else if(user.score >= 60 && user.score < 80) { SixToEight++; }
-      else if(user.score >= 80 && user.score <= 100) { NineToTen++; }
-    });
+    for(var score in scores_array)
+    {
+      var degree = scores_array[score]["userstats"]["score"];
+      if(degree >= 0 && degree < 50) { oneToFive++; }
+      else if(degree >= 50 && degree < 60) { fiveToSix++; }
+      else if(degree >= 60 && degree < 80) { SixToEight++; }
+      else if(degree >= 80 && degree <= 100) { NineToTen++; }
+    }
       var data = google.visualization.arrayToDataTable([
         ['Degree', 'Number of players'],
         ['0 - 50', oneToFive],
