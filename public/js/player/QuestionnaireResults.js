@@ -3,6 +3,10 @@ google.charts.load("current", {packages:["corechart"]});
 
 $(window).on("load",function() {
   $('#questionnaire-results').on('shown.bs.modal', function (e) {
+    if(time_left == 0)
+    {
+      show_notification("warning","These aren't the final results. Questionnaire is online.",6000);
+    }
     getAllScores();
   })
 });
