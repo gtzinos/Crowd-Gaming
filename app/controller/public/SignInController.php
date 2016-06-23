@@ -31,7 +31,7 @@
 
 			if( $response["success"] != true )
 			{
-				print 2;
+				print 5;
 				return;
 			}
 			
