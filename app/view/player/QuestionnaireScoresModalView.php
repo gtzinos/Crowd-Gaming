@@ -13,7 +13,8 @@
            <div id="results-place"></div>
            <br><br>
            <div id="charts-place"></div>
-           <br><br>
+           <div id="hidden-chart-image" style="display:none"></div>
+           <br>
            <div id="buttons-place">
               <div class="col-xs-12 col-sm-4 col-sm-offset-1">
                 <button id="download-submit" class="form-control" onclick="downloadAsPdf()">Download PDF</button>
