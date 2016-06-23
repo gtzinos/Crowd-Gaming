@@ -30,7 +30,7 @@ function getAllScores()
                         "<tr>" +
                           "<th>First Name</th>" +
                           "<th>Surname</th>" +
-                          "<th>Degree</th>" +
+                          "<th>Degree (%)</th>" +
                         "</tr>" +
                       "</thead>" +
                       "<tbody>";
