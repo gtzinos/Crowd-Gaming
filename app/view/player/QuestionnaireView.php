@@ -28,6 +28,7 @@
 		echo "<script>
 						var questionnaire_id = " . $questionnaire->getId() . ";
 						var time_left = " . $minutes_left . ";
+						var questionnaire_name = '" . $questionnaire->getName() . "';
 		 			</script>";
 	?>
 	<div class="container-fluid">

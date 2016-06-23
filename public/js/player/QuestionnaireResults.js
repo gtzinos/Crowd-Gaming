@@ -117,7 +117,7 @@ function getAllScores()
   }
 
    function downloadAsPdf() {
-       var pdf = new jsPDF('p', 'pt', 'letter');
+       var pdf = new jsPDF('p', 'pt', 'a4');
        // source can be HTML-formatted string, or a reference
        // to an actual DOM element from which the text will be scraped.
        source = $('#results-place').html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
@@ -152,6 +152,6 @@ function getAllScores()
        function (dispose) {
            // dispose: object with X, Y of the last line add to the PDF
            //          this allow the insertion of new lines after html
-           pdf.save('Test.pdf');
+           pdf.save(questionnaire_name + '.pdf');
        }, margins);
    }
