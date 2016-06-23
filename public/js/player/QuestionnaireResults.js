@@ -108,15 +108,19 @@ function getAllScores()
         pieHole: 0.4,
       };
 
-      var chart = new google.visualization.PieChart(document.getElementById('charts-place'));
+      var chart_div = document.getElementById('charts-place');
+      var chart = new google.visualization.PieChart(chart_div);
+
       chart.draw(data, options);
+
+      $("#hidden-chart-image").append('<img src="' + chart.getImageURI() + '">');
   }
 
    function downloadAsPdf() {
        var pdf = new jsPDF('p', 'pt', 'letter');
        // source can be HTML-formatted string, or a reference
        // to an actual DOM element from which the text will be scraped.
-       source = $('#results-place').html() + "<br><br>" + $('#charts-place').html();
+       source = $('#results-place').html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
 
        // we support special element handlers. Register them with jQuery-style
        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
