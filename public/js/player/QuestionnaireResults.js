@@ -54,7 +54,7 @@ function getAllScores()
           out += "<tr>" +
                       "<td>" + scores_array[score]["userstats"]["user-name"] + "</td>" +
                       "<td>" + scores_array[score]["userstats"]["user-surname"] + "</td>" +
-                      "<td>" + scores_array[score]["userstats"]["score"] + "</td>" +
+                      "<td>" + (scores_array[score]["userstats"]["score"]).toFixed(2) + "</td>" +
                   "</tr>";
         }
       }
