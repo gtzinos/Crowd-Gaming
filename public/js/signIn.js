@@ -115,6 +115,14 @@ function signInFromForm() {
 							 show_notification("error","Your account has banned.",4000);
 							}
 							/*
+								 If response message == 5
+								 Verify google recaptcha
+							*/
+							else if(data == "5")
+							{
+							 show_notification("error","You must verify recaptcha.",4000);
+							}
+							/*
 									Something going wrong
 							*/
 							else {
