@@ -39,11 +39,18 @@
 									if($user->getAccessLevel() == 1)
 									{
 										echo "<option value='1' selected>Player</option>
-													<option value='2'>Examiner</option>";
+													<option value='2'>Examiner</option>
+													<option value='3'>Moderator</option>";
 									}
 									else if($user->getAccessLevel() == 2){
 										echo "<option value='1'>Player</option>
-													<option value='2' selected>Examiner</option>";
+													<option value='2' selected>Examiner</option>
+													<option value='3'>Moderator</option>";
+									}
+									else if($user->getAccessLevel() == 3){
+										echo "<option value='1'>Player</option>
+													<option value='2'>Examiner</option>
+													<option value='3' selected>Moderator</option>";
 									}
 								echo "
 								</select>
@@ -240,6 +247,9 @@
 							}
 							else if($user->getAccessLevel() == 2){
 								echo "<input class='form-control' placeholder='Access Level' value='Examiner' disabled>";
+							}
+							else if($user->getAccessLevel() == 3){
+								echo "<input class='form-control' placeholder='Access Level' value='Moderator' disabled>";
 							}
 						echo "
 						<span class='gt-icon'></span>
