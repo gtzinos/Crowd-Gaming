@@ -167,7 +167,7 @@
 								If response-code = 0
 								Everything are okay
 							*/
-							if(get("response-code") == 0)
+							if(get("response-code") <= 0)
 							{
 								/*
 									Initialize success class
@@ -179,7 +179,13 @@
 								*/
 								if(isset($_POST['player-join']))
 								{
-									$response_message .= "Your request to be a player on this questionnaire sended successfully.";
+									if(get("response-code") == -1)
+									{
+										$response_message .= "You became a player on this questionnaire.";
+									}
+									else {
+										$response_message .= "Your request to be a player on this questionnaire sended successfully.";
+									}
 								}
 								/*
 									User option == 2
@@ -230,12 +236,24 @@
 								}
 							}
 							/*
+								Initialize success class
+							*/
+							$response_message = "<label class='alert alert-success'>";
+							/*
+								User option == 1
+								he need to be a player
+							*/
+							if(isset($_POST['player-join']))
+							{
+								$response_message .= "Your request to be a player on this questionnaire sended successfully.";
+							}
+							/*
 								Else If response-code = 1
-								then Message validation error
+								then Password validation error
 							*/
 							else if(get("response-code") == 1)
 							{
-								$response_message .= "This is not a valid message.";
+								$response_message .= "This is not a valid password value.";
 							}
 							/*
 								Else If response-code = 2
