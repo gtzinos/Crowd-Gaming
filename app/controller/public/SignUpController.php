@@ -14,14 +14,15 @@
 		public function run(){
 			
 			if( isset($_SESSION["USER_ID"])  ||
-				!(  isset($_POST["email"]) &&
-					isset($_POST["name"]) &&
-					isset($_POST["surname"]) &&
-					isset($_POST["country"]) &&
-					isset($_POST["city"]) &&
-					isset($_POST["gender"]) &&
-					isset($_POST["password"]) &&
-					isset($_POST["licence"] )) )
+				!isset( $_POST["email"],
+						$_POST["name"] ,
+						$_POST["surname"],
+						$_POST["country"],
+						$_POST["city"],
+						$_POST["gender"],
+						$_POST["password"],
+						$_POST["licence"] ,
+						$_POST["recaptcha"]) )
 			{
 				$this->redirect("home");
 			}
@@ -35,12 +36,12 @@
 			
 			/*
 				Captcha Check
-			 
+			*/
 			$curl = curl_init();
 
 			curl_setopt( $curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
 			curl_setopt( $curl, CURLOPT_POST ,1);
-			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['g-recaptcha-response'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);			
+			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['recaptcha'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);			
 			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
 
 			$responseJson = curl_exec($curl);
@@ -52,7 +53,7 @@
 				print 14;
 				return;
 			}
-			*/
+			
 
 			/*
 				Sanitizing
