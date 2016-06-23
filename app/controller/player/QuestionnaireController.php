@@ -307,6 +307,7 @@
 
 			try
 			{
+				$this->setOutput("response-code" , 0);
 				DatabaseConnection::getInstance()->startTransaction();
 
 				if( $questionnaireRequest !== null )
@@ -321,11 +322,12 @@
 				}
 				else if( $newParticipation !== null)
 				{
+					$this->setOutput("response-code" , -1);
 					$participationMapper->persist($newParticipation);
 				}
 
 				DatabaseConnection::getInstance()->commit();
-				$this->setOutput("response-code" , 0);
+				
 
 			}
 			catch(DatabaseException $ex)

@@ -582,7 +582,7 @@ WHERE `Questionnaire`.`id`=? ";
 		private function _update($questionnaire){
 			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=?,`message`=? , `allow_multiple_groups`=? WHERE `id`=?");
 
-			$statement->setParameters( 'issiiiis' ,
+			$statement->setParameters( 'issiisii' ,
 				$questionnaire->getCoordinatorId(),
 				$questionnaire->getName(),
 				$questionnaire->getDescription(),
