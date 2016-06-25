@@ -189,7 +189,7 @@
 
 		public function findScore($questionnaireId)
 		{
-			$query =   "SELECT sum(`Question`.`multiplier` * `UserAnswer`.`is_correct`) as score , `QuestionGroup`.`id` , `UserAnswer`.`user_id`,`User`.`name`,`User`.`surname`
+			$query =   "SELECT sum(`Question`.`multiplier` * `UserAnswer`.`is_correct`) as score , `QuestionGroup`.`id` , `UserAnswer`.`user_id`,`User`.`name`,`User`.`surname` , `User`.`email`
 						FROM `UserAnswer`
 						INNER JOIN `Question` on `UserAnswer`.`question_id`=`Question`.`id`
 						INNER JOIN `QuestionGroup` ON `QuestionGroup`.`id`=`Question`.`question_group_id` AND `QuestionGroup`.`questionnaire_id`=?
@@ -209,6 +209,7 @@
 				$arrayItem["group-id"] = $set->get("id");
 				$arrayItem["user-id"] = $set->get('user_id');
 				$arrayItem["user-name"] = $set->get("name");
+				$arrayItem["user-email"] = $set->get("email");
 				$arrayItem["user-surname"] = $set->get("surname");
 				$arrayItem["score"] = $set->get("score");
 
