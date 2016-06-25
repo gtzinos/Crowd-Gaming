@@ -48,8 +48,10 @@
 					<!-- Score rights -->
 					<div class="form-group has-feedback">
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
+								<label for="score_rights">Who will have access on scores ?</label>
 							</div>
 							<div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="select">
+								<select id="score_rights" class="form-control">
 									<option value="-" disabled selected>Who ? (Optional)</option>
 									<option value="1">Everyone</option>
 									<option value="2">Examiners, Moderators</option>
