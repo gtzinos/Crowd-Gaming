@@ -62,7 +62,7 @@
 
 		public function getActiveExaminerRequest($userId , $questionnaireId)
 		{
-			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `user_id`=? AND `request_type`=2 AND `accepted` IS NULL";
+			$query = "SELECT * FROM `QuestionnaireRequest` WHERE `user_id`=? AND `questionnaire_id`=? AND `request_type`=2 AND `accepted` IS NULL";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii',$userId , $questionnaireId);
