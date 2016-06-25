@@ -1,5 +1,4 @@
-var scores_array = [],
-    customize_array = [];
+var scores_array = [];
 google.charts.load("current", {packages:["corechart"]});
 
 $(window).on("load",function() {
@@ -12,10 +11,15 @@ $(window).on("load",function() {
   })
 });
 
-function refresh()
+function refreshSimpleResults()
 {
   $("#results-place,#full-results-place,#charts-place,#hidden-chart-image").html("");
   getAllScores();
+}
+
+function refreshFullResults()
+{
+  //TODO Refresh full results
 }
 
 function getAllScores()
@@ -39,6 +43,7 @@ function getAllScores()
     if(data.code == "200")
     {
       $("#results-place").html("");
+      var usersList = "";
       var out = "<div class='table-responsive'>" +
                     "<table class='table'>" +
                       "<thead>" +
@@ -53,30 +58,26 @@ function getAllScores()
       if(data["group-scores"] != null)
       {
         scores_array = data;
-        $.each(data["group-scores"], function(i,group) {
-            $.each(group, function(j, userstats) {
-              if(scores_array[userstats["user-name"] + " " + userstats["user-surname"]] != undefined)
-              {
-                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = scores_array[userstats["user-name"] + " " + userstats["user-surname"]]["userstats"].score + userstats.score;
-              }
-              else {
-                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = { userstats };
-              }
-            });
-        });
         //sortJsonByKey(scores_array,"user-surname");
-        $.each(data["total-score"],function(){
+        $.each(scores_array["total-score"],function(){
           out += "<tr>" +
                     "<td>" + this["name"] + "</td>" +
                     "<td>" + this["surname"] + "</td>" +
                     "<td>" + (this["score"]).toFixed(2) + "</td>" +
                  "</tr>";
+
+          usersList += "<option value='" +
+            this["surname"] + "' data-tokens='" +
+            this["name"] + " " + this["surname"] +
+            "'>" + this["name"] + " " + this["surname"] + "</option>";
         });
       }
       out += "</tbody>" +
             "</table>" +
         "</div>";
       $("#results-place").html(out);
+      $("#full-scores-users-dropdown").html(usersList);
+      $("#full-scores-users-dropdown").selectpicker('refresh');
     }
   })
   .fail(function(xhr,error){
