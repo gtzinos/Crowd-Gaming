@@ -43,11 +43,12 @@
                 <br><br>
                 <form role="form" class="form-horizontal" onsubmit="return false">
                   <div class="form-group">
-                    <div class="col-xs-offset-1 col-xs-7 col-sm-5">
+                    <div class="col-xs-offset-0 col-sm-offset-1 col-xs-12 col-sm-5">
                       <select id="full-scores-users-dropdown" class="selectpicker form-control" data-live-search="true" title="Select some users" multiple data-actions-box="true" data-selected-text-format="count > 2">
                       </select>
                     </div>
-                    <div class="col-xs-3 col-sm-4">
+                    <div class="col-xs-8 col-sm-4">
+                      <div class="visible-xs"><br></div>
                       <div class="dropdown">
                          <button class="form-control btn btn-primary" onclick="getFullScoreResults()">Get Scores</button>
                       </div>

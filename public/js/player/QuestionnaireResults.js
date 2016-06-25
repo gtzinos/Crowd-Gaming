@@ -181,9 +181,10 @@ function sortJsonByKey(array, key) {
         out += "<div class='table-responsive'>" +
                       "<table class='table'>" +
                         "<thead>" +
-                          "<th style='text-align:center' colspan='3'>" +
+                          "<td style='color: grey'>Group Name:</td>" +
+                          "<th>" +
                           group_name +
-                          "</h>" +
+                          "</th>" +
                           "<tr>" +
                             "<th>Full name</th>" +
                             "<th>Email</th>" +
