@@ -213,6 +213,7 @@
 					 }
 					 /*
 						If response message == 14
+						Verify recaptcha
 					 */
 					 else if(data == "14")
 					 {

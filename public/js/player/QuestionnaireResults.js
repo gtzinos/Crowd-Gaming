@@ -1,4 +1,5 @@
-var scores_array = [];
+var scores_array = [],
+    full_scores_users = [];
 google.charts.load("current", {packages:["corechart"]});
 
 $(window).on("load",function() {
@@ -20,6 +21,10 @@ function refreshResults()
     if($("#get-charts-submit").html() == "Hide charts")
     {
       drawChart();
+    }
+    if(full_scores_users.length > 0)
+    {
+
     }
   });
 }
@@ -63,9 +68,9 @@ function getAllScores()
         //sortJsonByKey(scores_array,"user-surname");
         $.each(scores_array["total-score"],function(){
           out += "<tr>" +
-                    "<td>" + this["name"] + this["surname"] + "</td>" +
+                    "<td>" + this["surname"] + " " + this["name"] + "</td>" +
                     "<td>" + this["email"] + "</td>" +
-                    "<td>" + (this["score"]).toFixed(2) + "</td>" +
+                    "<td>" + (this["score"]).toFixed(2) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>" +
                  "</tr>";
 
           usersList += "<option value='" +
@@ -176,30 +181,27 @@ function sortJsonByKey(array, key) {
     if($("#full-scores-users-dropdown").val() != null && $("#full-scores-users-dropdown").val().length > 0)
     {
       var temp = String($('#full-scores-users-dropdown').val());
-      var users_selected_list = [];
+      full_scores_users = [];
 
       if(temp.indexOf(',') >= 0)
       {
         temp = temp.split(",");
         for(var i=0;i<temp.length;i++)
         {
-          users_selected_list[temp[i]] = true;
+          full_scores_users[temp[i]] = true;
         }
       }
       else {
-        users_selected_list[temp] = true;
+        full_scores_users[temp] = true;
       }
       $("#full-results-place").html("");
 
       var out = "";
       $.each(scores_array["group-scores"],function(group_name,users_array) {
-        out += "<div class='table-responsive'>" +
+        out += "<p>Group Name: " + group_name + "</p>" +
+                "<div class='table-responsive'>" +
                       "<table class='table'>" +
                         "<thead>" +
-                          "<td style='color: grey'>Group Name:</td>" +
-                          "<th>" +
-                          group_name +
-                          "</th>" +
                           "<tr>" +
                             "<th>Full name</th>" +
                             "<th>Email</th>" +
@@ -208,12 +210,12 @@ function sortJsonByKey(array, key) {
                         "</thead>" +
                         "<tbody>";
         $.each(users_array,function() {
-          if(users_selected_list[this["user-email"]] != undefined)
+          if(full_scores_users[this["user-email"]] != undefined)
           {
             out += "<tr>" +
-              "<td>" + this["user-name"] + " " + this["user-surname"] + "</td>" +
+              "<td>" + this["user-surname"] + "-" + this["user-name"] + "</td>" +
               "<td>" + this["user-email"] + "</td>" +
-              "<td>" + this["score"] + "</td>" +
+              "<td>" + (this["score"]).toFixed(2) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>" +
               "</tr>";
           }
         });
@@ -228,11 +230,23 @@ function sortJsonByKey(array, key) {
     }
   }
 
-  function downloadAsPdf() {
-       var pdf = new jsPDF('p', 'pt', 'a4');
+  function downloadSimpleResults()
+  {
+    var source = $("#results-place").html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
+    downloadAsPdf(source);
+  }
+
+  function downloadFullResults()
+  {
+    var source = $("#full-results-place").html() + "<br><br>";
+    downloadAsPdf(source);
+  }
+
+  function downloadAsPdf(text) {
+       var pdf = new jsPDF('p', 'pt', 'letter');
        // source can be HTML-formatted string, or a reference
        // to an actual DOM element from which the text will be scraped.
-       source = $('#results-place').html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
+       source = text;
 
        // we support special element handlers. Register them with jQuery-style
        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
