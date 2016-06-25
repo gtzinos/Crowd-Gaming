@@ -45,26 +45,27 @@ function getAllScores()
 
       if(data["group-scores"] != null)
       {
-        scores_array = [];
+        scores_array = data;
         $.each(data["group-scores"], function(i,group) {
             $.each(group, function(j, userstats) {
+
               if(scores_array[userstats["user-name"] + " " + userstats["user-surname"]] != undefined)
               {
-                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = scores_array[userstats["user-name"] + " " + userstats["user-surname"]].score + userstats.score;
+                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = scores_array[userstats["user-name"] + " " + userstats["user-surname"]]["userstats"].score + userstats.score;
               }
               else {
                 scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = { userstats };
               }
             });
         });
-        for(var score in scores_array)
-        {
+        //sortJsonByKey(scores_array,"user-surname");
+        $.each(data["total-score"],function(){
           out += "<tr>" +
-                      "<td>" + scores_array[score]["userstats"]["user-name"] + "</td>" +
-                      "<td>" + scores_array[score]["userstats"]["user-surname"] + "</td>" +
-                      "<td>" + (scores_array[score]["userstats"]["score"]).toFixed(2) + "</td>" +
-                  "</tr>";
-        }
+                        "<td>" + this["name"] + "</td>" +
+                        "<td>" + this["surname"] + "</td>" +
+                        "<td>" + (this["score"]).toFixed(2) + "</td>" +
+                    "</tr>";
+        });
       }
       out += "</tbody>" +
             "</table>" +
@@ -90,6 +91,15 @@ function getAllScores()
   })
 }
 
+//Sort json by key
+function sortJsonByKey(array, key) {
+   return array.sort(function(a, b) {
+       var x = a["userstats"][key];
+       var y = b["userstats"][key];
+       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+   });
+}
+
   function drawChart()
   {
     if(notCompletedRequest == true)
@@ -107,14 +117,13 @@ function getAllScores()
         SixToEight = 0,
         EightToNine = 0,
         NineToTen = 0;
-    for(var score in scores_array)
-    {
-      var degree = scores_array[score]["userstats"]["score"];
+    $.each(scores_array["total-score"],function() {
+      var degree = this["score"];
       if(degree >= 0 && degree < 50) { oneToFive++; }
       else if(degree >= 50 && degree < 60) { fiveToSix++; }
       else if(degree >= 60 && degree < 80) { SixToEight++; }
       else if(degree >= 80 && degree <= 100) { NineToTen++; }
-    }
+    })
       var data = google.visualization.arrayToDataTable([
         ['Degree', 'Number of players'],
         ['0 - 50', oneToFive],
