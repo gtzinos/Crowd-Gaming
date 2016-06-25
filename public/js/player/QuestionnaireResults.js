@@ -125,6 +125,11 @@ function sortJsonByKey(array, key) {
     {
       return;
     }
+    if(scores_array.length == 0 || scores_array["group-scores"].length == 0)
+    {
+      show_notification("error","You don't have available data to draw.",4000);
+      return;
+    }
     notCompletedRequest = true;
     $("#charts-place").html("");
     $("#hidden-chart-image").html("");
