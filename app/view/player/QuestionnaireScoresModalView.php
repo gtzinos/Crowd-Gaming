@@ -38,7 +38,20 @@
                 </div>
               </div>
               <div id="full-scores-tab" class="tab-pane fade">
-
+                <br><br>
+                <form role="form" class="form-horizontal" onsubmit="return false">
+                  <div class="form-group">
+                    <div class="col-xs-offset-1 col-xs-7 col-sm-5">
+                      <select id="full-score-users-dropdown" class="selectpicker form-control" data-live-search="true" title="Select some users" multiple data-actions-box="true" data-selected-text-format="count > 2">
+                      </select>
+                    </div>
+                    <div class="col-xs-3 col-sm-4">
+                      <div class="dropdown">
+                         <button class="form-control btn btn-primary">Get Scores</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
 				 </div>
