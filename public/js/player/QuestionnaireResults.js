@@ -11,10 +11,17 @@ $(window).on("load",function() {
   })
 });
 
+//Refresh all scores
 function refreshResults()
 {
   $("#results-place,#full-results-place,#charts-place,#hidden-chart-image").html("");
   getAllScores();
+  $.when(notCompletedWork).done(function() {
+    if($("#get-charts-submit").html() == "Hide charts")
+    {
+      drawChart();
+    }
+  });
 }
 
 function getAllScores()
@@ -91,7 +98,9 @@ function getAllScores()
   .always(function() {
     remove_spinner("scores-spinner");
     notCompletedRequest = false;
-  })
+    notCompletedWork.resolve();
+    notCompletedWork = $.Deferred();
+  });
 }
 
 //Sort json by key

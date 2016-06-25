@@ -37,6 +37,10 @@
 		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/public/MainTemplate.js"); ?>"></script>
+		<script>
+			var notCompletedWork = $.Deferred();
+		</script>
+
 		<title>
 			<?php show("PAGE_TITLE") ?>
 		</title>
