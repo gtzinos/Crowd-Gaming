@@ -57,7 +57,9 @@
                 </form>
                 <br><br>
                 <div id="full-results-place"></div>
-                <br><br>
+                <br>
+                <div id="full-scores-spinner"></div>
+                <br>
                 <div id="full-button-place">
                    <div class="col-xs-12 col-sm-4 col-sm-offset-1">
                      <button id="full-download-submit" class="form-control" onclick="downloadFullResults()">Download PDF</button>

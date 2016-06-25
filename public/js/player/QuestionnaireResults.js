@@ -186,6 +186,7 @@ function sortJsonByKey(array, key) {
 
   function getFullScoreResults()
   {
+    show_spinner("full-scores-spinner");
     if($("#full-scores-users-dropdown").val() != null && $("#full-scores-users-dropdown").val().length > 0)
     {
       var temp = String($('#full-scores-users-dropdown').val());
@@ -234,9 +235,11 @@ function sortJsonByKey(array, key) {
           "</div><br><br>";
       });
       $("#full-results-place").html(out);
+      remove_spinner("full-scores-spinner");
     }
     else {
       show_notification("error","Please select some users.",4000);
+      remove_spinner("full-scores-spinner");
     }
   }
 
