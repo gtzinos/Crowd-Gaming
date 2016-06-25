@@ -34,8 +34,14 @@
 		<script src="<?php print LinkUtils::generatePublicLink("js/common/spinner-call.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/signIn.js"); ?>"></script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/signup.js"); ?>"></script>
+		<?php
+			if(!isset($_SESSION["USER_ID"]))
+			{
+				echo "
+					<script src=" . LinkUtils::generatePublicLink("js/signIn.js") . "></script>
+					<script src=" . LinkUtils::generatePublicLink("js/signup.js") . "></script>";
+			}
+			?>
 		<script src="<?php print LinkUtils::generatePublicLink("js/public/MainTemplate.js"); ?>"></script>
 		<script>
 			var notCompletedWork = $.Deferred();
@@ -90,11 +96,14 @@
 		</div>
 
 		<?php
+		if(!isset($_SESSION["USER_ID"]))
+		{
 			load("SIGN_IN");
 
 			load("SIGN_UP");
 
 	 		load("PASSWORD_RECOVERY");
+		}
 		?>
 	</body>
 
