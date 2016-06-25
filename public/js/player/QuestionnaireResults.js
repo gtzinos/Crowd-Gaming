@@ -201,6 +201,7 @@ function sortJsonByKey(array, key) {
         }
       }
       else {
+        full_scores_saved_selected_users = temp;
         full_scores_selected_users[full_scores_saved_selected_users] = true;
       }
       $("#full-results-place").html("");
