@@ -34,7 +34,7 @@
                    </div>
                    <div class="visible-xs"><br><br></div>
                    <div class="col-xs-12 col-sm-2">
-                     <button id="refresh-results-submit" class="form-control" onclick="refreshSimpleResults()">Refresh</button>
+                     <button id="refresh-results-submit" class="form-control" onclick="refreshResults()">Refresh</button>
                    </div>
                 </div>
               </div>
@@ -64,7 +64,7 @@
                    </div>
                    <div class="visible-xs"><br><br></div>
                    <div class="col-xs-12 col-sm-2">
-                     <button id="full-refresh-results-submit" class="form-control" onclick="refreshFullResults()">Refresh</button>
+                     <button id="full-refresh-results-submit" class="form-control" onclick="refreshResults()">Refresh</button>
                    </div>
                 </div>
               </div>

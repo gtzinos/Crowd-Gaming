@@ -11,15 +11,10 @@ $(window).on("load",function() {
   })
 });
 
-function refreshSimpleResults()
+function refreshResults()
 {
   $("#results-place,#full-results-place,#charts-place,#hidden-chart-image").html("");
   getAllScores();
-}
-
-function refreshFullResults()
-{
-  //TODO Refresh full results
 }
 
 function getAllScores()
@@ -119,6 +114,9 @@ function sortJsonByKey(array, key) {
     $("#hidden-chart-image").html("");
     show_spinner("scores-spinner");
 
+    $("#get-charts-submit").html("Hide charts")
+        .attr("onclick","removeChart()");
+
     var pieChartData = [];
     var oneToFive = 0,
         fiveToSix = 0,
@@ -154,6 +152,14 @@ function sortJsonByKey(array, key) {
       $("#hidden-chart-image").append('<img src="' + chart.getImageURI() + '">');
       remove_spinner("scores-spinner");
       notCompletedRequest = false;
+  }
+
+  function removeChart()
+  {
+    $("#charts-place,#hidden-chart-image").html("");
+
+    $("#get-charts-submit").html("Get chart")
+        .attr("onclick","drawChart()");
   }
 
   function getFullScoreResults()
