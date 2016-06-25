@@ -1,5 +1,5 @@
 var scores_array = [],
-    full_scores_users = [];
+    full_scores_saved_selected_users = [];
 google.charts.load("current", {packages:["corechart"]});
 
 $(window).on("load",function() {
@@ -22,9 +22,10 @@ function refreshResults()
     {
       drawChart();
     }
-    if(full_scores_users.length > 0)
+    if(full_scores_saved_selected_users.length > 0)
     {
-
+      $("#full-scores-users-dropdown").selectpicker("val",full_scores_saved_selected_users);
+      getFullScoreResults();
     }
   });
 }
@@ -146,11 +147,11 @@ function sortJsonByKey(array, key) {
     })
       var data = google.visualization.arrayToDataTable([
         ['Degree', 'Number of players'],
-        ['0 < x < 50', oneToFive],
-        ['50 < x < 60', fiveToSix],
-        ['60 < x < 80', SixToEight],
-        ['80 < x < 90', EightToNine],
-        ['90 < x < 100', NineToTen]
+        ['0 < x < 50', 1],
+        ['50 < x < 60', 2],
+        ['60 < x < 80', 3],
+        ['80 < x < 90', 4],
+        ['90 < x < 100', 5]
       ]);
 
       var options = {
@@ -188,18 +189,19 @@ function sortJsonByKey(array, key) {
     if($("#full-scores-users-dropdown").val() != null && $("#full-scores-users-dropdown").val().length > 0)
     {
       var temp = String($('#full-scores-users-dropdown').val());
-      full_scores_users = [];
+      var full_scores_selected_users = [];
 
       if(temp.indexOf(',') >= 0)
       {
-        temp = temp.split(",");
-        for(var i=0;i<temp.length;i++)
+        //global
+        full_scores_saved_selected_users = temp.split(",");
+        for(var i=0;i<full_scores_saved_selected_users.length;i++)
         {
-          full_scores_users[temp[i]] = true;
+          full_scores_selected_users[full_scores_saved_selected_users[i]] = true;
         }
       }
       else {
-        full_scores_users[temp] = true;
+        full_scores_selected_users[full_scores_saved_selected_users] = true;
       }
       $("#full-results-place").html("");
 
@@ -217,7 +219,7 @@ function sortJsonByKey(array, key) {
                         "</thead>" +
                         "<tbody>";
         $.each(users_array,function() {
-          if(full_scores_users[this["user-email"]] != undefined)
+          if(full_scores_selected_users[this["user-email"]] != undefined)
           {
             out += "<tr>" +
               "<td>" + this["user-surname"] + " " + this["user-name"] + "</td>" +
