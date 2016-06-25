@@ -531,7 +531,12 @@
 	load("QUESTIONNAIRE_OPTIONS");
 	load("QUESTIONNAIRE_PLAYERS");
 	load("CONTACT_WITH_ONE_EMAIL");
-	load("QUESTIONNAIRE_RESULTS");
+
+	if($questionnaire->getScoreRights() <= $_SESSION["USER_LEVEL"])
+	{
+		load("QUESTIONNAIRE_RESULTS");
+	}
+
 	/*
 		Illegal actions
 	*/
