@@ -146,16 +146,23 @@ function sortJsonByKey(array, key) {
     })
       var data = google.visualization.arrayToDataTable([
         ['Degree', 'Number of players'],
-        ['0 - 50', oneToFive],
-        ['50 - 60', fiveToSix],
-        ['60 - 80', SixToEight],
-        ['80 - 90', EightToNine],
-        ['90 - 100', NineToTen]
+        ['0 < x < 50', oneToFive],
+        ['50 < x < 60', fiveToSix],
+        ['60 < x < 80', SixToEight],
+        ['80 < x < 90', EightToNine],
+        ['90 < x < 100', NineToTen]
       ]);
 
       var options = {
         title: 'Questionnaire results',
         pieHole: 0.4,
+        slices: {
+            0: { color: 'red' },
+            1: { color: '#ADFF2F' },
+            2: { color: '#7CFC00' },
+            3: { color: '#33FF33' },
+            4: { color: '#32CD32' }
+          }
       };
 
       var chart_div = document.getElementById('charts-place');
