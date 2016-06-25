@@ -77,6 +77,12 @@
 				$questionnaire->setMessageRequired( $messageRequired=="yes" ? true : false );
 				$questionnaire->setAllowMultipleGroups( $_POST["allow-multiple-groups-playthrough"]=="1"?1:0);
 
+				if( isset($_POST["score_rights"]) && ($_POST["score_rights"]>=1 && $_POST["score_rights"]<=3 ) )
+				{
+					$questionnaire->setScoreRights($_POST["score_rights"]);
+				}
+
+
 				try{
 					DatabaseConnection::getInstance()->startTransaction();
 

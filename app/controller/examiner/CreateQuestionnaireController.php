@@ -104,6 +104,15 @@
 					$questionnaire->setCoordinatorId( $_SESSION["USER_ID"] );
 					$questionnaire->setAllowMultipleGroups( $_POST["allow-multiple-groups-playthrough"]=="1"?1:0);
 
+					if( isset($_POST["score_rights"]) && ($_POST["score_rights"]>=1 && $_POST["score_rights"]<=3 ) )
+					{
+						$questionnaire->setScoreRights($_POST["score_rights"]);
+					}
+					else
+					{
+						$questionnaire->setScoreRights(3);
+					}
+
 					$examinerParticipation = new Participation;
 					$examinerParticipation->setUserId( $_SESSION["USER_ID"]);
 					$examinerParticipation->setParticipationType( 2 );

@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`Questionnaire` (
   `creation_date` TIMESTAMP NOT NULL COMMENT 'Questionaire last updated time.',
   `message` VARCHAR(255) NULL,
   `allow_multiple_groups` TINYINT(1) NOT NULL DEFAULT 0,
+  `score_rights` INT NOT NULL DEFAULT 3,
   PRIMARY KEY (`id`),
   INDEX `uid_idx` (`coordinator_id` ASC),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC),
