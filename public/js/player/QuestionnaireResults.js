@@ -36,6 +36,7 @@ function getAllScores()
   {
     return;
   }
+  scores_array = [];
   notCompletedRequest = true;
   show_spinner("scores-spinner");
   $("#charts-place").html();
@@ -245,12 +246,22 @@ function sortJsonByKey(array, key) {
 
   function downloadSimpleResults()
   {
+    if((scores_array.length == 0 || scores_array["group-scores"].length == 0) && $('#hidden-chart-image').html() == "")
+    {
+      show_notification("error","You don't have available data to download.",4000);
+      return;
+    }
     var source = $("#results-place").html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
     downloadAsPdf(source);
   }
 
   function downloadFullResults()
   {
+    if(full_scores_saved_selected_users.length == 0)
+    {
+      show_notification("error","You don't have available data to download.",4000);
+      return;
+    }
     var source = $("#full-results-place").html() + "<br><br>";
     downloadAsPdf(source);
   }
