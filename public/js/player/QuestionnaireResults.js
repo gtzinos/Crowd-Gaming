@@ -13,6 +13,14 @@ $(window).on("load",function() {
 
 function getAllScores()
 {
+  if(notCompletedRequest == true)
+  {
+    return;
+  }
+  notCompletedRequest = true;
+  show_spinner("scores-spinner");
+  $("#charts-place").html();
+
   $.ajax(
   {
     method: "POST",
@@ -75,11 +83,24 @@ function getAllScores()
         displayServerResponseError(xhr,error);
         break;
     }
-  });
+  })
+  .always(function() {
+    remove_spinner("scores-spinner");
+    notCompletedRequest = false;
+  })
 }
 
   function drawChart()
   {
+    if(notCompletedRequest == true)
+    {
+      return;
+    }
+    notCompletedRequest = true;
+    $("#charts-place").html("");
+    $("#hidden-chart-image").html("");
+    show_spinner("scores-spinner");
+
     var pieChartData = [];
     var oneToFive = 0,
         fiveToSix = 0,
@@ -114,6 +135,8 @@ function getAllScores()
       chart.draw(data, options);
 
       $("#hidden-chart-image").append('<img src="' + chart.getImageURI() + '">');
+      remove_spinner("scores-spinner");
+      notCompletedRequest = false;
   }
 
    function downloadAsPdf() {
