@@ -238,6 +238,7 @@ function getQuestionnaireData()
   var allow_multiple_groups_playthrough = $("#allow_multiple_groups_playthrough").val();
   var message_required = $("#message-required").val();
   var password = $("#questionnaire-password").val();
+  var score_rights = $("#score_rights").val();
 
   if(name && descriptionClearText.length >= 31 && allow_multiple_groups_playthrough != "-")
   {
@@ -254,6 +255,11 @@ function getQuestionnaireData()
     if(message_required == "yes")
     {
       data["message"] = password;
+    }
+
+    if(score_rights != "-")
+    {
+      data["score_rights"] = score_rights;
     }
 
     return data;
