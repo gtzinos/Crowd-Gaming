@@ -247,135 +247,130 @@
 									$response_message .= "You are no longer an examiner on this questionnaire.";
 								}
 							}
-							/*
-								Initialize success class
-							*/
-							$response_message = "<label class='alert alert-success'>";
-							/*
-								User option == 1
-								he need to be a player
-							*/
-							if(isset($_POST['player-join']))
+							else
 							{
-								$response_message .= "Your request to be a player on this questionnaire sended successfully.";
-							}
-							/*
-								Else If response-code = 1
-								then Password validation error
-							*/
-							else if(get("response-code") == 1)
-							{
-								$response_message .= "This is not a valid password value.";
-							}
-							/*
-								Else If response-code = 2
-								then Invalid Option
-							*/
-							else if(get("response-code") == 2)
-							{
-								$response_message .= "This is not a valid option.";
-							}
-							/*
-								Else If response-code = 3
-								then Player already participates
-							*/
-							else if(get("response-code") == 3)
-							{
-								$response_message .= "You have already participate on this questionnaire.";
-							}
-							/*
-								Else If response-code = 4
-								then Player has already an active request
-							*/
-							else if(get("response-code") == 4)
-							{
-								$response_message .= "You have already an active request.";
-							}
-							/*
-								Else If response-code = 5
-								then User has no active request to delete
-							*/
-							else if(get("response-code") == 5)
-							{
-								$response_message .= "You have no active request to delete.";
-							}
-							/*
-								Else If response-code = 6
-								then User is not participating as player
-							*/
-							else if(get("response-code") == 6)
-							{
-								$response_message .= "You are not participating as player.";
-							}
-							/*
-								Else If response-code = 7
-								then Unauthorized action, user level is too low
-							*/
-							else if(get("response-code") == 7)
-							{
-								$response_message .= "Unauthorized action, your access level is too low.";
-							}
-							/*
-								Else If response-code = 8
-								then Examiner already participates
-							*/
-							else if(get("response-code") == 8)
-							{
-								$response_message .= "You have already examiner access on this questionnaire.";
-							}
-							/*
-								Else If response-code = 9
-								then Examiner already has an active request
-							*/
-							else if(get("response-code") == 9)
-							{
-								$response_message .= "You have already an active examiner request.";
-							}
-							/*
-								Else If response-code = 10
-								then User has no active examiner request to delete
-							*/
-							else if(get("response-code") == 10)
-							{
-								$response_message .= "You have no active examiner request to delete.";
-							}
-							/*
-								Else If response-code = 11
-								then User is not participating as examiner
-							*/
-							else if(get("response-code") == 11)
-							{
-								$response_message .= "You are not participating as examiner.";
-							}
-							/*
-								Else If response-code = 12
-								then General Database Error
-							*/
-							else if(get("response-code") == 12)
-							{
-								$response_message .= "General Database Error. Please try later!";
-							}
-							/*
-								Else If response-code = 13
-								then not a valid message
-							*/
-							else if(get("response-code") == 13)
-							{
-								$response_message .= "This is not a valid message text.";
-							}
-							/*
-								Else If response-code = 14
-								then cant send emails right now
-							*/
-							else if(get("response-code") == 14)
-							{
-								$response_message .= "We can't send emails right now. Please try later!";
-							}
-							/*
-								Else one new error occur
-							*/
-							else {
-									$response_message .= "Something going wrong. Please contact with one administrator!";
+									/*
+										Initialize error class
+									*/
+									$response_message = "<label class='alert alert-danger'>";
+									/*
+										Else If response-code = 1
+										then Password validation error
+									*/
+								  if(get("response-code") == 1)
+									{
+										$response_message .= "This is not a valid password value.";
+									}
+									/*
+										Else If response-code = 2
+										then Invalid Option
+									*/
+									else if(get("response-code") == 2)
+									{
+										$response_message .= "This is not a valid option.";
+									}
+									/*
+										Else If response-code = 3
+										then Player already participates
+									*/
+									else if(get("response-code") == 3)
+									{
+										$response_message .= "You have already participate on this questionnaire.";
+									}
+									/*
+										Else If response-code = 4
+										then Player has already an active request
+									*/
+									else if(get("response-code") == 4)
+									{
+										$response_message .= "You have already an active request.";
+									}
+									/*
+										Else If response-code = 5
+										then User has no active request to delete
+									*/
+									else if(get("response-code") == 5)
+									{
+										$response_message .= "You have no active request to delete.";
+									}
+									/*
+										Else If response-code = 6
+										then User is not participating as player
+									*/
+									else if(get("response-code") == 6)
+									{
+										$response_message .= "You are not participating as player.";
+									}
+									/*
+										Else If response-code = 7
+										then Unauthorized action, user level is too low
+									*/
+									else if(get("response-code") == 7)
+									{
+										$response_message .= "Unauthorized action, your access level is too low.";
+									}
+									/*
+										Else If response-code = 8
+										then Examiner already participates
+									*/
+									else if(get("response-code") == 8)
+									{
+										$response_message .= "You have already examiner access on this questionnaire.";
+									}
+									/*
+										Else If response-code = 9
+										then Examiner already has an active request
+									*/
+									else if(get("response-code") == 9)
+									{
+										$response_message .= "You have already an active examiner request.";
+									}
+									/*
+										Else If response-code = 10
+										then User has no active examiner request to delete
+									*/
+									else if(get("response-code") == 10)
+									{
+										$response_message .= "You have no active examiner request to delete.";
+									}
+									/*
+										Else If response-code = 11
+										then User is not participating as examiner
+									*/
+									else if(get("response-code") == 11)
+									{
+										$response_message .= "You are not participating as examiner.";
+									}
+									/*
+										Else If response-code = 12
+										then General Database Error
+									*/
+									else if(get("response-code") == 12)
+									{
+										$response_message .= "General Database Error. Please try later!";
+									}
+									/*
+										Else If response-code = 13
+										then not a valid message
+									*/
+									else if(get("response-code") == 13)
+									{
+										$response_message .= "This is not a valid message text.";
+									}
+									/*
+										Else If response-code = 14
+										then cant send emails right now
+									*/
+									else if(get("response-code") == 14)
+									{
+										$response_message .= "We can't send emails right now. Please try later!";
+									}
+									/*
+										Else one new error occur
+									*/
+									else {
+											$response_message .= "Something going wrong. Please contact with one administrator!";
+									}
 							}
 
 							if($response_message != "")
