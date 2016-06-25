@@ -11,6 +11,12 @@ $(window).on("load",function() {
   })
 });
 
+function refresh()
+{
+  $("#results-place,#full-results-place,#charts-place,#hidden-chart-image").html("");
+  getAllScores();
+}
+
 function getAllScores()
 {
   if(notCompletedRequest == true)
@@ -48,7 +54,6 @@ function getAllScores()
         scores_array = data;
         $.each(data["group-scores"], function(i,group) {
             $.each(group, function(j, userstats) {
-
               if(scores_array[userstats["user-name"] + " " + userstats["user-surname"]] != undefined)
               {
                 scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = scores_array[userstats["user-name"] + " " + userstats["user-surname"]]["userstats"].score + userstats.score;
@@ -61,10 +66,10 @@ function getAllScores()
         //sortJsonByKey(scores_array,"user-surname");
         $.each(data["total-score"],function(){
           out += "<tr>" +
-                        "<td>" + this["name"] + "</td>" +
-                        "<td>" + this["surname"] + "</td>" +
-                        "<td>" + (this["score"]).toFixed(2) + "</td>" +
-                    "</tr>";
+                    "<td>" + this["name"] + "</td>" +
+                    "<td>" + this["surname"] + "</td>" +
+                    "<td>" + (this["score"]).toFixed(2) + "</td>" +
+                 "</tr>";
         });
       }
       out += "</tbody>" +
