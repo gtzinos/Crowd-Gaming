@@ -19,7 +19,7 @@
 		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfo($sorting , $limit , $offset , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups` ,`Questionnaire`.`score_rights` 
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 AND `QuestionnaireParticipation`.`participation_type`=1 ";
@@ -60,6 +60,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights( $resultSet->get("score_rights"));
 
 				$arrayItem["questionnaire"] = $questionnaire;
 				$arrayItem["participations"] = $resultSet->get("participations");
@@ -83,7 +84,7 @@ AND `QuestionnaireParticipation`.`participation_type`=1 ";
 		 * @return [2d array]          [Each row contains an array that hold information about a specific questionnaire]
 		 */
 		public function findWithInfoById($questionnaireId , $public){
-			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
+			$query = "SELECT `Questionnaire`.`id`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` ,`Questionnaire`.`message`, `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups` , `Questionnaire`.`score_rights`
 FROM `Questionnaire`
 LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` AND `QuestionnaireParticipation`.`participation_type`=1
 WHERE `Questionnaire`.`id`=? ";
@@ -114,6 +115,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights( $resultSet->get("score_rights"));
 
 				$questionnaireInfo["questionnaire"] = $questionnaire;
 				$questionnaireInfo["participations"] = $resultSet->get("participations");
@@ -290,7 +292,7 @@ WHERE `Questionnaire`.`id`=? ";
 			Returns a list of all questionnaires
 		 */
 		public function findAll($sort , $offset , $limit){
-			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
+			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups` ,`Questionnaire`.`score_rights`
 				FROM `Questionnaire`
 				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 				AND `QuestionnaireParticipation`.`participation_type`=1
@@ -322,6 +324,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights($resultSet->get("score_rights"));
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -352,6 +355,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights($resultSet->get("score_rights"));
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -381,7 +385,8 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $resultSet->get("allow_multiple_groups"));
-				
+				$questionnaire->setScoreRights($resultSet->get("score_rights"));
+
 				return $questionnaire;
 			}
 
@@ -389,7 +394,7 @@ WHERE `Questionnaire`.`id`=? ";
 		}
 
 		public function findByCoordinator($coordinatorId , $sort = "date" , $offset = 0 , $limit = 10){
-			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups`
+			$query = "SELECT `Questionnaire`.`id`,`Questionnaire`.`message`, `Questionnaire`.`coordinator_id`,`Questionnaire`.`description` , `Questionnaire`.`name` , `Questionnaire`.`public` , `Questionnaire`.`message_required` , `Questionnaire`.`creation_date` , count( `QuestionnaireParticipation`.`user_id`) as participations , `Questionnaire`.`allow_multiple_groups` ,`Questionnaire`.`score_rights`
 				FROM `Questionnaire`
 				LEFT JOIN `QuestionnaireParticipation` on `QuestionnaireParticipation`.`questionnaire_id`=`Questionnaire`.`id` 
 				AND `QuestionnaireParticipation`.`participation_type`=1
@@ -422,6 +427,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $resultSet->get("message_required") );
 				$questionnaire->setCreationDate( $resultSet->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights($set->get("score_rights"));
 
 				$questionnaires[] =  $questionnaire;
 			}
@@ -460,6 +466,7 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $set->get("message_required") );
 				$questionnaire->setCreationDate( $set->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights($set->get("score_rights"));
 
 				$questionnaires[] = $questionnaire;
 			}
@@ -497,6 +504,8 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->setMessageRequired( $set->get("message_required") );
 				$questionnaire->setCreationDate( $set->get("creation_date") );
 				$questionnaire->setAllowMultipleGroups( $set->get("allow_multiple_groups"));
+				$questionnaire->setScoreRights($set->get("score_rights"));
+
 				return $questionnaire;
 			}
 			
@@ -561,26 +570,7 @@ WHERE `Questionnaire`.`id`=? ";
 			Inserts the questionnaire to the database
 		 */
 		private function _create($questionnaire){
-			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`,`message`,`allow_multiple_groups`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?,?)");
-
-			$statement->setParameters( 'issiisi' ,
-				$questionnaire->getCoordinatorId(),
-				$questionnaire->getName(),
-				$questionnaire->getDescription(),
-				$questionnaire->getPublic(),
-				$questionnaire->getMessageRequired(),
-				$questionnaire->getMessage(),
-				$questionnaire->getAllowMultipleGroups() );
-
-			$statement->executeUpdate();
-
-		}
-
-		/*
-			Updates a questionnaire in the databae
-		 */
-		private function _update($questionnaire){
-			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=?,`message`=? , `allow_multiple_groups`=? WHERE `id`=?");
+			$statement = $this->getStatement("INSERT INTO `Questionnaire` (`coordinator_id`, `name`, `description`, `public`, `message_required` ,`creation_date`,`message`,`allow_multiple_groups` ,`score_rights`) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP,?,?,?)");
 
 			$statement->setParameters( 'issiisii' ,
 				$questionnaire->getCoordinatorId(),
@@ -590,6 +580,27 @@ WHERE `Questionnaire`.`id`=? ";
 				$questionnaire->getMessageRequired(),
 				$questionnaire->getMessage(),
 				$questionnaire->getAllowMultipleGroups(),
+				$questionnaire->getScoreRights() );
+
+			$statement->executeUpdate();
+
+		}
+
+		/*
+			Updates a questionnaire in the databae
+		 */
+		private function _update($questionnaire){
+			$statement = $this->getStatement("UPDATE `Questionnaire` SET  `coordinator_id`=?,`name`=?,`description`=?,`public`=?,`message_required`=?,`message`=? , `allow_multiple_groups`=? , `score_rights`=? WHERE `id`=?");
+
+			$statement->setParameters( 'issiisiii' ,
+				$questionnaire->getCoordinatorId(),
+				$questionnaire->getName(),
+				$questionnaire->getDescription(),
+				$questionnaire->getPublic(),
+				$questionnaire->getMessageRequired(),
+				$questionnaire->getMessage(),
+				$questionnaire->getAllowMultipleGroups(),
+				$questionnaire->getScoreRights(),
 				$questionnaire->getId()
 			 	);
 

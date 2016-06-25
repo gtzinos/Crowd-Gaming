@@ -14,6 +14,7 @@
 		private $coordinatorId;
 		private $message;
 		private $allowMultipleGroups;
+		private $scoreRights;
 
 		/*
 			An array of objects of the type QuestionGroup
@@ -60,6 +61,14 @@
 		/*
 			Get and Set methods bellow
 		 */
+		public function getScoreRights(){
+			return $this->scoreRights;
+		}
+		
+		public function setScoreRights($scoreRights){
+			$this->scoreRights = $scoreRights;
+		}
+
 		public function getAllowMultipleGroups(){
 			return $this->allowMultipleGroups;
 		}
