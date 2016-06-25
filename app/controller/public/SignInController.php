@@ -24,6 +24,7 @@
 			curl_setopt( $curl, CURLOPT_POST ,1);
 			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['recaptcha'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);			
 			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0);
 
 			$responseJson = curl_exec($curl);
 
