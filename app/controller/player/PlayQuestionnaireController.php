@@ -31,15 +31,6 @@
 
 			$questionnaireMapper = new QuestionnaireMapper;
 
-			$questionnaire = $questionnaireMapper->findById($this->params[1]);
-
-			if( $questionnaire === null )
-			{
-				$this->redirect("my-questionnaires");
-			}
-
-			$this->setArg("PAGE_TITLE",$questionnaire->getName());
-
 			/*
 				Fetch the questionnaire
 				Players can only see the public questionnaires
@@ -58,7 +49,7 @@
 			if($questionnaireInfo === null || $questionnaireInfo["time-left"] != 0 || !$questionnaireInfo["player-participation"])
 				$this->redirect("my-questionnaires");
 
-
+			$this->setArg("PAGE_TITLE",$questionnaireInfo["questionnaire"]->getName());
 			/*
 				The array items have the below properties
 				"questionnaire"  			: the questionnaire object
