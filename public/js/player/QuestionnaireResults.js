@@ -156,7 +156,63 @@ function sortJsonByKey(array, key) {
       notCompletedRequest = false;
   }
 
-   function downloadAsPdf() {
+  function getFullScoreResults()
+  {
+    if($("#full-scores-users-dropdown").val() != null && $("#full-scores-users-dropdown").val().length > 0)
+    {
+      var temp = String($('#full-scores-users-dropdown').val());
+      var users_selected_list = [];
+
+      if(temp.indexOf(',') >= 0)
+      {
+        temp = temp.split(",");
+        for(var i=0;i<temp.length;i++)
+        {
+          users_selected_list[temp[i]] = true;
+        }
+      }
+      else {
+        users_selected_list[temp] = true;
+      }
+      $("#full-results-place").html("");
+
+      var out = "";
+      $.each(scores_array["group-scores"],function(group_name,users_array) {
+        out += "<div class='table-responsive'>" +
+                      "<table class='table'>" +
+                        "<thead>" +
+                          "<th style='text-align:center' colspan='3'>" +
+                          group_name +
+                          "</h>" +
+                          "<tr>" +
+                            "<th>Full name</th>" +
+                            "<th>Email</th>" +
+                            "<th>Degree (%)</th>" +
+                          "</tr>" +
+                        "</thead>" +
+                        "<tbody>";
+        $.each(users_array,function() {
+          if(users_selected_list[this["user-surname"]] != undefined)
+          {
+            out += "<tr>" +
+              "<td>" + this["user-name"] + " " + this["user-surname"] + "</td>" +
+              "<td>" + this["user-surname"] + "</td>" +
+              "<td>" + this["score"] + "</td>" +
+              "</tr>";
+          }
+        });
+        out += "</tbody>" +
+          "</table>" +
+          "</div><br><br>";
+      });
+      $("#full-results-place").html(out);
+    }
+    else {
+      show_notification("error","Please select some users.",4000);
+    }
+  }
+
+  function downloadAsPdf() {
        var pdf = new jsPDF('p', 'pt', 'a4');
        // source can be HTML-formatted string, or a reference
        // to an actual DOM element from which the text will be scraped.

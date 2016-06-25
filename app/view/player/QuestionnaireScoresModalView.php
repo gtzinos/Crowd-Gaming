@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-xs-3 col-sm-4">
                       <div class="dropdown">
-                         <button class="form-control btn btn-primary">Get Scores</button>
+                         <button class="form-control btn btn-primary" onclick="getFullScoreResults()">Get Scores</button>
                       </div>
                     </div>
                   </div>
