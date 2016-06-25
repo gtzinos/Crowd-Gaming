@@ -10,27 +10,37 @@
 					 <h4 class="gt-modal-header"><i class='glyphicon glyphicon-stats'></i> Questionnaire results </h4>
 				 </div>
 				 <div class="modal-body container-fluid">
-           <div id="results-place"></div>
-           <br><br>
-           <div id="full-results-place"></div>
-           <br><br>
-           <div id="charts-place"></div>
-           <div id="hidden-chart-image" style="display:none"></div>
-           <div id="scores-spinner"></div>
-           <br>
-           <div id="buttons-place">
-              <div class="col-xs-12 col-sm-4 col-sm-offset-1">
-                <button id="download-submit" class="form-control" onclick="downloadAsPdf()">Download PDF</button>
+            <ul class="nav nav-pills">
+              <li class="active"><a data-toggle="pill" href="#simple-scores-tab">Simple results</a></li>
+              <li><a data-toggle="pill" href="#full-scores-tab">Full results</a></li>
+            </ul>
+            <div class="tab-content">
+              <div id="simple-scores-tab" class="tab-pane fade in active">
+                <br>
+                <div id="results-place"></div>
+                <br><br>
+                <div id="charts-place"></div>
+                <div id="hidden-chart-image" style="display:none"></div>
+                <div id="scores-spinner"></div>
+                <br>
+                <div id="buttons-place">
+                   <div class="col-xs-12 col-sm-4 col-sm-offset-1">
+                     <button id="download-submit" class="form-control" onclick="downloadAsPdf()">Download PDF</button>
+                   </div>
+                   <div class="visible-xs"><br><br></div>
+                   <div class="col-xs-12 col-sm-4">
+                     <button id="get-charts-submit" class="form-control" onclick="drawChart()">Get charts</button>
+                   </div>
+                   <div class="visible-xs"><br><br></div>
+                   <div class="col-xs-12 col-sm-2">
+                     <button id="refresh-results-submit" class="form-control" onclick="refresh()">Refresh</button>
+                   </div>
+                </div>
               </div>
-              <div class="visible-xs"><br><br></div>
-              <div class="col-xs-12 col-sm-4">
-                <button id="get-charts-submit" class="form-control" onclick="drawChart()">Get charts</button>
+              <div id="full-scores-tab" class="tab-pane fade">
+
               </div>
-              <div class="visible-xs"><br><br></div>
-              <div class="col-xs-12 col-sm-2">
-                <button id="refresh-results-submit" class="form-control" onclick="refresh()">Refresh</button>
-              </div>
-           </div>
+            </div>
 				 </div>
 			 </div>
 		 </div>
