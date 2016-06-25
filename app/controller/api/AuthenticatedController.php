@@ -3,13 +3,17 @@
 
 	abstract class AuthenticatedController extends Controller
 	{
-		
+		private $userLevel;
+
 		protected function authenticateToken()
 		{
 
 			// If is called by the website , no need to authenticate by header.
 			if( isset( $_SESSION["USER_ID"] ) )
+			{
+				$this->userLevel = $_SESSION["USER_LEVEL"];
 				return $_SESSION["USER_ID"];
+			}
 
 			$headers = getallheaders();
 
@@ -25,6 +29,7 @@
 
 				if(is_object($user))
 				{
+					$this->userLevel = $user->getAccessLevel();
 					return $user->getId();
 				}
 			}
@@ -38,6 +43,11 @@
 
 			print json_encode($response);
 			die();
+		}
+
+		protected function getUserLevel()
+		{
+			return $this->userLevel;
 		}
 
 		protected function getCoordinates()
@@ -54,4 +64,6 @@
 			}
 			return null;
 		}
+
+
 	}

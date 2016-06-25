@@ -23,15 +23,19 @@
 			$questionnaireMapper = new QuestionnaireMapper;
 			$groupParticipationMapper = new QuestionGroupParticipationMapper;
 
+			$questionnaire = $questionnaireMapper->findById($questionnaireId);
 
-
-			if( !$participationMapper->participates($userId , $questionnaireId , 1 ,1)  )
+			if( (( $questionnaire->getScoreRights() == 1 && !$participationMapper->participates($userId , $questionnaireId , 1 ,1) ) ||
+				( $questionnaire->getScoreRights() == 2 && !$participationMapper->participates($userId , $questionnaireId , 2 ,1) ) ||
+				( $questionnaire->getScoreRights() == 3 && $questionnaire->getCoordinatorId()!=$userId ))
+				&& $this->getUserLevel()<3
+			)
 			{
 				/*
 					User doesnt participate to this questionnaire.
 				 */
 				$this->setOutput("code" , "604" );
-				$this->setOutput("message" , "Forbidden, You dont have access to that questionnaire" );
+				$this->setOutput("message" , "Forbidden" );
 
 				http_response_code(403);
 			}
