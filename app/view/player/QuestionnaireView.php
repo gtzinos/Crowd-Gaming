@@ -86,6 +86,18 @@
 						echo "</ul>
 							</div>";
 					}
+					//For players or examiners without examiner access on this questionnaire will come here
+					else if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
+					{
+						echo "
+						<div class='dropdown'>
+					    <span class='fi-widget dropdown-toggle mediumicon' type='button' data-toggle='dropdown'>
+					    <span style='display:none' class='caret'></span></span>
+					    <ul class='dropdown-menu' >
+					    	<li class='settingsitem'><a onclick=\"showModal('questionnaire-results'); return false;\"><i class='glyphicon glyphicon-stats'></i> Get results</a></li>
+							</ul>
+						</div>";
+					}
 	 			?>
 			</div>
 		</div>
