@@ -14,6 +14,7 @@
               <li class="active"><a data-toggle="pill" href="#simple-scores-tab">Simple results</a></li>
               <li><a data-toggle="pill" href="#full-scores-tab">Full results</a></li>
             </ul>
+            <!-- Simple results tab -->
             <div class="tab-content">
               <div id="simple-scores-tab" class="tab-pane fade in active">
                 <br>
@@ -25,7 +26,7 @@
                 <br>
                 <div id="buttons-place">
                    <div class="col-xs-12 col-sm-4 col-sm-offset-1">
-                     <button id="download-submit" class="form-control" onclick="downloadAsPdf()">Download PDF</button>
+                     <button id="download-submit" class="form-control" onclick="downloadSimpleResults()">Download PDF</button>
                    </div>
                    <div class="visible-xs"><br><br></div>
                    <div class="col-xs-12 col-sm-4">
@@ -33,10 +34,11 @@
                    </div>
                    <div class="visible-xs"><br><br></div>
                    <div class="col-xs-12 col-sm-2">
-                     <button id="refresh-results-submit" class="form-control" onclick="refresh()">Refresh</button>
+                     <button id="refresh-results-submit" class="form-control" onclick="refreshSimpleResults()">Refresh</button>
                    </div>
                 </div>
               </div>
+              <!-- Full scores tab -->
               <div id="full-scores-tab" class="tab-pane fade">
                 <br><br>
                 <form role="form" class="form-horizontal" onsubmit="return false">
@@ -52,6 +54,18 @@
                     </div>
                   </div>
                 </form>
+                <br><br>
+                <div id="full-results-place"></div>
+                <br><br>
+                <div id="full-button-place">
+                   <div class="col-xs-12 col-sm-4 col-sm-offset-1">
+                     <button id="full-download-submit" class="form-control" onclick="downloadFullResults()">Download PDF</button>
+                   </div>
+                   <div class="visible-xs"><br><br></div>
+                   <div class="col-xs-12 col-sm-2">
+                     <button id="full-refresh-results-submit" class="form-control" onclick="refreshFullResults()">Refresh</button>
+                   </div>
+                </div>
               </div>
             </div>
 				 </div>
