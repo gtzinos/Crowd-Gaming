@@ -48,8 +48,8 @@ function getAllScores()
                     "<table class='table'>" +
                       "<thead>" +
                         "<tr>" +
-                          "<th>First Name</th>" +
-                          "<th>Surname</th>" +
+                          "<th>Full Name</th>" +
+                          "<th>Email</th>" +
                           "<th>Degree (%)</th>" +
                         "</tr>" +
                       "</thead>" +
@@ -61,14 +61,14 @@ function getAllScores()
         //sortJsonByKey(scores_array,"user-surname");
         $.each(scores_array["total-score"],function(){
           out += "<tr>" +
-                    "<td>" + this["name"] + "</td>" +
-                    "<td>" + this["surname"] + "</td>" +
+                    "<td>" + this["name"] + this["surname"] + "</td>" +
+                    "<td>" + this["email"] + "</td>" +
                     "<td>" + (this["score"]).toFixed(2) + "</td>" +
                  "</tr>";
 
           usersList += "<option value='" +
-            this["surname"] + "' data-tokens='" +
-            this["name"] + " " + this["surname"] +
+            this["email"] + "' data-tokens='" +
+            this["name"] + " " + this["surname"] + " " + this["email"] +
             "'>" + this["name"] + " " + this["surname"] + "</option>";
         });
       }
@@ -192,11 +192,11 @@ function sortJsonByKey(array, key) {
                         "</thead>" +
                         "<tbody>";
         $.each(users_array,function() {
-          if(users_selected_list[this["user-surname"]] != undefined)
+          if(users_selected_list[this["user-email"]] != undefined)
           {
             out += "<tr>" +
               "<td>" + this["user-name"] + " " + this["user-surname"] + "</td>" +
-              "<td>" + this["user-surname"] + "</td>" +
+              "<td>" + this["user-email"] + "</td>" +
               "<td>" + this["score"] + "</td>" +
               "</tr>";
           }
