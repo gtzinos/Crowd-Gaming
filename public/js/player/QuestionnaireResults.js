@@ -1,4 +1,5 @@
-var scores_array = [];
+var scores_array = [],
+    customize_array = [];
 google.charts.load("current", {packages:["corechart"]});
 
 $(window).on("load",function() {
@@ -82,6 +83,7 @@ function getAllScores()
     var response = JSON.parse(xhr.responseText);
     switch(response.code)
     {
+      case "403":
       case "604":
         show_notification("error",response.message,4000);
         break;
