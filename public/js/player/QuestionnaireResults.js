@@ -155,7 +155,7 @@ function sortJsonByKey(array, key) {
 
       var options = {
         title: 'Questionnaire results',
-        pieHole: 0.4,
+        is3D: true,
         slices: {
             0: { color: 'red' },
             1: { color: '#ADFF2F' },
