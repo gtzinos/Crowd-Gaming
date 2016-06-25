@@ -382,17 +382,20 @@ function getUpdateQuestionnaireData(id) {
   var description = $(document).find("#qeditor").val();
   var required = $(document).find("#message-required").val();
   var allow_multiple_groups_playthrough = $("#allow-multiple-groups-playthrough").val();
+  var score_rights = $("#score_rights").val();
+
   /*
     Check the Variables before sending them
   */
-  if(name && description && required && allow_multiple_groups_playthrough != "-")
+  if(name && description && required && allow_multiple_groups_playthrough != "-" && score_rights)
   {
     let data = {
       "questionnaire-id": id,
       "name": name,
       "description": description,
       "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "1" ? "1" : "0",
-      "message_required": required == "yes" ? "yes" : "no"
+      "message_required": required == "yes" ? "yes" : "no",
+      "score_rights": score_rights
     };
     if(required == "yes")
     {

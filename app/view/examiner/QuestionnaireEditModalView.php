@@ -65,6 +65,46 @@
     								<span class="gt-icon"></span>
     							</div>
     					</div>
+              <!-- Score rights -->
+              <div class="form-group has-feedback">
+                  <div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-9">
+                    <label for="score_rights">Who will have access on scores ?</label>
+                  </div>
+                  <div class="col-xs-offset-0 col-xs-12 col-md-offset-3 col-md-6 gt-input-group" data-validate="select">
+                    <select id="score_rights" class="form-control" required>
+                      <?php
+                        /*
+                          Everyone have access
+                        */
+                        if($questionnaire->getScoreRights() == 1)
+                        {
+                          echo "<option value='1' selected>Everyone</option>";
+                          echo "<option value='2'>Examiners, Moderators</option>";
+                          echo "<option value='3'>Coordinator, Moderators</option>";
+                        }
+                        /*
+                          Examiners, Moderators
+                        */
+                        else if($questionnaire->getScoreRights() == 2)
+                        {
+                          echo "<option value='1'>Everyone</option>";
+                          echo "<option value='2' selected>Examiners, Moderators</option>";
+                          echo "<option value='3'>Coordinator, Moderators</option>";
+                        }
+                        /*
+                          Coordinator, Moderators
+                        */
+                        else
+                        {
+                          echo "<option value='1'>Everyone</option>";
+                          echo "<option value='2'>Examiners, Moderators</option>";
+                          echo "<option value='3' selected>Coordinator, Moderators</option>";
+                        }
+                      ?>
+                    </select>
+                    <span class="gt-icon"></span>
+                  </div>
+              </div>
               <!-- Password Required -->
               <div class="form-group has-feedback">
                   <div class="col-xs-12 col-sm-offset-3 col-sm-9">
