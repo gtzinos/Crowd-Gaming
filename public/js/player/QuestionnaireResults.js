@@ -147,11 +147,11 @@ function sortJsonByKey(array, key) {
     })
       var data = google.visualization.arrayToDataTable([
         ['Degree', 'Number of players'],
-        ['0 < x < 50', 1],
-        ['50 < x < 60', 2],
-        ['60 < x < 80', 3],
-        ['80 < x < 90', 4],
-        ['90 < x < 100', 5]
+        ['0 < x < 50', oneToFive],
+        ['50 < x < 60', fiveToSix],
+        ['60 < x < 80', SixToEight],
+        ['80 < x < 90', EightToNine],
+        ['90 < x < 100', NineToTen]
       ]);
 
       var options = {
