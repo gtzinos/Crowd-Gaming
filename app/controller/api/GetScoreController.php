@@ -47,7 +47,7 @@
 				{					
 					$item["user-name"] = $userScore["user-name"];
 					$item["user-surname"] = $userScore["user-surname"];
-					$item["real-score"] = $userScore["score"];
+					$item["user-email"] = $userScore["user-email"];
 					$item["score"] = $userScore["score"] * 100 / ( $groups[ $userScore["group-id"] ]["max-score"]);
 
 					$groupScores[$groups[ $userScore["group-id"] ]["name"]][] = $item;
@@ -66,6 +66,7 @@
 					{
 						$sumScore[ $userScore["user-id"] ]["name"] = $userScore["user-name"];
 						$sumScore[ $userScore["user-id"] ]["surname"] = $userScore["user-surname"];
+						$sumScore[ $userScore["user-id"] ]["email"] = $userScore["user-email"];
 						$sumScore[ $userScore["user-id"] ]["score"] = $userScore["score"];
 					}
  				}
