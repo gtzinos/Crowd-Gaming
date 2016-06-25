@@ -1,4 +1,5 @@
-var scores_array = [];
+var scores_array = [],
+    full_scores_saved_selected_users = [];
 google.charts.load("current", {packages:["corechart"]});
 
 $(window).on("load",function() {
@@ -10,6 +11,24 @@ $(window).on("load",function() {
     getAllScores();
   })
 });
+
+//Refresh all scores
+function refreshResults()
+{
+  $("#results-place,#full-results-place,#charts-place,#hidden-chart-image").html("");
+  getAllScores();
+  $.when(notCompletedWork).done(function() {
+    if($("#get-charts-submit").html() == "Hide charts")
+    {
+      drawChart();
+    }
+    if(full_scores_saved_selected_users.length > 0)
+    {
+      $("#full-scores-users-dropdown").selectpicker("val",full_scores_saved_selected_users);
+      getFullScoreResults();
+    }
+  });
+}
 
 function getAllScores()
 {
@@ -32,12 +51,13 @@ function getAllScores()
     if(data.code == "200")
     {
       $("#results-place").html("");
+      var usersList = "";
       var out = "<div class='table-responsive'>" +
                     "<table class='table'>" +
                       "<thead>" +
                         "<tr>" +
-                          "<th>First Name</th>" +
-                          "<th>Surname</th>" +
+                          "<th>Full Name</th>" +
+                          "<th>Email</th>" +
                           "<th>Degree (%)</th>" +
                         "</tr>" +
                       "</thead>" +
@@ -45,37 +65,34 @@ function getAllScores()
 
       if(data["group-scores"] != null)
       {
-        scores_array = [];
-        $.each(data["group-scores"], function(i,group) {
-            $.each(group, function(j, userstats) {
-              if(scores_array[userstats["user-name"] + " " + userstats["user-surname"]] != undefined)
-              {
-                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = scores_array[userstats["user-name"] + " " + userstats["user-surname"]].score + userstats.score;
-              }
-              else {
-                scores_array[userstats["user-name"] + " " + userstats["user-surname"]] = { userstats };
-              }
-            });
-        });
-        for(var score in scores_array)
-        {
+        scores_array = data;
+        //sortJsonByKey(scores_array,"user-surname");
+        $.each(scores_array["total-score"],function(){
           out += "<tr>" +
-                      "<td>" + scores_array[score]["userstats"]["user-name"] + "</td>" +
-                      "<td>" + scores_array[score]["userstats"]["user-surname"] + "</td>" +
-                      "<td>" + (scores_array[score]["userstats"]["score"]).toFixed(2) + "</td>" +
-                  "</tr>";
-        }
+                    "<td>" + this["surname"] + " " + this["name"] + "</td>" +
+                    "<td>" + this["email"] + "</td>" +
+                    "<td>" + (this["score"]).toFixed(2) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>" +
+                 "</tr>";
+
+          usersList += "<option value='" +
+            this["email"] + "' data-tokens='" +
+            this["name"] + " " + this["surname"] + " " + this["email"] +
+            "'>" + this["name"] + " " + this["surname"] + "</option>";
+        });
       }
       out += "</tbody>" +
             "</table>" +
         "</div>";
       $("#results-place").html(out);
+      $("#full-scores-users-dropdown").html(usersList);
+      $("#full-scores-users-dropdown").selectpicker('refresh');
     }
   })
   .fail(function(xhr,error){
     var response = JSON.parse(xhr.responseText);
     switch(response.code)
     {
+      case "403":
       case "604":
         show_notification("error",response.message,4000);
         break;
@@ -87,7 +104,18 @@ function getAllScores()
   .always(function() {
     remove_spinner("scores-spinner");
     notCompletedRequest = false;
-  })
+    notCompletedWork.resolve();
+    notCompletedWork = $.Deferred();
+  });
+}
+
+//Sort json by key
+function sortJsonByKey(array, key) {
+   return array.sort(function(a, b) {
+       var x = a["userstats"][key];
+       var y = b["userstats"][key];
+       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+   });
 }
 
   function drawChart()
@@ -101,32 +129,41 @@ function getAllScores()
     $("#hidden-chart-image").html("");
     show_spinner("scores-spinner");
 
+    $("#get-charts-submit").html("Hide charts")
+        .attr("onclick","removeChart()");
+
     var pieChartData = [];
     var oneToFive = 0,
         fiveToSix = 0,
         SixToEight = 0,
         EightToNine = 0,
         NineToTen = 0;
-    for(var score in scores_array)
-    {
-      var degree = scores_array[score]["userstats"]["score"];
+    $.each(scores_array["total-score"],function() {
+      var degree = this["score"];
       if(degree >= 0 && degree < 50) { oneToFive++; }
       else if(degree >= 50 && degree < 60) { fiveToSix++; }
       else if(degree >= 60 && degree < 80) { SixToEight++; }
       else if(degree >= 80 && degree <= 100) { NineToTen++; }
-    }
+    })
       var data = google.visualization.arrayToDataTable([
         ['Degree', 'Number of players'],
-        ['0 - 50', oneToFive],
-        ['50 - 60', fiveToSix],
-        ['60 - 80', SixToEight],
-        ['80 - 90', EightToNine],
-        ['90 - 100', NineToTen]
+        ['0 < x < 50', 1],
+        ['50 < x < 60', 2],
+        ['60 < x < 80', 3],
+        ['80 < x < 90', 4],
+        ['90 < x < 100', 5]
       ]);
 
       var options = {
         title: 'Questionnaire results',
-        pieHole: 0.4,
+        is3D: true,
+        slices: {
+            0: { color: 'red' },
+            1: { color: '#ADFF2F' },
+            2: { color: '#7CFC00' },
+            3: { color: '#33FF33' },
+            4: { color: '#32CD32' }
+          }
       };
 
       var chart_div = document.getElementById('charts-place');
@@ -139,11 +176,86 @@ function getAllScores()
       notCompletedRequest = false;
   }
 
-   function downloadAsPdf() {
-       var pdf = new jsPDF('p', 'pt', 'a4');
+  function removeChart()
+  {
+    $("#charts-place,#hidden-chart-image").html("");
+
+    $("#get-charts-submit").html("Get chart")
+        .attr("onclick","drawChart()");
+  }
+
+  function getFullScoreResults()
+  {
+    if($("#full-scores-users-dropdown").val() != null && $("#full-scores-users-dropdown").val().length > 0)
+    {
+      var temp = String($('#full-scores-users-dropdown').val());
+      var full_scores_selected_users = [];
+
+      if(temp.indexOf(',') >= 0)
+      {
+        //global
+        full_scores_saved_selected_users = temp.split(",");
+        for(var i=0;i<full_scores_saved_selected_users.length;i++)
+        {
+          full_scores_selected_users[full_scores_saved_selected_users[i]] = true;
+        }
+      }
+      else {
+        full_scores_selected_users[full_scores_saved_selected_users] = true;
+      }
+      $("#full-results-place").html("");
+
+      var out = "";
+      $.each(scores_array["group-scores"],function(group_name,users_array) {
+        out += "<p>Group Name: " + group_name + "</p>" +
+                "<div class='table-responsive'>" +
+                      "<table class='table'>" +
+                        "<thead>" +
+                          "<tr>" +
+                            "<th>Full name</th>" +
+                            "<th>Email</th>" +
+                            "<th>Degree (%)</th>" +
+                          "</tr>" +
+                        "</thead>" +
+                        "<tbody>";
+        $.each(users_array,function() {
+          if(full_scores_selected_users[this["user-email"]] != undefined)
+          {
+            out += "<tr>" +
+              "<td>" + this["user-surname"] + " " + this["user-name"] + "</td>" +
+              "<td>" + this["user-email"] + "</td>" +
+              "<td>" + (this["score"]).toFixed(2) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>" +
+              "</tr>";
+          }
+        });
+        out += "</tbody>" +
+          "</table>" +
+          "</div><br><br>";
+      });
+      $("#full-results-place").html(out);
+    }
+    else {
+      show_notification("error","Please select some users.",4000);
+    }
+  }
+
+  function downloadSimpleResults()
+  {
+    var source = $("#results-place").html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
+    downloadAsPdf(source);
+  }
+
+  function downloadFullResults()
+  {
+    var source = $("#full-results-place").html() + "<br><br>";
+    downloadAsPdf(source);
+  }
+
+  function downloadAsPdf(text) {
+       var pdf = new jsPDF('p', 'pt', 'letter');
        // source can be HTML-formatted string, or a reference
        // to an actual DOM element from which the text will be scraped.
-       source = $('#results-place').html() + "<br><br>" + $('#hidden-chart-image').html() + "<br><br>" + $('#charts-place').html();
+       source = text;
 
        // we support special element handlers. Register them with jQuery-style
        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)

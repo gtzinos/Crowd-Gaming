@@ -91,7 +91,6 @@ function getSchedulePlans()
                 minutes = (minutes < 9 ? "0" : "") + minutes;
 
                 $("#multiple-day-dropdown").promise().done(function() {
-
                   $("#start_time_timer" + data.schedule[i].day).val(hours + ":" + minutes);
                 });
               }
