@@ -77,14 +77,17 @@
 					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
 								<!-- <li class='divider'></li> --> ";
 		 						echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
-								echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-results'); return false;\"><i class='glyphicon glyphicon-stats'></i> Get results</a></li>";
-							if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() || $_SESSION["USER_LEVEL"] == 3)
-							{
-								echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
-								echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
-							}
-						echo "</ul>
-							</div>";
+								if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
+								{
+									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-results'); return false;\"><i class='glyphicon glyphicon-stats'></i> Get results</a></li>";
+								}
+								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() || $_SESSION["USER_LEVEL"] == 3)
+								{
+									echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
+									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
+								}
+							echo "</ul>
+								</div>";
 					}
 					//For players or examiners without examiner access on this questionnaire will come here
 					else if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
@@ -539,7 +542,7 @@
 	load("QUESTIONNAIRE_PLAYERS");
 	load("CONTACT_WITH_ONE_EMAIL");
 
-	if($questionnaire->getScoreRights() <= $_SESSION["USER_LEVEL"])
+	if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
 	{
 		load("QUESTIONNAIRE_RESULTS");
 	}
