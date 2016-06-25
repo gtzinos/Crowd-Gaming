@@ -220,7 +220,7 @@ function sortJsonByKey(array, key) {
           if(full_scores_users[this["user-email"]] != undefined)
           {
             out += "<tr>" +
-              "<td>" + this["user-surname"] + "-" + this["user-name"] + "</td>" +
+              "<td>" + this["user-surname"] + " " + this["user-name"] + "</td>" +
               "<td>" + this["user-email"] + "</td>" +
               "<td>" + (this["score"]).toFixed(2) + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>" +
               "</tr>";
