@@ -30,7 +30,6 @@
 		<!-- Tinymce editor -->
 		<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-formvalidator/gt-formvalidator.js"); ?>"></script>
-		<script src="<?php print LinkUtils::generatePublicLink("js/AjaxRequests.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/common/spinner-call.js"); ?>"></script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/library/noty/js/noty/packaged/jquery.noty.packaged.min.js"); ?>"> </script>
 		<script src="<?php print LinkUtils::generatePublicLink("js/common/notification-box.js"); ?>"> </script>
