@@ -41,7 +41,7 @@
 
 		public function findByQuestionnaire($questionnaireId)
 		{
-			$query = "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=?";
+			$query = "SELECT * FROM `QuestionGroup` WHERE `questionnaire_id`=? ORDER BY `priority`,`id`";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('i' , $questionnaireId);

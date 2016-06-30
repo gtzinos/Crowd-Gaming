@@ -8,6 +8,7 @@
 	include_once '../app/model/mappers/questionnaire/QuestionnaireScheduleMapper.php';
 	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
+	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
 	class GetQuestionController extends AuthenticatedController
 	{
@@ -35,6 +36,7 @@
 			$scheduleMapper = new QuestionnaireScheduleMapper;
 			$playthroughMapper = new PlaythroughMapper;
 			$questionnaireMapper = new QuestionnaireMapper;
+			$userAnswerMapper = new UserAnswerMapper;
 
 
 			// Variables
@@ -243,10 +245,50 @@
 				Get the next question
 			 */	
 			$question = $questionMapper->findNextQuestion($userId , $groupId);
-
+			$userAnswer = null;
 
 			if($question !== null )
 			{
+				$timeLeftToAnswer =  $questionMapper->findTimeLeftToAnswer($question->getId() , $userId);
+
+				if( $timeLeftToAnswer <= 0)
+				{
+
+					$coordinates = $this->getCoordinates();	
+
+					$userAnswer = new UserAnswer;
+					$userAnswer->setUserId($userId);
+					$userAnswer->setQuestionId($question->getId());
+					$userAnswer->setAnswerId(null);
+					$userAnswer->setAnsweredTime($timeLeftToAnswer);
+					$userAnswer->setLatitude( $coordinates !== null ? $coordinates["latitude"] : null );
+					$userAnswer->setLongitude( $coordinates !== null ? $coordinates["longitude"] : null);
+					$userAnswer->setCorrect(0);
+
+					try
+					{
+						$userAnswerMapper->persist($userAnswer);
+					}
+					catch(DatabaseException $ex)
+					{
+						$this->setOutput("code", "500" );
+						$this->setOutput("message", "Internal server error." );
+						http_response_code(500);
+						return;
+					}
+					
+					$question = $questionMapper->findNextQuestion($userId , $groupId);
+
+					if( $question === null )
+					{
+						$playthroughMapper->setCompleted($userId , $groupId);
+						http_response_code(404);
+						$this->setOutput("code" , "609");
+						$this->setOutput("message" , "Question Group doesnt have any more questions");
+						return;
+					}
+				}
+
 				$answerMapper = new AnswerMapper;
 
 				$answers = $answerMapper->findByQuestion($question->getId());
@@ -262,8 +304,13 @@
 				$questionJsonObject["question-text"] = $question->getQuestionText();
 				$questionJsonObject["multiplier"] = $question->getMultiplier();
 				$questionJsonObject["creation_date"] = $question->getCreationDate();
-				$questionJsonObject["time-to-answer"] = $question->getTimeToAnswer();
-					
+
+
+				if( $timeLeftToAnswer <= -1)
+					$questionJsonObject["time-to-answer"] = $question->getTimeToAnswer();
+				else
+					$questionJsonObject["time-to-answer"] = $timeLeftToAnswer;
+
 				$this->setOutput("question" , $questionJsonObject);
 
 				$answersJsonArray = array();
@@ -293,16 +340,14 @@
 				{
 					// Ingore , just means this question has been shown recently shown
 				}
-				
 			}
 			else
 			{
-
+				$playthroughMapper->setCompleted($userId , $groupId);
 				http_response_code(404);
 				$this->setOutput("code" , "609");
 				$this->setOutput("message" , "Question Group doesnt have any more questions");
 			}
-
 
 		}
 

@@ -259,7 +259,6 @@
 				catch(DatabaseException $e)
 				{
 					DatabaseConnection::getInstance()->rollback();
-					print $e->getMessage();
 					$this->setOutput("code", "500" );
 					$this->setOutput("message", "Internal server error." );
 					http_response_code(500);

@@ -206,6 +206,23 @@
 			return false;
 		}
 
+		public function findTimeLeftToAnswer($questionId , $userId)
+		{
+			$query = "SELECT `Question`.`time_to_answer`-TIME_TO_SEC( TIMEDIFF(CURRENT_TIMESTAMP , `QuestionShown`.`timestamp` ) ) as time_left 
+					  FROM `QuestionShown`
+					  INNER JOIN `Question` on `Question`.`id`=`QuestionShown`.`question_id`
+					  WHERE `QuestionShown`.`user_id`=? AND `QuestionShown`.`question_id`=?";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $userId , $questionId);
+
+			$set = $statement->execute();
+
+			if($set->next())
+				return $set->get("time_left");
+			return -1;
+		}
+
 		public function deleteQuestionShownRecords($questionGroupId, $userId)
 		{
 			$query = "DELETE `QuestionShown`.* FROM `QuestionShown` 
