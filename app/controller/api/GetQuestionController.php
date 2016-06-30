@@ -251,7 +251,7 @@
 			{
 				$timeLeftToAnswer =  $questionMapper->findTimeLeftToAnswer($question->getId() , $userId);
 
-				if( $timeLeftToAnswer <= 0)
+				if( $timeLeftToAnswer!==null && $timeLeftToAnswer <= 0)
 				{
 
 					$coordinates = $this->getCoordinates();	

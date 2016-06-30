@@ -220,7 +220,7 @@
 
 			if($set->next())
 				return $set->get("time_left");
-			return -1;
+			return null;
 		}
 
 		public function deleteQuestionShownRecords($questionGroupId, $userId)
