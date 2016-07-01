@@ -17,11 +17,11 @@ $(window).on("load",function()
  {
      if(getBrowserCompatibility())
      {
-       navigator.geolocation.getCurrentPosition(initializePosition, showError);
+       navigator.geolocation.getCurrentPosition(initializePosition, showError, {timeout: 10000});
      }
      else
      {
-       show_notification("error","You browser doesn't support geolocation.",4000);
+       show_notification("error","Your browser doesn't support geolocation.",4000);
        setTimeout(function() {
          window.location.replace(webRoot);
        },3000);
@@ -156,7 +156,7 @@ $(window).on("load",function()
 //get question groups
 function getQuestionGroups()
 {
-  $.post(webRoot + "/rest_api/questionnaire/" + questionnaire_id + "/groups",
+  $.post(webRoot + "rest_api/questionnaire/" + questionnaire_id + "/groups",
   {
 
   },
