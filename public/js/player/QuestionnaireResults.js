@@ -40,11 +40,10 @@ function getAllScores()
   notCompletedRequest = true;
   show_spinner("scores-spinner");
   $("#charts-place").html();
-
   $.ajax(
   {
     method: "POST",
-    url: webRoot + "/rest_api/questionnaire/" + questionnaire_id + "/score",
+    url: webRoot + "rest_api/questionnaire/" + questionnaire_id + "/score",
     data: {}
   })
   .done(function(data)
