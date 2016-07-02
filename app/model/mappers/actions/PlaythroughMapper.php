@@ -47,7 +47,12 @@
 				  INNER JOIN QuestionGroup ON
 				  QuestionGroup.id=Playthrough.question_group_id
 				  SET completed=1
-					  WHERE Playthrough.completed=0 AND Playthrough.user_id=? AND QuestionGroup.questionnaire_id=? AND (`QuestionGroup`.`time-to-complete` - TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, Playthrough.time_started)) )<=0";
+				  WHERE QuestionGroup.`time-to-complete`>0 AND
+				  Playthrough.time_started IS NOT NULL AND
+				  Playthrough.completed=0 AND 
+				  Playthrough.user_id=? AND 
+				  QuestionGroup.questionnaire_id=? 
+				  AND (`QuestionGroup`.`time-to-complete` - TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, Playthrough.time_started)) )<=0";
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $user_id , $questionnaire_id);
 			$statement->executeUpdate();
@@ -104,7 +109,7 @@
 
 			if($set->next())
 				return $set->get("time_left");
-			return null;
+			return -1;
 		}
 
 		public function findRepeatCount($user_id , $question_group_id)
@@ -145,7 +150,7 @@
 		public function hasStarted($user_id , $question_group_id)
 		{
 
-			$query = "SELECT `time_started` FROM `Playthrough` WHERE `user_id`=? AND `question_group_id`=?";
+			$query = "SELECT `time_started` FROM `Playthrough` WHERE `user_id`=? AND `question_group_id`=? AND `time_started` IS NOT NULL";
 
 			$statement = $this->getStatement($query);
 			$statement->setParameters('ii' , $user_id , $question_group_id);
@@ -155,8 +160,8 @@
 
 			
 			if($set->next())
-				return $set->get("time_started");
-			return null;
+				return 1;
+			return 0;
 		}
 
 		public function findActiveGroupCount($user_id , $questionnaire_id)
