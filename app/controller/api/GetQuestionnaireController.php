@@ -1,5 +1,6 @@
 <?php
 	include_once 'AuthenticatedController.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/user/UserAnswerMapper.php';
 
@@ -24,6 +25,7 @@
 			$questionnaireMapper = new QuestionnaireMapper;
 			$scheduleMapper = new QuestionnaireScheduleMapper;
 			$userAnswerMapper = new UserAnswerMapper;
+			$playthroughMapper = new PlaythroughMapper;
 
 			
 			
@@ -51,6 +53,7 @@
 						$questionnaireArrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
 						$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
 						$questionnaireArrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId(), $userId);
+						$questionnaireArrayItem["is-completed"] = $playthroughMapper->isQuestionnaireCompleted($userId , $questionnaire->getId() );
 						$questionnaireArrayItem["allow-multiple-groups-playthrough"] = $questionnaire->getAllowMultipleGroups();
 						$questionnaireArray[] = $questionnaireArrayItem;
 					}	
@@ -80,6 +83,8 @@
 					$jsonObject["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
 					$jsonObject["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId() , $userId);
 					$jsonObject["allow-multiple-groups-playthrough"] = $questionnaire->getAllowMultipleGroups();
+					$jsonObject["is-completed"] = $playthroughMapper->isQuestionnaireCompleted($userId, $questionnaire->getId());
+
 					$this->setOutput("questionnaire" , $jsonObject);
 				}
 				else

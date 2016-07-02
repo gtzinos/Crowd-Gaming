@@ -182,9 +182,9 @@ WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=?";
 
 			if( $set->next() && $set->get("completed") == $set->get("total_groups") )
 			{
-				return true;
+				return 1;
 			}
-			return false;			
+			return 0;			
 		}
 
 
@@ -201,6 +201,7 @@ WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=?";
 				return $set->get("completed");
 			return null;
 		}
+
 
 		public function startQuestionGroup($user_id , $question_group_id)
 		{
