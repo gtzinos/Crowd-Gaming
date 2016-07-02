@@ -30,7 +30,17 @@
 			$userAnswerMapper = new UserAnswerMapper;
 			$playthroughMapper = new PlaythroughMapper;
 
-
+			try
+			{
+				$playthroughMapper->refreshPlaythrough($userId, $questionnaireId);
+			}
+			catch( DatabaseException $ex)
+			{
+				$this->setOutput("code","500");
+				$this->setOutput("message","Internal server error.");
+				http_response_code(500);
+				return;
+			}
 			if( !$participationMapper->participates($userId , $questionnaireId , 1 , 1)  )
 			{
 				/*

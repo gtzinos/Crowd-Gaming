@@ -40,6 +40,18 @@
 			$statement->setParameters('ii' , $questionnaire_id , $user_id);
 			$statement->executeUpdate();
 		}
+		
+		public function refreshPlaythrough($user_id , $questionnaire_id)
+		{
+			$query = "UPDATE Playthrough
+				  INNER JOIN QuestionGroup ON
+				  QuestionGroup.id=Playthrough.question_group_id
+				  SET completed=1
+					  WHERE Playthrough.completed=0 AND Playthrough.user_id=? AND QuestionGroup.questionnaire_id=? AND (`QuestionGroup`.`time-to-complete` - TIME_TO_SEC(TIMEDIFF(CURRENT_TIMESTAMP, Playthrough.time_started)) )<=0";
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $user_id , $questionnaire_id);
+			$statement->executeUpdate();
+		}
 
 		public function deleteAllPlaythroughs($questionnaire_id)
 		{
