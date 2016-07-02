@@ -38,6 +38,18 @@
 			return 0;
 		}
 
+		public function findLastGroupCreatedId($questionnaireId)
+		{
+			$query = "SELECT id FROM QuestionGroup WHERE `questionnaire_id`=? ORDER BY id DESC LIMIT 1";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('i' ,$questionnaireId);
+			$set = $statement->execute();
+
+			if($set->next())
+				return $set->get("id");
+			return null;
+		}
 
 		public function findByQuestionnaire($questionnaireId)
 		{

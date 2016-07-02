@@ -2,6 +2,7 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/actions/RequestMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class HandleQuestionnaireRequestController extends Controller
 	{
@@ -66,6 +67,8 @@
 
 				$request->setResponse( $_POST["response"] == "accept" ? true : false );
 
+				$playthroughMapper = new PlaythroughMapper;
+				
 				try
 				{
 					DatabaseConnection::getInstance()->startTransaction();
@@ -78,6 +81,11 @@
 						$participation->setUserId( $request->getUserId() );
 						$participation->setQuestionnaireId( $request->getQuestionnaireId() );
 						$participation->setParticipationType( $request->getRequestType() );
+
+						if( $request->getRequestType() == 1)
+						{
+							$playthroughMapper->initPlaythrough($participation->getUserId() , $request->getQuestionnaireId() );
+						}
 
 						$participationMapper->persist($participation);
 					}

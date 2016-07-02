@@ -17,6 +17,18 @@
 			$statement->executeUpdate();
 		}
 
+		public function initPlaythroughForGroup($questionnaire_id , $group_id)
+		{
+			$query = "INSERT INTO Playthrough ( `Playthrough`.`user_id` , `Playthrough`.`question_group_id` ) 
+					  SELECT `QuestionnaireParticipation`.`user_id` , ?
+					  FROM `QuestionnaireParticipation`
+					  WHERE `QuestionnaireParticipation`.`questionnaire_id`=? AND `QuestionnaireParticipation`.`participation_type`=1";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $group_id , $questionnaire_id);
+			$statement->executeUpdate();
+		}
+
 		public function deletePlaythrough($user_id , $questionnaire_id)
 		{
 			$query =   "DELETE Playthrough.* 

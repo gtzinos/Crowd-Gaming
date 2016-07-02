@@ -2,6 +2,7 @@
 	
 	include_once "../app/model/mappers/questionnaire/QuestionnaireMapper.php";
 	include_once "../app/model/mappers/actions/ParticipationMapper.php";
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class DeleteQuestionnaireParticipationController extends Controller
 	{
@@ -57,6 +58,7 @@
 				}
 
 				$participationMapper = new ParticipationMapper;
+				$playthroughMapper = new PlaythroughMapper;
 
 				$participation = $participationMapper->findParticipation( $_POST["user-id"] , $questionnaire->getId() , $_POST["participation-type"]);
 
@@ -68,12 +70,17 @@
 
 				try
 				{
+					DatabaseConnection::getInstance()->startTransaction();
+					
 					$participationMapper->delete($participation);	
+					$playthroughMapper->deletePlaythrough( $participation->getUserId() , $participation->getQuestionnaireId() );
 
 					$this->setOutput("response-code" , 0);
+					DatabaseConnection::getInstance()->commit();
 				}
 				catch(DatabaseException $ex)
 				{
+					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 6); // General database error
 				}
 				return;

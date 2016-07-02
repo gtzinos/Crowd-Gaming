@@ -2,7 +2,7 @@
 	include_once "../app/model/mappers/questionnaire/QuestionGroupMapper.php";
 	include_once "../app/model/mappers/actions/ParticipationMapper.php";
 	include_once "../app/model/mappers/questionnaire/QuestionnaireMapper.php";
-
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class CreateQuestionGroupController extends Controller
 	{
@@ -44,6 +44,7 @@
 			$questionnaireMapper = new QuestionnaireMapper;
 			$participationMapper = new ParticipationMapper;
 			$questionGroupMapper = new QuestionGroupMapper;
+			$playthroughMapper = new PlaythroughMapper; 
 
 			if( !isset( $this->params[1] ) ||
 				$questionnaireMapper->findById($this->params[1]) === null ||
@@ -95,7 +96,6 @@
 				$questionGroup->setName( htmlspecialchars($_POST["name"] ,ENT_QUOTES) );
 				$questionGroup->setQuestionnaireId( $questionnaireId );
 				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
-
 				$questionGroup->setPriority( isset( $_POST["priority"])?$_POST["priority"]:1);
 
 
@@ -141,12 +141,20 @@
 
 				try
 				{
+					DatabaseConnection::getInstance()->startTransaction();
+
 					$questionGroupMapper->persist($questionGroup);
 
 					$this->setOutput("response-code" , 0);
+					
+					$playthroughMapper->initPlaythroughForGroup($questionGroup->getQuestionnaireId() ,
+																$questionGroupMapper->findLastGroupCreatedId($questionGroup->getQuestionnaireId()));
+
+					DatabaseConnection::getInstance()->commit();
 				}
 				catch(DatabaseException $e)
 				{
+					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 6);
 				}
 

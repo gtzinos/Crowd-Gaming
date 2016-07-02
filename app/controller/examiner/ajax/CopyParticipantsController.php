@@ -1,6 +1,7 @@
 <?php
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class CopyParticipantsController extends Controller
 	{
@@ -61,7 +62,8 @@
 				}
 
 				$participationMapper = new ParticipationMapper;
-
+				$playthroughMapper = new PlaythroughMapper;
+				
 				$participations = null;
 
 				if( isset($participationType) )
@@ -74,11 +76,10 @@
 					try
 					{
 						
-					
 						$participation->setQuestionnaireId( $toQuestionnaire->getId() );
-						$participationMapper->persist($participation);
-						
-						
+
+						$playthroughMapper->initPlaythrough($participation->getUserId() , $toQuestionnaire->getId() );
+						$participationMapper->persist($participation);		
 						
 					}
 					catch( DatabaseException $e)

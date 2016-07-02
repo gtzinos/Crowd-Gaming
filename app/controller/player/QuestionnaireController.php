@@ -3,6 +3,7 @@
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/RequestMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/domain/actions/QuestionnaireRequest.php';
 	include_once '../libs/PHPMailer-5.2.14/PHPMailerAutoload.php';
 
@@ -152,6 +153,7 @@
 			$requestMapper = new RequestMapper;
 			$participationMapper = new ParticipationMapper;
 			$questionnaireMapper = new QuestionnaireMapper;
+			$playthroughMapper = new PlaythroughMapper;
 
 			$questionnaireRequest = null;
 			$participation = null;
@@ -317,12 +319,13 @@
 				}
 				else if( $participation !== null )
 				{
-
+					$playthroughMapper->deletePlaythrough( $participation->getUserId() , $participation->getQuestionnaireId() );
 					$participationMapper->delete($participation);
 				}
 				else if( $newParticipation !== null)
 				{
 					$this->setOutput("response-code" , -1);
+					$playthroughMapper->initPlaythrough($_SESSION["USER_ID"] , $questionnaireId );
 					$participationMapper->persist($newParticipation);
 				}
 
