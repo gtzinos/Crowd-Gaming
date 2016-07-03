@@ -95,7 +95,7 @@
 		public function participatesInGroup($playerId , $groupId , $type , $isPublic = null){
 			$statement = null;
 
-			if( $isPublic !== null)
+			if( $isPublic === null)
 			{
 				$query = "SELECT `QuestionnaireParticipation`.`user_id` FROM `QuestionnaireParticipation`
 					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`questionnaire_id`=`QuestionnaireParticipation`.`questionnaire_id` 
@@ -120,15 +120,11 @@
 				$statement->setParameters('iiii',$playerId,$groupId,$type,$isPublic);
 			}
 
-
-
 			$set = $statement->execute();
 
-			if($set->getRowCount()>0){
+			if($set->next())
 				return true;
-			}else{
-				return false;
-			}
+			return false;
 		}
 
 		public function participatesInQuestion($playerId , $questionId , $type , $isPublic = null){

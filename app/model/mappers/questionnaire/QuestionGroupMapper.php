@@ -38,6 +38,11 @@
 			return 0;
 		}
 
+		public function findByParticipation( $userId , $questionnaireId)
+		{
+			
+		}
+
 		public function findLastGroupCreatedId($questionnaireId)
 		{
 			$query = "SELECT id FROM QuestionGroup WHERE `questionnaire_id`=? ORDER BY id DESC LIMIT 1";
