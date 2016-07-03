@@ -1,6 +1,7 @@
 <?php
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class AddUserToQuestionGroupController extends Controller
 	{
@@ -52,15 +53,25 @@
 				$groupParticipation->setUserId( $_POST["user-id"] );
 
 
+				$playthroughMapper = new PlaythroughMapper;
+
 				try
 				{
+					DatabaseConnection::getInstance()->startTransaction();
+
+					if( $groupParticipationMapper->findCount($_POST["question-group-id"]) == 0 )
+						$playthroughMapper->deletePlaythroughByGroup($_POST["question-group-id"]);
+
 					$groupParticipationMapper->persist($groupParticipation);
+					$playthroughMapper->addPlaythrough($_POST["user-id"] , $_POST["question-group-id"]);
 
 					$this->setOutput("response-code" , 0);
+
+					DatabaseConnection::getInstance()->commit();
 				}
 				catch(DatabaseException $e)
 				{
-
+					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 4);
 				}
 				return;

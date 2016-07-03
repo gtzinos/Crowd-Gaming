@@ -38,9 +38,35 @@
 			return 0;
 		}
 
-		public function findByParticipation( $userId , $questionnaireId)
+		public function findByParticipation( $userId , $questionnaireId )
 		{
-			
+			$query =   "SELECT `QuestionGroup`.* FROM `QuestionGroup`
+						WHERE `questionnaire_id`=? AND 
+						( `id` IN 
+							( SELECT QuestionGroupParticipation.question_group_id
+						      FROM QuestionGroupParticipation
+						      WHERE QuestionGroupParticipation.question_group_id=`id` AND `user_id`=?)
+						   OR
+						 	( SELECT count(*)
+						      FROM QuestionGroupParticipation
+						      WHERE QuestionGroupParticipation.question_group_id=`id`
+						    )=0
+						)
+						ORDER BY `priority`,`id`";
+
+			$statement = $this->getStatement($query);
+			$statement->setParameters("ii",$questionnaireId , $userId);
+
+			$set = $statement->execute();
+
+			$questionGroups = array();
+
+			while($set->next())
+			{
+				$questionGroups[] = $this->_exportObject($set);
+			}
+
+			return $questionGroups;
 		}
 
 		public function findLastGroupCreatedId($questionnaireId)

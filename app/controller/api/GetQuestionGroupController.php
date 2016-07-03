@@ -57,7 +57,7 @@
 				/*
 					Return all question group that belong to this questionnaire
 				 */
-				$questionGroups = $questionGroupMapper->findByQuestionnaire($questionnaireId);
+				$questionGroups = $questionGroupMapper->findByParticipation($userId ,$questionnaireId);
 
 				$this->setOutput("code" ,"200");
 				$this->setOutput("message","Success");

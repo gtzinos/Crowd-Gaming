@@ -1,6 +1,8 @@
 <?php
 	include_once '../app/model/mappers/actions/ParticipationMapper.php';
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
+	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
 
 	class RemoveUserFromQuestionGroupController extends Controller
 	{
@@ -42,15 +44,30 @@
 					return;
 				}
 
+				$playthroughMapper = new PlaythroughMapper;
+				$questionGroupMapper = new QuestionGroupMapper;
+
+				$questionGroup = $questionGroupMapper->findById($_POST["question-group-id"]);
+
 				try
 				{
+					DatabaseConnection::getInstance()->startTransaction();
+
 					$groupParticipationMapper->delete($groupParticipation);
+					$playthroughMapper->removePlaythrough($_POST["user-id"] , $_POST["question-group-id"]);
+
+					if( $groupParticipationMapper->findCount($_POST["question-group-id"]) == 0 )
+						$playthroughMapper->initPlaythroughForGroup( $questionGroup->getQuestionnaireId() ,$_POST["question-group-id"]);
+
+					
 
 					$this->setOutput("response-code" , 0);
+
+					DatabaseConnection::getInstance()->commit();
 				}
 				catch(DatabaseException $e)
 				{
-
+					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 3);
 				}
 				return;
