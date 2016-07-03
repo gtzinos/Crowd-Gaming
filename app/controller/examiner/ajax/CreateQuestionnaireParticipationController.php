@@ -70,7 +70,7 @@
 				{
 					$participationMapper->persist($participation);	
 
-					if( $_POST["participation-type"] )
+					if( $_POST["participation-type"] == 1 )
 					{
 						$playthroughMapper->initPlaythrough($participation->getUserId() , $participation->getQuestionnaireId() );
 					}

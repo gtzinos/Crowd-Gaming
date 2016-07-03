@@ -158,7 +158,7 @@ DROP TABLE IF EXISTS `quizapp`.`Question` ;
 CREATE TABLE IF NOT EXISTS `quizapp`.`Question` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Auto increment question id',
   `question_group_id` INT NOT NULL COMMENT 'QuestionGroups id (QuestionGroups:id)',
-  `question` VARCHAR(255) NOT NULL COMMENT 'Question name',
+  `question` TEXT NOT NULL COMMENT 'Question name',
   `time_to_answer` INT NOT NULL COMMENT 'Time for a user to answer one question',
   `creation_date` TIMESTAMP NOT NULL COMMENT 'Question last updated time.',
   `multiplier` FLOAT NOT NULL DEFAULT 1,
@@ -180,7 +180,7 @@ DROP TABLE IF EXISTS `quizapp`.`Answer` ;
 CREATE TABLE IF NOT EXISTS `quizapp`.`Answer` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Auto increment id',
   `question_id` INT NOT NULL COMMENT 'Question id (Questions:id)',
-  `answer` VARCHAR(50) NOT NULL COMMENT 'Answer name',
+  `answer` TEXT NOT NULL COMMENT 'Answer name',
   `is_correct` TINYINT(1) NOT NULL COMMENT 'if this answer is the correct for the question id',
   `creation_date` TIMESTAMP NOT NULL COMMENT 'when answer created',
   INDEX `qid_idx` (`question_id` ASC),
