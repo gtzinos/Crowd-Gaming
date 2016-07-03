@@ -76,7 +76,7 @@
 
 				$question = new Question;
 
-				$question->setQuestionText( htmlentities($_POST["question-text"] ) );
+				$question->setQuestionText( htmlspecialchars($_POST["question-text"] ) );
 				$question->setMultiplier( $_POST["multiplier"] );
 				$question->setQuestionGroupId( $_POST["question-group-id"] );
 				$question->setTimeToAnswer( $_POST["time-to-answer"] );
@@ -99,7 +99,7 @@
 					}
 
 					$answer = new Answer;
-					$answer->setAnswerText( $_POST["answer".$i] );
+					$answer->setAnswerText( htmlspecialchars($_POST["answer".$i]) );
 					$answer->setCorrect( $_POST["correct"] == $i ? true : false );
 
 					$answers[] = $answer;	

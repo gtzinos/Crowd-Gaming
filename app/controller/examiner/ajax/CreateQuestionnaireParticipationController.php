@@ -68,6 +68,8 @@
 				
 				try
 				{
+					DatabaseConnection::getInstance()->startTransaction();
+
 					$participationMapper->persist($participation);	
 
 					if( $_POST["participation-type"] == 1 )
@@ -76,9 +78,11 @@
 					}
 					
 					$this->setOutput("response-code" , 0);
+					DatabaseConnection::getInstance()->commit();
 				}
 				catch(DatabaseException $ex)
 				{
+					DatabaseConnection::getInstance()->rollback();
 					$this->setOutput("response-code" , 6); // General database error
 				}
 				return;

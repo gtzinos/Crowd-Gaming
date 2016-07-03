@@ -88,7 +88,7 @@
 				}
 
 
-				$question->setQuestionText( $purifier->purify($_POST["question-text"] ) );
+				$question->setQuestionText( htmlspecialchars($_POST["question-text"] ) );
 				$question->setMultiplier( $_POST["multiplier"] );
 				$question->setTimeToAnswer( $_POST["time-to-answer"] );
 
@@ -107,7 +107,7 @@
 							return;
 						}
 
-						$answers[$i-1]->setAnswerText( $_POST["answer".$i] );
+						$answers[$i-1]->setAnswerText( htmlspecialchars($_POST["answer".$i]) );
 						$answers[$i-1]->setCorrect( $_POST["correct"] == $i ? true : false );
 					}
 					// Answer doesnt exist but post data exist
@@ -120,7 +120,7 @@
 						}
 
 						$answer = new Answer;
-						$answer->setAnswerText( $purifier->purify($_POST["answer".$i]) );
+						$answer->setAnswerText( htmlspecialchars($_POST["answer".$i]) );
 						$answer->setCorrect( $_POST["correct"] == $i ? true : false );
 						$answer->setQuestionId( $question->getId() );
 						$answers[$i-1] = $answer;

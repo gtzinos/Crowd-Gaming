@@ -116,7 +116,7 @@
 					$startTime = $startDate->getTimestamp() + ($schedule->getStartTime() * 60);
 					$endTime = $endDate->getTimestamp() + ($schedule->getEndTime() *60);
 
-					return ($endTime - $now)/60;
+					return (int)(($endTime - $now)/60);
 				}
 				else if( $schedule->getDay() ==0 )
 				{
