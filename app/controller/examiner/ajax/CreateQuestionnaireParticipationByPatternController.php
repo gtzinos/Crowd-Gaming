@@ -2,6 +2,7 @@
 
 	include_once '../app/model/mappers/questionnaire/QuestionnaireMapper.php';
 	include_once '../app/model/mappers/user/UserMapper.php';
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class CreateQuestionnaireParticipationByPatternController extends Controller
 	{
@@ -46,6 +47,9 @@
 				$participationMapper = new ParticipationMapper;
 				$participations = array();
 
+				$playthroughMapper = new PlaythroughMapper;
+				
+
 				foreach ($users as $user) {
 					if( !$participationMapper->participates( $user->getId() , $questionnaire->getId() , $_POST["participation-type"]) )
 					{
@@ -65,6 +69,10 @@
 					
 					foreach ($participations as $participation) {
 						$participationMapper->persist($participation);
+						if( $_POST["participation-type"] == 1)
+						{
+							$playthroughMapper->initPlaythrough($participation->getUserId() , $participation->getQuestionnaireId() );
+						}
 					}
 
 					DatabaseConnection::getInstance()->commit();

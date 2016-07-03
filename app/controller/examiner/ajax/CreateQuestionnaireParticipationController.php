@@ -2,6 +2,7 @@
 
 	include_once "../app/model/mappers/questionnaire/QuestionnaireMapper.php";
 	include_once "../app/model/mappers/actions/ParticipationMapper.php";
+	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 
 	class CreateQuestionnaireParticipationController extends Controller
 	{
@@ -63,11 +64,17 @@
 				$participation->setQuestionnaireId($questionnaire->getId());
 				$participation->setParticipationType($_POST["participation-type"]);
 
-
+				$playthroughMapper = new PlaythroughMapper;
+				
 				try
 				{
 					$participationMapper->persist($participation);	
 
+					if( $_POST["participation-type"] )
+					{
+						$playthroughMapper->initPlaythrough($participation->getUserId() , $participation->getQuestionnaireId() );
+					}
+					
 					$this->setOutput("response-code" , 0);
 				}
 				catch(DatabaseException $ex)

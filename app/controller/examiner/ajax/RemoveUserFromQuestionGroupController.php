@@ -3,7 +3,7 @@
 	include_once '../app/model/mappers/actions/QuestionGroupParticipationMapper.php';
 	include_once '../app/model/mappers/actions/PlaythroughMapper.php';
 	include_once '../app/model/mappers/questionnaire/QuestionGroupMapper.php';
-
+	
 	class RemoveUserFromQuestionGroupController extends Controller
 	{
 		
