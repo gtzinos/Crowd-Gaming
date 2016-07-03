@@ -172,11 +172,23 @@ function getQuestionGroups()
 //get address from google api
 function getAddresses()
 {
-  var i = 0;
-  var out = "";
+  var withAddressCounter = 0;
+  for(i=0; i<groups.length; i++)
+  {
+    if(groups[i]["latitude"] != null && groups[i]["longitude"] != null) {
+      withAddressCounter++;
+    }
+  }
+  var i = 0,
+    out = "",
+    withAddressDoneCounter=0;
   //get addresses from google api
   for(i=0; i<groups.length; i++)
   {
+    if(withAddressCounter == withAddressDoneCounter)
+    {
+      notCompletedWork.resolve();
+    }
     if(groups[i]["latitude"] == null || groups[i]["longitude"] == null) {
       continue;
     }
@@ -188,20 +200,26 @@ function getAddresses()
 
           #No Parameters
         */
-        $.post("https://maps.googleapis.com/maps/api/geocode/json?address="+ (groups[i]["latitude"] != null ? groups[i]["latitude"] + ","  : "")  + (groups[i]["longitude"] != null ? groups[i]["longitude"] : "") + "&key=" + googleApiKey,
+        $.ajax(
         {
-
-        },
-        function(data,status)
-        {
-          if(status == "success")
-          {
+          method: "POST",
+          url: "https://maps.googleapis.com/maps/api/geocode/json?address="+ (groups[i]["latitude"] != null ? groups[i]["latitude"] + ","  : "")  + (groups[i]["longitude"] != null ? groups[i]["longitude"] : "") + "&key=" + googleApiKey,
+          data: { }
+        })
+        .done(function(data) {
             groups[i]["address"] = data["results"][0] != undefined ? data["results"][0]["formatted_address"] : "";
-          }
+            withAddressDoneCounter++;
+            if(withAddressCounter == withAddressDoneCounter)
+            {
+              notCompletedWork.resolve();
+            }
         });
      })(i);
   }
-  displayData();
+  $.when(notCompletedWork).done(function() {
+    displayData();
+    notCompletedWork = $.Deferred();
+  });
 }
 //display data on page
 function displayData()

@@ -30,7 +30,17 @@
 			$userAnswerMapper = new UserAnswerMapper;
 			$playthroughMapper = new PlaythroughMapper;
 
-
+			try
+			{
+				$playthroughMapper->refreshPlaythrough($userId, $questionnaireId);
+			}
+			catch( DatabaseException $ex)
+			{
+				$this->setOutput("code","500");
+				$this->setOutput("message","Internal server error.");
+				http_response_code(500);
+				return;
+			}
 			if( !$participationMapper->participates($userId , $questionnaireId , 1 , 1)  )
 			{
 				/*
@@ -66,12 +76,12 @@
 					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
 					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
 					$arrayItem["allowed-repeats"] = $questionGroup->getAllowedRepeats();
-					$arrayItem["current-repeats"] = $playthroughMapper->findRepeatCount($questionGroup->getId() , $userId);
+					$arrayItem["current-repeats"] = $playthroughMapper->findRepeatCount($userId ,$questionGroup->getId());
 					$arrayItem["time-left"] = $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
 					$arrayItem["time-to-complete"] = $questionGroup->getTimeToComplete();
 					$arrayItem["priority"] = $questionGroup->getPriority();
 					$arrayItem["is-completed"] = $playthroughMapper->isCompleted($userId , $questionGroup->getId());
-
+					$arrayItem["has-started"] = $playthroughMapper->hasStarted($userId , $questionGroup->getId());
 					$groupJsonArray[] = $arrayItem;
 				}
 
@@ -100,12 +110,12 @@
 					$arrayItem["total-questions"] = $questionGroupMapper->findQuestionCount($questionGroup->getId());
 					$arrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByGroup($questionGroup->getId() , $userId);
 					$arrayItem["allowed-repeats"] = $questionGroup->getAllowedRepeats();
-					$arrayItem["current-repeats"] = $playthroughMapper->findRepeatCount($questionGroup->getId() , $userId);
+					$arrayItem["current-repeats"] = $playthroughMapper->findRepeatCount($userId,$questionGroup->getId());
 					$arrayItem["time-left"] = $playthroughMapper->findTimeLeft($userId , $questionGroup->getId());
 					$arrayItem["time-to-complete"] = $questionGroup->getTimeToComplete();
 					$arrayItem["priority"] = $questionGroup->getPriority();
 					$arrayItem["is-completed"] = $playthroughMapper->isCompleted($userId , $questionGroup->getId());
-					
+					$arrayItem["has-started"] = $playthroughMapper->hasStarted($userId,$questionGroup->getId());
 					$this->setOutput("question-group",$arrayItem);
 				}
 				else
