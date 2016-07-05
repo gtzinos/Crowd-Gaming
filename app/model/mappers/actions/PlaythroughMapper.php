@@ -221,6 +221,23 @@ WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=? AND `ti
 			return 0;
 		}
 
+		public function findPriority($user_id , $questionnaire_id)
+		{
+			$query = "SELECT min( `priority` ) as curr_priority FROM `Playthrough`
+					  INNER JOIN `QuestionGroup` ON
+					  `QuestionGroup`.`id`=`Playthrough`.`question_group_id` AND `QuestionGroup`.`questionnaire_id`=?  
+					  WHERE `user_id`=? AND `completed`=0";
+			
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $questionnaire_id , $user_id);
+
+			$set = $statement->execute();
+
+			if( $set->next() )
+				return $set->get('curr_priority');
+			return 0;
+		}
+
 		public function isQuestionnaireCompleted($user_id , $questionnaire_id)
 		{
 			$query = "SELECT sum(`Playthrough`.`completed`) as completed , count(*) as total_groups FROM `Playthrough`

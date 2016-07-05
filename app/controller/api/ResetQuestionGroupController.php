@@ -65,14 +65,7 @@
 			$questionGroup = $questionGroupMapper->findById($groupId);
 
 
-			$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionGroup->getQuestionnaireId() );
-
-
-			if( $playthroughMapper->findActiveGroupCount($userId, $questionGroup->getQuestionnaireId())==0 &&
-				!$playthroughMapper->groupLeftWithPriority($userId , $questionGroup->getQuestionnaireId() , $currentPriority) )
-				$currentPriority++;
-
-			if( $currentPriority != $questionGroup->getPriority() || $playthroughMapper->isCompleted($userId , $questionGroup->getId()) )
+			if( $playthroughMapper->isCompleted($userId , $questionGroup->getId()) )
 			{
 				$this->setOutput("code", "607");
 				$this->setOutput("message", "Forbidden , you cant reset this question group.");

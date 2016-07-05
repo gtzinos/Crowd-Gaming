@@ -177,12 +177,7 @@
 
 			if( !$groupHasStarted )
 			{
-				$currentPriority = $playthroughMapper->findCurrentPriority($userId , $questionnaire->getId());
-
-
-				if( $activeGroups==0 &&
-					!$playthroughMapper->groupLeftWithPriority($userId , $questionGroup->getQuestionnaireId() , $currentPriority) )
-					$currentPriority++;
+				$currentPriority = $playthroughMapper->findPriority($userId , $questionnaire->getId());
 
 				if( $currentPriority != $questionGroup->getPriority() )
 				{
