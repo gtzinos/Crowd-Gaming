@@ -27,8 +27,6 @@
 			$userAnswerMapper = new UserAnswerMapper;
 			$playthroughMapper = new PlaythroughMapper;
 
-			
-			
 			if( $questionnaireId === null )
 			{
 				/*
@@ -51,7 +49,7 @@
 						$questionnaireArrayItem["creation-date"] = $questionnaire->getCreationDate();
 						$questionnaireArrayItem["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
 						$questionnaireArrayItem["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
-						$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
+						$questionnaireArrayItem["total-questions"] = $questionnaireMapper->findQuestionCountByUser($userId ,$questionnaire->getId());
 						$questionnaireArrayItem["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId(), $userId);
 						$questionnaireArrayItem["is-completed"] = $playthroughMapper->isQuestionnaireCompleted($userId , $questionnaire->getId() );
 						$questionnaireArrayItem["allow-multiple-groups-playthrough"] = $questionnaire->getAllowMultipleGroups();
@@ -80,7 +78,7 @@
 					$jsonObject["creation-date"] = $questionnaire->getCreationDate();
 					$jsonObject["time-left"] = $scheduleMapper->findMinutesToStart($questionnaire->getId());
 					$jsonObject["time-left-to-end"] = $scheduleMapper->findMinutesToEnd($questionnaire->getId());
-					$jsonObject["total-questions"] = $questionnaireMapper->findQuestionCount($questionnaire->getId());
+					$jsonObject["total-questions"] = $questionnaireMapper->findQuestionCountByUser($userId , $questionnaire->getId());
 					$jsonObject["answered-questions"] = $userAnswerMapper->findAnswersCountByQuestionnaire($questionnaire->getId() , $userId);
 					$jsonObject["allow-multiple-groups-playthrough"] = $questionnaire->getAllowMultipleGroups();
 					$jsonObject["is-completed"] = $playthroughMapper->isQuestionnaireCompleted($userId, $questionnaire->getId());

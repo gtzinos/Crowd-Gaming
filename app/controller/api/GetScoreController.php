@@ -65,9 +65,11 @@
 					if( isset($sumScore[ $userScore["user-id"] ]) )
 					{
 						$sumScore[ $userScore["user-id"] ]["score"] += $userScore["score"];
+						$sumScore[ $userScore["user-id"] ]["max-personal-score"]+= $groups[ $userScore["group-id"] ]["max-score"];
 					}
 					else
 					{
+						$sumScore[ $userScore["user-id"] ]["max-personal-score"] = $groups[ $userScore["group-id"] ]["max-score"];
 						$sumScore[ $userScore["user-id"] ]["name"] = $userScore["user-name"];
 						$sumScore[ $userScore["user-id"] ]["surname"] = $userScore["user-surname"];
 						$sumScore[ $userScore["user-id"] ]["email"] = $userScore["user-email"];
@@ -84,7 +86,7 @@
 
  				foreach ($sumScore as $key => $sum) 
  				{
- 					$sumScore[$key]["score"] = $sum["score"] * 100 / $maxTotalScore;
+ 					$sumScore[$key]["score"] = $sum["score"] * 100 / $sum["max-personal-score"];
  				}
 
 				$this->setOutput("code" , "200");

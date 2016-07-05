@@ -135,6 +135,24 @@ WHERE `Questionnaire`.`id`=? ";
 			return null;
 		}
 
+		public function findQuestionCountByUser($userId , $questionnaireId)
+		{
+			$query = "SELECT count(*) as counter FROM `Question`
+					  INNER JOIN `QuestionGroup` on `QuestionGroup`.`id`=`Question`.`question_group_id`
+					  INNER JOIN `Playthrough` on `Playthrough`.`question_group_id`=`QuestionGroup`.`id`
+					  WHERE `QuestionGroup`.`questionnaire_id`=? AND `Playthrough`.`user_id`=?";
+
+			$statement = $this->getStatement($query);
+
+			$statement->setParameters("ii" , $questionnaireId , $userId);
+
+			$res = $statement->execute();
+
+			if( $res->next())
+				return $res->get("counter");
+			return 0;
+		}
+
 		public function findQuestionCount($questionnaireId)
 		{
 			$query = "SELECT count(*) as counter FROM `Question`
