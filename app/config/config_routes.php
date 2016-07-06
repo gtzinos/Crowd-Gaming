@@ -67,7 +67,7 @@
 	Routes::add( 'get-questionnaire-schedule' , 'examiner/ajax/GetQuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'update-questionnaire-schedule' , 'examiner/ajax/UpdateQuestionnaireScheduleController.php' , $_USER_LEVEL["EXAMINER"]);
 	Routes::add( 'get-user-report' , 'examiner/ajax/GetUserReportController.php' , $_USER_LEVEL["EXAMINER"] );
-
+	Routes::add( 'export-to-json' , 'examiner/ajax/ExportQuestionnaireToJsonController.php' , $_USER_LEVEL["EXAMINER"]);
 	/*
 		Moderator level pages
 	 */
