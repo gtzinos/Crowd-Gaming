@@ -9,7 +9,7 @@
 		}
 
 		public function run(){
-			if( isset($_SESSION["USER_ID"]) || ( !isset($_POST["email"] , $_POST["password"] , $_POST["recaptcha"]) ) ){
+			if( isset($_SESSION["USER_ID"]) || ( !isset($_POST["username"] , $_POST["password"] , $_POST["recaptcha"]) ) ){
 				$this->redirect("home");
 			}
 
@@ -17,12 +17,12 @@
 
 			/*
 				Captcha Check
-			*/ 
+			*/
 			$curl = curl_init();
 
 			curl_setopt( $curl, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
 			curl_setopt( $curl, CURLOPT_POST ,1);
-			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['recaptcha'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);			
+			curl_setopt( $curl, CURLOPT_POSTFIELDS , 'response='.$_POST['recaptcha'].'&secret='.$_CONFIG["SERVER_GOOGLE_RECAPTCHA_KEY"]);
 			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 0);
 
@@ -35,14 +35,14 @@
 				print 5;
 				return;
 			}
-			
+
 
 			header('Content-Type: text/plain');
 
 			$userMapper = new UserMapper();
 
-			$user = $userMapper->authenticate($_POST["email"] , $_POST["password"] );
-			
+			$user = $userMapper->authenticate($_POST["username"] , $_POST["password"] );
+
 			if( $user ){
 
 				if( is_object($user)){
@@ -54,7 +54,7 @@
 					print $user;
 				}
 
-				
+
 			}else{
 				print '1'; // wrong email or password
 			}
