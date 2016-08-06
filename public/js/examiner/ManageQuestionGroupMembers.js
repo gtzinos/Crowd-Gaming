@@ -15,7 +15,7 @@ function add_user_on_question_group()
 {
   if($("#questionnaire-users-dropdown").val() == null)
   {
-    show_notification("error","You must select some users.",5000);
+    show_notification("error","Please select some users.",5000);
     return;
   }
   var users_array,
@@ -63,11 +63,11 @@ var user_name_array = [];
             }
             else if(data == "2")
             {
-              show_notification("error","User already participates to that question group (" + user_name + ").",5000);
+              show_notification("error","User (" + user_name + ") already participates in that question group.",5000);
             }
             else if(data == "3")
             {
-              show_notification("error","User doesnt participate to this questionnaire (" + user_name + ").",5000);
+              show_notification("error","User " + user_name + " doesn't participate in this questionnaire.",5000);
             }
             else if(data == "4")
             {
@@ -75,11 +75,11 @@ var user_name_array = [];
             }
             else if(data == "-1")
             {
-              show_notification("error","You didnt send data (" + user_name + ").",5000);
+              show_notification("error","You didnt send any data (" + user_name + ").",5000);
             }
             else
             {
-              show_notification("error","Unknown error.Please contact with us (" + user_name + ").",5000);
+              show_notification("error","Unknown error. Contact us for support. (" + user_name + ").",5000);
             }
           }
       });
@@ -93,7 +93,7 @@ function delete_user_from_question_group()
 {
   if($("#question-group-users-dropdown").val() == null)
   {
-    show_notification("error","You must select some users.",5000);
+    show_notification("error","Please select some users.",5000);
     return;
   }
   var users_array,
@@ -138,7 +138,7 @@ function delete_user_from_question_group()
             }
             else if(data == "2")
             {
-              show_notification("error","User doesnt participate to this question group (" + user_name + ").",5000);
+              show_notification("error","User " + user_name + " doesn't participate in this question group.",5000);
             }
             else if(data == "4")
             {
@@ -146,11 +146,11 @@ function delete_user_from_question_group()
             }
             else if(data == "-1")
             {
-              show_notification("error","You didnt send data (" + user_name + ").",5000);
+              show_notification("error","You didn't any send data (" + user_name + ").",5000);
             }
             else
             {
-              show_notification("error","Unknown error.Please contact with us (" + user_name + ").",5000);
+              show_notification("error","Unknown error. Contact us for support (" + user_name + ").",5000);
             }
           }
       });
@@ -216,7 +216,7 @@ function get_question_groups()
         show_notification("error","You dont have access.",5000);
       }
       else {
-        show_notification("error","Unknown error. Please contact with us!",5000);
+        show_notification("error","Unknown error. Contact us for support.",5000);
       }
     }
   });
@@ -275,11 +275,11 @@ function get_question_groups()
       }
       else if(data.response_code == "2")
       {
-        show_notification("error","You didn't send data.",5000);
+        show_notification("error","You didn't send any data.",5000);
       }
       else
       {
-        show_notification("error","Unknown error.Please contact with us.",5000);
+        show_notification("error","Unknown error. Contact us for support.",5000);
       }
     }
   });
@@ -342,7 +342,7 @@ function get_question_groups()
          }
          else
          {
-           show_notification("error","Unknown error. Please contact with us.",5000);
+           show_notification("error","Unknown error. Contact us for support..",5000);
          }
        }
     });
