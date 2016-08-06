@@ -40,7 +40,7 @@ function resetPassword()
 				}
 				//Something going wrong
 				else {
-					show_notification("error","Unknown error. Contact with one administrator!",4000);
+					show_notification("error","Unknown error. Contact us for support.",4000);
 				}
 			})
 			.fail(function(xhr,error) {
