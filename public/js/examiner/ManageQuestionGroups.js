@@ -344,7 +344,7 @@ function show_edit_question_data(question_id,question_text,time_to_answer,creati
       if(i == 0)
       {
         $("#question-edit-response").show();
-        $("#question-edit-response").html("<div class='alert alert-danger'>There are no answers in this question. </div>");
+        $("#question-edit-response").html("<div class='alert alert-danger'>This question doesn't have any answers. </div>");
       }
     })
     .fail(function (xhr,error) {
@@ -427,7 +427,7 @@ function update_question(question_id)
           /*
             Success message
           */
-          show_notification("success","Question updated successfully.",4000);
+          show_notification("success","Question was updated successfully.",4000);
           $("#question"+question_id).html(data["question-text"]);
       }
       /*
@@ -452,7 +452,7 @@ function update_question(question_id)
       */
       else if(data == "3")
       {
-        show_notification("error","This is not a valid time to question text.",4000);
+        show_notification("error","The time to answer values is not valid.",4000);
       }
       /*
          If response message == 4
@@ -460,7 +460,7 @@ function update_question(question_id)
       */
       else if(data == "4")
       {
-        show_notification("error","This not a valid time to answer. Must be >= 5 seconds.",4000);
+        show_notification("error","Time to answer must be 5 seconds or more..",4000);
       }
       /*
          If response message == 5
@@ -484,7 +484,7 @@ function update_question(question_id)
       */
       else if(data == "7")
       {
-        show_notification("error","Invalid Correct Answer.",4000);
+        show_notification("error","The answer you select as correct is not valid or doesn't exist.",4000);
       }
       /*
          If response message == 8
@@ -500,13 +500,13 @@ function update_question(question_id)
       */
       else if(data == "-1")
       {
-        show_notification("error","You didnt send something.",4000);
+        show_notification("error","You didn't send any data.",4000);
       }
       /*
           Something going wrong
       */
       else {
-        show_notification("error","Unknown error. Contact with one administrator!",4000);
+        show_notification("error","Unknown error. Contact us for support.",4000);
       }
     })
     .fail(function(xhr,error){
@@ -521,7 +521,7 @@ function update_question(question_id)
     /*
       Cannot be empty
     */
-    show_notification("error","Fill all fields before save.",4000);
+    show_notification("error","All fields need to be filled.",4000);
   }
 }
 
@@ -607,7 +607,7 @@ function create_question(question_group_id)
     			/*
     				Success message
           */
-          show_notification("success","Your question created successfully.",4000);
+          show_notification("success","Your question was created successfully.",4000);
 
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) + 1);
 
@@ -641,7 +641,7 @@ function create_question(question_group_id)
       */
       else if(data == "1")
       {
-        show_notification("error","You dont have access to do it.",4000);
+        show_notification("error","You don't have access to do this action.",4000);
       }
       /*
          If response message == 2
@@ -649,7 +649,7 @@ function create_question(question_group_id)
       */
       else if(data == "2")
       {
-        show_notification("error","This is not a valid question name.",4000);
+        show_notification("error","Question name is not valid.",4000);
       }
       /*
          If response message == 3
@@ -657,7 +657,7 @@ function create_question(question_group_id)
       */
       else if(data == "3")
       {
-        show_notification("error","This is not a valid time to answer value.",4000);
+        show_notification("error","Time to answer must be 5 seconds or more.",4000);
       }
       /*
          If response message == 4
@@ -689,7 +689,7 @@ function create_question(question_group_id)
       */
       else if(data == "7")
       {
-        show_notification("error","This is not a valid correct answer.",4000);
+        show_notification("error","The answer you select as correct is not valid or doesn't exist.",4000);
       }
       /*
          If response message == 8
@@ -697,7 +697,7 @@ function create_question(question_group_id)
       */
       else if(data == "8")
       {
-        show_notification("error","Cant create a question when the questionnaire is public.",4000);
+        show_notification("error","You can't modify a public questionnaire.",4000);
       }
       /*
          If response message == -1
@@ -705,13 +705,13 @@ function create_question(question_group_id)
       */
       else if(data == "-1")
       {
-        show_notification("error","No data error.",4000);
+        show_notification("error","You didn't send any data.",4000);
       }
       /*
           Something going wrong
       */
       else {
-        show_notification("error","Unknown error. Contact with one administrator!",4000);
+        show_notification("error","Unknown error. Contact us for support.",4000);
       }
     })
     .fail(function(xhr,error){
@@ -758,11 +758,11 @@ function delete_question(question_group_id,question_id,ask_required)
             Success message
           */
           if (parseInt($("#qcounter"+question_group_id).text()) == 1) {
-            $("#question-list-group").html("<label class='alert alert-danger text-center'>There are no questions on this question group</label>");
+            $("#question-list-group").html("<label class='alert alert-danger text-center'>This question group doesn't have any questions.</label>");
           }
           $("#qitem"+question_id).remove();
           $("#qcounter"+question_group_id).html(parseInt($("#qcounter"+question_group_id).text()) - 1);
-          show_notification("success","Question " + question_id + " deleted successfully.",4000);
+          show_notification("success","Question " + question_id + " was deleted successfully.",4000);
       }
       /*
          If response message == 1
@@ -794,7 +794,7 @@ function delete_question(question_group_id,question_id,ask_required)
       */
       else if(data == "4")
       {
-        show_notification("error","Questionnaire is public , you can't delete it.",4000);
+        show_notification("error","You can't modify a public questionnaire.",4000);
       }
       /*
          If response message == -1
@@ -802,13 +802,13 @@ function delete_question(question_group_id,question_id,ask_required)
       */
       else if(data == "-1")
       {
-        show_notification("error","You didnt send something.",4000);
+        show_notification("error","You didn't send any data.",4000);
       }
       /*
           Something going wrong
       */
       else {
-        show_notification("error","Unknown error. Contact with one administrator!",4000);
+        show_notification("error","Unknown error. Contact us for support.",4000);
       }
     })
     .fail(function(xhr,error){
@@ -856,7 +856,7 @@ function delete_question_group(question_group_id,ask_required)
                         "</div>" +
                         "</a>");
           }
-          show_notification("success","Question group " + question_group_id + " deleted successfully.",5000);
+          show_notification("success","Question group " + question_group_id + " was deleted successfully.",5000);
       }
       /*
          If response message == 1
@@ -884,11 +884,11 @@ function delete_question_group(question_group_id,ask_required)
       }
       /*
          If response message == 4
-         Questionnaire is public, you cant delete this.
+         You can't modify a public questionnaire..
       */
       else if(data == "4")
       {
-        show_notification("error","Questionnaire is public, you cant delete this.",4000);
+        show_notification("error","You can't modify a public questionnaire.",4000);
       }
       /*
          If response message == -1
@@ -896,13 +896,13 @@ function delete_question_group(question_group_id,ask_required)
       */
       else if(data == "-1")
       {
-        show_notification("error","You didn't send the required data.",4000);
+        show_notification("error","You didn't provide the required information.",4000);
       }
       /*
           Something going wrong
       */
       else {
-        show_notification("error","Unknown error. Contact with one administrator!",4000);
+        show_notification("error","Unknown error. Contact us for support.",4000);
       }
     })
     .fail(function(xhr,error)
