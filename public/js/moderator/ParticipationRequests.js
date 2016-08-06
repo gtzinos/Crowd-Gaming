@@ -124,11 +124,11 @@ function handleQuestionnaireParticipationRequest(request_id,response,request_ind
       if(data == "0")
       {
         if(response == "accept") {
-          show_notification("success",fullName + " participation request accepted successfully.",3000);
+          show_notification("success",fullName + " participation request was accepted successfully.",3000);
         }
         else if(response == "decline")
         {
-          show_notification("success",fullName + " participation request declined successfully.",3000);
+          show_notification("success",fullName + " participation request was declined successfully.",3000);
         }
         $("#ritem" + request_id).remove();
         if($("[id^=ritem]").length == 0)
@@ -158,14 +158,14 @@ function handleQuestionnaireParticipationRequest(request_id,response,request_ind
       }
       else if(data == "5")
       {
-        show_notification("error","Response already handled. (" + fullName + ")",4000);
+        show_notification("error","Response was already handled.(" + fullName + ")",4000);
       }else if(data == "6")
       {
         show_notification("error","General Database Error. (" + fullName + ")",4000);
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data. (" + fullName + ")",4000);
+        show_notification("error","You didnt send any data. (" + fullName + ")",4000);
       }
     }
   });
