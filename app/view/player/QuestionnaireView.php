@@ -199,7 +199,7 @@
 										$response_message .= "You became a player on this questionnaire.";
 									}
 									else {
-										$response_message .= "Your request to be a player on this questionnaire sended successfully.";
+										$response_message .= "Your request to be a player in this questionnaire was sended successfully.";
 									}
 								}
 								/*
@@ -208,7 +208,7 @@
 								*/
 								else if(isset($_POST['player-cancel-request']))
 								{
-									$response_message .= "Your request to be a player deleted successfully.";
+									$response_message .= "Your request to be a player was deleted successfully.";
 								}
 								/*
 									User option == 3
@@ -216,7 +216,7 @@
 								*/
 								else if(isset($_POST['player-unjoin']))
 								{
-									$response_message .= "You are no longer a player on this questionnaire.";
+									$response_message .= "You are no longer a player in this questionnaire.";
 								}
 								/*
 									User option == 4s
@@ -224,7 +224,7 @@
 								*/
 								else if(isset($_POST['examiner-join']))
 								{
-									$response_message .= "You sent a request to be an examiner on this questionnaire.";
+									$response_message .= "You sent a request to be an examiner in this questionnaire.";
 								}
 								/*
 									User option == 5
@@ -232,14 +232,14 @@
 								*/
 								else if(isset($_POST['examiner-cancel-request']))
 								{
-									$response_message .= "Your request to be an examiner deleted successfully.";
+									$response_message .= "Your request to be an examiner was deleted successfully.";
 								}
 								/*
 									he needs to contact with coordinator
 								*/
 								else if(isset($_POST['contact-message']))
 								{
-									$response_message .= "Your message sended successfully.";
+									$response_message .= "Your message was sended successfully.";
 								}
 								/*
 									User option == 6
@@ -247,7 +247,7 @@
 								*/
 								else if(isset($_POST['examiner-unjoin']))
 								{
-									$response_message .= "You are no longer an examiner on this questionnaire.";
+									$response_message .= "You are no longer an examiner in this questionnaire.";
 								}
 							}
 							else
@@ -262,7 +262,7 @@
 									*/
 								  if(get("response-code") == 1)
 									{
-										$response_message .= "This is not a valid password value.";
+										$response_message .= "Invalid password value.";
 									}
 									/*
 										Else If response-code = 2
@@ -270,7 +270,7 @@
 									*/
 									else if(get("response-code") == 2)
 									{
-										$response_message .= "This is not a valid option.";
+										$response_message .= "Invalid option.";
 									}
 									/*
 										Else If response-code = 3
@@ -278,7 +278,7 @@
 									*/
 									else if(get("response-code") == 3)
 									{
-										$response_message .= "You have already participate on this questionnaire.";
+										$response_message .= "You have already participate in this questionnaire.";
 									}
 									/*
 										Else If response-code = 4
@@ -294,7 +294,7 @@
 									*/
 									else if(get("response-code") == 5)
 									{
-										$response_message .= "You have no active request to delete.";
+										$response_message .= "You haven't active request to delete.";
 									}
 									/*
 										Else If response-code = 6
@@ -302,7 +302,7 @@
 									*/
 									else if(get("response-code") == 6)
 									{
-										$response_message .= "You are not participating as player.";
+										$response_message .= "You are not a player.";
 									}
 									/*
 										Else If response-code = 7
@@ -318,7 +318,7 @@
 									*/
 									else if(get("response-code") == 8)
 									{
-										$response_message .= "You have already examiner access on this questionnaire.";
+										$response_message .= "You have already examiner access in this questionnaire.";
 									}
 									/*
 										Else If response-code = 9
@@ -342,7 +342,7 @@
 									*/
 									else if(get("response-code") == 11)
 									{
-										$response_message .= "You are not participating as examiner.";
+										$response_message .= "You are not an examiner.";
 									}
 									/*
 										Else If response-code = 12
@@ -358,7 +358,7 @@
 									*/
 									else if(get("response-code") == 13)
 									{
-										$response_message .= "This is not a valid message text.";
+										$response_message .= "Invalid message text.";
 									}
 									/*
 										Else If response-code = 14
@@ -372,7 +372,7 @@
 										Else one new error occur
 									*/
 									else {
-											$response_message .= "Something going wrong. Please contact with one administrator!";
+											$response_message .= "Something going wrong. Contact us for support.";
 									}
 							}
 
