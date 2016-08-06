@@ -104,7 +104,7 @@ $(window).on("load",function()
        distance = 0;
      }
      $("#distance" + groups[i].id).html("Distance: " + distance + "m ");
-     if(groups[i]["total-questions"] != groups[i]["answered-questions"])
+     if(groups[i]["total-questions"] != groups[i]["answered-questions"] || groups[i]["is-completed"] != null)
      {
        if(distance > 0) {
          $("#play" + groups[i].id).prop("disabled",true);
@@ -135,7 +135,7 @@ $(window).on("load",function()
   function displayDistance(distance)
   {
     $("#distance" + groups[target_group_index].id).html("Distance: " + distance + "m ");
-    if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"])
+    if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"] || groups[i]["is-completed"] != null)
     {
       if(distance > 0) {
         $("#play" + groups[target_group_index].id).prop("disabled",true);
