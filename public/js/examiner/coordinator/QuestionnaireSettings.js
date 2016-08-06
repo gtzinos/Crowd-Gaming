@@ -227,7 +227,7 @@ function updateSchedulePlan()
         */
         if(data == "0")
         {
-          show_notification("success","Questionnaire schedule updated successfully.",5000);
+          show_notification("success","Questionnaire schedule was updated successfully",5000);
           setTimeout(function() {
             location.reload();
           },2000);
@@ -248,10 +248,10 @@ function updateSchedulePlan()
           }
           else if(data == "-1")
           {
-            show_notification("error","You didn't send data.",4000);
+            show_notification("error","You didn't send any data.",4000);
           }
           else {
-            show_notification("error","Unknown error. Please contact with us.",4000);
+            show_notification("error","Unknown error. Contact us for support.",4000);
           }
           notCompletedRequest = false;
           remove_spinner("update-schedule-spinner");
