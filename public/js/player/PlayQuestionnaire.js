@@ -80,12 +80,12 @@ $(window).on("load",function()
    if($("#auto-refresh").css('color') == 'rgb(255, 0, 0)') {
      $("#auto-refresh").css('color','green');
      auto_refresh = navigator.geolocation.watchPosition(refreshAllDistances,showError);
-     show_notification("success","Auto refresh enabled successfully.",3000);
+     show_notification("success","Auto refresh was enabled successfully.",3000);
    }
    else {
      $("#auto-refresh").css('color','red');
      navigator.geolocation.clearWatch(auto_refresh);
-     show_notification("success","Auto refresh disabled successfully.",3000);
+     show_notification("success","Auto refresh was disabled successfully.",3000);
    }
  }
  //refresh all question groups
@@ -128,7 +128,7 @@ $(window).on("load",function()
    }
    else
    {
-     show_notification("error","Something going wrong",3000);
+     show_notification("error","Something went wrong. Contact us for support.",3000);
    }
  }
   //display distance to target group index
@@ -377,7 +377,7 @@ function playQuestionGroup(target)
     //Questionnaire doesnt allow multiple playthrough
     if(!allow_multiple_groups)
     {
-      show_notification("error","You must complete: " + groups[notCompletedFoundPosition]["name"],4000);
+      show_notification("error","You must complete the group : " + groups[notCompletedFoundPosition]["name"],4000);
       return;
     }
     //else continue get questions
