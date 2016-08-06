@@ -29,6 +29,10 @@
 	/*
 		Google api key , web client needs it
 	 */
+	$_CONFIG["GOOGLE_ANALYTICS_ID"] = "UA-82084036-1";
+	/*
+		Google api key , web client needs it
+	 */
 	$_CONFIG["GOOGLE_API_KEY"] = "AIzaSyCclvgjNy2vp9rD8TrAnbNs4wvXft7hKiY";
 	/*
 		Google recaptcha key , web client needs it
