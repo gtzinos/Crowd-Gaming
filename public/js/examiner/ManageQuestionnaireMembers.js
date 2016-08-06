@@ -110,26 +110,26 @@ function copy_questionnaire_members(participation_type)
           4 : Invalid Access
         */
         if (data == "0") {
-          show_notification("success","Users copied successfully.",3000);
+          show_notification("success","Users was copied successfully.",3000);
         }
         else if(data == "1")
         {
           show_notification("error","Not a valid participation type.",4000);
         }
         else if (data == "2") {
-          show_notification("error","From questionnaire doesnt exists.",4000);
+          show_notification("error","The target questionnaire doesn't exist.",4000);
         }
         else if (data == "3") {
-          show_notification("error","To questionnaire doesnt exists.",4000);
+          show_notification("error","This questionnaire doesnt exists.",4000);
         }
         else if(data == "4") {
           show_notification("error","You dont have the minimum access level.",4000);
         }
         else if(data == "-1") {
-          show_notification("error","You didn't send data.",4000);
+          show_notification("error","You didn't send any data.",4000);
         }
         else {
-          show_notification("error","Unknown error. Please contact with us." ,4000);
+          show_notification("error","Unknown error. Contact us for support." ,4000);
         }
       }
     });
@@ -257,7 +257,7 @@ function getQuestionnairesICanAccess()
 
     if($('#questionnaire-members-dropdown').val() == null)
     {
-      show_notification("error","You must select some users.",4000);
+      show_notification("error","Please select some users.",4000);
       no_completed_request = false;
       return;
     }
@@ -306,7 +306,7 @@ function getQuestionnairesICanAccess()
             /*
               0 : All ok
               1 : Questionnaire doesnt exists
-              2 : You must be coordinator
+              2 : You must be the coordinator
               3 : participation-type must be 1 or 2
               4 : The participation doesnt exist
               5 : You cant remove the coordinator
@@ -315,7 +315,7 @@ function getQuestionnairesICanAccess()
             */
             if(data == "0")
             {
-              show_notification("success",type_name + " " + user_name + " deleted successfully.",4000);
+              show_notification("success",type_name + " " + user_name + " was deleted successfully.",4000);
             }
             else if(data == "1")
             {
@@ -323,15 +323,15 @@ function getQuestionnairesICanAccess()
             }
             else if(data == "2")
             {
-              show_notification("error","You must be coordinator. { " + user_name + " }",6000);
+              show_notification("error","You must be the coordinator. { " + user_name + " }",6000);
             }
             else if(data == "3")
             {
-              show_notification("error","Participation type must be 1 or 2. { " + user_name + " }",6000);
+              show_notification("error","The participation must be 'Player' or 'Examiner' { " + user_name + " }",6000);
             }
             else if(data == "4")
             {
-              show_notification("error","The participation doesnt exist. { " + user_name + " }",6000);
+              show_notification("error","User " + user_name + " doesn't participate.",6000);
             }
             else if(data == "5")
             {
@@ -343,7 +343,7 @@ function getQuestionnairesICanAccess()
             }
             else if(data == "-1")
             {
-              show_notification("error","You didn't send data. { " + user_name + " }",6000);
+              show_notification("error","You didn't send any data. { " + user_name + " }",6000);
             }
           }
           no_completed_request = false;
@@ -418,7 +418,7 @@ function getQuestionnairesICanAccess()
             /*
               0 : All ok
               1 : Questionnaire doesnt exists
-              2 : You must be coordinator
+              2 : You must be the coordinator
               3 : participation-type must be 1 or 2
               4 : The participation doesnt exist
               5 : User already participates
@@ -427,7 +427,7 @@ function getQuestionnairesICanAccess()
             */
             if(data == "0")
             {
-              show_notification("success",type_name + " " + user_results_array[i] + " added successfully.",4000);
+              show_notification("success",type_name + " " + user_results_array[i] + " was added successfully.",4000);
             }
             else if(data == "1")
             {
@@ -435,15 +435,15 @@ function getQuestionnairesICanAccess()
             }
             else if(data == "2")
             {
-              show_notification("error","You must be coordinator. { " + user_results_array[i] + " }",6000);
+              show_notification("error","You must be the coordinator. { " + user_results_array[i] + " }",6000);
             }
             else if(data == "3")
             {
-              show_notification("error","Participation type must be 1 or 2. { " + user_results_array[i] + " }",6000);
+              show_notification("error","The participation must be 'Player' or 'Examiner' { " + user_results_array[i] + " }",6000);
             }
             else if(data == "4")
             {
-              show_notification("error","The participation doesnt exist. { " + user_results_array[i] + " }",6000);
+              show_notification("error","User (" + user_results_array[i] + ") doesn't participate",6000);
             }
             else if(data == "5")
             {
@@ -455,7 +455,7 @@ function getQuestionnairesICanAccess()
             }
             else if(data == "-1")
             {
-              show_notification("error","You didn't send data. { " + user_results_array[i] + " }",6000);
+              show_notification("error","You didn't send any data. { " + user_results_array[i] + " }",6000);
             }
           }
           no_completed_request = false;
