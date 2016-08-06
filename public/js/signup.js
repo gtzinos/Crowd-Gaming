@@ -94,7 +94,7 @@
 				if(data == "0")
 				{
 					/* Redirect to home page	*/
-					show_notification("success","You have registered successfully!",4000);
+					show_notification("success","Your account was created successfully!",4000);
 					/*
 					 Milliseconds which user must wait
 					 after register completed successfully
@@ -121,7 +121,7 @@
 					 */
 					 if(data == "1")
 					 {
-						 show_notification("error","Email address length must be 3 - 50 characters.",4000);
+						 show_notification("error","Email address must be between 3 and 50 characters.",4000);
 					 }
 					 /*
 							If response message == 2
@@ -129,7 +129,7 @@
 					 */
 					 else if(data == "2")
 					 {
-						 show_notification("error","First Name length must be 2 - 40 characters.",4000);
+						 show_notification("error","First name must be between 2 and 40 characters.",4000);
 					 }
 					 /*
 							If response message == 3
@@ -137,7 +137,7 @@
 					 */
 					 else if(data == "3")
 					 {
-						 show_notification("error","Last Name length must be 2 - 40 characters.",4000);
+						 show_notification("error","Last name must be between 2 and 40 characters.",4000);
 					 }
 					 /*
 							If response message == 4
@@ -145,7 +145,7 @@
 					 */
 					 else if(data == "4")
 					 {
-						 show_notification("error","Gender length must be 0 or 1.",4000);
+						 show_notification("error","Please select a gender.",4000);
 					 }
 					 /*
 							If response message == 5
@@ -153,7 +153,7 @@
 					 */
 					 else if(data == "5")
 					 {
-						show_notification("error","Country name length must be 2 - 40 characters.",4000);
+						show_notification("error","Country name must be between 2 and 40 characters.",4000);
 					 }
 					 /*
 							If response message == 6
@@ -161,7 +161,7 @@
 					 */
 					 else if(data == "6")
 					 {
-						 show_notification("error","City name length must be 2 - 40 characters.",4000);
+						 show_notification("error","City name must be between 2 and 40 characters.",4000);
 					 }
 					 /*
 							If response message == 7
@@ -169,7 +169,7 @@
 					 */
 					 else if(data == "7")
 					 {
-						show_notification("error","Password length must be 8 - 50 characters.",4000);
+						show_notification("error","Password length must be between 8 and 50 characters.",4000);
 					 }
 					 /*
 							If response message == 8
@@ -177,7 +177,7 @@
 					 */
 					 else if(data == "8")
 					 {
-						 show_notification("error","Address name length must be 2 - 40 characters.",4000);
+						 show_notification("error","Address name must be between 2 and 40 characters.",4000);
 					 }
 					 /*
 							If response message == 9
@@ -185,7 +185,7 @@
 					 */
 					 else if(data == "9")
 					 {
-						show_notification("error","Phone number length must be 8 - 15 characters.",4000);
+						show_notification("error","Phone number must be between 8 - 15 characters.",4000);
 					 }
 					 /*
 							If response message == 10
@@ -201,7 +201,7 @@
 					 */
 					 else if(data == "11")
 					 {
-						show_notification("error","We are sorry about this. Please try Later.",4000);
+						show_notification("error","We are sorry about this. Please try again later..",4000);
 					 }
 					 /*
 						If response message == 12
@@ -209,7 +209,7 @@
 					 */
 					 else if(data == "12")
 					 {
-						show_notification("error","You must accept our licence.",4000);
+						show_notification("error","You mush accept the licence.",4000);
 					 }
 					 /*
 						If response message == 14
@@ -223,7 +223,7 @@
 							 Something going wrong
 					 */
 						else {
-							 show_notification("error","Something going wrong. Please try later!",4000);
+							 show_notification("error","Something went wrong. Contact us for support.",4000);
 						}
 						notCompletedRequest = false;
 						remove_spinner("signup-spinner");
