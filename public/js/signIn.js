@@ -126,7 +126,7 @@ function signInFromForm() {
 									Something going wrong
 							*/
 							else {
-								show_notification("error","Something going wrong. Please try later!",4000);
+								show_notification("error","Something went wrong, Please try again later!",4000);
 							}
 							remove_spinner("signin-spinner");
 							notCompletedRequest = false;
