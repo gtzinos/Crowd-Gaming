@@ -379,7 +379,7 @@ function getUpdateQuestionnaireData(id) {
     Initialize the variables
   */
   var name = $(document).find("#qname").val();
-  var description = $(document).find("#qeditor").val();
+  var description = tinymce.activeEditor.getContent({format : 'text'});
   var required = $(document).find("#message-required").val();
   var allow_multiple_groups_playthrough = $("#allow-multiple-groups-playthrough").val();
   var score_rights = $("#score_rights").val();
