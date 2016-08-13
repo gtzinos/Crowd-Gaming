@@ -184,12 +184,12 @@ function updateSchedulePlan()
   show_spinner("update-schedule-spinner");
   $("#update-schedule-submit-button").prop("disabled",true);
 
-  let data = {
+  var data = {
     'start-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[0] : null,
     'end-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[2] : null
   };
 
-  let days = {};
+  var days = {};
   if(String($('#multiple-day-dropdown').val()).indexOf(",") >= 0)
   {
     $.each(String($('#multiple-day-dropdown').val()).split(","),function(){
