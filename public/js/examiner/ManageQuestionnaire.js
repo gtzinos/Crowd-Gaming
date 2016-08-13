@@ -245,7 +245,7 @@ function getQuestionnaireData()
     /*
       Variables we will send
     */
-    let data = {
+    var data = {
       "name": name,
       "description": descriptionHTML,
       "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "1" ? "1" : "0",
@@ -389,7 +389,7 @@ function getUpdateQuestionnaireData(id) {
   */
   if(name && description && required && allow_multiple_groups_playthrough != "-" && score_rights)
   {
-    let data = {
+    var data = {
       "questionnaire-id": id,
       "name": name,
       "description": description,
