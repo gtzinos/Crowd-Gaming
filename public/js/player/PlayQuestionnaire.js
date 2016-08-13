@@ -629,7 +629,7 @@ function confirmAnwser(question_id,usingCoordinates)
 {
   $("#confirm-answer-button").prop("disabled",true);
   var selected_answer_id = $("input[name='optradio']:checked").val();
-  let headersData = { };
+  var headersData = { };
 
   if(usingCoordinates)
   {
@@ -639,7 +639,7 @@ function confirmAnwser(question_id,usingCoordinates)
     }
   }
 
-  let data =
+  var data =
   {
     'question-id' : question_id,
     'answer-id' : selected_answer_id
