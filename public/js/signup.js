@@ -23,7 +23,7 @@
 					return -1;
 				}
 
-				let dataToSend = {
+				var dataToSend = {
 					"email": userEmail,
 					"password": userPassword,
 					"name": userFName,
