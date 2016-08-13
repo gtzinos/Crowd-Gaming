@@ -369,7 +369,7 @@ function getUpdateQuestionData(question_id)
 
   if(name && time && multiplier && correct && answers.length == 2)
   {
-    let data = {
+    var data = {
       "question-id": question_id,
       "question-text": name,
       "time-to-answer": time,
@@ -544,7 +544,7 @@ function getCreateQuestionData(question_group_id)
 
   if(name && time && multiplier && correct && answers.length == 2)
   {
-    let data = {
+    var data = {
       "question-group-id": question_group_id,
       "question-text": name,
       "time-to-answer": time,
