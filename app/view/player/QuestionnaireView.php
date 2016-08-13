@@ -9,7 +9,9 @@
 <script src="<?php print LinkUtils::generatePublicLink("js/library/craftpip-jquery-confirm/dist/jquery-confirm.min.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/confirm-dialog.js"); ?>"> </script>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/bootstrap-select-list/dist/js/bootstrap-select.min.js"); ?>"></script>
-<script src="<?php print LinkUtils::generatePublicLink("js/examiner/coordinator/QuestionnaireSettings.js"); ?>"></script>
+<?php if($_SESSION["USER_LEVEL"] >= 2)
+echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/QuestionnaireSettings.js") . "></script>";
+?>
 <script src="<?php print LinkUtils::generatePublicLink("js/library/clockpicker/dist/bootstrap-clockpicker.min.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/clockpicker-manager.js"); ?>"></script>
 <script src="<?php print LinkUtils::generatePublicLink("js/common/agent-detector.js"); ?>"></script>
@@ -76,12 +78,16 @@
 					    <ul class='dropdown-menu' >
 					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
 								<!-- <li class='divider'></li> --> ";
-		 						echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
-								if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
+								if($_SESSION["USER_LEVEL"] >= 2)
+								{
+									echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
+									echo "<li class='settingsitem'><a href='" . LinkUtils::generatePageLink('question-groups') . "/" . $questionnaire->getId() . "'><i class='glyphicon glyphicon-edit'></i> Edit Groups</a></li>";
+								}
+		 						if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
 								{
 									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-results'); return false;\"><i class='glyphicon glyphicon-stats'></i> Get results</a></li>";
 								}
-								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() || $_SESSION["USER_LEVEL"] == 3)
+								if($_SESSION["USER_ID"] == $questionnaire->getCoordinatorId() && $_SESSION["USER_LEVEL"] >= 2 || $_SESSION["USER_LEVEL"] == 3)
 								{
 									echo "<li class='settingsitem'><a onclick=\"showModal('manage-questionnaire-members'); return false;\"><i  class='fa fa-users'></i> Manage Members</a></li>";
 									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-settings'); return false;\"><i  class='fa fa-cogs'></i> Settings & Requests</a></li>";
@@ -551,7 +557,7 @@
 	{
 		load("EDIT_QUESTIONNAIRE");
 	}
-	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"] || $_SESSION['USER_LEVEL'] == 3)
+	if($questionnaire->getCoordinatorId() == $_SESSION["USER_ID"] && $_SESSION['USER_LEVEL'] >= 2 || $_SESSION['USER_LEVEL'] == 3)
 	{
 			load("QUESTIONNAIRE_MEMBERS");
 			load("QUESTIONNAIRE_SETTINGS");
