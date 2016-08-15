@@ -338,7 +338,7 @@
 				DatabaseConnection::getInstance()->rollback();
 				$this->setOutput("response-code" , 12); // General database error
 			}
-		}
+	}
 
 		public function sendMailToCoordinator($message , $questionnaireInfo)
 		{
@@ -378,8 +378,8 @@
 
 			$mail->Body    = "Questionnaire Contact <br>".
 							 "About Questionnaire : ".$questionnaireInfo["questionnaire"]->getName(). ' id='.$questionnaireInfo["questionnaire"]->getId().'<br>'.
-							 "<a href='" . LinkUtils::generatePageLink('user') ."/" .
-							 $user->getId() . "' target='_blank'>View Profile</a>" .'<br>'.
+							 "<a href='http://".$_SERVER["HTTP_HOST"].LinkUtils::generatePageLink("user").'/'.
+							$user->getId() . "' target='_blank'>View Profile</a>" .'<br>'.
 							 "Name : ".$user->getName().' <br>'.
 							 "Surname : ".$user->getSurname().' <br>'.
 							 "Email : ".$user->getEmail().' <br>'.
