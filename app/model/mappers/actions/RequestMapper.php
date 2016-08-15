@@ -92,7 +92,7 @@
 			$query =   "SELECT qr.* , u1.email ,u1.surname,u1.name as uname, q.name as qname
 						FROM `QuestionnaireRequest` qr
 						INNER JOIN `User` u1 on u1.id=qr.user_id
-						INNER JOIN `User` u2 on u2.id=1
+						INNER JOIN `User` u2 on u2.id=?
 						INNER JOIN `Questionnaire` q on qr.questionnaire_id=q.id ";
 
 			if( $_SESSION["USER_LEVEL"] == 2)
@@ -113,13 +113,13 @@
 			$statement = $this->getStatement($query);
 
 			if( $questionnaireId !== null && $requestType !== null )
-				$statement->setParameters('iiii' , $requestType , $questionnaireId , $offset , $limit);
+				$statement->setParameters('iiiii' , $_SESSION["USER_ID"],$requestType , $questionnaireId , $offset , $limit);
 			else if( $questionnaireId !== null && $requestType === null )
-				$statement->setParameters('iii' , $questionnaireId , $offset , $limit);
+				$statement->setParameters('iiii' ,$_SESSION["USER_ID"], $questionnaireId , $offset , $limit);
 			else if( $questionnaireId === null && $requestType !== null )
-				$statement->setParameters('iii' , $requestType , $offset , $limit);
+				$statement->setParameters('iiii' ,$_SESSION["USER_ID"], $requestType , $offset , $limit);
 			else
-				$statement->setParameters('ii' , $offset , $limit);
+				$statement->setParameters('iii' ,$_SESSION["USER_ID"], $offset , $limit);
 
 			$res = $statement->execute();
 
