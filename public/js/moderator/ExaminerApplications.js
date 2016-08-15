@@ -80,11 +80,11 @@ function handleExaminerApplication(request_id,response,request_index)
       if(data == "0")
       {
         if(response == "accept") {
-          show_notification("success", + " examiner request accepted successfully.",3000);
+          show_notification("success", + " Examiner request was accepted successfully..",3000);
         }
         else
         {
-          show_notification("success",fullName + " request declined successfully.",3000);
+          show_notification("success",fullName + " request was declined successfully.",3000);
         }
         $("#ritem" + request_id).remove();
         if($("[id^=ritem]").length == 0)
@@ -98,11 +98,11 @@ function handleExaminerApplication(request_id,response,request_index)
       }
       else if(data == "1")
       {
-        show_notification("error","Application does not exists. (" + fullName + ")",4000);
+        show_notification("error","This pplication does not exists. (" + fullName + ")",4000);
       }
       else if(data == "2")
       {
-        show_notification("error","You can only handle publish requests. (" + fullName + ")",4000);
+        show_notification("error","You can only handle publications request. (" + fullName + ")",4000);
       }
       else if(data == "3")
       {
@@ -114,7 +114,7 @@ function handleExaminerApplication(request_id,response,request_index)
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data. (" + fullName + ")",4000);
+        show_notification("error","You didnt send any data. (" + fullName + ")",4000);
       }
     }
   });

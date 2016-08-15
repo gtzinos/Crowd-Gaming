@@ -9,7 +9,7 @@
 		Leave empty if the public folder IS the root.
 		WEB_ROOT Must end with '/' if exists.
 	 */
-	$_CONFIG["WEB_ROOT"] = "./Treasure-Thess-Website/public/";
+	$_CONFIG["WEB_ROOT"] = "./Crowd-Gaming/public/";
 	/*
 		Short application name
 	*/
@@ -26,6 +26,10 @@
 		Version number
 	*/
 	$_CONFIG["VERSION"] = "0";
+	/*
+		Google api key , web client needs it
+	 */
+	$_CONFIG["GOOGLE_ANALYTICS_ID"] = "UA-82084036-1";
 	/*
 		Google api key , web client needs it
 	 */

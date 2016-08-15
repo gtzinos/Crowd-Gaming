@@ -14,6 +14,17 @@
 		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" href="<?php print LinkUtils::generatePublicLink("css/MainTemplateStyle.css"); ?>" >
 
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+			ga('create', '<?php print $_CONFIG["GOOGLE_ANALYTICS_ID"]; ?>', 'auto');
+			ga('send', 'pageview');
+
+		</script>
+
 		<script type="text/javascript">
 			var webRoot = '<?php print '/'.$_CONFIG["WEB_ROOT"]; ?>';
 			var googleApiKey = '<?php print $_CONFIG["GOOGLE_API_KEY"]; ?>';

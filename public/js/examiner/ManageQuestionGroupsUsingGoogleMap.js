@@ -261,17 +261,17 @@ function checkOptionals()
     }
     else if($("#radius").val() < 5)
     {
-      show_notification("error","Radius needs value >= 5.",6000);
+      show_notification("error","Radius must be 5 meters or greater.",6000);
       return false;
     }
     else if($("#longitude").val() > 180 || $("#longitude").val() < -180)
     {
-      show_notification("error","Longitude needs value -180 - 180",6000);
+      show_notification("error","Longitude must be between -180 and 180.",6000);
       return false;
     }
     else if($("#latitude").val() > 90 || $("#latitude").val() < -90)
     {
-      show_notification("error","Radius needs value -90 - 90",6000);
+      show_notification("error","Latitude must be between -180 and 180",6000);
       return false;
     }
     else {

@@ -76,8 +76,8 @@ function delete_public_request(confirmed)
   })
   .done(function(data){
       /*
-        1 : Questionnaire doesnt work.
-        2 : You must be coordinator to make the request.
+        1 : Questionnaire doesn't exist.
+        2 : You must be the coordinator to make this request.
         3 : Message Validation Error
         4 : Questionnaire is already public
         5 : Active application already exists
@@ -86,7 +86,7 @@ function delete_public_request(confirmed)
       */
       if(data == "0")
       {
-        show_notification("success","Request canceled successfully.",3000);
+        show_notification("success","The request was canceled successfully.",3000);
         setTimeout(function() {
           location.reload();
         },2000);
@@ -95,11 +95,11 @@ function delete_public_request(confirmed)
       {
         if (data == "1")
         {
-          show_notification("error","Questionnaire doesnt work.",4000);
+          show_notification("error","Questionnaire doesn't exist.",4000);
         }
         else if (data == "2")
         {
-          show_notification("error","You must be coordinator to make the request.",4000);
+          show_notification("error","You must be the coordinator to make this request.",4000);
         }
         else if (data == "3")
         {
@@ -111,7 +111,7 @@ function delete_public_request(confirmed)
         }
         else if (data == "5")
         {
-          show_notification("error","Active application already exists.",4000);
+          show_notification("error","An An An active application already exists.",4000);
         }
         else if (data == "6")
         {
@@ -119,11 +119,11 @@ function delete_public_request(confirmed)
         }
         else if (data == "7")
         {
-          show_notification("error","There is no active publish application.",4000);
+          show_notification("error","There is no active puclication request.",4000);
         }
         else if (data == "-1")
         {
-          show_notification("error","You didnt send data.",4000);
+          show_notification("error","You didn't send any data..",4000);
         }
         notCompletedRequest = false;
         remove_spinner("publish-request-spinner");
@@ -166,8 +166,8 @@ function sendPublicRequest()
   })
   .done(function(data){
       /*
-        1 : Questionnaire doesnt work.
-        2 : You must be coordinator to make the request.
+        1 : Questionnaire doesn't exist.
+        2 : You must be the coordinator to make this request.
         3 : Message Validation Error
         4 : Questionnaire is already public
         5 : Active application already exists
@@ -176,7 +176,7 @@ function sendPublicRequest()
       */
       if(data == "0")
       {
-        show_notification("success","Request sended successfully.",3000);
+        show_notification("success","Request was sent successfully.",3000);
         setTimeout(function() {
           location.reload();
         },2000);
@@ -184,11 +184,11 @@ function sendPublicRequest()
       else {
         if (data == "1")
         {
-          show_notification("error","Questionnaire doesnt work.",4000);
+          show_notification("error","Questionnaire doesn't exist.",4000);
         }
         else if (data == "2")
         {
-          show_notification("error","You must be coordinator to make the request.",4000);
+          show_notification("error","You must be the coordinator to make this request.",4000);
         }
         else if (data == "3")
         {
@@ -200,7 +200,7 @@ function sendPublicRequest()
         }
         else if (data == "5")
         {
-          show_notification("error","Active application already exists.",4000);
+          show_notification("error","An An An active application already exists.",4000);
         }
         else if (data == "6")
         {
@@ -208,11 +208,11 @@ function sendPublicRequest()
         }
         else if (data == "7")
         {
-          show_notification("error","There is no active publish application.",4000);
+          show_notification("error","There is no active puclication request.",4000);
         }
         else if (data == "-1")
         {
-          show_notification("error","You didnt send data.",4000);
+          show_notification("error","You didn't send any data..",4000);
         }
         remove_spinner("publish-request-spinner");
         notCompletedRequest = false;
@@ -245,7 +245,7 @@ function getQuestionnaireData()
     /*
       Variables we will send
     */
-    let data = {
+    var data = {
       "name": name,
       "description": descriptionHTML,
       "allow-multiple-groups-playthrough": allow_multiple_groups_playthrough == "1" ? "1" : "0",
@@ -304,7 +304,7 @@ function createQuestionnaire()
           /*
             Success message
           */
-           show_notification("success","Your questionnaire created successfully.",4000);
+           show_notification("success","The questionnaire was created successfully..",4000);
            setTimeout(function() {
              window.location.replace(questionnaire_view_page + "/" + data["questionnaire-id"]);
            },3000);
@@ -331,7 +331,7 @@ function createQuestionnaire()
         */
         else if(code == "3")
         {
-          show_notification("error","This is not a valid password required option.",4000);
+          show_notification("error","Please select if a password is required..",4000);
         }
         /*
            If response message == 4
@@ -339,7 +339,7 @@ function createQuestionnaire()
         */
         else if(code == "4")
         {
-          show_notification("error","General database error. Please try later!",4000);
+          show_notification("error","General database error. Please try again later!",4000);
         }
         /*
            If response message == 5
@@ -353,7 +353,7 @@ function createQuestionnaire()
             Something going wrong
         */
         else {
-          show_notification("error","Something going wrong. Contact with one administrator!",4000);
+          show_notification("error","Something went wrong. Contact us for support.",4000);
         }
       })
       .fail(function(xhr,error){
@@ -379,7 +379,7 @@ function getUpdateQuestionnaireData(id) {
     Initialize the variables
   */
   var name = $(document).find("#qname").val();
-  var description = $(document).find("#qeditor").val();
+  var description = tinymce.activeEditor.getContent({format : 'text'});
   var required = $(document).find("#message-required").val();
   var allow_multiple_groups_playthrough = $("#allow-multiple-groups-playthrough").val();
   var score_rights = $("#score_rights").val();
@@ -389,7 +389,7 @@ function getUpdateQuestionnaireData(id) {
   */
   if(name && description && required && allow_multiple_groups_playthrough != "-" && score_rights)
   {
-    let data = {
+    var data = {
       "questionnaire-id": id,
       "name": name,
       "description": description,
@@ -450,7 +450,7 @@ function updateQuestionnaire(id)
           /*
             Redirect to home page
           */
-          show_notification("success","Questionnaire updated successfully.",6000);
+          show_notification("success","Questionnaire was updated successfully..",6000);
 
           setTimeout(function() {
             location.reload();
@@ -466,7 +466,7 @@ function updateQuestionnaire(id)
         */
         else if(data == "-1")
         {
-          show_notification("error","We can't found this questionnaire.",4000);
+          show_notification("error","This questionnaire doesn't exist.",4000);
         }
         /*
            If response message == 1
@@ -486,11 +486,11 @@ function updateQuestionnaire(id)
         }
         /*
            If response message == 3
-           Not a valid Password Required value
+           Please select if a password is required.
         */
         else if(data == "3")
         {
-          show_notification("error","Not a valid password required value",4000);
+          show_notification("error","Please select if a password is required.",4000);
         }
         /*
            If response message == 4
@@ -512,7 +512,7 @@ function updateQuestionnaire(id)
             Something going wrong
         */
         else {
-          show_notification("error","Unknown error message. Contact with one administrator!",4000);
+          show_notification("error","Something  went wrong. Contact us for support.",4000);
         }
     })
     .fail(function(xhr,error){
@@ -584,9 +584,9 @@ $(document)
             //if was the last user
             if($("[id*=mitem]").length == 0)
             {
-              $("#mgroup").html("<label class='alert alert-danger text-center'>There are no members on this questionnaire</label>");
+              $("#mgroup").html("<label class='alert alert-danger text-center'>There are no members in this queationnaire.</label>");
             }
-            show_notification("success","User removed successfully.",4000);
+            show_notification("success","User was removed successfully.",4000);
             //after modal closed
             $('#questionnaire-modal').on('hidden.bs.modal', function () {
               location.reload();
@@ -606,7 +606,7 @@ $(document)
         */
         else if(data == "2")
         {
-          show_notification("error","You must be coordinator.",4000);
+          show_notification("error","You must be the coordinator.",4000);
         }
         /*
            If response message == 3
@@ -614,7 +614,7 @@ $(document)
         */
         else if(data == "3")
         {
-          show_notification("error","Participation type must be 1 or 2.",4000);
+          show_notification("error","The participation must be 'Player' or 'Examiner'.",4000);
         }
         /*
            If response message == 4
@@ -622,7 +622,7 @@ $(document)
         */
         else if(data == "4")
         {
-          show_notification("error","This user doesn't have a player access.",4000);
+          show_notification("error","This user doesn't participate as a player..",4000);
         }
         /*
            If response message == 5
@@ -646,13 +646,13 @@ $(document)
         */
         else if(data == "-1")
         {
-          show_notification("error","You didn't send data.",4000);
+          show_notification("error","You didn't send any data.",4000);
         }
         /*
             Something going wrong
         */
         else {
-          show_notification("error","Unknown error. Contact with one administrator!",4000);
+          show_notification("error","Unknown error. Contact us for support.",4000);
         }
       })
       .fail(function(xhr,error){

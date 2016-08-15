@@ -37,7 +37,7 @@ function update_user(user_id,confirmed)
          && gender.length > 0 && country.length > 0 && city.length > 0 && password1 == password2)
   {
 
-      let data_to_send = {
+      var data_to_send = {
         "user-id" : user_id,
         "access" : access,
         "email" : email,
@@ -129,10 +129,10 @@ function update_user(user_id,confirmed)
         }
         else if(data == "-1")
         {
-          show_notification("error","You didnt send data.",5000);
+          show_notification("error","You didnt send any data.",5000);
         }
         else {
-          show_notification("error","Unknown error. Please contact with us!",5000);
+          show_notification("error","Unknown error. Contact us for support.",5000);
         }
       }
     });
@@ -166,7 +166,7 @@ function ban_user(user_id,confirmed)
     {
       if(data == "0")
       {
-        show_notification("success","User banned successfully.",3000);
+        show_notification("success","User was banned successfully.",3000);
         setTimeout(function() {
           location.reload();
         },4000);
@@ -181,14 +181,14 @@ function ban_user(user_id,confirmed)
       }
       else if(data == "3")
       {
-        show_notification("error","User had already a banned status.",5000);
+        show_notification("error","User is already banned.",5000);
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data.",5000);
+        show_notification("error","You didnt send any data.",5000);
       }
       else {
-        show_notification("error","Unknown error. Please contact with us!",5000);
+        show_notification("error","Unknown error. Contact us for support.",5000);
       }
     }
   });
@@ -221,7 +221,7 @@ function unban_user(user_id,confirmed)
     {
       if(data == "0")
       {
-        show_notification("success","User unbanned successfully.",3000);
+        show_notification("success","User was unbanned successfully.",3000);
         setTimeout(function() {
           location.reload();
         },3000);
@@ -236,14 +236,14 @@ function unban_user(user_id,confirmed)
       }
       else if(data == "3")
       {
-        show_notification("error","User is unbanned.",5000);
+        show_notification("error","User was unbanned successfully.",5000);
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data.",5000);
+        show_notification("error","You didnt send any data.",5000);
       }
       else {
-        show_notification("error","Unknown error. Please contact with us!",5000);
+        show_notification("error","Unknown error. Contact us for support.",5000);
       }
     }
   });
@@ -273,7 +273,7 @@ function delete_user(user_id,confirmed)
     {
       if(data == "0")
       {
-        show_notification("success","User deleted successfully.",3000);
+        show_notification("success","User was deleted successfully.",3000);
         setTimeout(function() {
           location.reload();
         },4000);
@@ -288,10 +288,10 @@ function delete_user(user_id,confirmed)
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data.",5000);
+        show_notification("error","You didnt send any data.",5000);
       }
       else {
-        show_notification("error","Unknown error. Please contact with us!",5000);
+        show_notification("error","Unknown error. Contact us for support.",5000);
       }
     }
   });
@@ -299,5 +299,5 @@ function delete_user(user_id,confirmed)
 
 function undelete_user(user_id,confirmed)
 {
-  show_notification("error","Only administrators can undelete a user.",5000);
+  show_notification("error","Only a moderator can restore a deleted user.",5000);
 }

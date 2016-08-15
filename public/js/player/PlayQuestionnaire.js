@@ -80,12 +80,12 @@ $(window).on("load",function()
    if($("#auto-refresh").css('color') == 'rgb(255, 0, 0)') {
      $("#auto-refresh").css('color','green');
      auto_refresh = navigator.geolocation.watchPosition(refreshAllDistances,showError);
-     show_notification("success","Auto refresh enabled successfully.",3000);
+     show_notification("success","Auto refresh was enabled successfully.",3000);
    }
    else {
      $("#auto-refresh").css('color','red');
      navigator.geolocation.clearWatch(auto_refresh);
-     show_notification("success","Auto refresh disabled successfully.",3000);
+     show_notification("success","Auto refresh was disabled successfully.",3000);
    }
  }
  //refresh all question groups
@@ -104,7 +104,7 @@ $(window).on("load",function()
        distance = 0;
      }
      $("#distance" + groups[i].id).html("Distance: " + distance + "m ");
-     if(groups[i]["total-questions"] != groups[i]["answered-questions"])
+     if(groups[i]["total-questions"] != groups[i]["answered-questions"] || groups[i]["is-completed"] != null)
      {
        if(distance > 0) {
          $("#play" + groups[i].id).prop("disabled",true);
@@ -128,14 +128,14 @@ $(window).on("load",function()
    }
    else
    {
-     show_notification("error","Something going wrong",3000);
+     show_notification("error","Something went wrong. Contact us for support.",3000);
    }
  }
   //display distance to target group index
   function displayDistance(distance)
   {
     $("#distance" + groups[target_group_index].id).html("Distance: " + distance + "m ");
-    if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"])
+    if(groups[target_group_index]["total-questions"] != groups[target_group_index]["answered-questions"] || groups[i]["is-completed"] != null)
     {
       if(distance > 0) {
         $("#play" + groups[target_group_index].id).prop("disabled",true);
@@ -377,7 +377,7 @@ function playQuestionGroup(target)
     //Questionnaire doesnt allow multiple playthrough
     if(!allow_multiple_groups)
     {
-      show_notification("error","You must complete: " + groups[notCompletedFoundPosition]["name"],4000);
+      show_notification("error","You must complete the group : " + groups[notCompletedFoundPosition]["name"],4000);
       return;
     }
     //else continue get questions
@@ -629,7 +629,7 @@ function confirmAnwser(question_id,usingCoordinates)
 {
   $("#confirm-answer-button").prop("disabled",true);
   var selected_answer_id = $("input[name='optradio']:checked").val();
-  let headersData = { };
+  var headersData = { };
 
   if(usingCoordinates)
   {
@@ -639,7 +639,7 @@ function confirmAnwser(question_id,usingCoordinates)
     }
   }
 
-  let data =
+  var data =
   {
     'question-id' : question_id,
     'answer-id' : selected_answer_id

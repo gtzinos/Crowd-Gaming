@@ -82,11 +82,11 @@ function handleQuestionnairePublicRequest(request_id,response,request_index)
       if(data == "0")
       {
         if(response == "accept") {
-          show_notification("success",requests_array[request_index]['questionnaire-name'] + " published successfully.",3000);
+          show_notification("success",requests_array[request_index]['questionnaire-name'] + " was published successfully.",3000);
         }
         else
         {
-          show_notification("success",requests_array[request_index]['questionnaire-name'] + " request declined successfully.",3000);
+          show_notification("success",requests_array[request_index]['questionnaire-name'] + " request was declined successfully.",3000);
         }
         $("#ritem" + request_id).remove();
         if($("[id^=ritem]").length == 0)
@@ -104,7 +104,7 @@ function handleQuestionnairePublicRequest(request_id,response,request_index)
       }
       else if(data == "2")
       {
-        show_notification("error","You can only handle publish requests. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
+        show_notification("error","You can only handle publication requests. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "4")
       {
@@ -112,7 +112,7 @@ function handleQuestionnairePublicRequest(request_id,response,request_index)
       }
       else if(data == "5")
       {
-        show_notification("error","Response already handled. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
+        show_notification("error","Response was already handled. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
       else if(data == "6")
       {
@@ -120,7 +120,7 @@ function handleQuestionnairePublicRequest(request_id,response,request_index)
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
+        show_notification("error","You didnt send any data. (" + requests_array[request_index]['questionnaire-name'] + ")",4000);
       }
     }
   });

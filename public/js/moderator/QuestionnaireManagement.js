@@ -180,7 +180,7 @@ function set_questionnaire_public(local_index)
       }
       else if(data == "2")
       {
-        show_notification("error","Questionnaire " + questionnaires[local_index].name + " already public.",4000);
+        show_notification("error","Questionnaire " + questionnaires[local_index].name + " is already public.",4000);
       }
       else if(data == "3")
       {
@@ -188,11 +188,11 @@ function set_questionnaire_public(local_index)
       }
       else if(data == "-1")
       {
-          show_notification("error","You didn't send data. { " + questionnaires[local_index].name + " }",4000);
+          show_notification("error","You didn't send any data. { " + questionnaires[local_index].name + " }",4000);
       }
       else
       {
-        show_notification("error","Unknown error. Please contact with us { " + questionnaires[local_index].name + " }",4000);
+        show_notification("error","Unknown error. Contact us for support. { " + questionnaires[local_index].name + " }",4000);
       }
     }
   });
@@ -227,7 +227,7 @@ function set_questionnaire_private(local_index)
       }
       else if(data == "2")
       {
-        show_notification("error","Questionnaire " + questionnaires[local_index].name + " already private.",4000);
+        show_notification("error","Questionnaire " + questionnaires[local_index].name + " is already private.",4000);
       }
       else if(data == "3")
       {
@@ -235,11 +235,11 @@ function set_questionnaire_private(local_index)
       }
       else if(data == "-1")
       {
-          show_notification("error","You didn't send data. { " + questionnaires[local_index].name + " }",4000);
+          show_notification("error","You didn't send any data. { " + questionnaires[local_index].name + " }",4000);
       }
       else
       {
-        show_notification("error","Unknown error. Please contact with us { " + questionnaires[local_index].name + " }",4000);
+        show_notification("error","Unknown error. Contact us for support. { " + questionnaires[local_index].name + " }",4000);
       }
     }
   });
@@ -353,7 +353,7 @@ function ban_members_from_questionnaire(action_type,confirmed)
 
   if($('#questionnaire-members-dropdown').val() == null)
   {
-    show_notification("error","You must select some users.",4000);
+    show_notification("error","Please select some users",4000);
     return;
   }
   else if(!confirmed)
@@ -397,7 +397,7 @@ function ban_members_from_questionnaire(action_type,confirmed)
           */
           if(data == "0")
           {
-            show_notification("success",user_name + " banned successfully.",4000);
+            show_notification("success",user_name + " was banned successfully.",4000);
           }
           else if(data == "1")
           {
@@ -413,15 +413,15 @@ function ban_members_from_questionnaire(action_type,confirmed)
           }
           else if(data == "4")
           {
-            show_notification("error","Can't ban a moderator. { " + user_name + " }",6000);
+            show_notification("error","You can't ban a moderator. { " + user_name + " }",6000);
           }
           else if(data == "-1")
           {
-            show_notification("error","You didn't send data. { " + user_name + " }",6000);
+            show_notification("error","You didn't send any data. { " + user_name + " }",6000);
           }
           else
           {
-            show_notification("error","Unknow error.Please contact with us. { " + user_name + " }",6000);
+            show_notification("error","Unknown error. Contact us for support. { " + user_name + " }",6000);
           }
           getQuestionnaireMembers();
         }
@@ -454,14 +454,14 @@ function delete_questionnaire()
       if(data == "0")
       {
         $("#confirm-questionnaire-deletion").modal("hide");
-        show_notification("success","Questionnaire deleted successfully.",3000);
+        show_notification("success","Questionnaire was deleted successfully.",3000);
         setTimeout(function() {
           location.reload();
         },3000);
       }
       else if(data == "1")
       {
-        show_notification("error","Authentication failed. Your password is incorrect.",4000);
+        show_notification("error","Authentication failed.",4000);
       }
       else if(data == "2")
       {
@@ -473,11 +473,11 @@ function delete_questionnaire()
       }
       else if(data == "-1")
       {
-        show_notification("error","You didnt send data.",4000);
+        show_notification("error","You didnt send any data.",4000);
       }
       else
       {
-        show_notification("error","Unknow error. Please contact with us.",4000);
+        show_notification("error","Unknown error. Contact us for support.",4000);
       }
     }
   });
@@ -508,7 +508,7 @@ function ban_all_examiners_from_questionnaire(confirmed)
       */
       if(data == "0")
       {
-        show_notification("success","Questionnaire examiners banned successfully.",3000);
+        show_notification("success","Questionnaire examiners was banned successfully.",3000);
       }
       else if(data == "1")
       {
@@ -516,10 +516,10 @@ function ban_all_examiners_from_questionnaire(confirmed)
       }
       else if(data == "-1")
       {
-        show_notification("error","You didn't send data.",4000);
+        show_notification("error","You didn't send any data.",4000);
       }
       else {
-        show_notification("error","Unknown error. Please contact with us.",4000);
+        show_notification("error","Unknown error. Contact us for support..",4000);
       }
     }
   });
@@ -547,7 +547,7 @@ function change_coordinator()
     {
       if(data == "0")
       {
-        show_notification("success","Coordinator changed successfully.",3000);
+        show_notification("success","Coordinator was changed successfully.",3000);
         getAvailableCoordinators();
       }
       else if(data == "1") {
@@ -563,10 +563,10 @@ function change_coordinator()
         show_notification("error","General database error.",4000);
       }
       else if(data == "-1") {
-        show_notification("error","You didn't send data.",4000);
+        show_notification("error","You didn't send any data.",4000);
       }
       else {
-        show_notification("error","Unknown error. Please contact with us.",4000);
+        show_notification("error","Unknown error. Contact us for support..",4000);
       }
     }
   });

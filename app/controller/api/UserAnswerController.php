@@ -167,7 +167,7 @@
 				 $activeGroups >= 1 &&
 				!$questionnaire->getAllowMultipleGroups() )
 			{
-				$this->setOutput("code", "607");
+				$this->setOutput("code", "618");
 				$this->setOutput("message", "Forbidden, This questionnaire doesnt allow multiple question group participations");
 
 				http_response_code(403);
@@ -181,7 +181,7 @@
 
 				if( $currentPriority != $questionGroup->getPriority() )
 				{
-					$this->setOutput("code", "607");
+					$this->setOutput("code", "616");
 					$this->setOutput("message", "Forbidden, You must complete other question groups first");
 
 					http_response_code(403);
@@ -195,7 +195,7 @@
 			{
 				$playthroughMapper->setCompleted($userId , $groupId);
 
-				$this->setOutput("code", "607");
+				$this->setOutput("code", "617");
 				$this->setOutput("message", "Forbidden, Group has been completed now");
 
 				http_response_code(403);

@@ -184,12 +184,12 @@ function updateSchedulePlan()
   show_spinner("update-schedule-spinner");
   $("#update-schedule-submit-button").prop("disabled",true);
 
-  let data = {
+  var data = {
     'start-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[0] : null,
     'end-date' : $("#datepicker").val().length == 23 ? $("#datepicker").val().split(" ")[2] : null
   };
 
-  let days = {};
+  var days = {};
   if(String($('#multiple-day-dropdown').val()).indexOf(",") >= 0)
   {
     $.each(String($('#multiple-day-dropdown').val()).split(","),function(){
@@ -227,7 +227,7 @@ function updateSchedulePlan()
         */
         if(data == "0")
         {
-          show_notification("success","Questionnaire schedule updated successfully.",5000);
+          show_notification("success","Questionnaire schedule was updated successfully",5000);
           setTimeout(function() {
             location.reload();
           },2000);
@@ -248,10 +248,10 @@ function updateSchedulePlan()
           }
           else if(data == "-1")
           {
-            show_notification("error","You didn't send data.",4000);
+            show_notification("error","You didn't send any data.",4000);
           }
           else {
-            show_notification("error","Unknown error. Please contact with us.",4000);
+            show_notification("error","Unknown error. Contact us for support.",4000);
           }
           notCompletedRequest = false;
           remove_spinner("update-schedule-spinner");
