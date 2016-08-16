@@ -67,10 +67,7 @@ function getMyQuestionnaires()
                     "<div style='font-size:17px' >" +
                       " Answers : " + data.questionnaire[i]['answered-questions'] + "/" + data.questionnaire[i]['total-questions'] + " </div>" +
                 "</div>" +
-                "<div class='col-xs-12 col-sm-5 col-md-6'>" +
-                    "<div style='font-size:17px' > Players: 100 </a></div>" +
-                "</div>" +
-                  "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-4 col-sm-3 col-md-2'>";
+                  "<div class='col-xs-offset-5 col-xs-7 col-sm-offset-9 col-sm-3 col-md-offset-10 col-md-2'>";
 
          if(data.questionnaire[i]['time-left-to-end'] == 0)
          {

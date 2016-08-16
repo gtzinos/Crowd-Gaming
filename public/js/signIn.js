@@ -21,7 +21,7 @@ function getClientData()
 	}
 	else
 	{
-		let data = {
+		var data = {
 			"email": userEmail,
 			"password": userPassword,
 			"recaptcha": verify

@@ -37,7 +37,7 @@ function update_user(user_id,confirmed)
          && gender.length > 0 && country.length > 0 && city.length > 0 && password1 == password2)
   {
 
-      let data_to_send = {
+      var data_to_send = {
         "user-id" : user_id,
         "access" : access,
         "email" : email,

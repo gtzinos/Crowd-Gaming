@@ -8,7 +8,7 @@
   #element id,this . . .
   #options is an object with options E.g 'option1' : 'value' , .. ,
 */
-let default_options = {
+var default_options = {
   donetext : 'Done',
   placement: 'top',
   align: 'left',
