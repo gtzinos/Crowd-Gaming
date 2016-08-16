@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `quizapp`.`Questionnaire` (
   `id` INT NOT NULL AUTO_INCREMENT COMMENT 'Auto increment questionaire id',
   `coordinator_id` INT NOT NULL COMMENT 'Author id(Users:id)',
   `name` VARCHAR(255) NOT NULL COMMENT 'Questionaire name',
-  `description` VARCHAR(255) NOT NULL COMMENT 'Questionaire description',
+  `description` text NOT NULL COMMENT 'Questionaire description',
   `public` TINYINT(1) NOT NULL DEFAULT 0 COMMENT 'If questionaire accepted from one admin',
   `message_required` INT NOT NULL DEFAULT 0,
   `creation_date` TIMESTAMP NOT NULL COMMENT 'Questionaire last updated time.',
