@@ -69,7 +69,7 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 			</div>
 			<div class="questionnaire-public col-xs-offset-2 col-xs-2 col-sm-offset-6 col-sm-2">
 				<?php
-					if($_SESSION["USER_LEVEL"] >= 2 || get("questionnaire")["examiner-participation"])
+					if($_SESSION["USER_LEVEL"] >= 2 && get("questionnaire")["examiner-participation"] || $_SESSION["USER_LEVEL"] == 3)
 					{
 						echo "
 						<div class='dropdown'>
@@ -78,11 +78,8 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 					    <ul class='dropdown-menu' >
 					      <!-- <li class='dropdown-header'>Dropdown header 1</li> -->
 								<!-- <li class='divider'></li> --> ";
-								if($_SESSION["USER_LEVEL"] >= 2)
-								{
-									echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
-									echo "<li class='settingsitem'><a href='" . LinkUtils::generatePageLink('question-groups') . "/" . $questionnaire->getId() . "'><i class='glyphicon glyphicon-edit'></i> Edit Groups</a></li>";
-								}
+								echo "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> Edit Content</a></li>";
+								echo "<li class='settingsitem'><a href='" . LinkUtils::generatePageLink('question-groups') . "/" . $questionnaire->getId() . "'><i class='glyphicon glyphicon-edit'></i> Edit Groups</a></li>";
 		 						if($_SESSION["USER_LEVEL"] >= $questionnaire->getScoreRights())
 								{
 									echo "<li class='settingsitem'><a onclick=\"showModal('questionnaire-results'); return false;\"><i class='glyphicon glyphicon-stats'></i> Get results</a></li>";
