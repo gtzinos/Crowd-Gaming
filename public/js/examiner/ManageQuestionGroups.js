@@ -251,7 +251,7 @@ function show_questions(question_group_id)
                       "<span class='col-xs-9 col-sm-10' id='question" + questions.questions[i].id + "'>"
                           + questions.questions[i].question_text +
                       "</span>" +
-                      "<span onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
+                      "<span id='edit_question_button" + questions.questions[i].id + "' onclick=\"$('#edit-question').modal('show'); show_edit_question_data('" + questions.questions[i].id + "','" + questions.questions[i].question_text + "','" + questions.questions[i].time_to_answer + "','" + questions.questions[i].creation_date + "','" + questions.questions[i].multiplier + "');\" class='edit-question fa fa-pencil col-xs-1'></span>" +
                       "<span onclick=\"delete_question('" + question_group_id + "','" + questions.questions[i].id + "',false)\" class='remove-question glyphicon glyphicon-trash col-xs-1'></span>" +
                   "</div>";
       }
@@ -428,7 +428,8 @@ function update_question(question_id)
             Success message
           */
           show_notification("success","Question was updated successfully.",4000);
-          $("#question"+question_id).html(data["question-text"]);
+          $("#question"+question_id).html(dataToSend["question-text"]);
+          $("#edit_question_button" + question_id).attr("onclick","$('#edit-question').modal('show'); show_edit_question_data('" + dataToSend["question-id"] + "','" + dataToSend["question-text"] + "','" +dataToSend["time-to-answer"] + "',null,'" + dataToSend["multiplier"] + "'); ");
       }
       /*
           If response message == 1
