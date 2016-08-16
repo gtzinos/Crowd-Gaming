@@ -401,8 +401,8 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 													<span class='caret'></span></button>
 													<ul class='dropdown-menu'>
 										";
-									if($_SESSION["USER_LEVEL"] != 3)
-									{
+									//if($_SESSION["USER_LEVEL"] != 3)
+									//{
 									/*
 										Simple player
 									*/
@@ -519,7 +519,7 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 												echo "<li><input type='submit' class='btn btn-link' name='examiner-unjoin' value='Unjoin as examiner' > </li>";
 											}
 									}
-							}
+							//}
 
 							/*
 								Contact with the coordinator
