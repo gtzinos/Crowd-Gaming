@@ -202,7 +202,7 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 										$response_message .= "You became a player on this questionnaire.";
 									}
 									else {
-										$response_message .= "Your request to be a player in this questionnaire was sended successfully.";
+										$response_message .= "Your request to become a player in this questionnaire was sent successfully.";
 									}
 								}
 								/*
@@ -227,7 +227,7 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 								*/
 								else if(isset($_POST['examiner-join']))
 								{
-									$response_message .= "You sent a request to be an examiner in this questionnaire.";
+									$response_message .= "You sent a request to become an examiner in this questionnaire.";
 								}
 								/*
 									User option == 5
@@ -235,7 +235,7 @@ echo "<script src=" . LinkUtils::generatePublicLink("js/examiner/coordinator/Que
 								*/
 								else if(isset($_POST['examiner-cancel-request']))
 								{
-									$response_message .= "Your request to be an examiner was deleted successfully.";
+									$response_message .= "Your request to become an examiner was deleted successfully.";
 								}
 								/*
 									he needs to contact with coordinator
