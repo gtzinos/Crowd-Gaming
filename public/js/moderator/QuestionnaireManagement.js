@@ -111,7 +111,6 @@ function get_questionnaire_i_manage()
                               "<span class='caret'></span></span>" +
                               "<ul class='dropdown-menu' >" +
                                 "<li class='settingsitem'><a onclick=\"show_confirm_modal()\"><i class='glyphicon glyphicon-trash'></i> Delete</a></li>" +
-                                "<li class='settingsitem'><a onclick=\"showModal('edit-questionnaire'); return false;\"><i class='glyphicon glyphicon-edit'></i> View logs</a></li>" +
                                 "<li class='settingsitem'><a onclick=\"show_actions_modal()\"><i class='fa fa-cogs'></i> More settings</a></li>" +
                               "</ul>" +
                           "</div>" +
