@@ -9,15 +9,15 @@ $(window).load(function() {
 
     if($("#login-recaptcha").length == 1)
     {
-      loginCaptcha = grecaptcha.render('login-recaptcha', { 'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A' });
+      loginCaptcha = grecaptcha.render('login-recaptcha', { 'sitekey' : googleReCaptchaKey });
     }
     if($("#register-recaptcha").length == 1)
     {
-      registerCaptcha = grecaptcha.render('register-recaptcha', { 'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A' });
+      registerCaptcha = grecaptcha.render('register-recaptcha', { 'sitekey' : googleReCaptchaKey });
     }
     if($("#contact-recaptcha").length == 1)
     {
-      contactCaptcha = grecaptcha.render('contact-recaptcha', { 'sitekey' : '6LeluyETAAAAADhNCPmzGYok8f1jfKYgRr36T33A' });
+      contactCaptcha = grecaptcha.render('contact-recaptcha', { 'sitekey' : googleReCaptchaKey });
     }
 });
 
