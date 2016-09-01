@@ -52,7 +52,7 @@ function displayServerResponseError(xhr,error)
   	}
     else if(xhr.status==500)
     {
-  	   show_notification("error","Internel Server Error.",4000);
+  	   show_notification("error","Internal Server Error.",4000);
   	}
     else if(error == 'parsererror')
     {
