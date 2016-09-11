@@ -309,52 +309,56 @@ function createQuestionnaire()
              window.location.replace(questionnaire_view_page + "/" + data["questionnaire-id"]);
            },3000);
         }
-        /*
-           If response message == 1
-           Name Validation error
-        */
-        else if(code == "1")
-        {
-          show_notification("error","This is not a valid questionnaire name.",4000);
-        }
-        /*
-           If response message == 2
-           Description Validation error
-        */
-        else if(code == "2")
-        {
-          show_notification("error","This is not a valid questionnaire description.",4000);
-        }
-        /*
-           If response message == 3
-           Password Required Error
-        */
-        else if(code == "3")
-        {
-          show_notification("error","Please select if a password is required..",4000);
-        }
-        /*
-           If response message == 4
-           Database Error
-        */
-        else if(code == "4")
-        {
-          show_notification("error","General database error. Please try again later!",4000);
-        }
-        /*
-           If response message == 5
-           Name already exists
-        */
-        else if(code == "5")
-        {
-          show_notification("error","This questionnaire name already exists.",4000);
-        }
-        /*
-            Something going wrong
-        */
         else {
-          show_notification("error","Something went wrong. Contact us for support.",4000);
+          /*
+             If response message == 1
+             Name Validation error
+          */
+          if(code == "1")
+          {
+            show_notification("error","This is not a valid questionnaire name.",4000);
+          }
+          /*
+             If response message == 2
+             Description Validation error
+          */
+          else if(code == "2")
+          {
+            show_notification("error","This is not a valid questionnaire description.",4000);
+          }
+          /*
+             If response message == 3
+             Password Required Error
+          */
+          else if(code == "3")
+          {
+            show_notification("error","Please select if a password is required..",4000);
+          }
+          /*
+             If response message == 4
+             Database Error
+          */
+          else if(code == "4")
+          {
+            show_notification("error","General database error. Please try again later!",4000);
+          }
+          /*
+             If response message == 5
+             Name already exists
+          */
+          else if(code == "5")
+          {
+            show_notification("error","This questionnaire name already exists.",4000);
+          }
+          /*
+              Something going wrong
+          */
+          else {
+            show_notification("error","Something went wrong. Contact us for support.",4000);
+          }
+          remove_spinner("create-questionnaire-spinner");
         }
+
       })
       .fail(function(xhr,error){
         displayServerResponseError(xhr,error);
