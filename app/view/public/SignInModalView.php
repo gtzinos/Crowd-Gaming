@@ -32,7 +32,7 @@
 									</div>
 									<!-- Check box Field -->
 									<div class="form-group">
-										<div class="col-xs-offset-1 col-xs-5 col-sm-offset-3 col-sm-4">
+										<div style="visibility:hidden" class="col-xs-offset-1 col-xs-5 col-sm-offset-3 col-sm-4">
 												<span style="font-size:12px">
 													<input id="signin-remember" type="checkbox" />
 													Remember Me
