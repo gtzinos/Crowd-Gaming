@@ -25,7 +25,7 @@
 
 			$questionnaire = $questionnaireMapper->findById($questionnaireId);
 
-			if( (( $questionnaire->getScoreRights() == 1 && !$participationMapper->participates($userId , $questionnaireId , 1 ,1) ) ||
+			if( (( $questionnaire->getScoreRights() == 1 && !($participationMapper->participates($userId , $questionnaireId , 1 ,1) || $participationMapper->participates($userId, $questionanireId,2,1)) ) ||
 				( $questionnaire->getScoreRights() == 2 && !$participationMapper->participates($userId , $questionnaireId , 2 ,1) ) ||
 				( $questionnaire->getScoreRights() == 3 && $questionnaire->getCoordinatorId()!=$userId ))
 				&& $this->getUserLevel()<3
