@@ -90,7 +90,7 @@
 				return;
 			}
 
-			if( strlen($message) < 19 || strlen($message) > 255 ){
+			if( strlen($message) < 10 || strlen($message) > 255 ){
 				$this->setArg("response-code" , 4); // message validation error
 				return;
 			}
