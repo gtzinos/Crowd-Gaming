@@ -676,7 +676,10 @@ function confirmAnwser(question_id,usingCoordinates)
         $.when(refreshAnswers()).done(function() {
           if(!completed())
           {
-            playQuestionGroup(target_group_index);
+            if(data.code != "201")
+            {
+              playQuestionGroup(target_group_index);
+            }
           }
           else
           {
