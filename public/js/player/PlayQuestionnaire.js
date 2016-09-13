@@ -732,7 +732,7 @@ function refreshAnswers()
 
 //return true if game completed
 function completed() {
-  return $("input[id^=play][disabled]").length == $("input[id^=play]").length;
+  return $("input[id^=play][disabled][value='Completed']").length == $("input[id^=play]").length;
 }
 
 function resetQuestionGroupAnswers(target)
