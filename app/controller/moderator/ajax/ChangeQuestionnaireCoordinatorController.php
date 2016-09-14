@@ -8,15 +8,15 @@
 	{
 		public function init()
 		{
-			$$this->setView( new CodeView );
+			$this->setView( new CodeView );
 		}
 
 		public function run()
 		{
-			
+
 			/*
 				Response Codes
-				0 : All ok 
+				0 : All ok
 				1 : Questionnaire does not exist
 				2 : User doesnt not exist
 				3 : User Access Level is lower than Examiner
@@ -26,9 +26,9 @@
 			if( isset( $_POST["questionnaire-id"] , $_POST["user-id"] ) )
 			{
 				$questionnaireMapper = new QuestionnaireMapper;
-				
+
 				$questionnaire = $questionnaireMapper->findById($_POST["questionnaire-id"]);
-				
+
 				if( $questionnaire === null )
 				{
 					$this->setOutput("response-code", 1);
@@ -83,7 +83,7 @@
 				try
 				{
 					DatabaseConnection::getInstance()->startTransaction();
-					
+
 					if( $examinerParticipation !== null)
 						$participationMapper->persist($examinerParticipation);
 					if( $playerParticipation !== null )
