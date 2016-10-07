@@ -448,7 +448,7 @@ function getNextQuestionWithoutCoordinates()
               }
         out += "<br><br><div class='form-group'>" +
                    "<div class='col-xs-4 col-sm-offset-3 col-sm-2'>" +
-                     "<button id='confirm-answer-button' type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false)'>Confirm</button>" +
+                     "<button id='confirm-answer-button' type='button' class='btn btn-primary btn-md' onclick='confirmAnwser(" + data.question.id + ",false," + data.question['time-to-answer'] + ")'>Confirm</button>" +
                    "</div>" +
                    "<div class='col-xs-3 col-sm-2'>" +
                      "<button type='button' class='btn btn-primary btn-md' data-dismiss='modal' >" +
@@ -458,7 +458,10 @@ function getNextQuestionWithoutCoordinates()
                 "</div>";
         $("#play-questionnaire-form").html(out);
         //var answer_countdown = parseInt(data.question['time-to-answer']);
-        show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired.","questionTimeExpired()");
+        if(data.question['time-to-answer'] >= 0)
+        {
+          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired.","questionTimeExpired()");
+        }
       }
     },
     error: function(xhr, status, error) {
@@ -566,7 +569,7 @@ function getNextQuestionUsingCoordinates(position)
                 }
           out += "<br><br><div class='form-group'>" +
                          "<div class='col-xs-3 col-sm-offset-3 col-sm-2'>" +
-                           "<button id='confirm-answer-button' type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ",true)'>Confirm</button>" +
+                           "<button id='confirm-answer-button' type='button' class='btn btn-primary' onclick='confirmAnwser(" + data.question.id + ",true," + data.question['time-to-answer'] + ")'>Confirm</button>" +
                          "</div>" +
                          "<div class='col-xs-4 col-sm-2'>" +
                            "<button type='button' class='btn btn-primary' data-dismiss='modal' >" +
@@ -576,7 +579,10 @@ function getNextQuestionUsingCoordinates(position)
                   "</div>";
           $("#play-questionnaire-form").html(out);
           //var answer_countdown = parseInt(data.question['time-to-answer']);
-          show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired","questionTimeExpired()");
+          if(data.question['time-to-answer'] >= 0)
+          {
+            show_clock("#question-count-down",moment().add(data.question['time-to-answer'],'second').format("YYYY/MM/DD HH:mm:ss"),"Your time expired","questionTimeExpired()");
+          }
         }
       },
       error: function(xhr, status, error) {
@@ -625,7 +631,7 @@ function getNextQuestionUsingCoordinates(position)
   });
 }
 
-function confirmAnwser(question_id,usingCoordinates)
+function confirmAnwser(question_id,usingCoordinates,timeToAnswer)
 {
   $("#confirm-answer-button").prop("disabled",true);
   var selected_answer_id = $("input[name='optradio']:checked").val();
@@ -672,7 +678,10 @@ function confirmAnwser(question_id,usingCoordinates)
           show_notification("success",data.message,3000);
           $("#play-questionnaire").modal("toggle");
         }
-        $('#question-count-down').countdown('stop');
+        if(timeToAnswer >= 0)
+        {
+          $('#question-count-down').countdown('stop');
+        }
         $.when(refreshAnswers()).done(function() {
           if(!completed())
           {
