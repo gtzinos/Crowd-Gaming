@@ -15,3 +15,35 @@ geohraphical region. When the competition/game is over, the scores of the users
 who have participated are processed and a detailed report is generated. The
 application consists of a relational database server, a web service and three types
 of clients (web, iOS, and Android).
+
+# Setup with 2 Steps
+
+* Copy our files to your http server
+* ./app/config/config_general.php (Set your own settings)
+
+
+Testing builds:
+
+* https://crowdgaming.it.teithe.gr/
+
+* https://crowd-gaming.skourtis.me
+
+
+Android Application Project:
+
+* https://github.com/gtzinos/Crowd-Gaming-Android
+
+
+Android Application (Playstore url):
+
+* https://play.google.com/store/apps/details?id=tzinos.crowdgaming
+
+
+Ios Application Project:
+
+* https://github.com/StavrosSkourtis/Crowd-Gaming-IOS
+
+
+Info for Thess - Wiki Event:
+
+* http://crowdgaming-el.weebly.com/
