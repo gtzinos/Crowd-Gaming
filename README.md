@@ -47,3 +47,7 @@ Ios Application Project:
 Some informations about us and the Event name Thess - Wiki (Thessaloniki 9/10/2016) :
 
 * http://crowdgaming-el.weebly.com/
+
+
+Front - End, Android App Developer : George Tzinos
+Back - End, iOS App Developer : Stavros Skourtis
