@@ -81,22 +81,22 @@
 	 */
 	$_CONFIG["CONTACT_EMAIL"] = "geotzinos@gmail.com";
 	/*
-		Specify main and backup SMTP
+		Specify main and backup SMTP *For contact forms
 	 */
 	$_CONFIG["SMTP_HOST"] = "smtp.gmail.com";
 	/*
-		SMTP username
+		SMTP username *For contact forms
 	 */
-	$_CONFIG["SMTP_USERNAME"] = "tzinos.team@gmail.com";
+	$_CONFIG["SMTP_USERNAME"] = "";
 	/*
-		SMTP password, DONT COMMIT YOUR PASSWORD TO GITHUB!
+		SMTP password, DONT COMMIT YOUR PASSWORD TO GITHUB! *For contact forms
 	 */
-	$_CONFIG["SMTP_PASSWORD"] = "1994gt31";
+	$_CONFIG["SMTP_PASSWORD"] = "";
 	/*
-		TCP port to connect to
+		TCP port to connect to *For contact forms
 	 */
 	$_CONFIG["SMTP_PORT"] = 587;
 	/*
-		Enable TLS encryption, `ssl` also accepted
+		Enable TLS encryption, `ssl` also accepted *For contact forms
 	 */
 	$_CONFIG["SMTP_SECURE"] = "tls";
