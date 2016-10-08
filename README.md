@@ -16,12 +16,13 @@ who have participated are processed and a detailed report is generated. The
 application consists of a relational database server, a web service and three types
 of clients (web, iOS, and Android).
 
+<br>
 # Setup with 2 Steps
 
 * Copy our files to your http server
 * ./app/config/config_general.php (Set your own settings)
 
-
+<br>
 Testing builds:
 
 * https://crowdgaming.it.teithe.gr/
