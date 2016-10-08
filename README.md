@@ -49,6 +49,7 @@ Some informations about us and the Event name Thess - Wiki (Thessaloniki 9/10/20
 * http://crowdgaming-el.weebly.com/
 
 
+
 Front - End, Android App Developer : George Tzinos
 
 Back - End, iOS App Developer : Stavros Skourtis
