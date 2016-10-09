@@ -74,7 +74,7 @@
 						{
 							$value .= $_POST["time-to-complete"];
 						}
-						else if(get("question-group")->getTimeToComplete() != "-1") {
+						else {
 							$value .= get("question-group")->getTimeToComplete();
 						}
 						echo "<input class='form-control' value='" . $value . "' id='time-to-complete' name='time-to-complete' type='text' placeholder='Time to complete (Default=-1)' data-toggle='tooltip' gt-error-message='Must be a positive integer'>";
