@@ -81,7 +81,13 @@
 
  				foreach ($sumScore as $key => $sum) 
  				{
- 					$sumScore[$key]["score"] = $sum["score"] * 100 / $sum["max-personal-score"];
+					if($sum["max-personal-score"] != 0)
+					{
+						$sumScore[$key]["score"] = $sum["score"] * 100 / $sum["max-personal-score"];
+					}
+ 					else {
+						$sumScore[$key]["score"] = 0;
+					}
  				}
 
 				$this->setOutput("code" , "200");
