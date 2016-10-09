@@ -190,6 +190,38 @@ WHERE `Questionnaire`.`id`=? ";
 			return false;
 		}
 
+		public function GetUserMaxScore($userId, $questionnaireId)
+		{
+			$query = "SELECT sum(`Question`.`multiplier`) as max_score
+						FROM `Question`
+						INNER JOIN `QuestionGroup` ON `Question`.`question_group_id`=`QuestionGroup`.`id`
+						WHERE `QuestionGroup`.`questionnaire_id`=?
+						AND 
+						( `QuestionGroup`.`id` not in(
+							Select question_group_id 
+							FROM `questiongroupparticipation`
+							)
+							OR
+							`QuestionGroup`.`id` not in(
+							Select question_group_id 
+							FROM `questiongroupparticipation`
+							WHERE `questiongroupparticipation`.`user_id`=?
+							)
+						)
+						";
+			$statement = $this->getStatement($query);
+			$statement->setParameters('ii' , $questionnaireId, $userId);
+
+			$set = $statement->execute();
+
+			while($set->next() )
+			{
+				return $set->get("max_score");
+			}
+
+			return 0;
+		}
+
 		public function findMaxScore( $questionnaireId )
 		{
 			$query = "SELECT sum(`Question`.`multiplier`) as max_score , `QuestionGroup`.`id` ,`QuestionGroup`.`name`
