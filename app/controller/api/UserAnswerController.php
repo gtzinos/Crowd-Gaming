@@ -223,7 +223,7 @@
 				$userAnswer->setLatitude( $coordinates !== null ? $coordinates["latitude"] : null );
 				$userAnswer->setLongitude( $coordinates !== null ? $coordinates["longitude"] : null);
 				$userAnswer->setCorrect( $answerMapper->isCorrect( $parameters["answer-id"])
-										 && $questionMapper->isAnsweredInTime( $parameters[ "question-id"] , $userId ) );
+										 && ($questionMapper->isAnsweredInTime( $parameters[ "question-id"] , $userId ) || $question->getTimeToAnswer()==-1));
 
 				/*
 					Try to insert it in the database
