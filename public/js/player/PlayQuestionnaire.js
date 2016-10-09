@@ -58,7 +58,7 @@ $(window).on("load",function()
  function showError(error) {
      switch(error.code) {
          case error.PERMISSION_DENIED:
-             show_notification("error","User denied the request for Geolocation.",4000);
+             show_notification("error","Please enable your GPS !!!",6000);
              break;
          case error.POSITION_UNAVAILABLE:
              show_notification("error","Location information is unavailable.",4000);
