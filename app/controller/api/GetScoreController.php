@@ -62,14 +62,9 @@
 
 				foreach ($userScores as $userScore) 
 				{
-					if( isset($sumScore[ $userScore["user-id"] ]) )
+					if( !isset($sumScore[ $userScore["user-id"] ]) )
 					{
-						$sumScore[ $userScore["user-id"] ]["score"] += $userScore["score"];
-						$sumScore[ $userScore["user-id"] ]["max-personal-score"]+= $groups[ $userScore["group-id"] ]["max-score"];
-					}
-					else
-					{
-						$sumScore[ $userScore["user-id"] ]["max-personal-score"] = $groups[ $userScore["group-id"] ]["max-score"];
+						$sumScore[ $userScore["user-id"] ]["max-personal-score"] = $questionnaireMapper->GetUserMaxScore($userScore["user-id"],$questionnaireId);
 						$sumScore[ $userScore["user-id"] ]["name"] = $userScore["user-name"];
 						$sumScore[ $userScore["user-id"] ]["surname"] = $userScore["user-surname"];
 						$sumScore[ $userScore["user-id"] ]["email"] = $userScore["user-email"];
