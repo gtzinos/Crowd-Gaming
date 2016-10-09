@@ -102,7 +102,7 @@
 				$questionGroup->setAllowedRepeats( $_POST["allowed_repeats"]);
 				$questionGroup->setPriority( isset( $_POST["priority"])?$_POST["priority"]:1);
 
-				if( isset( $_POST["time-to-complete"] ) && $_POST["time-to-complete"]>=0 )
+				if( isset( $_POST["time-to-complete"] ) && $_POST["time-to-complete"]>=0 && !empty($_POST["time-to-complete"]) )
 				{
 					$questionGroup->setTimeToComplete( $_POST["time-to-complete"]);
 				}
