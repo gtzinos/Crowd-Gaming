@@ -9,7 +9,7 @@
 		Leave empty if the public folder IS the root.
 		WEB_ROOT Must end with '/' if exists.
 	 */
-	$_CONFIG["WEB_ROOT"] = "./Crowd-Gaming/public/";
+	$_CONFIG["WEB_ROOT"] = "./";
 	/*
 		Short application name
 	*/
