@@ -198,14 +198,14 @@ WHERE `Questionnaire`.`id`=? ";
 						WHERE `QuestionGroup`.`questionnaire_id`=?
 						AND 
 						( `QuestionGroup`.`id` not in(
-							Select question_group_id 
-							FROM `questiongroupparticipation`
+							Select `QuestionGroupParticipation`.`question_group_id` 
+							FROM `QuestionGroupParticipation`
 							)
 							OR
 							`QuestionGroup`.`id` not in(
-							Select question_group_id 
-							FROM `questiongroupparticipation`
-							WHERE `questiongroupparticipation`.`user_id`=?
+							Select `QuestionGroupParticipation`.`question_group_id` 
+							FROM `QuestionGroupParticipation`
+							WHERE `QuestionGroupParticipation`.`user_id`=?
 							)
 						)
 						";
