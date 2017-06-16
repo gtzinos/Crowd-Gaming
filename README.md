@@ -45,7 +45,7 @@ Ios Application Project:
 * https://github.com/StavrosSkourtis/Crowd-Gaming-IOS
 
 
-Some informations about us and the Event name Thess - Wiki (Thessaloniki 9/10/2016) :
+Some information about us and the Event name Thess - Wiki (Thessaloniki 9/10/2016) :
 
 * http://crowdgaming-el.weebly.com/
 
