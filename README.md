@@ -45,6 +45,10 @@ Ios Application Project:
 * https://github.com/StavrosSkourtis/Crowd-Gaming-IOS
 
 
+Publication (IEEE Educon 2017)
+* http://ieeexplore.ieee.org/document/7943008/
+
+
 Some information about us and the Event name Thess - Wiki (Thessaloniki 9/10/2016) :
 
 * http://crowdgaming-el.weebly.com/
