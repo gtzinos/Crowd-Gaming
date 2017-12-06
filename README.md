@@ -25,8 +25,6 @@ of clients (web, iOS, and Android).
 <br>
 Testing builds:
 
-* https://crowdgaming.it.teithe.gr/
-
 * www.thesis.geotzinos.com
 
 
