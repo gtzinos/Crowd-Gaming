@@ -27,7 +27,7 @@ Testing builds:
 
 * https://crowdgaming.it.teithe.gr/
 
-* www.tzinos.me
+* www.thesis.geotzinos.com
 
 
 Android Application Project:
