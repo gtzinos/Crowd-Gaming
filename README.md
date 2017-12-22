@@ -27,6 +27,13 @@ Testing builds:
 
 * www.thesis.geotzinos.com
 
+Tutorials:
+* https://www.youtube.com/watch?v=vq4Xu5oll14&t=138s
+* https://www.youtube.com/watch?v=zB9bAR80cUg
+* https://www.youtube.com/watch?v=TWrUE7uaK70
+* https://www.youtube.com/watch?v=r3N6hibYvOg
+* https://www.youtube.com/watch?v=vnvZAhCET28
+
 
 Android Application Project:
 
